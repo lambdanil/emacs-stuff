@@ -1,2 +1,5 @@
 #!/bin/bash
 emacsclient -cn --eval "(progn (x-focus-frame nil) (+vterm/here t))"
+alias emacs="emacsclient -c -a 'emacs'"
+alias vim="emacsclient -nw -a 'emacs'"
+export EDITOR="emacsclient -nw -a 'emacs'"
