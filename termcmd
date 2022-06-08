@@ -1,0 +1,2 @@
+#!/bin/bash
+emacsclient -cn --eval "(progn (x-focus-frame nil) (+vterm/here t))"
