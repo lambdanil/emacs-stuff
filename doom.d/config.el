@@ -72,12 +72,23 @@
                     (lambda()
                       (interactive)
                       (exwm-move-window-to-workspace 5)))
-(exwm-input-set-key (kbd "s-q")
-                    (lambda()
-                      (interactive)
-                      (kill-buffer)
-                      (run-with-idle-timer 0.1 nil (lambda() (delete-window)))))
 
+(defun my-kill-buffer-and-window ()
+  "Kill the current buffer and delete the selected window."
+  (interactive)
+  (let ((window-to-delete (selected-window))
+	(buffer-to-kill (current-buffer))
+	(delete-window-hook (lambda () (ignore-errors (delete-window)))))
+    (unwind-protect
+	(progn
+	  (add-hook 'kill-buffer-hook delete-window-hook t t)
+	  (if (kill-buffer (current-buffer))
+	      ;; If `delete-window' failed before, we rerun it to regenerate
+	      ;; the error so it can be seen in the echo area.
+	      (when (eq (selected-window) window-to-delete)
+		(delete-window)))))))
+
+(exwm-input-set-key (kbd "s-q") #'my-kill-buffer-and-window)
 (exwm-input-set-key (kbd "s-R") #'exwm-reset)
 (exwm-input-set-key (kbd "s-x") #'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "s-h") #'windmove-left)
@@ -88,7 +99,6 @@
 (exwm-input-set-key (kbd "C-c h") #'+evil/window-move-left)
 (exwm-input-set-key (kbd "C-c j") #'+evil/window-move-down)
 (exwm-input-set-key (kbd "C-c k") #'+evil/window-move-up)
-(exwm-input-set-key (kbd "s-q") #'evil-window-delete)
 (exwm-input-set-key (kbd "s-Q") #'kill-buffer-and-window)
 (exwm-input-set-key (kbd "C-c q") #'kill-current-buffer)
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
