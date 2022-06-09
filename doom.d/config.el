@@ -20,9 +20,6 @@
         (id (exwm--buffer->id (window-buffer))))
     (exwm-workspace-move-window frame id)))
 
-(defun my-shell-cmd (command)
-  (interactive)
-  (start-process-shell-command command nil command))
 
 (exwm-input-set-key (kbd "s-é")
                     (lambda()
@@ -106,7 +103,7 @@
 (exwm-input-set-key (kbd "s-F") #'exwm-floating-toggle-floating)
 (exwm-input-set-key (kbd "s-M") (lambda ()
                                   (interactive)
-                                  (my-shell-run "pavucontrol")))
+                                  (start-process-shell-command "pavucontrol" nil "pavucontrol")))
 
 
 
