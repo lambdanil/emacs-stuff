@@ -19,6 +19,13 @@
         (id (exwm--buffer->id (window-buffer))))
     (exwm-workspace-move-window frame id)))
 
+(exwm-workspace-add)
+(exwm-workspace-add)
+(exwm-workspace-add)
+(exwm-workspace-add)
+(exwm-workspace-add)
+
+
 (exwm-input-set-key (kbd "s-é")
                     (lambda()
                       (interactive)
