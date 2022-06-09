@@ -72,6 +72,11 @@
                     (lambda()
                       (interactive)
                       (exwm-move-window-to-workspace 5)))
+(exwm-input-set-key (kbd "s-q")
+                    (lambda()
+                      (interactive)
+                      (kill-buffer)
+                      (run-with-idle-timer 0.1 nil (lambda() (delete-window)))))
 
 (exwm-input-set-key (kbd "s-R") #'exwm-reset)
 (exwm-input-set-key (kbd "s-x") #'exwm-input-toggle-keyboard)
