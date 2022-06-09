@@ -20,6 +20,10 @@
         (id (exwm--buffer->id (window-buffer))))
     (exwm-workspace-move-window frame id)))
 
+(defun my-shell-cmd (command)
+  (interactive)
+  (start-process-shell-command command nil command))
+
 (exwm-input-set-key (kbd "s-é")
                     (lambda()
                       (interactive)
@@ -87,7 +91,10 @@
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
 (exwm-input-set-key (kbd "s-f") #'exwm-layout-toggle-fullscreen)
 (exwm-input-set-key (kbd "s-<return>") #'+vterm/here)
-(exwm-input-set-key (kbd "s-d") #'vterm)
+(exwm-input-set-key (kbd "s-c") #'vterm)
+(exwm-input-set-key (kbd "s-d") (lambda (command)
+                                  (interactive (list (read-shell-command "$ ")))
+                                  (start-process-shell-command command nil command)))
 (exwm-input-set-key (kbd "s-W") #'evil-window-new)
 (exwm-input-set-key (kbd "s-b") #'split-window-vertically)
 (exwm-input-set-key (kbd "s-v") #'split-window-horizontally)
@@ -97,6 +104,10 @@
 (exwm-input-set-key (kbd "s-J") #'evil-window-decrease-height)
 (exwm-input-set-key (kbd "s-K") #'evil-window-increase-height)
 (exwm-input-set-key (kbd "s-F") #'exwm-floating-toggle-floating)
+(exwm-input-set-key (kbd "s-M") (lambda ()
+                                  (interactive)
+                                  (my-shell-run "pavucontrol")))
+
 
 
 (push ?\s-  exwm-input-prefix-keys)
