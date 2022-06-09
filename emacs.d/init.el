@@ -57,3 +57,4 @@
 (doom-initialize-modules)
 (add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
 (setq kill-buffer-query-functions nil)
+(display-time-mode)
