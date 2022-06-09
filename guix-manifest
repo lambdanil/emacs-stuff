@@ -6,7 +6,6 @@
 
 (specifications->manifest
   (list "markdown"
-        "sl"
         "emacs"
         "kdenlive"
         "tuxguitar"
