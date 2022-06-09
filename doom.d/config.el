@@ -90,6 +90,8 @@
 (exwm-input-set-key (kbd "s-L") #'evil-window-decrease-width)
 (exwm-input-set-key (kbd "s-J") #'evil-window-decrease-height)
 (exwm-input-set-key (kbd "s-K") #'evil-window-increase-height)
+((exwm-input-set-key (kbd "s-F") #'exwm-floating-toggle-floating)
+
 
 (push ?\s-  exwm-input-prefix-keys)
 
