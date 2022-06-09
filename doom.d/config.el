@@ -88,7 +88,7 @@
 	      (when (eq (selected-window) window-to-delete)
 		(delete-window)))))))
 
-(exwm-input-set-key (kbd "s-q") #'my-kill-buffer-and-window)
+(exwm-input-set-key (kbd "s-Q") #'my-kill-buffer-and-window)
 (exwm-input-set-key (kbd "s-R") #'exwm-reset)
 (exwm-input-set-key (kbd "s-x") #'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "s-h") #'windmove-left)
@@ -99,7 +99,7 @@
 (exwm-input-set-key (kbd "C-c h") #'+evil/window-move-left)
 (exwm-input-set-key (kbd "C-c j") #'+evil/window-move-down)
 (exwm-input-set-key (kbd "C-c k") #'+evil/window-move-up)
-(exwm-input-set-key (kbd "s-Q") #'delete-window)
+(exwm-input-set-key (kbd "s-q") #'delete-window)
 (exwm-input-set-key (kbd "C-c q") #'kill-current-buffer)
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
 (exwm-input-set-key (kbd "s-f") #'exwm-layout-toggle-fullscreen)
@@ -116,7 +116,7 @@
 (exwm-input-set-key (kbd "s-v") (lambda ()
                                   (interactive)
                                   (split-window-horizontally)
-                                  (run-with-idle-timer 0.05 nil (lambda() (evil-buffer-new)))))
+                                  (run-with-idle-timer 0.05 nil (lambda() (buffer-new)))))
 (exwm-input-set-key (kbd "s-L") #'evil-window-increase-width)
 (exwm-input-set-key (kbd "s-H") #'evil-window-decrease-width)
 (exwm-input-set-key (kbd "s-J") #'evil-window-decrease-height)
@@ -139,12 +139,6 @@
 (exwm-input-set-key (kbd "s-<f6>") (lambda ()
                                   (interactive)
                                   (start-process-shell-command "pamixer --default-source -t" nil "pamixer --default-source -t")))
-
-
-
-
-
-
 
 
 (push ?\s-  exwm-input-prefix-keys)
