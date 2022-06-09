@@ -70,14 +70,14 @@
                       (interactive)
                       (exwm-move-window-to-workspace 5)))
 
-
 (exwm-input-set-key (kbd "s-R") #'exwm-reset)
 (exwm-input-set-key (kbd "s-x") #'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "s-h") #'windmove-left)
 (exwm-input-set-key (kbd "s-j") #'windmove-down)
 (exwm-input-set-key (kbd "s-k") #'windmove-up)
 (exwm-input-set-key (kbd "s-l") #'windmove-right)
-(exwm-input-set-key (kbd "s-q") #'evil-window-delete)
+(exwm-input-set-key (kbd "s-Q") #'evil-window-delete)
+(exwm-input-set-key (kbd "s-q") #'kill-buffer-and-window)
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
 (exwm-input-set-key (kbd "s-f") #'exwm-layout-toggle-fullscreen)
 (exwm-input-set-key (kbd "s-<return>") #'+vterm/here)
