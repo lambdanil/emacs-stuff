@@ -104,6 +104,23 @@
 (exwm-input-set-key (kbd "s-M") (lambda ()
                                   (interactive)
                                   (start-process-shell-command "pavucontrol" nil "pavucontrol")))
+(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>") (lambda ()
+                                  (interactive)
+                                  (start-process-shell-command "pamixer -i 5" nil "pamixer -i 5")))
+(exwm-input-set-key (kbd "<XF86AudioLowerVolume>") (lambda ()
+                                  (interactive)
+                                  (start-process-shell-command "pamixer -d 5" nil "pamixer -d 5")))
+(exwm-input-set-key (kbd "<XF86AudioMute>") (lambda ()
+                                  (interactive)
+                                  (start-process-shell-command "pamixer -t" nil "pamixer -t")))
+(exwm-input-set-key (kbd "s-<f6>") (lambda ()
+                                  (interactive)
+                                  (start-process-shell-command "pamixer --default-source -t" nil "pamixer --default-source -t")))
+
+
+
+
+
 
 
 
