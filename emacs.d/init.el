@@ -61,3 +61,4 @@
 (setq c-basic-offset 4)
 (add-to-list 'default-frame-alist '(height . 36))
 (add-to-list 'default-frame-alist '(width . 124))
+(setq split-height-threshold nil)
