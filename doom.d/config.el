@@ -14,7 +14,7 @@
 (setq exwm-systemtray-height 16)
 (setq exwm-layout-show-all-buffers t)
 (setq exwm-workspace-show-all-buffers t)
-(setq exwm-workspace-number 6)
+(setq exwm-workspace-number 2)
 
 (defun exwm-move-window-to-workspace(workspace-number)
   (interactive)
