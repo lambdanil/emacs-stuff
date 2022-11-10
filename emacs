@@ -1,29 +1,36 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;;   My Emacs config
+;;; Code:
+
+;;; Melpa and package setup
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+;;; ----------------------------------------------------------------------------
 
 ;;; Packages
+(let ((my-package-list '(dumb-jump
+			 company
+			 ivy
+			 markdown-mode
+			 flycheck)))
+  (dolist (my-package my-package-list)
+    (eval `(use-package ,my-package
+      :ensure t))))
 
-(use-package dumb-jump
-  :ensure t)
+(dolist (package '(use-package))
+  (unless (package-installed-p package)
+    (package-install package)))
+;;;
 
-(use-package company
-  :ensure t)
-
-(use-package ivy
-  :ensure t)
-
-(use-package markdown-mode
-  :ensure t)
-
-(use-package flycheck
-  :ensure t)
-
-;;; Code:
+;;; Read GNU Emacs defaults:
 (if (file-readable-p "~/.gnu-emacs")
     (load "~/.gnu-emacs" nil t)
   (if (file-readable-p "/etc/skel/.gnu-emacs")
       (load "/etc/skel/.gnu-emacs" nil t)))
+;;;
 
 ;;; Custom variables
 (custom-set-variables
@@ -31,27 +38,20 @@
  '(custom-enabled-themes '(tango-dark))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(lsp-mode ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+   '(ligature minimap markdown-mode ivy flycheck company dumb-jump)))
 (custom-set-faces
  '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
-;;;
+;;; ----------------------------------------------------------------------------
 
+;;; Basic defaults
 (setq ring-bell-function 'ignore)
 (setq inhibit-startup-screen t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+;;; ----------------------------------------------------------------------------
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
-
-(dolist (package '(use-package))
-  (unless (package-installed-p package)
-    (package-install package)))
-
-
+;;; Company autofill setup
 (defun company-complete-common-or-cycle ()
   "Company settings."
   (interactive)
@@ -63,20 +63,22 @@
 
 (define-key company-active-map [tab] 'company-complete-common-or-cycle)
 (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-
 (setq company-insertion-on-trigger 'company-explicit-action-p)
-
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;;; ----------------------------------------------------------------------------
 
+;;; Global modes
 (global-display-line-numbers-mode t)
-
 (global-company-mode t)
 (global-flycheck-mode t)
 (ivy-mode t)
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
+;;; ----------------------------------------------------------------------------
 
+
+;;; Minor mode for custom keymaps
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
 
@@ -90,7 +92,9 @@
 ;; `minor-mode-map-alist'
 (add-to-list 'emulation-mode-map-alists
              `((my/keys-mode . ,my/keys-keymap)))
+;;; ----------------------------------------------------------------------------
 
+;;; Custom functions
 (defun insert-line-above-and-jump ()
   "Insert line above current line."
   (interactive)
@@ -136,7 +140,9 @@
   (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
   (shell-command "cp ~/git/emacs-stuff/emacs ~/.emacs")
   (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
+;;; ----------------------------------------------------------------------------
 
+;;; Key bindings
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -164,8 +170,9 @@
 (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
 (define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
 (define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
+;;; ----------------------------------------------------------------------------
 
-
+;;; Cursor
 (setq-default cursor-type 'bar)
 
 
