@@ -115,7 +115,7 @@
   (shell-command "git pull")
   (shell-command "cp ~/.emacs ~/git/emacs-stuff/emacs")
   (shell-command "git add .")
-  (shell-command "git commit -m %s" (read-string "Enter commit message: "))
+  (shell-command (format "git commit -m \"%s\"" (read-string "Enter commit message: ")))
   (shell-command "git push -u origin main"))
 
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
