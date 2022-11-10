@@ -112,6 +112,7 @@
 (define-key my/keys-keymap (kbd "C-i") 'insert-line-below-and-jump)
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
+(define-key my/keys-keymap (kbd "TAB") 'indent-according-to-mode)
 
 
 (setq-default cursor-type 'bar)
