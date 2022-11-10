@@ -42,7 +42,16 @@
   (load "~/.gnu-emacs-custom" t t)
 ;;;
 )
-;;;
+;
 (setq ring-bell-function 'ignore)
 (global-display-line-numbers-mode)
 (setq inhibit-startup-screen t)
+(global-set-key [(control l)] 'forward-char)
+(global-set-key [(meta l)]    'forward-word)
+(global-set-key [(meta h)]    'backward-word)
+(global-set-key [(meta j)]    'forward-paragraph)
+(global-set-key [(meta k)]    'backward-paragraph)
+(global-set-key [(control h)] 'backward-char)
+(global-set-key [(control j)] 'next-line)
+(global-set-key [(control k)] 'previous-line)
+(global-set-key [(control d)] 'kill-line)
