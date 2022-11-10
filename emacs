@@ -6,7 +6,7 @@
 ;;;
 ;;;
 ;;; Dependencies:
-;;;   clang, ripgrep
+;;;   clang, ripgrep, Fira font
 ;;;
 ;;;
 
