@@ -118,6 +118,14 @@
   (shell-command (format "git commit -m \"%s\"" (read-string "Enter commit message: ")))
   (shell-command "git push -u origin main"))
 
+(defun pull-config-from-git ()
+  "Pull config from my github."
+  (interactive)
+  (shell-command "mkdir -p ~/git")
+  (setq default-directory "~/git")
+  (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
+  (shell-command "cp ~/git/emacs-stuff/emacs ~/."))
+
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
