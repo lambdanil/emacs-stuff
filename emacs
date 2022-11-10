@@ -65,6 +65,7 @@
 (global-company-mode t)
 (global-flycheck-mode t)
 (ivy-mode t)
+(electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
 
