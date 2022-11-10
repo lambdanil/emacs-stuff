@@ -112,6 +112,9 @@
 (define-key my/keys-keymap (kbd "M-h") 'backward-word)
 (define-key my/keys-keymap (kbd "M-j") 'forward-paragraph)
 (define-key my/keys-keymap (kbd "M-k") 'backward-paragraph)
+(define-key my/keys-keymap (kbd "M-c") 'compile)
+(define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
+(define-key my/keys-keymap (kbd "C-p") 'other-window)
 
 (provide '.emacs)
 ;;; .emacs ends here
