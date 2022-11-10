@@ -1,17 +1,30 @@
-;;; Code
+;;; package --- Summary
+;;; Commentary:
+;;;   My Emacs config
+
+(use-package dumb-jump
+  :ensure t)
+
+(use-package company
+  :ensure t)
+
+(use-package ivy
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t)
+
+;;; Code:
 (if (file-readable-p "~/.gnu-emacs")
     (load "~/.gnu-emacs" nil t)
   (if (file-readable-p "/etc/skel/.gnu-emacs")
       (load "/etc/skel/.gnu-emacs" nil t)))
 
-;; Custom Settings
-;; ===============
-;; To avoid any trouble with the customization system of GNU emacs
-;; we set the default file ~/.gnu-emacs-custom
+;;; GNU custom
 (setq custom-file "~/.gnu-emacs-custom")
 (load "~/.gnu-emacs-custom" t t)
 ;;;
-					;
+
 (setq ring-bell-function 'ignore)
 (setq inhibit-startup-screen t)
 (menu-bar-mode -1)
@@ -26,14 +39,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-(use-package dumb-jump
-  :ensure t)
-
-(use-package company
-  :ensure t)
-
-(use-package ivy
-  :ensure t)
 
 (defun company-complete-common-or-cycle ()
   "Company settings."
@@ -65,7 +70,7 @@
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
 
-(define-minor-mode my-keys-mode
+(define-minor-mode my/keys-mode
   "Minor mode for my personal keybindings."
   :init-value t
   :global t
