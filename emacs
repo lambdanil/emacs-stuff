@@ -62,6 +62,9 @@
 (use-package company
   :ensure t)
 
+(use-package ivy
+  :ensure t)
+
 (defun company-complete-common-or-cycle ()
   "Company settings."
   (interactive)
@@ -84,6 +87,7 @@
 (global-display-line-numbers-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
+(ivy-mode t)
 
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
