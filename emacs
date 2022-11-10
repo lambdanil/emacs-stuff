@@ -86,9 +86,12 @@
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 (global-display-line-numbers-mode t)
+
 (global-company-mode t)
 (global-flycheck-mode t)
 (ivy-mode t)
+(global-hl-line-mode 1)
+(set-face-attribute 'hl-line nil :inherit nil :background "gray14")
 
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
@@ -107,13 +110,16 @@
 (defun insert-line-above ()
   "Insert line above current line."
   (interactive)
-  (push-mark)
-  (let* ((ipt (progn (back-to-indentation) (point)))
-	 (bol (progn (move-beginning-of-line 1) (point)))
-	 (indent (buffer-substring bol ipt)))
-    (newline)
-    (forward-line -1)
-    (insert indent)))
+  (beginning-of-line)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun insert-line-below ()
+  "Insert line below current line."
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
 
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
@@ -128,6 +134,10 @@
 (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
 (define-key my/keys-keymap (kbd "C-p") 'other-window)
 (define-key my/keys-keymap (kbd "C-o") 'insert-line-above)
+(define-key my/keys-keymap (kbd "C-i") 'insert-line-below)
+
+
+(setq-default cursor-type 'bar)
 
 
 (provide '.emacs)
