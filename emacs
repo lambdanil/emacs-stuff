@@ -10,14 +10,18 @@
 ;;;
 ;;;
 
-;;; Melpa and package setup
+
+
+;;; Melpa and package setup  --------------------------------------------------
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 ;;; ----------------------------------------------------------------------------
 
-;;; Packages
+
+
+;;; Packages  ------------------------------------------------------------------
 (let ((my-package-list '(dumb-jump
 			 company
 			 ivy
@@ -30,16 +34,22 @@
 (dolist (package '(use-package))
   (unless (package-installed-p package)
     (package-install package)))
-;;;
+;;; ----------------------------------------------------------------------------
 
-;;; Read GNU Emacs defaults:
+
+
+
+;;; Read GNU Emacs defaults:  --------------------------------------------------
 (if (file-readable-p "~/.gnu-emacs")
     (load "~/.gnu-emacs" nil t)
   (if (file-readable-p "/etc/skel/.gnu-emacs")
       (load "/etc/skel/.gnu-emacs" nil t)))
-;;;
+;;; ----------------------------------------------------------------------------
 
-;;; Custom variables
+
+
+
+;;; Custom variables  ----------------------------------------------------------
 (custom-set-variables
  '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
@@ -50,7 +60,10 @@
  '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
 ;;; ----------------------------------------------------------------------------
 
-;;; Basic defaults
+
+
+
+;;; Basic defaults  ------------------------------------------------------------
 (setq ring-bell-function 'ignore)
 (setq inhibit-startup-screen t)
 (menu-bar-mode -1)
@@ -58,7 +71,10 @@
 (scroll-bar-mode -1)
 ;;; ----------------------------------------------------------------------------
 
-;;; Company autofill setup
+
+
+
+;;; Company autofill setup  ----------------------------------------------------
 (defun company-complete-common-or-cycle ()
   "Company settings."
   (interactive)
@@ -74,7 +90,10 @@
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 ;;; ----------------------------------------------------------------------------
 
-;;; Global modes
+
+
+
+;;; Global modes  --------------------------------------------------------------
 (global-display-line-numbers-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
@@ -85,7 +104,8 @@
 ;;; ----------------------------------------------------------------------------
 
 
-;;; Minor mode for custom keymaps
+
+;;; Minor mode for custom keymaps  ---------------------------------------------
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
 
@@ -101,7 +121,10 @@
              `((my/keys-mode . ,my/keys-keymap)))
 ;;; ----------------------------------------------------------------------------
 
-;;; Custom functions
+
+
+
+;;; Custom functions  ----------------------------------------------------------
 (defun insert-line-above-and-jump ()
   "Insert line above current line."
   (interactive)
@@ -149,7 +172,10 @@
   (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
 ;;; ----------------------------------------------------------------------------
 
-;;; Key bindings
+
+
+
+;;; Key bindings  --------------------------------------------------------------
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
