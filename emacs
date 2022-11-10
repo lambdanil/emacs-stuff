@@ -3,6 +3,13 @@
 ;;;   My Emacs config
 ;;; Code:
 
+;;;
+;;;
+;;; Dependencies:
+;;;   clang, ripgrep
+;;;
+;;;
+
 ;;; Melpa and package setup
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
