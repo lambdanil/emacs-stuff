@@ -97,6 +97,16 @@
   (end-of-line)
   (newline-and-indent))
 
+(defun my-enlarge-window-horizontally ()
+  "Enlarge window horizontally."
+  (interactive)
+  (enlarge-window-horizontally 4))
+
+(defun my-shrink-window-horizontally ()
+  "Shrink window horizontally."
+  (interactive)
+  (shrink-window-horizontally 4))
+
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -113,8 +123,8 @@
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
-(define-key my/keys-keymap (kbd "C-)") 'enlarge-window)
-(define-key my/keys-keymap (kbd "C-ú") 'shrink-window)
+(define-key my/keys-keymap (kbd "C-)") 'my-enlarge-window-horizontally)
+(define-key my/keys-keymap (kbd "C-ú") 'my-shrink-window-horizontally)
 
 
 (setq-default cursor-type 'bar)
