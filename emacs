@@ -114,6 +114,7 @@
   (shell-command "git reset --hard")
   (shell-command "git pull")
   (shell-command "cp ~/.emacs ~/git/emacs-stuff/emacs")
+  (shell-command "cp ~/.bashrc ~/git/emacs-stuff/bashrc")
   (shell-command "git add .")
   (shell-command (format "git commit -m \"%s\"" (read-string "Enter commit message: ")))
   (shell-command "git push -u origin main"))
@@ -122,9 +123,11 @@
   "Pull config from my github."
   (interactive)
   (shell-command "mkdir -p ~/git")
+  (shell-command "rm -rf ~/git/emacs-stuff")
   (setq default-directory "~/git")
   (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
-  (shell-command "cp ~/git/emacs-stuff/emacs ~/."))
+  (shell-command "cp ~/git/emacs-stuff/emacs ~/.emacs")
+  (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
 
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
@@ -151,6 +154,8 @@
 (define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
 (define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
 (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
+(define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
+(define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
 
 
 (setq-default cursor-type 'bar)
