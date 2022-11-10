@@ -107,6 +107,16 @@
   (interactive)
   (shrink-window-horizontally 4))
 
+(defun my-enlarge-window ()
+  "Enlarge window horizontally."
+  (interactive)
+  (enlarge-window 2))
+
+(defun my-shrink-window ()
+  "Shrink window horizontally."
+  (interactive)
+  (shrink-window 2))
+
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -125,6 +135,8 @@
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
 (define-key my/keys-keymap (kbd "C-)") 'my-enlarge-window-horizontally)
 (define-key my/keys-keymap (kbd "C-ú") 'my-shrink-window-horizontally)
+(define-key my/keys-keymap (kbd "C-/") 'my-shrink-window)
+(define-key my/keys-keymap (kbd "C-(") 'my-enlarge-window)
 
 
 (setq-default cursor-type 'bar)
