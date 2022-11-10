@@ -107,15 +107,16 @@
   (interactive)
   (shrink-window-horizontally 4))
 
-(defun my-enlarge-window ()
-  "Enlarge window horizontally."
+(defun push-config-to-git ()
+  "Push config to my github."
   (interactive)
-  (enlarge-window 2))
-
-(defun my-shrink-window ()
-  "Shrink window horizontally."
-  (interactive)
-  (shrink-window 2))
+  (setq default-directory "~/git/emacs-stuff")
+  (shell-command "git reset --hard")
+  (shell-command "git pull")
+  (shell-command "cp ~/.emacs ~/git/emacs-stuff/emacs")
+  (shell-command "git add .")
+  (shell-command "git commit -m %s" (read-string "Enter commit message: "))
+  (shell-command "git push -u origin main"))
 
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
@@ -133,10 +134,15 @@
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
-(define-key my/keys-keymap (kbd "C-)") 'my-enlarge-window-horizontally)
-(define-key my/keys-keymap (kbd "C-ú") 'my-shrink-window-horizontally)
-(define-key my/keys-keymap (kbd "C-/") 'my-shrink-window)
-(define-key my/keys-keymap (kbd "C-(") 'my-enlarge-window)
+(define-key my/keys-keymap (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
+(define-key my/keys-keymap (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
+(define-key my/keys-keymap (kbd "C-/") #'(lambda () (interactive) (shrink-window 2)))
+(define-key my/keys-keymap (kbd "C-(") #'(lambda () (interactive) (enlarge-window 2)))
+(define-key my/keys-keymap (kbd "C-§") 'scroll-down-line)
+(define-key my/keys-keymap (kbd "C-ů") 'scroll-up-line)
+(define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
+(define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
+(define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
 
 
 (setq-default cursor-type 'bar)
