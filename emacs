@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;;   My Emacs config
 
+;;; Packages
+
 (use-package dumb-jump
   :ensure t)
 
@@ -23,9 +25,15 @@
   (if (file-readable-p "/etc/skel/.gnu-emacs")
       (load "/etc/skel/.gnu-emacs" nil t)))
 
-;;; GNU custom
-(setq custom-file "~/.gnu-emacs-custom")
-(load "~/.gnu-emacs-custom" t t)
+;;; Custom variables
+(custom-set-variables
+ '(column-number-mode t)
+ '(custom-enabled-themes '(tango-dark))
+ '(delete-selection-mode t)
+ '(package-selected-packages
+   '(lsp-mode ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+(custom-set-faces
+ '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
 ;;;
 
 (setq ring-bell-function 'ignore)
@@ -151,7 +159,7 @@
 (define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2)))
 (define-key my/keys-keymap (kbd "C-§") 'scroll-down-line)
 (define-key my/keys-keymap (kbd "C-ů") 'scroll-up-line)
-(define-key my/keys-keymap (kbd "M-ů") #'(lambda  () (interactive) (scroll-up 4)))
+(define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
 (define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
 (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
 (define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
