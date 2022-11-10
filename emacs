@@ -44,7 +44,7 @@
 )
 ;
 (setq ring-bell-function 'ignore)
-(global-display-line-numbers-mode)
+
 (setq inhibit-startup-screen t)
 (global-set-key [(control l)] 'forward-char)
 (global-set-key [(meta l)]    'forward-word)
@@ -55,3 +55,44 @@
 (global-set-key [(control j)] 'next-line)
 (global-set-key [(control k)] 'previous-line)
 (global-set-key [(control d)] 'kill-line)
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
+(dolist (package '(use-package))
+  (unless (package-installed-p package)
+    (package-install package)))
+
+(use-package dumb-jump
+  :ensure t)
+
+(use-package company
+  :ensure t)
+
+(defun company-complete-common-or-cycle ()
+  "Company settings."
+  (interactive)
+  (when (company-manual-begin)
+    (if (eq last-command 'company-complete-common-or-cycle)
+        (let ((company-selection-wrap-around t))
+          (call-interactively 'company-select-next))
+      (call-interactively 'company-complete-common))))
+
+(define-key company-active-map [tab] 'company-complete-common-or-cycle)
+(define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+
+(setq company-insertion-on-trigger 'company-explicit-action-p)
+
+(use-package flycheck
+  :ensure t)
+
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+(global-display-line-numbers-mode t)
+(global-company-mode t)
+(global-flycheck-mode t)
+
+(provide '.emacs)
+;;; .emacs ends here
