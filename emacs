@@ -46,15 +46,6 @@
 (setq ring-bell-function 'ignore)
 
 (setq inhibit-startup-screen t)
-(global-set-key [(control l)] 'forward-char)
-(global-set-key [(meta l)]    'forward-word)
-(global-set-key [(meta h)]    'backward-word)
-(global-set-key [(meta j)]    'forward-paragraph)
-(global-set-key [(meta k)]    'backward-paragraph)
-(global-set-key [(control h)] 'backward-char)
-(global-set-key [(control j)] 'next-line)
-(global-set-key [(control k)] 'previous-line)
-(global-set-key [(control d)] 'kill-line)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -93,6 +84,30 @@
 (global-display-line-numbers-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
+
+(defvar my/keys-keymap (make-keymap)
+  "Keymap for my/keys-mode.")
+
+(define-minor-mode my-keys-mode
+  "Minor mode for my personal keybindings."
+  :init-value t
+  :global t
+  :keymap my/keys-keymap)
+
+;; The keymaps in `emulation-mode-map-alists' take precedence over
+;; `minor-mode-map-alist'
+(add-to-list 'emulation-mode-map-alists
+             `((my/keys-mode . ,my/keys-keymap)))
+
+(define-key my/keys-keymap (kbd "C-d") 'kill-line)
+(define-key my/keys-keymap (kbd "C-l") 'forward-char)
+(define-key my/keys-keymap (kbd "C-h") 'backward-char)
+(define-key my/keys-keymap (kbd "C-k") 'previous-line)
+(define-key my/keys-keymap (kbd "C-j") 'next-line)
+(define-key my/keys-keymap (kbd "M-l") 'forward-word)
+(define-key my/keys-keymap (kbd "M-h") 'backward-word)
+(define-key my/keys-keymap (kbd "M-j") 'forward-paragraph)
+(define-key my/keys-keymap (kbd "M-k") 'backward-paragraph)
 
 (provide '.emacs)
 ;;; .emacs ends here
