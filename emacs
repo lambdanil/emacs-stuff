@@ -14,6 +14,9 @@
 (use-package markdown-mode
   :ensure t)
 
+(use-package flycheck
+  :ensure t)
+
 ;;; Code:
 (if (file-readable-p "~/.gnu-emacs")
     (load "~/.gnu-emacs" nil t)
@@ -54,9 +57,6 @@
 (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
 
 (setq company-insertion-on-trigger 'company-explicit-action-p)
-
-(use-package flycheck
-  :ensure t)
 
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
@@ -110,10 +110,12 @@
 (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
 (define-key my/keys-keymap (kbd "C-p") 'other-window)
 (define-key my/keys-keymap (kbd "C-o") 'insert-line-above-and-jump)
-(define-key my/keys-keymap (kbd "C-i") 'insert-line-below-and-jump)
+(define-key my/keys-keymap (kbd "C-m") 'insert-line-below-and-jump)
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
-(define-key my/keys-keymap (kbd "TAB") 'indent-according-to-mode)
+(define-key my/keys-keymap (kbd "C-=") 'indent-region)
+(define-key my/keys-keymap (kbd "C-)") 'enlarge-window)
+(define-key my/keys-keymap (kbd "C-ú") 'shrink-window)
 
 
 (setq-default cursor-type 'bar)
