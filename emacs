@@ -82,7 +82,7 @@
 (add-to-list 'emulation-mode-map-alists
              `((my/keys-mode . ,my/keys-keymap)))
 
-(defun insert-line-above ()
+(defun insert-line-above-and-jump ()
   "Insert line above current line."
   (interactive)
   (beginning-of-line)
@@ -90,7 +90,7 @@
   (forward-line -1)
   (indent-according-to-mode))
 
-(defun insert-line-below ()
+(defun insert-line-below-and-jump ()
   "Insert line below current line."
   (interactive)
   (end-of-line)
@@ -108,9 +108,10 @@
 (define-key my/keys-keymap (kbd "M-c") 'compile)
 (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
 (define-key my/keys-keymap (kbd "C-p") 'other-window)
-(define-key my/keys-keymap (kbd "C-o") 'insert-line-above)
-(define-key my/keys-keymap (kbd "C-i") 'insert-line-below)
+(define-key my/keys-keymap (kbd "C-o") 'insert-line-above-and-jump)
+(define-key my/keys-keymap (kbd "C-i") 'insert-line-below-and-jump)
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
+(define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
 
 
 (setq-default cursor-type 'bar)
