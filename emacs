@@ -104,6 +104,17 @@
 (add-to-list 'emulation-mode-map-alists
              `((my/keys-mode . ,my/keys-keymap)))
 
+(defun insert-line-above ()
+  "Insert line above current line."
+  (interactive)
+  (push-mark)
+  (let* ((ipt (progn (back-to-indentation) (point)))
+	 (bol (progn (move-beginning-of-line 1) (point)))
+	 (indent (buffer-substring bol ipt)))
+    (newline)
+    (forward-line -1)
+    (insert indent)))
+
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -116,6 +127,8 @@
 (define-key my/keys-keymap (kbd "M-c") 'compile)
 (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
 (define-key my/keys-keymap (kbd "C-p") 'other-window)
+(define-key my/keys-keymap (kbd "C-o") 'insert-line-above)
+
 
 (provide '.emacs)
 ;;; .emacs ends here
