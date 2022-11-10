@@ -110,7 +110,6 @@
 (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
 (define-key my/keys-keymap (kbd "C-p") 'other-window)
 (define-key my/keys-keymap (kbd "C-o") 'insert-line-above-and-jump)
-(define-key my/keys-keymap (kbd "C-m") 'insert-line-below-and-jump)
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
