@@ -156,14 +156,6 @@
 
 
 
-;;; Custom mode hooks  ---------------------------------------------------------
-(add-hook 'lisp-mode-hook #'(lambda ()
-			      (setq inferior-lisp-program "/usr/bin/sbcl")
-			      (sly)))
-;;; ----------------------------------------------------------------------------
-
-
-
 ;;; Minor mode for custom keymaps  ---------------------------------------------
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
