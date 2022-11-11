@@ -6,7 +6,7 @@
 ;;;
 ;;;
 ;;; Dependencies:
-;;;   clang, ripgrep, Fira font
+;;;   clang, ripgrep, Fira font, sbcl
 ;;;
 ;;;
 
@@ -28,6 +28,7 @@
 			 ivy
 			 sly
 			 markdown-mode
+			 impatient-mode
 			 flycheck)))
   (dolist (my-package my-package-list)
     (eval `(use-package ,my-package
@@ -61,7 +62,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+   '(impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -227,12 +228,25 @@
   (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
   (shell-command "cp ~/git/emacs-stuff/emacs ~/.emacs")
   (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
+
+(defun markdown-html (buffer)
+  "Markdown HTML filter, supply BUFFER."
+  (princ (with-current-buffer buffer
+	   (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+	 (current-buffer)))
+
+(defun markdown-impatient-start ()
+  "Start impatient mode with filter."
+  (interactive)
+  (impatient-mode)
+  (httpd-start)
+  (imp-set-user-filter 'markdown-html))
 ;;; ----------------------------------------------------------------------------
 
 
 
 
-;;; Key bindings  --------------------------------------------------------------
+;;; Global key bindings  -------------------------------------------------------
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -262,8 +276,29 @@
 (define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
 ;;; ----------------------------------------------------------------------------
 
+
+
+
+;;; Per-mode key bindings-------------------------------------------------------
+;; Lisp mode -----
+(add-hook 'lisp-mode #'(lambda ()
+			 (local-set-key (kbd "C-c d") 'sly-eval-defun)
+			 (local-set-key (kbd "C-c r") 'sly-eval-region)
+			 (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
+
+;; Markdown mode -
+(add-hook 'markdown-mode #'(lambda ()
+			     (markdown-impatient-start))) ; Impatient mode live preview
+
+;;; ----------------------------------------------------------------------------
+
+
+
+
 ;;; Cursor
 (setq-default cursor-type 'bar)
+
+
 
 
 (provide '.emacs)
