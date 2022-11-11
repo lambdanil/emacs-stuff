@@ -114,6 +114,7 @@
 ;;; Basic defaults  ------------------------------------------------------------
 (setq ring-bell-function 'ignore)
 (setq inhibit-startup-screen t)
+(setq confirm-kill-processes nil)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -281,14 +282,14 @@
 
 ;;; Per-mode key bindings-------------------------------------------------------
 ;; Lisp mode -----
-(add-hook 'lisp-mode #'(lambda ()
-			 (local-set-key (kbd "C-c d") 'sly-eval-defun)
-			 (local-set-key (kbd "C-c r") 'sly-eval-region)
-			 (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
+(add-hook 'lisp-mode-hook #'(lambda ()
+			      (local-set-key (kbd "C-c d") 'sly-eval-defun)
+			      (local-set-key (kbd "C-c r") 'sly-eval-region)
+			      (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 
 ;; Markdown mode -
-(add-hook 'markdown-mode #'(lambda ()
-			     (markdown-impatient-start))) ; Impatient mode live preview
+(add-hook 'markdown-mode-hook #'(lambda ()
+				  (markdown-impatient-start))) ; Impatient mode live preview
 
 ;;; ----------------------------------------------------------------------------
 
