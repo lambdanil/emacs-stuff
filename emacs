@@ -52,13 +52,58 @@
 
 ;;; Custom variables  ----------------------------------------------------------
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-enabled-themes '(tango-dark))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+   '(company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
+;;; ----------------------------------------------------------------------------
+
+
+
+
+;;; Ligatures ------------------------------------------------------------------
+(dolist (char/ligature-re
+         `((?-  ,(rx (or (or "-->" "-<<" "->>" "-|" "-~" "-<" "->") (+ "-"))))
+           (?/  ,(rx (or (or "/==" "/=" "/>" "/**" "/*") (+ "/"))))
+           (?*  ,(rx (or (or "*>" "*/") (+ "*"))))
+           (?<  ,(rx (or (or "<<=" "<<-" "<|||" "<==>" "<!--" "<=>" "<||" "<|>" "<-<"
+                             "<==" "<=<" "<-|" "<~>" "<=|" "<~~" "<$>" "<+>" "</>" "<*>"
+                             "<->" "<=" "<|" "<:" "<>"  "<$" "<-" "<~" "<+" "</" "<*")
+                         (+ "<"))))
+           (?:  ,(rx (or (or ":?>" "::=" ":>" ":<" ":?" ":=") (+ ":"))))
+           (?=  ,(rx (or (or "=>>" "==>" "=/=" "=!=" "=>" "=:=") (+ "="))))
+           (?!  ,(rx (or (or "!==" "!=") (+ "!"))))
+           (?>  ,(rx (or (or ">>-" ">>=" ">=>" ">]" ">:" ">-" ">=") (+ ">"))))
+           (?&  ,(rx (+ "&")))
+           (?|  ,(rx (or (or "|->" "|||>" "||>" "|=>" "||-" "||=" "|-" "|>" "|]" "|}" "|=")
+                         (+ "|"))))
+           (?.  ,(rx (or (or ".?" ".=" ".-" "..<") (+ "."))))
+           (?+  ,(rx (or "+>" (+ "+"))))
+           (?\[ ,(rx (or "[<" "[|")))
+           (?\{ ,(rx "{|"))
+           (?\? ,(rx (or (or "?." "?=" "?:") (+ "?"))))
+           (?#  ,(rx (or (or "#_(" "#[" "#{" "#=" "#!" "#:" "#_" "#?" "#(") (+ "#"))))
+           (?\; ,(rx (+ ";")))
+           (?_  ,(rx (or "_|_" "__")))
+           (?~  ,(rx (or "~~>" "~~" "~>" "~-" "~@")))
+           (?$  ,(rx "$>"))
+           (?^  ,(rx "^="))
+           (?\] ,(rx "]#"))))
+  (apply (lambda (char ligature-re)
+           (set-char-table-range composition-function-table char
+                                 `([,ligature-re 0 font-shape-gstring])))
+         char/ligature-re))
 ;;; ----------------------------------------------------------------------------
 
 
@@ -96,6 +141,7 @@
 
 ;;; Global modes  --------------------------------------------------------------
 (global-display-line-numbers-mode t)
+(global-prettify-symbols-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
 (ivy-mode t)
