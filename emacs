@@ -26,6 +26,7 @@
 (let ((my-package-list '(dumb-jump
 			 company
 			 ivy
+			 sly
 			 markdown-mode
 			 flycheck)))
   (dolist (my-package my-package-list)
@@ -72,7 +73,7 @@
 
 
 
-;;; Ligatures ------------------------------------------------------------------
+;;; Ligatures  -----------------------------------------------------------------
 (dolist (char/ligature-re
          `((?-  ,(rx (or (or "-->" "-<<" "->>" "-|" "-~" "-<" "->") (+ "-"))))
            (?/  ,(rx (or (or "/==" "/=" "/>" "/**" "/*") (+ "/"))))
@@ -148,6 +149,15 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
+;;; ----------------------------------------------------------------------------
+
+
+
+
+;;; Custom mode hooks  ---------------------------------------------------------
+(add-hook 'lisp-mode-hook #'(lambda ()
+			      (setq inferior-lisp-program "/usr/bin/sbcl")
+			      (sly)))
 ;;; ----------------------------------------------------------------------------
 
 
