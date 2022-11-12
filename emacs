@@ -163,6 +163,7 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
+(desktop-save-mode 1)
 ;;; ----------------------------------------------------------------------------
 
 
@@ -188,6 +189,12 @@
 
 
 ;;; Custom functions  ----------------------------------------------------------
+(defun dired-open-file ()
+  "In Dired, open the file named on this line."
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (call-process "xdg-open" nil 0 nil file)))
+
 (defun insert-line-above-and-jump ()
   "Insert line above current line."
   (interactive)
@@ -283,6 +290,7 @@
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "C-c n") 'elfeed)
+(define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 ;;; ----------------------------------------------------------------------------
 
 
