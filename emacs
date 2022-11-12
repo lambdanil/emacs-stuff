@@ -12,6 +12,12 @@
 
 
 
+;;; EXWM enable
+(let ((use-exwm nil))
+  (when use-exwm (load "~/.exwm.el")))
+;;; -----------
+
+
 
 ;;; User info  ----------------------------------------------------------------
 (setq user-mail-address "shadenk30011@gmail.com"
@@ -28,6 +34,7 @@
 (package-initialize)
 (require 'use-package)
 ;;; ----------------------------------------------------------------------------
+
 
 
 
@@ -226,6 +233,7 @@
   (shell-command "git reset --hard")
   (shell-command "git pull")
   (shell-command "cp ~/.emacs ~/git/emacs-stuff/emacs")
+  (shell-command "cp ~/.exwm.el ~/git/emacs-stuff/exwm.el")
   (shell-command "cp ~/.bashrc ~/git/emacs-stuff/bashrc")
   (shell-command "git add .")
   (shell-command (format "git commit -m \"%s\"" (read-string "Enter commit message: ")))
@@ -239,6 +247,7 @@
   (setq default-directory "~/git")
   (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
   (shell-command "cp ~/git/emacs-stuff/emacs ~/.emacs")
+  (shell-command "cp ~/git/emacs-stuff/exwm.el ~/.exwm.el")
   (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
 
 (defun markdown-html (buffer)
