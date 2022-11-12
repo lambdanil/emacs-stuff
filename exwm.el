@@ -47,6 +47,11 @@
                       (interactive)
                       (start-process-shell-command ,command nil ,command)))
 
+(defun new-vterm ()
+  (interactive)
+  (let ((current-prefix-arg '(4))) ;; emulate C-u
+    (call-interactively 'vterm)))
+
 (exwm-key-to-workspace "s-é" 0)
 (exwm-key-to-workspace "s-+" 1)
 (exwm-key-to-workspace "s-ě" 2)
@@ -88,7 +93,7 @@
 (exwm-input-set-key (kbd "C-c q") #'kill-current-buffer)
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
 (exwm-input-set-key (kbd "s-f") #'exwm-layout-toggle-fullscreen)
-(exwm-input-set-key (kbd "s-<return>") #'+vterm/here)
+(exwm-input-set-key (kbd "s-<return>") #'new-vterm)
 (exwm-input-set-key (kbd "s-c") #'vterm)
 (exwm-input-set-key (kbd "s-d") (lambda (command)
                                  (interactive (list (read-shell-command "$ ")))
