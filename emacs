@@ -277,7 +277,7 @@
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
 (define-key my/keys-keymap (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
 (define-key my/keys-keymap (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
-(define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (shrink-window 2)))
+(define-key my/keys-keymap (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
 (define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2)))
 (define-key my/keys-keymap (kbd "C-§") 'scroll-down-line)
 (define-key my/keys-keymap (kbd "C-ů") 'scroll-up-line)
