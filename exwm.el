@@ -1,4 +1,7 @@
 ;;; Exwm  ----------------------------------------------------------------------
+(display-time-mode 1)
+
+(setq display-time-format "%k:%M %d/%m/%y")
 
 (unless (package-installed-p 'exwm)
   (package-install 'exwm))
