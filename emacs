@@ -198,6 +198,26 @@
 
 
 ;;; Custom functions  ----------------------------------------------------------
+(defun my-kill-buffer-and-window ()
+ "Kill the current buffer and delete the selected window."
+ (interactive)
+ (let ((window-to-delete (selected-window))
+	(buffer-to-kill (current-buffer))
+	(delete-window-hook (lambda () (ignore-errors (delete-window)))))
+   (unwind-protect
+	(progn
+	  (add-hook 'kill-buffer-hook delete-window-hook t t)
+	  (if (kill-buffer (current-buffer))
+	      ;; If `delete-window' failed before, we rerun it to regenerate
+	      ;; the error so it can be seen in the echo area.
+	      (when (eq (selected-window) window-to-delete)
+		(delete-window)))))))
+
+(defun new-vterm ()
+  (interactive)
+  (let ((current-prefix-arg '(4))) ;; emulate C-u
+    (call-interactively 'vterm)))
+
 (defun dired-open-file ()
   "In Dired, open the file named on this line."
   (interactive)
@@ -301,6 +321,23 @@
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "C-c n") 'elfeed)
+(define-key my/keys-keymap (kbd "C-c t") 'new-vterm)
+(define-key my/keys-keymap (kbd "C-c v") #'(lambda ()
+					     (interactive)
+					     (split-window-horizontally)
+					     (run-with-idle-timer 0.05 nil
+								  'windmove-right)))
+(define-key my/keys-keymap (kbd "C-c c") #'(lambda ()
+					     (interactive)
+					     (split-window-vertically)
+					     (run-with-idle-timer 0.05 nil
+								  'windmove-down)))
+(define-key my/keys-keymap (kbd "C-c q") 'delete-window)
+(define-key my/keys-keymap (kbd "C-c C-q") 'my-kill-buffer-and-window)
+(define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)
+(define-key my/keys-keymap (kbd "C-c d") #'(lambda (command)
+					     (interactive (list (read-shell-command "$ ")))
+					     (start-process-shell-command command nil command)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 ;;; ----------------------------------------------------------------------------
 
