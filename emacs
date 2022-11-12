@@ -12,6 +12,15 @@
 
 
 
+
+;;; User info  ----------------------------------------------------------------
+(setq user-mail-address "shadenk30011@gmail.com"
+      user-full-name "Jan Novotný")
+;;; ---------------------------------------------------------------------------
+
+
+
+
 ;;; Melpa and package setup  --------------------------------------------------
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -27,6 +36,7 @@
 			 company
 			 ivy
 			 sly
+			 elfeed
 			 markdown-mode
 			 impatient-mode
 			 flycheck)))
@@ -62,7 +72,7 @@
  '(custom-enabled-themes '(tango-dark))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+   '(elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -118,6 +128,8 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(add-to-list 'default-frame-alist '(height . 44))
+(add-to-list 'default-frame-alist '(width . 140))
 ;;; ----------------------------------------------------------------------------
 
 
@@ -268,6 +280,9 @@
 (define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
 (define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
 (define-key my/keys-keymap (kbd "C-c r") 'replace-string)
+(define-key my/keys-keymap (kbd "M-/") 'undo-redo)
+(define-key my/keys-keymap (kbd "M-/") 'undo-redo)
+(define-key my/keys-keymap (kbd "C-c n") 'elfeed)
 ;;; ----------------------------------------------------------------------------
 
 
@@ -283,9 +298,17 @@
 ;; Markdown mode -
 (add-hook 'markdown-mode-hook #'(lambda ()
 				  (markdown-impatient-start))) ; Impatient mode live preview
-
 ;;; ----------------------------------------------------------------------------
 
+
+
+
+;;; Elfeed ---------------------------------------------------------------------
+(setq elfeed-feeds
+      '(("https://www.root.cz/rss/clanky" root.cz)
+        ("https://www.root.cz/rss/zpravicky" root.cz)
+        ("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
+;;; ----------------------------------------------------------------------------
 
 
 
