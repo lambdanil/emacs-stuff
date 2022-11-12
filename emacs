@@ -13,7 +13,7 @@
 
 
 ;;; EXWM enable
-(let ((use-exwm nil))
+(let ((use-exwm t))
   (when use-exwm (load "~/.exwm.el")))
 ;;; -----------
 
@@ -79,7 +79,8 @@
  '(custom-enabled-themes '(tango-dark))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(emms elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump)))
+   '(emms elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump))
+ '(warning-suppress-types '((emacs))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

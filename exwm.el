@@ -9,7 +9,10 @@
 (defun exwm-init-custom ()
   (interactive)
   (shell-command "setxkbmap cz -option 'ctrl:swapcaps'")
-  (shell-command "xrandr -s 1920x1080"))
+  (shell-command "xrandr -s 1920x1080")
+  (shell-command "xinput set-prop 'pointer:Logitech G305' 'libinput Accel Speed' 0")
+  (shell-command "xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1")
+  (start-process-shell-command "picom --experimental-backends" nil "picom --experimental-backends"))
 
 (exwm-init-custom)
 
