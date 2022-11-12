@@ -43,6 +43,7 @@
 			 company
 			 ivy
 			 sly
+			 vterm
 			 elfeed
 			 markdown-mode
 			 impatient-mode
