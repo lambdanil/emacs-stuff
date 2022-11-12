@@ -1,6 +1,14 @@
 ;;; Exwm  ----------------------------------------------------------------------
+
 (unless (package-installed-p 'exwm)
   (package-install 'exwm))
+
+(defun exwm-init-custom ()
+  (interactive)
+  (shell-command "setxkbmap cz -option 'ctrl:swapcaps'")
+  (shell-command "xrandr -s 1920x1080"))
+
+(exwm-init-custom)
 
 (require 'exwm)
 (require 'exwm-config)
