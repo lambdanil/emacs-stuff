@@ -267,6 +267,7 @@
 (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
 (define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
 (define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
+(define-key my/keys-keymap (kbd "C-c r") 'replace-string)
 ;;; ----------------------------------------------------------------------------
 
 
