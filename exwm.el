@@ -84,6 +84,11 @@
 	      (when (eq (selected-window) window-to-delete)
 		(delete-window)))))))
 
+(exwm-input-set-key (kbd "C-<return>") 'new-vterm)
+(exwm-input-set-key (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
+(exwm-input-set-key (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
+(exwm-input-set-key (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
+(exwm-input-set-key (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2)))
 ;;(exwm-input-set-key (kbd "s-Q") #'my-kill-buffer-and-window)
 (exwm-input-set-key (kbd "s-R") #'exwm-reset)
 (exwm-input-set-key (kbd "s-x") #'exwm-input-toggle-keyboard)
@@ -123,6 +128,8 @@
 
 
 (push ?\s-  exwm-input-prefix-keys)
+(push ?\M-  exwm-input-prefix-keys)
+(push ?\C-  exwm-input-prefix-keys)
 
 (push (kbd "<escape>") exwm-input-prefix-keys)
 ;;; ----------------------------------------------------------------------------

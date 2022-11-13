@@ -11,10 +11,11 @@
 ;;;
 
 
+(defvar use-exwm t)
+
 
 ;;; EXWM enable
-(let ((use-exwm t))
-  (when use-exwm (load "~/.exwm.el")))
+(when use-exwm (load "~/.exwm.el"))
 ;;; -----------
 
 
@@ -165,7 +166,7 @@
 
 
 ;;; Global modes  --------------------------------------------------------------
-(global-display-line-numbers-mode nil)
+(global-display-line-numbers-mode -1)
 (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
 (global-prettify-symbols-mode t)
 (global-company-mode t)
@@ -292,6 +293,12 @@
 
 
 ;;; Global key bindings  -------------------------------------------------------
+(when (not use-exwm) ;; Some bindings don't work properly in exwm when defined this way, so they are defined in the exwm config instead.
+  (define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)
+  (define-key my/keys-keymap (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
+  (define-key my/keys-keymap (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
+  (define-key my/keys-keymap (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
+  (define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2))))
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
 (define-key my/keys-keymap (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
@@ -308,10 +315,6 @@
 (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
 (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
 (define-key my/keys-keymap (kbd "C-=") 'indent-region)
-(define-key my/keys-keymap (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
-(define-key my/keys-keymap (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
-(define-key my/keys-keymap (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
-(define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2)))
 (define-key my/keys-keymap (kbd "C-§") 'scroll-down-line)
 (define-key my/keys-keymap (kbd "C-ů") 'scroll-up-line)
 (define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
@@ -336,7 +339,6 @@
 								  'windmove-down)))
 (define-key my/keys-keymap (kbd "C-c q") 'delete-window)
 (define-key my/keys-keymap (kbd "C-c C-q") 'my-kill-buffer-and-window)
-(define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)
 (define-key my/keys-keymap (kbd "C-c d") #'(lambda (command)
 					     (interactive (list (read-shell-command "$ ")))
 					     (start-process-shell-command command nil command)))
