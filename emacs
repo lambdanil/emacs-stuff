@@ -165,7 +165,8 @@
 
 
 ;;; Global modes  --------------------------------------------------------------
-(global-display-line-numbers-mode t)
+(global-display-line-numbers-mode nil)
+(add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
 (global-prettify-symbols-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
@@ -225,7 +226,7 @@
   (let* ((file (dired-get-filename nil t)))
     (call-process "xdg-open" nil 0 nil file)))
 
-(defun insert-line-above-and-jump ()
+(defun insert-above-and-jump ()
   "Insert line above current line."
   (interactive)
   (beginning-of-line)
