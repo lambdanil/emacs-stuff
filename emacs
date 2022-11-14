@@ -11,7 +11,7 @@
 ;;;
 
 
-(defvar use-exwm t)
+(defvar use-exwm nil)
 
 
 ;;; EXWM enable
