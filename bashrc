@@ -23,3 +23,15 @@ export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ \[$(tput sg
 # export PS1="[\u@\h] \t\n(\w) λ \[$(tput sgr0)\]"
 alias ls="ls --color"
 alias flatpak="sudo flatpak"
+
+# Automatically added by the Guix install script.
+if [ -n "$GUIX_ENVIRONMENT" ]; then
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+        PS1="${BASH_REMATCH[1]} [env]\\\$ "
+    fi
+fi
+
+export GUIX_PROFILE="$HOME/.config/guix/current"
+export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+export PATH="$PATH:$HOME/.config/guix/current"
+. "$GUIX_PROFILE/etc/profile"
