@@ -12,17 +12,20 @@
 
 test -s ~/.alias && . ~/.alias || true
 PATH=$PATH:$HOME/.bin
-_GREEN=$(tput setaf 2)
-_MAGENTA=$(tput setaf 200)
-_BLUE=$(tput setaf 4)
-_RED=$(tput setaf 1)
-_CYAN=$(tput setaf 45)
-_RESET=$(tput sgr0)
-_BOLD=$(tput bold)
-export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ \[$(tput sgr0)\]"
+if [[ $- == *i* ]]
+then
+  _GREEN=$(tput setaf 2)
+  _MAGENTA=$(tput setaf 200)
+  _BLUE=$(tput setaf 4)
+  _RED=$(tput setaf 1)
+  _CYAN=$(tput setaf 45)
+  _RESET=$(tput sgr0)
+  _BOLD=$(tput bold)
+  export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ \[$(tput sgr0)\]"
+fi
 # export PS1="[\u@\h] \t\n(\w) λ \[$(tput sgr0)\]"
 alias ls="ls --color"
-alias flatpak="sudo flatpak"
+# alias flatpak="sudo flatpak"
 
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then

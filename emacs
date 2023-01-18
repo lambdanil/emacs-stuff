@@ -136,6 +136,7 @@
 (setq inhibit-startup-screen t)
 (setq confirm-kill-processes nil)
 (setq kill-buffer-query-functions nil)
+(setq frame-resize-pixelwise t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
