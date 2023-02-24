@@ -6,6 +6,13 @@
 
 (specifications->manifest
   (list "markdown"
+        "gnome-terminal"
+        "firefox"
+        "distrobox"
+        "podman"
+        "yaru-theme"
+        "gnome-shell-extension-blur-my-shell"
+        "gnome-tweaks"
         "emacs"
         "kdenlive"
         "tuxguitar"
