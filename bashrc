@@ -46,3 +46,4 @@ export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 export PATH="$PATH:$HOME/.config/guix/current"
 . "$GUIX_PROFILE/etc/profile"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+export LD_LIBRARY_PATH=$LIBRARY_PATH
