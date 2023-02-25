@@ -5,7 +5,12 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "markdown"
+  (list "pavucontrol"
+        "gnome-shell-extension-appindicator"
+        "steam"
+        "gcc-toolchain"
+        "neofetch"
+        "markdown"
         "gnome-terminal"
         "firefox"
         "distrobox"
@@ -13,9 +18,22 @@
         "yaru-theme"
         "gnome-shell-extension-blur-my-shell"
         "gnome-tweaks"
+        "clang"
+        "sbcl"
+        "cmake"
+        "make"
+        "mpv"
+        "vlc"
+        "openjdk"
+        "yt-dlp"
+        "gcc"
+        "virt-manager"
+        "flatpak"
+        "font-fira-mono"
         "emacs"
+        "libvterm"
         "kdenlive"
         "tuxguitar"
         "libtool"
+        "wine"
         "glibc-locales"))
-        
