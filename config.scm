@@ -6,7 +6,6 @@
              (nongnu packages linux)
              (nongnu system linux-initrd)
              (gnu services virtualization)
-	     (gnu services docker)
              (gnu packages fonts)
 	     (gnu packages networking)
              (guix packages)
@@ -25,9 +24,10 @@
                                                  (authorized-keys
                                                   (append (list (local-file "./signing-key.pub"))
                                                           %default-authorized-guix-keys))))
-		   (dbus-root-service-type config =>
-                        (dbus-configuration (inherit config)
-                                 (services (list blueman))))))
+;;		   (dbus-root-service-type config =>
+;;                        (dbus-configuration (inherit config)
+;;                                 (services (list blueman))))
+		   ))
 
 (operating-system
  (locale "cs_CZ.utf8")
@@ -50,8 +50,9 @@
    (map specification->package
         (list
          "nss-certs"
+	 "xf86-video-amdgpu"
+	 "amdgpu-firmware"
 	 "bluez"
-	 "blueman"
          "vim"
          "git"))
    %base-packages))
@@ -67,15 +68,15 @@
                    (libvirt-configuration
                     (unix-sock-group "libvirt")
                     (tls-port "16555")))
-	  (service docker-service-type)
           (service zram-device-service-type
                    (zram-device-configuration
                     (size "8172M")
                     (compression-algorithm 'zstd))))
     %my-services)
-   (remove (lambda (service)
-	     (eq? (service-kind service) gdm-service-type))
-	   %my-services)))
+;;   (remove (lambda (service)
+;;	     (eq? (service-kind service) gdm-service-type))
+;;	   %my-services)
+   ))
  (bootloader
   (bootloader-configuration
    (bootloader grub-efi-bootloader)
