@@ -61,6 +61,8 @@
    (append
     (list (service gnome-desktop-service-type)
           (bluetooth-service #:auto-enable? #f)
+          (extra-special-file "/lib64/ld-linux-x86-64.so.2"
+           (file-append glibc "/lib/ld-linux-x86-64.so.2"))
           (set-xorg-configuration
            (xorg-configuration
             (keyboard-layout keyboard-layout)))
