@@ -43,7 +43,7 @@
                 (group "users")
                 (home-directory "/home/jan")
                 (supplementary-groups
-                 '("wheel" "netdev" "audio" "video" "lp")))
+                 '("wheel" "netdev" "audio" "video" "lp" "libvirt")))
                %base-user-accounts))
  (packages
   (append
