@@ -5,7 +5,22 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "python-pip"
+  (list "emacs-geiser-guile"
+        "gnome-shell-extension-dash-to-dock"
+        "thunar"
+        "caja"
+        "tumbler"
+        "eom"
+        "gthumb"
+        "sushi"
+        "obs"
+        "gimp"
+        "celluloid"
+        "sdl2-ttf"
+        "xrandr"
+        "yamagi-quake2"
+        "gzdoom"
+        "python-pip"
         "emacs-vterm"
         "emacs-use-package"
         "stow"
