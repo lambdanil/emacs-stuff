@@ -1,8 +1,9 @@
-;; https://github.com/CuBeRJAN/guix-config
+;; https://github.com/CuBeRJAN/emacs-stuff
 
 (use-modules (gnu)
              (gnu services)
 	     (gnu services dbus)
+	     (gnu packages gnome)
              (nongnu packages linux)
              (nongnu system linux-initrd)
              (gnu services virtualization)
@@ -24,10 +25,9 @@
                                                  (authorized-keys
                                                   (append (list (local-file "./signing-key.pub"))
                                                           %default-authorized-guix-keys))))
-;;		   (dbus-root-service-type config =>
-;;                        (dbus-configuration (inherit config)
-;;                                 (services (list blueman))))
-		   ))
+		   (dbus-root-service-type config =>
+					   (dbus-configuration (inherit config)
+							       (services (list libratbag))))))
 
 (operating-system
  (locale "cs_CZ.utf8")
@@ -35,6 +35,10 @@
  (keyboard-layout (keyboard-layout "cz"))
  (host-name "eternity")
  (kernel linux)
+ (groups 
+   (cons* 
+     (user-group (name "games"))
+     %base-groups))
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
  (users (cons* (user-account
@@ -43,7 +47,7 @@
                 (group "users")
                 (home-directory "/home/jan")
                 (supplementary-groups
-                 '("wheel" "netdev" "audio" "video" "lp" "libvirt")))
+                 '("wheel" "netdev" "audio" "video" "lp" "libvirt" "games")))
                %base-user-accounts))
  (packages
   (append
@@ -54,6 +58,7 @@
 	 "amdgpu-firmware"
 	 "bluez"
          "vim"
+	 "libratbag"
          "git"))
    %base-packages))
  (services
@@ -61,6 +66,9 @@
    (append
     (list (service gnome-desktop-service-type)
           (bluetooth-service #:auto-enable? #f)
+	  (pam-limits-service
+           ;; For Lutris / Wine esync
+           (list (pam-limits-entry "*" 'hard 'nofile 524288)))
           (extra-special-file "/lib64/ld-linux-x86-64.so.2"
            (file-append glibc "/lib/ld-linux-x86-64.so.2"))
           (set-xorg-configuration

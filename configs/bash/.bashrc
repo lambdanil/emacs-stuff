@@ -1,11 +1,3 @@
-#_GREEN=$(tput setaf 2)
-#_MAGENTA=$(tput setaf 200)
-#_BLUE=$(tput setaf 4)
-#_RED=$(tput setaf 1)
-#_CYAN=$(tput setaf 45)
-#_RESET=$(tput sgr0)
-#_BOLD=$(tput bold) # use if tput available
-
 # Sample .bashrc for SUSE Linux
 # Copyright (c) SUSE Software Solutions Germany GmbH
 
@@ -29,6 +21,7 @@ then
   _CYAN="\e[0;36m"
   _RESET="\e[0m"
   _BOLD="\e[1m"
+  export LD_LIBRARY_PATH=$LIBRARY_PATH
   export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
 fi
 #export PS1="[\u@\h] \t\n(\w) λ "
@@ -46,4 +39,3 @@ export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 export PATH="$PATH:$HOME/.config/guix/current"
 . "$GUIX_PROFILE/etc/profile"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
-export LD_LIBRARY_PATH=$LIBRARY_PATH
