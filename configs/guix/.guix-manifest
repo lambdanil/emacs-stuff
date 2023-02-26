@@ -5,7 +5,8 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "emacs-geiser-guile"
+  (list "dconf-editor"
+        "emacs-geiser-guile"
         "gnome-shell-extension-dash-to-dock"
         "thunar"
         "caja"
