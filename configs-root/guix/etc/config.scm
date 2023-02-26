@@ -1,4 +1,4 @@
-;; https://github.com/CuBeRJAN/emacs-stuff
+;; https://github.com/CuBeRJAN/emacs-config
 
 (use-modules (gnu)
              (gnu services)
@@ -26,8 +26,9 @@
                                                   (append (list (local-file "./signing-key.pub"))
                                                           %default-authorized-guix-keys))))
 		   (dbus-root-service-type config =>
-					   (dbus-configuration (inherit config)
-							       (services (list libratbag))))))
+                        (dbus-configuration (inherit config)
+                                 (services (list libratbag))))
+		   ))
 
 (operating-system
  (locale "cs_CZ.utf8")
@@ -69,6 +70,7 @@
 	  (pam-limits-service
            ;; For Lutris / Wine esync
            (list (pam-limits-entry "*" 'hard 'nofile 524288)))
+	  ;; For executing binaries
           (extra-special-file "/lib64/ld-linux-x86-64.so.2"
            (file-append glibc "/lib/ld-linux-x86-64.so.2"))
           (set-xorg-configuration
@@ -96,19 +98,19 @@
   (cons* (file-system
           (mount-point "/")
           (device
-           (uuid ""
+           (uuid "fd02d6c6-5ff1-48d9-b9cb-a444ceb260dd"
                  'ext4))
           (type "ext4"))
          (file-system
           (mount-point "/boot/efi")
           (device
-           (uuid ""
+           (uuid "D846-4633"
                  'fat32))
           (type "vfat"))
 	 (file-system
           (mount-point "/mnt/media/jan/external")
           (device
-           (uuid ""
+           (uuid "6e008012-794a-40ad-99e9-69825235e4c5"
                  'ext4))
           (type "ext4"))
          %base-file-systems)))

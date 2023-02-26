@@ -1,2 +1,0 @@
-#!/bin/bash
-/home/jan/.guix-profile/bin/emacsclient -cn --eval "(progn (x-focus-frame nil) (set-frame-width (selected-frame) 124) (set-frame-height (selected-frame) 36) (+vterm/here t))"

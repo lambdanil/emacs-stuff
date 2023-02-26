@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=exwm
-Comment=Emacs X window manager
-Exec=/home/jan/.guix-profile/bin/emacs
-TryExec=/home/jan/.guix-profile/bin/emacs
-Type=Application
-X-LightDM-DesktopName=emacs
-DesktopNames=emacs
-Keywords=tiling;wm;windowmanager;window;manager;

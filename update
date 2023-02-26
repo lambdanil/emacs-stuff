@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cp /etc/config.scm .
-guix package --export-maifest > ./misc/guix-manifest
