@@ -5,7 +5,10 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "libreoffice"
+  (list "unrar"
+        "unzip"
+        "google-chrome-stable"
+        "libreoffice"
         "dconf-editor"
         "emacs-geiser-guile"
         "gnome-shell-extension-dash-to-dock"
