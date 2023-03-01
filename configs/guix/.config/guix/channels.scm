@@ -1,4 +1,9 @@
-(cons* (channel
+(use-modules (guix ci))
+
+(cons* (channel-with-substitutes-available
+        %default-guix-channel
+        "https://ci.guix.gnu.org")
+       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         ;; Enable signature verification:
