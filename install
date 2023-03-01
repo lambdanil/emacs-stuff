@@ -3,11 +3,11 @@
 guix pull
 guix package -i stow vim
 cd ./configs
-for PACKAGE in *; do stow $PACKAGE -t $HOME; done
+stow * -t $HOME
 cd ..
 guix pull # for new channels
 cd ./configs-root/
-for PACKAGE in *; do sudo stow $PACKAGE -t /; done
+sudo stow * -t /
 cd ..
 sudo chown -R root ./configs-root/
 sudo guix archive --authorize < /etc/signing-key.pub

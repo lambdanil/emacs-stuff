@@ -84,10 +84,6 @@
  '(delete-selection-mode t)
  '(package-selected-packages
    '(guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump))
- '(safe-local-variable-values
-   '((eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
-     (eval modify-syntax-entry 126 "'")))
  '(warning-suppress-types '((emacs))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
