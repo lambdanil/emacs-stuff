@@ -10,6 +10,21 @@
 # here, since multilingual X sessions would not work properly if LANG is over-
 # ridden in every subshell.
 
+clear_build () { # clear guix build by regex
+    if [[ $1 ]]; then
+	CLEAR_BUILD_PATHS="$(ls -d /gnu/store/$1 | tr '\n' ' ')"
+    else
+	echo "no regex specified"
+	return 1
+    fi
+    if [[ $(echo "$CLEAR_BUILD_PATHS" | wc -c) -ne 1 ]]; then
+	guix gc --delete $CLEAR_BUILD_PATHS
+    else
+	echo "no match for regex found"
+	return 1
+    fi
+}
+
 test -s ~/.alias && . ~/.alias || true
 PATH=$PATH:$HOME/.bin
 if [[ $- == *i* ]]
