@@ -3,12 +3,14 @@
 guix pull
 guix package -i stow vim
 cd ./configs
-stow * -t $HOME
+stow * -t $HOME --adopt # adopt to make sure files are symlinked
 cd ..
+git reset --hard # restore adopted files
 guix pull # for new channels
 cd ./configs-root/
-sudo stow * -t /
+sudo stow * -t / --adopt
 cd ..
+git reset --hard
 sudo chown -R root ./configs-root/
 sudo guix archive --authorize < /etc/signing-key.pub
 sudo guix system reconfigure /etc/config.scm --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
