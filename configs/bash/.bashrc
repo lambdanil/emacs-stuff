@@ -10,9 +10,9 @@
 # here, since multilingual X sessions would not work properly if LANG is over-
 # ridden in every subshell.
 
-clear_build () { # clear guix build by regex
+clean_build () { # clear guix build by regex
     if [[ $1 ]]; then
-	CLEAR_BUILD_PATHS="$(ls -d /gnu/store/$1 | tr '\n' ' ')"
+	CLEAR_BUILD_PATHS="$(ls --color=never -d /gnu/store/$1 | tr '\n' ' ')"
     else
 	echo "no regex specified"
 	return 1
@@ -26,7 +26,6 @@ clear_build () { # clear guix build by regex
 }
 
 test -s ~/.alias && . ~/.alias || true
-PATH=$PATH:$HOME/.bin
 if [[ $- == *i* ]]
 then
   _GREEN="\e[0;32m"
@@ -36,7 +35,7 @@ then
   _CYAN="\e[0;36m"
   _RESET="\e[0m"
   _BOLD="\e[1m"
-  export LD_LIBRARY_PATH=$LIBRARY_PATH
+#  export LD_LIBRARY_PATH=$LIBRARY_PATH
   export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
 fi
 #export PS1="[\u@\h] \t\n(\w) λ "
@@ -49,8 +48,4 @@ if [ -n "$GUIX_ENVIRONMENT" ]; then
     fi
 fi
 
-export GUIX_PROFILE="$HOME/.guix-profile"
-export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-export PATH="$PATH:$HOME/.config/guix/current"
-. "$GUIX_PROFILE/etc/profile"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
