@@ -5,7 +5,13 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "thunar"
+  (list "distrobox-docker"
+        "ungoogled-chromium"
+        "dolphin"
+        "jq"
+        "gdb"
+        "brogue-ce"
+        "thunar"
         "firefox"
         "font-google-noto-emoji"
         "google-chrome-stable"
@@ -23,7 +29,6 @@
         "qemu"
         "pavucontrol"
         "gnome-terminal"
-        "distrobox"
         "podman"
         "gnome-tweaks"
         "mpv"
