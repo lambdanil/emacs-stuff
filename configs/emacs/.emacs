@@ -179,7 +179,7 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
-(desktop-save-mode -1)
+(desktop-save-mode 1)
 ;;; ----------------------------------------------------------------------------
 
 
@@ -328,14 +328,8 @@
 
 
 ;;; Per-mode key bindings-------------------------------------------------------
-;; Scheme mode ---
-(add-hook 'scheme-mode-hook #'(lambda ()
-				(interactive)
-				(geiser)))
 ;; Lisp mode -----
 (add-hook 'common-lisp-mode-hook #'(lambda ()
-				     (interactive)
-				     (sly)
 				     (local-set-key (kbd "C-c d") 'sly-eval-defun)
 				     (local-set-key (kbd "C-c r") 'sly-eval-region)
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
