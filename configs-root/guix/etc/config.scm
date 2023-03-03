@@ -2,6 +2,8 @@
 ;;  https://github.com/CuBeRJAN/emacs-config
 ;; ------------------------------------------
 
+(add-to-load-path "/etc/guix-modules") ;; Add custom modules
+
 ;; Import necessary modules ----------------------------------------------------
 (use-modules (gnu)
              (gnu services)
@@ -10,9 +12,12 @@
              (nongnu packages linux)
              (nongnu system linux-initrd)
              (gnu services virtualization)
+	     (gnu services shepherd)
 	     (gnu services docker)
+	     (jan services mount-rshared)
              (gnu packages fonts)
 	     (gnu packages networking)
+	     (guix gexp)
              (guix packages)
 	     (srfi srfi-1))
 (use-service-modules linux desktop networking ssh xorg)
@@ -42,8 +47,6 @@
 			        (services (list libratbag))))
 		   ))
                    ;; ----------------------------------------------------------
-
-
 ;; -----------------------------------------------------------------------------
 
 
@@ -96,6 +99,8 @@
    (append
     (list (service gnome-desktop-service-type)
           (bluetooth-service #:auto-enable? #f)
+	  
+	  mount-rshared-service ;; Automatically mount / with --make-rshared, necessary for distrobox
 	  
 	  (pam-limits-service ;; For Lutris / Wine esync
            (list (pam-limits-entry "*" 'hard 'nofile 524288)))
