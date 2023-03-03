@@ -80,6 +80,7 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages toolkits)
   #:use-module (gnu packages video)
+  #:use-module (gnu packages xorg)
   #:use-module (nonguix utils))
 
 (define-record-type* <nonguix-container>
@@ -228,6 +229,7 @@
 
 (define steam-gameruntime-libs
   `(("alsa-lib" ,alsa-lib)              ; Required for audio in most games.
+    ("xrandr" ,xrandr)                  ; Required for resolution setting in csgo
     ("alsa-plugins:pulseaudio" ,alsa-plugins "pulseaudio") ; Required for audio in most games.
     ("font-dejavu" ,font-dejavu)
     ("font-liberation" ,font-liberation)
@@ -458,6 +460,7 @@ in a sandboxed FHS environment."
                          "/tmp"
                          ,(string-append sandbox-home "=" home)
                          ,@(exists-> (string-append home "/.config/pulse"))
+			 ,@(exists-> (string-append home "/.icons")) ; Fix mouse cursor
                          ,@(exists-> (string-append xdg-runtime "/pulse"))
                          ,@(exists-> (string-append xdg-runtime "/bus"))
                          ,@(exists-> (getenv "XAUTHORITY"))))

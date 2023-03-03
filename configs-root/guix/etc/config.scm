@@ -13,6 +13,9 @@
              (nongnu system linux-initrd)
              (gnu services virtualization)
 	     (gnu services shepherd)
+	     (gnu services admin)
+	     (guix channels)
+	     (gnu services mcron)
 	     (gnu services docker)
 	     (jan services mount-rshared)
              (gnu packages fonts)
@@ -23,7 +26,6 @@
 (use-service-modules linux desktop networking ssh xorg)
 (use-package-modules linux package-management)
 ;; -----------------------------------------------------------------------------
-
 
 ;; Service modifications -------------------------------------------------------
 (define %my-services
@@ -44,11 +46,9 @@
 		   ;; additional dbus services ---------------------------------
 		   (dbus-root-service-type config =>
 		        (dbus-configuration (inherit config)
-			        (services (list libratbag))))
-		   ))
+			        (services (list libratbag))))))
                    ;; ----------------------------------------------------------
 ;; -----------------------------------------------------------------------------
-
 
 ;; OS config -------------------------------------------------------------------
 (operating-system
@@ -98,7 +98,10 @@
   (cons*
    (append
     (list (service gnome-desktop-service-type)
-          (bluetooth-service #:auto-enable? #f)
+	  
+          (service bluetooth-service-type
+		   (bluetooth-configuration
+		    (auto-enable? #f)))
 	  
 	  mount-rshared-service ;; Automatically mount / with --make-rshared, necessary for distrobox
 	  
