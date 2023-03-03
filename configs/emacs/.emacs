@@ -33,31 +33,26 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
-(require 'use-package)
 ;;; ----------------------------------------------------------------------------
 
 
 
 
 ;;; Packages  ------------------------------------------------------------------
-(let ((my-package-list '(dumb-jump
-			 company
-			 ivy
-			 sudo-edit
-			 sly
-			 vterm
-			 elfeed
-			 guix
-			 markdown-mode
-			 impatient-mode
-			 flycheck)))
-  (dolist (my-package my-package-list)
-    (eval `(use-package ,my-package
-      :ensure t))))
-
-(dolist (package '(use-package))
+(dolist (package '(dumb-jump
+		   company
+		   ivy
+		   sudo-edit
+		   sly
+		   vterm
+		   elfeed
+		   guix
+		   markdown-mode
+		   impatient-mode
+		   flycheck))
   (unless (package-installed-p package)
-    (package-install package)))
+    (package-install package))
+  (require package))
 ;;; ----------------------------------------------------------------------------
 
 
@@ -88,7 +83,7 @@
    '((eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")))
- '(warning-suppress-types '((emacs))))
+ '(warning-suppress-types '((comp) (comp) (emacs))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -139,6 +134,7 @@
 
 ;;; Basic defaults  ------------------------------------------------------------
 (setq ring-bell-function 'ignore)
+(setq vc-follow-symlinks t)
 (setq inhibit-startup-screen t)
 (setq confirm-kill-processes nil)
 (setq kill-buffer-query-functions nil)
@@ -148,6 +144,7 @@
 (scroll-bar-mode -1)
 (add-to-list 'default-frame-alist '(height . 44))
 (add-to-list 'default-frame-alist '(width . 140))
+(setq inferior-lisp-program "sbcl")
 ;;; ----------------------------------------------------------------------------
 
 
@@ -182,7 +179,7 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
-(desktop-save-mode 1)
+(desktop-save-mode -1)
 ;;; ----------------------------------------------------------------------------
 
 
@@ -258,30 +255,6 @@
   (interactive)
   (shrink-window-horizontally 4))
 
-(defun push-config-to-git ()
-  "Push config to my github."
-  (interactive)
-  (setq default-directory "~/git/emacs-stuff")
-  (shell-command "git reset --hard")
-  (shell-command "git pull")
-  (shell-command "cp ~/.emacs ~/git/emacs-stuff/emacs")
-  (shell-command "cp ~/.exwm.el ~/git/emacs-stuff/exwm.el")
-  (shell-command "cp ~/.bashrc ~/git/emacs-stuff/bashrc")
-  (shell-command "git add .")
-  (shell-command (format "git commit -m \"%s\"" (read-string "Enter commit message: ")))
-  (shell-command "git push -u origin main"))
-
-(defun pull-config-from-git ()
-  "Pull config from my github."
-  (interactive)
-  (shell-command "mkdir -p ~/git")
-  (shell-command "rm -rf ~/git/emacs-stuff")
-  (setq default-directory "~/git")
-  (shell-command "git clone \"https://github.com/CuBeRJAN/emacs-stuff\"")
-  (shell-command "cp ~/git/emacs-stuff/emacs ~/.emacs")
-  (shell-command "cp ~/git/emacs-stuff/exwm.el ~/.exwm.el")
-  (shell-command "cp ~/git/emacs-stuff/bashrc ~/.bashrc"))
-
 (defun markdown-html (buffer)
   "Markdown HTML filter, supply BUFFER."
   (princ (with-current-buffer buffer
@@ -307,7 +280,7 @@
   (define-key my/keys-keymap (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
   (define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2))))
 (define-key my/keys-keymap (kbd "C-d") 'kill-line)
-(define-key my/keys-keymap (kbd "C-l") 'forward-char)
+(global-set-key (kbd "C-l") 'forward-char)
 (define-key my/keys-keymap (kbd "C-h") 'backward-char)
 (define-key my/keys-keymap (kbd "C-k") 'previous-line)
 (define-key my/keys-keymap (kbd "C-j") 'next-line)
@@ -327,13 +300,12 @@
 (define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
 (define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
 (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
-(define-key my/keys-keymap (kbd "C-c p") 'push-config-to-git)
-(define-key my/keys-keymap (kbd "C-c l") 'pull-config-from-git)
 (define-key my/keys-keymap (kbd "C-c r") 'replace-string)
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
 (define-key my/keys-keymap (kbd "C-c n") 'elfeed)
 (define-key my/keys-keymap (kbd "C-c t") 'new-vterm)
+(define-key my/keys-keymap (kbd "M-w") 'copy-region-as-kill)
 (define-key my/keys-keymap (kbd "C-c v") #'(lambda ()
 					     (interactive)
 					     (split-window-horizontally)
@@ -356,11 +328,17 @@
 
 
 ;;; Per-mode key bindings-------------------------------------------------------
+;; Scheme mode ---
+(add-hook 'scheme-mode-hook #'(lambda ()
+				(interactive)
+				(geiser)))
 ;; Lisp mode -----
-(add-hook 'lisp-mode-hook #'(lambda ()
-			      (local-set-key (kbd "C-c d") 'sly-eval-defun)
-			      (local-set-key (kbd "C-c r") 'sly-eval-region)
-			      (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
+(add-hook 'common-lisp-mode-hook #'(lambda ()
+				     (interactive)
+				     (sly)
+				     (local-set-key (kbd "C-c d") 'sly-eval-defun)
+				     (local-set-key (kbd "C-c r") 'sly-eval-region)
+				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 
 ;; Markdown mode -
 (add-hook 'markdown-mode-hook #'(lambda ()
