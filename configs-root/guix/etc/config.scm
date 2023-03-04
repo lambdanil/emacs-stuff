@@ -95,7 +95,6 @@
 
  ;; System services ------------------------------------------------------------
  (services
-  (cons*
    (append
     (list (service gnome-desktop-service-type)
 	  
@@ -132,11 +131,10 @@
                    (zram-device-configuration
                     (size "8172M")
                     (compression-algorithm 'zstd))))
-    %my-services)
+    %my-services))
 ;;   (remove (lambda (service)
 ;;	     (eq? (service-kind service) gdm-service-type))
 ;;	   %my-services)
-   ))
  ;; ----------------------------------------------------------------------------
 
  ;; Bootloader and disk config -------------------------------------------------
