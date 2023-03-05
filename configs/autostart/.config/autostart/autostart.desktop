@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=loginctl
+Exec=/home/jan/.loginctl
+Comment=Run loginctl script on login
+X-GNOME-Autostart-enabled=true

@@ -1,0 +1,2 @@
+xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1
+emacs --daemon
