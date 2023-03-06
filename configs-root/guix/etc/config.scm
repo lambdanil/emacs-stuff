@@ -46,7 +46,7 @@
 		   ;; additional dbus services ---------------------------------
 		   (dbus-root-service-type config =>
 		        (dbus-configuration (inherit config)
-			        (services (list libratbag))))))
+			        (services (list libratbag blueman))))))
                    ;; ----------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 
@@ -87,6 +87,7 @@
 	 "xf86-video-amdgpu"
 	 "amdgpu-firmware"
 	 "bluez"
+	 "blueman"
          "vim"
 	 "libratbag"
          "git"))
@@ -96,7 +97,7 @@
  ;; System services ------------------------------------------------------------
  (services
    (append
-    (list (service gnome-desktop-service-type)
+    (list (service xfce-desktop-service-type)
 	  
           (service bluetooth-service-type
 		   (bluetooth-configuration

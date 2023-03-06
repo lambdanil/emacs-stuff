@@ -1,2 +1,4 @@
-xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1
-emacs --daemon
+xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+emacs --daemon &
+setxkbmap cz -option 'ctrl:swapcaps' &
+timidity -iA &
