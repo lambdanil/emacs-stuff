@@ -9,7 +9,7 @@
       <property name="position" type="string" value="p=8;x=960;y=1065"/>
       <property name="length" type="double" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
-      <property name="icon-size" type="uint" value="16"/>
+      <property name="icon-size" type="uint" value="18"/>
       <property name="size" type="uint" value="28"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
@@ -55,6 +55,7 @@
     <property name="plugin-6" type="string" value="systray">
       <property name="square-icons" type="bool" value="true"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="vlc"/>
         <value type="string" value="blueman"/>
         <value type="string" value="steam"/>
         <value type="string" value="discord"/>
@@ -66,7 +67,7 @@
     <property name="plugin-8" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
       <property name="show-notifications" type="bool" value="true"/>
-      <property name="mpris-players" type="string" value="chromium.instance17651;chromium.instance20424;firefox.instance7708;spotify"/>
+      <property name="mpris-players" type="string" value="chromium.instance17651;chromium.instance20424;chromium.instance6175;firefox.instance2236;firefox.instance7708;io.github.celluloid_player.Celluloid.instance-1;spotify;vlc"/>
     </property>
     <property name="plugin-10" type="string" value="notification-plugin"/>
     <property name="plugin-11" type="string" value="separator">

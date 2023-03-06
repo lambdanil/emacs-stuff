@@ -79,7 +79,7 @@
    '("ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4" "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
  '(delete-selection-mode t)
  '(package-selected-packages
-   '(rainbow-delimiters rainbow-delimeters tree-sitter-langs tree-sitter magit treemacs-icons-dired solarized-theme modus-themes spacemacs-theme uwu-theme doom-themes treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump))
+   '(nyan-mode parrot rainbow-delimiters rainbow-delimeters tree-sitter-langs tree-sitter magit treemacs-icons-dired solarized-theme modus-themes spacemacs-theme uwu-theme doom-themes treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature minimap markdown-mode ivy flycheck company dumb-jump))
  '(safe-local-variable-values
    '((eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
@@ -185,6 +185,10 @@
 (global-hl-line-mode 1)
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
 (desktop-save-mode -1)
+(setf nyan-animate-nyancat t)
+(setf nyan-animation-frame-interval 0.05)
+(setf nyan-wavy-trail t)
+(nyan-mode t)
 ;;; ----------------------------------------------------------------------------
 
 

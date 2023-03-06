@@ -61,6 +61,10 @@
       <property name="&lt;Super&gt;a" type="string" value="thunar"/>
       <property name="&lt;Super&gt;e" type="string" value="emacsclient -c"/>
       <property name="&lt;Shift&gt;&lt;Alt&gt;F12" type="string" value="xfconf-query --channel=xfwm4 --property=/general/use_compositing --type=bool --toggle"/>
+      <property name="AudioRaiseVolume" type="string" value="pactl set-sink-volume @DEFAULT_SINK@ +10%"/>
+      <property name="AudioLowerVolume" type="string" value="pactl set-sink-volume @DEFAULT_SINK@ -10%"/>
+      <property name="AudioMute" type="string" value="pactl set-sink-mute @DEFAULT_SINK@ toggle"/>
+      <property name="&lt;Alt&gt;F10" type="string" value="pactl set-source-mute @DEFAULT_SOURCE@ toggle"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
@@ -128,15 +132,12 @@
     </property>
     <property name="custom" type="empty">
       <property name="&lt;Primary&gt;F12" type="string" value="workspace_12_key"/>
-      <property name="&lt;Super&gt;KP_Down" type="string" value="tile_down_key"/>
       <property name="&lt;Primary&gt;F6" type="string" value="workspace_6_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;Down" type="string" value="down_workspace_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;KP_9" type="string" value="move_window_workspace_9_key"/>
-      <property name="&lt;Super&gt;KP_Up" type="string" value="tile_up_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;End" type="string" value="move_window_next_workspace_key"/>
       <property name="&lt;Primary&gt;F8" type="string" value="workspace_8_key"/>
       <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Alt&gt;Left" type="string" value="move_window_left_key"/>
-      <property name="&lt;Super&gt;KP_Right" type="string" value="tile_right_key"/>
       <property name="Right" type="string" value="right_key"/>
       <property name="Down" type="string" value="down_key"/>
       <property name="&lt;Shift&gt;&lt;Alt&gt;Page_Down" type="string" value="lower_window_key"/>
@@ -154,12 +155,10 @@
       <property name="&lt;Alt&gt;F7" type="string" value="move_window_key"/>
       <property name="Up" type="string" value="up_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;KP_6" type="string" value="move_window_workspace_6_key"/>
-      <property name="&lt;Alt&gt;F11" type="string" value="fullscreen_key"/>
       <property name="&lt;Alt&gt;space" type="string" value="popup_menu_key"/>
       <property name="&lt;Super&gt;KP_Home" type="string" value="tile_up_left_key"/>
       <property name="Escape" type="string" value="cancel_key"/>
       <property name="&lt;Super&gt;KP_Next" type="string" value="tile_down_right_key"/>
-      <property name="&lt;Super&gt;KP_Left" type="string" value="tile_left_key"/>
       <property name="&lt;Shift&gt;&lt;Alt&gt;Page_Up" type="string" value="raise_window_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;Home" type="string" value="move_window_prev_workspace_key"/>
       <property name="&lt;Alt&gt;&lt;Shift&gt;Tab" type="string" value="cycle_reverse_windows_key"/>
@@ -188,6 +187,11 @@
       <property name="&lt;Super&gt;scaron" type="string" value="workspace_3_key"/>
       <property name="&lt;Super&gt;ccaron" type="string" value="workspace_4_key"/>
       <property name="&lt;Super&gt;x" type="string" value="hide_window_key"/>
+      <property name="&lt;Super&gt;Down" type="string" value="tile_down_key"/>
+      <property name="&lt;Super&gt;Left" type="string" value="tile_left_key"/>
+      <property name="&lt;Super&gt;Right" type="string" value="tile_right_key"/>
+      <property name="&lt;Super&gt;Up" type="string" value="tile_up_key"/>
+      <property name="&lt;Super&gt;f" type="string" value="fullscreen_key"/>
     </property>
   </property>
   <property name="providers" type="array">

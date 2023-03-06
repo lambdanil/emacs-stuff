@@ -7,7 +7,7 @@ enable_imgur_upload=true
 show_in_folder=false
 action=1
 delay=0
-region=1
+region=3
 show_mouse=1
 show_border=1
 

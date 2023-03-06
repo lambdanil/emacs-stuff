@@ -1,5 +1,5 @@
 favorites=xfce4-file-manager.desktop,xfce4-terminal-emulator.desktop,firefox.desktop,steam.desktop,net.lutris.Lutris.desktop,emacsclient.desktop,com.spotify.Client.desktop,tuxguitar.desktop,com.obsproject.Studio.desktop,google-chrome.desktop,virt-manager.desktop,pavucontrol.desktop
-recent=brogue.desktop,virt-manager.desktop,pavucontrol.desktop,net.lutris.Lutris.desktop,tuxguitar.desktop,com.github.tchx84.Flatseal.desktop,steam.desktop,com.discordapp.Discord.desktop,xfce4-terminal-emulator.desktop
+recent=libreoffice-writer.desktop,org.gnome.Mines.desktop,tuxguitar.desktop,steam.desktop,com.discordapp.Discord.desktop,brogue.desktop,virt-manager.desktop,pavucontrol.desktop,net.lutris.Lutris.desktop,com.github.tchx84.Flatseal.desktop
 button-icon=org.xfce.panel.whiskermenu
 button-single-row=false
 show-button-title=true
