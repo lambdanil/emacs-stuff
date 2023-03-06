@@ -1,0 +1,30 @@
+[Desktop Entry]
+Version=1.0
+Name=Firefox Web Browser
+Name[cs]=Firefox Webový prohlížeč
+Comment=Browse the World Wide Web
+Comment[cs]=Prohlížení stránek World Wide Webu
+GenericName=Web Browser
+GenericName[cs]=Webový prohlížeč
+Keywords=Internet;WWW;Browser;Web;Explorer
+Keywords[cs]=Internet;WWW;Prohlížeč;Web;Explorer
+Exec=/gnu/store/cxh7q6ffb6ypnxvqiz6bjx7fbdg0g24h-firefox-110.0.1/bin/firefox %u
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=firefox
+Categories=GNOME;GTK;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;
+StartupNotify=true
+StartupWMClass=Navigator
+Actions=new-window;new-private-window;
+X-XFCE-Source=file:///home/jan/.guix-profile/share/applications/firefox.desktop
+
+[Desktop Action new-window]
+Name=Open a New Window
+Name[cs]=Otevřít nové okno
+Exec=/gnu/store/cxh7q6ffb6ypnxvqiz6bjx7fbdg0g24h-firefox-110.0.1/bin/firefox -new-window
+
+[Desktop Action new-private-window]
+Name=Open a New Private Window
+Exec=/gnu/store/cxh7q6ffb6ypnxvqiz6bjx7fbdg0g24h-firefox-110.0.1/bin/firefox -private-window

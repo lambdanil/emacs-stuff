@@ -82,10 +82,10 @@
     <property name="zoom_desktop" type="bool" value="true"/>
     <property name="zoom_pointer" type="bool" value="true"/>
     <property name="workspace_names" type="array">
-      <value type="string" value="Pracovní plocha 1"/>
-      <value type="string" value="Pracovní plocha 2"/>
-      <value type="string" value="Pracovní plocha 3"/>
-      <value type="string" value="Pracovní plocha 4"/>
+      <value type="string" value="1"/>
+      <value type="string" value="2"/>
+      <value type="string" value="3"/>
+      <value type="string" value="4"/>
     </property>
   </property>
 </channel>

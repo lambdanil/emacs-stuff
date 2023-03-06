@@ -1,0 +1,26 @@
+[Desktop Entry]
+Version=1.0
+Name=Google Chrome
+GenericName=Web Browser
+GenericName[cs]=WWW prohlížeč
+Comment=Access the Internet
+Comment[cs]=Přístup k internetu
+Exec=/gnu/store/s5phs94kydikg4h89xnfxhz6ix17qdsb-google-chrome-stable-110.0.5481.77/bin/google-chrome
+StartupNotify=true
+Terminal=false
+Icon=google-chrome
+Type=Application
+Categories=Network;WebBrowser;
+MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/http;x-scheme-handler/https;
+Actions=new-window;new-private-window;
+X-XFCE-Source=file:///home/jan/.guix-profile/share/applications/google-chrome.desktop
+
+[Desktop Action new-window]
+Name=New Window
+Name[cs]=Nové okno
+Exec=/gnu/store/s5phs94kydikg4h89xnfxhz6ix17qdsb-google-chrome-stable-110.0.5481.77/bin/google-chrome
+
+[Desktop Action new-private-window]
+Name=New Incognito Window
+Name[cs]=Nové anonymní okno
+Exec=/gnu/store/s5phs94kydikg4h89xnfxhz6ix17qdsb-google-chrome-stable-110.0.5481.77/bin/google-chrome
