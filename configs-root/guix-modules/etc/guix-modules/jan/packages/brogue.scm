@@ -1,4 +1,4 @@
-(define-module (gnu packages brogue)
+(define-module (jan packages brogue)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system gnu)
