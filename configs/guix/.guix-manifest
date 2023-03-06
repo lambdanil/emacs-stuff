@@ -5,13 +5,18 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "google-chrome-stable"
+  (list "gvfs"
+        "xfce4-whiskermenu-plugin"
+        "xfce4-panel"
+        "setxkbmap"
+        "arc-icon-theme"
+        "arc-theme"
+        "google-chrome-stable"
         "sushi"
         "celluloid"
         "libportal"
         "xdg-desktop-portal-gtk"
         "xdg-desktop-portal"
-        "gnome-terminal"
         "gnome-tweaks"
         "scsh"
         "transmission:gui"
