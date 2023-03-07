@@ -5,7 +5,16 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "gvfs"
+  (list "xfce4-pulseaudio-plugin"
+        "xfce4-volumed-pulse"
+        "pandoc"
+        "gpick"
+        "dmenu"
+        "picom"
+        "xset"
+        "nitrogen"
+        "i3-wm"
+        "gvfs"
         "xfce4-whiskermenu-plugin"
         "xfce4-panel"
         "setxkbmap"
