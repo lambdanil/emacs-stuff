@@ -26,6 +26,7 @@ reboot # Should be all done!
 ```
 
 * My profile package manifest is available in ``~/.guix-manifest``, has to be updated manually with ``guix package --export-manifest > ~/.guix-manifest``!
+* ``~/.loginctl`` is the on-login script, edit when needed
 * Emacs is pretty much just startup-and-use, but a ``(package-install-selected-packages)`` may be necessary the first time around
 * Live Markdown preview is automatic, use ``impatient-mode`` for HTML preview
 * To use Gnome switch to ``(gnome-desktop-service-type)`` in ``/etc/config.scm``  
