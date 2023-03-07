@@ -6,6 +6,8 @@ Current available configurations are for EXWM, Gnome (with dash to dock and appi
 
 All configurations are currently for use exclusively with GNU Guix, nonguix channel included for firmware.
 
+![screenshot](new_scr.jpg)
+
 ---
 
 Install configurations using GNU Stow:
