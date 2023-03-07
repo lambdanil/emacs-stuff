@@ -13,9 +13,9 @@ All configurations are currently for use exclusively with GNU Guix, nonguix chan
 Install configurations using GNU Stow:
 
 ```bash
-stow configs/* -t ~ --adopt && git reset --hard # Force overwrite existing
+cd configs && stow * -t ~ --adopt && cd .. && git reset --hard # Force overwrite existing
 sudo cp /etc/config.scm /etc/config.old.scm # Backup old config, mostly for drive setup and bootloader config
-sudo stow configs-root/* -t / --adopt && git reset --hard 
+cd configs-root && sudo stow * -t / --adopt && cd .. && git reset --hard 
 
 # Now adjust bootloader options and drive setup in /etc/config.scm!!!
 
