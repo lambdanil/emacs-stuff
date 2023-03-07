@@ -1,7 +1,5 @@
 # The Q333 (aka CuBeRJAN) dotfile collection
 
----
-
 This repo contains all (most) of my personal dotfiles and configs.
 
 Current available configurations are for Gnome (with dash to dock and appindicators), XFCE (with the pretty Arc theme) and XFCE+i3 (needs some extra configuration!). My dwm config _might_ come later.
@@ -42,5 +40,3 @@ then follow with a guix pull and a system reconfigure with the substitute URLs (
 ---
 
 * This repo is meant for personal use, the README here is mostly just for myself, in case I forget how to use the dotfiles :)
-
-```
