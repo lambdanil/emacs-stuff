@@ -2,7 +2,7 @@
 
 This repo contains all (most) of my personal dotfiles and configs.
 
-Current available configurations are for Gnome (with dash to dock and appindicators), XFCE (with the pretty Arc theme) and XFCE+i3 (needs some extra configuration!). My dwm config _might_ come later.
+Current available configurations are for EXWM, Gnome (with dash to dock and appindicators), XFCE (with the pretty Arc theme) and XFCE+i3 (needs some extra configuration!). My dwm config _might_ come later.
 
 All configurations are currently for use exclusively with GNU Guix, nonguix channel included for firmware.
 
@@ -30,6 +30,7 @@ reboot # Should be all done!
 * Live Markdown preview is automatic, use ``impatient-mode`` for HTML preview
 * To use Gnome switch to ``(gnome-desktop-service-type)`` in ``/etc/config.scm``  
 * XFCE + i3 requires changes to XFCE settings, - disable XFCE keyboard shortcuts, ``xfdesktop`` and ``xfwm`` and start ``i3`` with ``picom`` instead.
+* EXWM has to be enabled with a special variable in the ``~/.emacs`` file, also requires disabling ``gdm`` in system config and using the special ``~/.startx`` instead, with emacs started from ``~/.xinitrc``
 * Custom ``steam-patched`` package is used, exposes my second HDD with games to the Steam sandbox
 * ``distrobox-docker`` is distrobox but repackaged for use with docker (duh), fully usable in rootless mode!
 
