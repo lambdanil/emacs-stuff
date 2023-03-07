@@ -50,9 +50,11 @@
 		   tree-sitter
 		   tree-sitter-langs
 		   treemacs
+		   ;spacemacs-theme ;; Doesn't work when added here?
 		   treemacs-all-the-icons
 		   markdown-mode
 		   impatient-mode
+		   rainbow-delimiters
 		   ligature
 		   flycheck))
   (unless (package-installed-p package)
@@ -339,7 +341,8 @@
 
 
 
-;;; Per-mode key bindings-------------------------------------------------------
+;;; Per-mode stuff -------------------------------------------------------------
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ;; Lisp mode -----
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'common-lisp-mode-hook #'(lambda ()
