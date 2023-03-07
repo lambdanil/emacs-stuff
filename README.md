@@ -25,10 +25,6 @@ guix package -m ~/.guix-manifest # install profile package manifest
 reboot # Should be all done!
 ```
 
-then follow with a guix pull and a system reconfigure with the substitute URLs (only necessary for the first reconfiguration, see ``install`` for reference).
-
----
-
 * My profile package manifest is available in ``~/.guix-manifest``, has to be updated manually with ``guix package --export-manifest > ~/.guix-manifest``!
 * Emacs is pretty much just startup-and-use, but a ``(package-install-selected-packages)`` may be necessary the first time around
 * Live Markdown preview is automatic, use ``impatient-mode`` for HTML preview
