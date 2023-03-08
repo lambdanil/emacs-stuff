@@ -100,10 +100,10 @@ bindsym $mod+Control+l resize grow width 2 px or 2 ppt
 
 
 # split in horizontal orientation
-bindsym $mod+c split h
+bindsym $mod+v split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+c split v
 
 bindsym $mod+s split toggle
 bindsym $mod+a exec --no-startup-id thunar

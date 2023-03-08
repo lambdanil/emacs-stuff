@@ -5,7 +5,13 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "xfce4-pulseaudio-plugin"
+  (list "i3lock"
+        "xprop"
+        "i3status"
+        "ublock-origin-chromium"
+        "lm-sensors"
+        "cloc"
+        "xfce4-pulseaudio-plugin"
         "xfce4-volumed-pulse"
         "pandoc"
         "gpick"

@@ -27,7 +27,6 @@ MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=FALSE
 MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU
-BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 BackgroundDarkness=0,900000
 ColorBackground=#292929292929
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
