@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 9
 
 gaps inner 6px
 
@@ -171,5 +171,29 @@ bindsym $mod+Control+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 bar {
-    mode invisible
+    position top
+    mode dock
+    status_command i3status -c ~/.config/i3status/config
+    colors {
+	background #292929
+	statusline #ffffff
+	separator #666666
+
+	focused_workspace  #4c7899 #285577 #ffffff
+	active_workspace   #333333 #5f676a #ffffff
+	inactive_workspace #333333 #222222 #888888
+	urgent_workspace   #2f343a #900000 #ffffff
+	binding_mode       #2f343a #900000 #ffffff
+     }
 }
+
+
+# Theme colors
+# class                   border  backgr. text    indic.   child_border
+  client.focused          #556064 #556064 #80FFF9 #FDF6E3
+  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  client.placeholder      #000000 #0c0c0c #ffffff #000000 
+
+  client.background       #2B2C2B
