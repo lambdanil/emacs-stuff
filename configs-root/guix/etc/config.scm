@@ -65,6 +65,7 @@
  (groups 
   (cons* 
    (user-group (name "games")) ;; For libratbagd
+   (user-group (name "realtime"))
    %base-groups))
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
@@ -74,7 +75,7 @@
                 (group "users")
                 (home-directory "/home/jan")
                 (supplementary-groups
-                 '("wheel" "netdev" "audio" "video" "lp" "libvirt" "kvm" "games" "docker")))
+                 '("wheel" "netdev" "audio" "video" "lp" "libvirt" "kvm" "games" "docker" "realtime")))
                %base-user-accounts))
   ;; ---------------------------------------------------------------------------
 
@@ -106,7 +107,9 @@
 	  mount-rshared-service ;; Automatically mount / with --make-rshared, necessary for distrobox
 	  
 	  (pam-limits-service ;; For Lutris / Wine esync
-           (list (pam-limits-entry "*" 'hard 'nofile 524288)))
+           (list (pam-limits-entry "*" 'hard 'nofile 524288)
+		 (pam-limits-entry "@realtime" 'both 'rtprio 99) ;; For jackd in realtime
+		 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 	  
           (extra-special-file "/lib64/ld-linux-x86-64.so.2" ;; For executing precompiled binaries
 			      (file-append glibc "/lib/ld-linux-x86-64.so.2"))
