@@ -4,4 +4,5 @@ setxkbmap cz -option 'ctrl:swapcaps' &
 timidity -iA &
 nitrogen --restore &
 picom &
+playerctld &
 exec i3 &

@@ -3,18 +3,29 @@ import json
 import subprocess
 import sys
 
+def get_status():
+    status = subprocess.getoutput('playerctl status')
+    if 'Playing' in status:
+        return "▶️"
+    elif 'Paused' in status:
+        return "⏸︎"
+    elif 'Stopped' in status:
+        return "⏹︎"
+    else:
+        return ""
+
 def get_current_music_title():
     title = subprocess.getoutput('playerctl metadata title')
     if 'No players found' in title:
         return ""
     artist = subprocess.getoutput('playerctl metadata artist')
-    return f"{artist} - {title}"
+    status = get_status()
+    return f"{status} {artist} - {title}"
 
 def print_line(message):
     """ Non-buffered printing to stdout. """
     sys.stdout.write(message + '\n')
     sys.stdout.flush()
-
 
 def read_line():
     """ Interrupted respecting reader for stdin. """
