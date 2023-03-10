@@ -190,7 +190,7 @@ set $urgent-bg-color     #FF0000
 bar {
     position top
     mode dock
-    status_command i3status -c ~/.config/i3status/config
+    status_command i3status | ~/.config/i3/i3status_wrapper.py
     colors {
 	    background $inactive-bg-color
 	    separator $inactive-bg-color

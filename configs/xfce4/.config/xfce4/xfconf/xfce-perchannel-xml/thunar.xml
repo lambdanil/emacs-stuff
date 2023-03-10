@@ -18,4 +18,6 @@
   <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
   <property name="default-view" type="string" value="void"/>
   <property name="misc-directory-specific-settings" type="bool" value="true"/>
+  <property name="last-menubar-visible" type="bool" value="false"/>
+  <property name="last-statusbar-visible" type="bool" value="false"/>
 </channel>
