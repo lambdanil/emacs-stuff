@@ -5,7 +5,10 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "rofi"
+  (list "playerctl"
+        "aisleriot"
+        "i3blocks"
+        "rofi"
         "font-google-noto-sans-cjk"
         "qemu"
         "virt-manager"
