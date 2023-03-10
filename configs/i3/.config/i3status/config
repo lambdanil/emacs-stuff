@@ -7,15 +7,24 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 5
+  colors = true
+  color_good = "#a3be8c"
+  color_degraded = "#ebcb8b"
+  color_bad = "#bf616a"
+  interval = 1
 }
 
 order += "ethernet _first_"
-order += "disk /"
-order += "load"
-order += "memory"
+order += separator
+order += "volume master"
+order += separator
 order += "tztime local"
+
+volume master {
+        format = "|| %volume"
+        format_muted = "|| (%volume)"
+        device = "pulse:1"
+}
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
@@ -23,8 +32,8 @@ wireless _first_ {
 }
 
 ethernet _first_ {
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+        format_up = "%ip"
+        format_down = "down"
 }
 
 battery all {
@@ -46,5 +55,5 @@ memory {
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format = "|| %H:%M %d.%m.%Y"
 }
