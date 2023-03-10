@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $HOME /home/jan
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -30,7 +31,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -42,6 +43,9 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Screenshot
+bindsym Print exec --no-startup-id scr
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -177,6 +181,7 @@ bindsym $mod+Control+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 set $bg-color 	         #88c0d0
+set $active-border-color #FFFFFF
 set $inactive-bg-color   #2E3440
 set $text-color          #f5f5f5
 set $inactive-text-color #d8dee9
@@ -199,7 +204,7 @@ bar {
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-client.focused          $bg-color           $bg-color          $inactive-bg-color          $bg-color
+client.focused          $bg-color           $bg-color          $inactive-bg-color          $active-border-color
 client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
