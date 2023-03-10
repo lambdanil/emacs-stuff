@@ -5,7 +5,11 @@
 ;; See the "Replicating Guix" section in the manual.
 
 (specifications->manifest
-  (list "qjackctl"
+  (list "rofi"
+        "font-google-noto-sans-cjk"
+        "qemu"
+        "virt-manager"
+        "qjackctl"
         "i3lock"
         "i3status"
         "lm-sensors"
@@ -39,12 +43,10 @@
         "piper"
         "gedit"
         "openjdk"
-        "qemu"
         "pavucontrol"
         "podman"
         "mpv"
         "yt-dlp"
-        "virt-manager"
         "element-desktop"
         "scrot"
         "libreoffice"
