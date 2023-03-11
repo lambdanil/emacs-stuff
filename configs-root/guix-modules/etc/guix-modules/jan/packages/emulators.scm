@@ -6,12 +6,17 @@
   #:use-module (guix packages)
   #:use-module (guix utils)
   #:use-module (gnu packages)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages emulators))
 
 (define-public retroarch-nonfree
   (package
     (inherit retroarch)
     (name "retroarch-nonfree")
+    (inputs (modify-inputs (package-inputs retroarch)
+              (append glu)
+              (append libaio)))
     (arguments
      (substitute-keyword-arguments (package-arguments retroarch)
        ((#:phases phases)
@@ -39,4 +44,12 @@
                      "<zlib.h>"))
                   (invoke "./configure"
                           (string-append "--prefix=" out)
-                          "--disable-builtinminiupnpc"))))))))))
+                          "--disable-builtinminiupnpc"))))
+            (add-after 'install 'append-extra-libs
+              (lambda* (#:key inputs #:allow-other-keys)
+                (wrap-program (string-append #$output "/bin/retroarch")
+                              `("LD_LIBRARY_PATH" ":" prefix
+                                (,(string-append #$(this-package-input "glu")
+                                                 "/lib" ":"
+                                                 #$(this-package-input
+                                                    "libaio") "/lib"))))))))))))

@@ -31,4 +31,5 @@ BackgroundDarkness=0,950000
 ColorBackground=#2e2e34344040
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
 BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+FontName=Fira Code 12
 
