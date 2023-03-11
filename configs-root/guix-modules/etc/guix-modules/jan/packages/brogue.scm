@@ -59,5 +59,3 @@
     (description "Community fork of Brogue")
     (home-page "https://github.com/tmewett/BrogueCE")
     (license agpl3)))
-
-brogue-ce
