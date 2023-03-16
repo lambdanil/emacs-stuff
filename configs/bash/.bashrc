@@ -41,6 +41,7 @@ fi
 #export PS1="[\u@\h] \t\n(\w) λ "
 alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
+alias lol="distrobox enter ubuntu -- env LUTRIS_SKIP_INIT=1 ~/git/lutris/bin/lutris lutris:rungameid/1"
 
 # Automatically added by the Guix install script.
 if [ -n "$GUIX_ENVIRONMENT" ]; then
