@@ -28,6 +28,7 @@
                        (vulkan (assoc-ref inputs "vulkan-loader"))
                        (wayland-protocols (assoc-ref inputs
                                                      "wayland-protocols")))
+                  ;; Hard-code some store file names.
                   (substitute* "gfx/common/vulkan_common.c"
                     (("libvulkan.so")
                      (string-append vulkan "/lib/libvulkan.so")))
@@ -35,16 +36,14 @@
                     (("/usr/local/share/wayland-protocols")
                      (string-append wayland-protocols
                                     "/share/wayland-protocols")))
-                  (substitute* "qb/qb.libs.sh"
-                    (("/bin/true")
-                     (which "true")))
-                  (substitute* '("libretro-common/file/archive_file_zlib.c"
-                                 "libretro-common/streams/trans_stream_zlib.c")
-                    (("<compat/zlib.h>")
-                     "<zlib.h>"))
+
+                  ;; The configure script does not yet accept the extra arguments
+                  ;; (like ‘CONFIG_SHELL=’) passed by the default configure phase.
                   (invoke "./configure"
                           (string-append "--prefix=" out)
-                          "--disable-builtinminiupnpc"))))
+                          ;; Non-free software are available through the core updater,
+                          ;; disable it.  See <https://issues.guix.gnu.org/38360>.
+                          "--disable-builtinzlib"))))
             (add-after 'install 'append-extra-libs
               (lambda* (#:key inputs #:allow-other-keys)
                 (wrap-program (string-append #$output "/bin/retroarch")

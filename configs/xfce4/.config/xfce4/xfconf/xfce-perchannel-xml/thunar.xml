@@ -10,8 +10,8 @@
   </property>
   <property name="last-focused-tab-left" type="int" value="0"/>
   <property name="last-focused-tab-right" type="int" value="0"/>
-  <property name="last-window-width" type="int" value="1077"/>
-  <property name="last-window-height" type="int" value="704"/>
+  <property name="last-window-width" type="int" value="1102"/>
+  <property name="last-window-height" type="int" value="721"/>
   <property name="last-window-maximized" type="bool" value="false"/>
   <property name="last-separator-position" type="int" value="210"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
@@ -23,5 +23,5 @@
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-details-view-visible-columns" type="string" value="THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_TYPE"/>
   <property name="last-details-view-column-widths" type="string" value="50,50,112,50,50,497,50,50,820,50,50,92,50,172"/>
-  <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="last-show-hidden" type="bool" value="false"/>
 </channel>

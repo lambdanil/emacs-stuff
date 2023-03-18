@@ -1,5 +1,5 @@
 favorites=xfce4-file-manager.desktop,xfce4-terminal-emulator.desktop,firefox.desktop,steam.desktop,net.lutris.Lutris.desktop,emacsclient.desktop,com.spotify.Client.desktop,tuxguitar.desktop,com.obsproject.Studio.desktop,google-chrome.desktop,virt-manager.desktop,pavucontrol.desktop
-recent=com.discordapp.Discord.desktop,net.lutris.Lutris.desktop,org.gnome.Mines.desktop,steam.desktop,virt-manager.desktop,brogue.desktop,org.freedesktop.Piper.desktop,chromium.desktop,libreoffice-writer.desktop,tuxguitar.desktop
+recent=net.lutris.Lutris.desktop,steam.desktop,com.discordapp.Discord.desktop,virt-manager.desktop,org.gnome.Mines.desktop,brogue.desktop,org.freedesktop.Piper.desktop,chromium.desktop,libreoffice-writer.desktop,tuxguitar.desktop
 button-icon=org.xfce.panel.whiskermenu
 button-single-row=false
 show-button-title=true

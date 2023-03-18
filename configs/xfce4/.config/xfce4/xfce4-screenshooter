@@ -1,10 +1,10 @@
-app=/gnu/store/0ghj28hxa75p8rys80a5xyhp02fgi7lm-ristretto-0.13.0/bin/ristretto
+app=/gnu/store/hb1d3vy1d9pn3gifzcjy90sqhyq7dnpj-ristretto-0.13.0/bin/ristretto
 custom_action_command=none
 last_user=
 last_extension=png
 screenshot_dir=file:/home/jan/Obrázky
 enable_imgur_upload=true
-show_in_folder=false
+show_in_folder=true
 action=1
 delay=0
 region=3
