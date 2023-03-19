@@ -67,7 +67,7 @@
     <property name="plugin-8" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
       <property name="show-notifications" type="bool" value="true"/>
-      <property name="mpris-players" type="string" value="chromium.instance17651;chromium.instance19132;chromium.instance20424;chromium.instance26701;chromium.instance30508;chromium.instance3119;chromium.instance6175;chromium.instance7544;chromium.instance9835;firefox.instance2104;firefox.instance2108;firefox.instance2236;firefox.instance2307;firefox.instance28911;firefox.instance3010;firefox.instance7708;io.github.celluloid_player.Celluloid.instance-1;spotify;vlc"/>
+      <property name="mpris-players" type="string" value="chromium.instance10703;chromium.instance12635;chromium.instance17651;chromium.instance19132;chromium.instance20424;chromium.instance25658;chromium.instance26701;chromium.instance30508;chromium.instance3119;chromium.instance6175;chromium.instance7544;chromium.instance9822;chromium.instance9835;firefox.instance2019;firefox.instance2104;firefox.instance2108;firefox.instance2236;firefox.instance2307;firefox.instance28911;firefox.instance3010;firefox.instance7708;io.github.celluloid_player.Celluloid.instance-1;spotify;vlc"/>
     </property>
     <property name="plugin-10" type="string" value="notification-plugin"/>
     <property name="plugin-11" type="string" value="separator">
