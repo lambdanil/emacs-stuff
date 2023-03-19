@@ -1,6 +1,6 @@
 favorites=xfce4-file-manager.desktop,xfce4-terminal-emulator.desktop,firefox.desktop,steam.desktop,net.lutris.Lutris.desktop,emacsclient.desktop,com.spotify.Client.desktop,tuxguitar.desktop,com.obsproject.Studio.desktop,google-chrome.desktop,virt-manager.desktop,pavucontrol.desktop
-recent=virt-manager.desktop,net.lutris.Lutris.desktop,steam.desktop,com.discordapp.Discord.desktop,org.gnome.Mines.desktop,sol.desktop,retroarch.desktop,brogue.desktop,org.freedesktop.Piper.desktop,chromium.desktop
-button-icon=org.xfce.panel.whiskermenu
+recent=virt-manager.desktop,tuxguitar.desktop,net.lutris.Lutris.desktop,steam.desktop,com.discordapp.Discord.desktop,org.gnome.Mines.desktop,sol.desktop,retroarch.desktop,brogue.desktop,org.freedesktop.Piper.desktop
+button-icon=/home/jan/.local/share/icons/hicolor/64x64/emblems/lambda-t.png
 button-single-row=false
 show-button-title=true
 show-button-icon=true
