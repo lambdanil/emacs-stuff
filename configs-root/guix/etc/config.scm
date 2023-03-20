@@ -17,7 +17,7 @@
 	     (guix channels)
 	     (gnu services mcron)
 	     (gnu services docker)
-	     (jan services mount-rshared)
+	     (nil services mount-rshared)
              (gnu packages fonts)
 	     (gnu packages networking)
 	     (guix gexp)
@@ -70,10 +70,10 @@
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
  (users (cons* (user-account
-                (name "jan")
-                (comment "Jan Novotný")
+                (name "nil")
+                (comment "(lambda () nil)")
                 (group "users")
-                (home-directory "/home/jan")
+                (home-directory "/home/nil")
                 (supplementary-groups
                  '("wheel" "netdev" "audio" "video" "lp" "libvirt" "kvm" "games" "docker" "realtime")))
                %base-user-accounts))
@@ -163,7 +163,7 @@
             'fat32))
      (type "vfat"))
    (file-system ;; Second hard drive
-     (mount-point "/mnt/media/jan/external")
+     (mount-point "/mnt/media/nil/external")
      (device
       (uuid "6e008012-794a-40ad-99e9-69825235e4c5"
             'ext4))

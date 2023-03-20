@@ -7,6 +7,7 @@
       <value type="string" value="blueman"/>
       <value type="string" value="discord"/>
       <value type="string" value="org.freedesktop.network-manager-applet"/>
+      <value type="string" value="thunar"/>
       <value type="string" value="Xfce volume control"/>
       <value type="string" value="Xfce volume daemon"/>
       <value type="string" value="xfce4-settings-helper"/>

@@ -37,7 +37,7 @@
 ;;; the manifest is printed inside the build phases. However, the (guix gexp)
 ;;; module is apparently disallowed inside build phases.
 
-(define-module (jan packages steam-client)
+(define-module (nil packages steam-client)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module ((nonguix licenses) #:prefix license:)
   #:use-module (guix gexp)

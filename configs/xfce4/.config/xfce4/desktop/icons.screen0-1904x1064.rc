@@ -1,7 +1,15 @@
 [xfdesktop-version-4.10.3+-rcfile_format]
 4.10.3+=true
 
-[/home/jan/Plocha/net.lutris.league-of-legends-1.desktop]
+[/home/nil/Plocha/retroarch.desktop]
+row=4
+col=0
+
+[/home/nil/Plocha/net.lutris.league-of-legends-1.desktop]
+row=3
+col=0
+
+[/home/nil/Plocha/net.lutris.richard-burns-rally-1.desktop]
 row=2
 col=0
 
@@ -9,7 +17,7 @@ col=0
 row=1
 col=0
 
-[/home/jan]
+[/home/nil]
 row=0
 col=0
 

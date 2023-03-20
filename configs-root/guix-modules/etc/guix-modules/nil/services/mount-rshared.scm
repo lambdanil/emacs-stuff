@@ -1,4 +1,4 @@
-(define-module (jan services mount-rshared)
+(define-module (nil services mount-rshared)
   #:use-module (guix gexp)
   #:use-module (gnu packages)
   #:use-module (guix packages)

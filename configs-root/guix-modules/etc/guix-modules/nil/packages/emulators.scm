@@ -1,6 +1,6 @@
 ;; Retroarch patched to include the core downloader
 
-(define-module (jan packages emulators)
+(define-module (nil packages emulators)
   #:use-module (ice-9 match)
   #:use-module (guix gexp)
   #:use-module (guix packages)
