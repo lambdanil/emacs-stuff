@@ -1,5 +1,5 @@
 favorites=xfce4-file-manager.desktop,xfce4-terminal-emulator.desktop,firefox.desktop,steam.desktop,net.lutris.Lutris.desktop,emacsclient.desktop,com.spotify.Client.desktop,tuxguitar.desktop,com.obsproject.Studio.desktop,google-chrome.desktop,virt-manager.desktop,pavucontrol.desktop
-recent=virt-manager.desktop,tuxguitar.desktop,net.lutris.Lutris.desktop,steam.desktop,com.discordapp.Discord.desktop,org.gnome.Mines.desktop,sol.desktop,retroarch.desktop,brogue.desktop,org.freedesktop.Piper.desktop
+recent=com.discordapp.Discord.desktop,xfce4-terminal-emulator.desktop,virt-manager.desktop,net.lutris.Lutris.desktop,steam.desktop,sol.desktop,org.gnome.Mines.desktop,pavucontrol.desktop,tuxguitar.desktop,retroarch.desktop
 button-icon=/home/nil/.local/share/icons/hicolor/64x64/emblems/lambda-t.png
 button-single-row=false
 show-button-title=true
