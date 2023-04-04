@@ -57,7 +57,8 @@
 		   impatient-mode
 		   rainbow-delimiters
 		   ligature
-		   flycheck))
+		   flycheck
+		   web-mode))
   (unless (package-installed-p package)
     (package-install package))
   (require package))
