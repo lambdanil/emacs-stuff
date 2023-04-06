@@ -6,6 +6,7 @@
 
 (specifications->manifest
   (list "audacity"
+        "strawberry"
         "lmms"
         "arc-theme"
         "gvfs"
