@@ -341,6 +341,10 @@
 (define-key my/keys-keymap (kbd "C-c d") #'(lambda (command)
 					     (interactive (list (read-shell-command "$ ")))
 					     (start-process-shell-command command nil command)))
+(global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
+(global-set-key (kbd "C-c C-w") #'(lambda ()
+				    (interactive)
+				    (eww (read-string "Enter URL: " "https://google.com"))))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 ;;; ----------------------------------------------------------------------------
 
