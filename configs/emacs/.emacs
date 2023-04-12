@@ -199,6 +199,18 @@
 
 
 
+;;; org-mode + agenda ----------------------------------------------------------
+(require 'org)
+(setq org-log-done t)
+(setq calendar-week-start-day 1)
+(add-to-list 'org-agenda-files "~/org/agenda.org")
+(define-key global-map "\C-ck" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+;;; ----------------------------------------------------------------------------
+
+
+
+
 ;;; Minor mode for custom keymaps  ---------------------------------------------
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
