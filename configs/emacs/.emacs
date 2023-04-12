@@ -344,7 +344,8 @@
 (global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
 (global-set-key (kbd "C-c C-w") #'(lambda ()
 				    (interactive)
-				    (eww (read-string "Enter URL: " "https://google.com"))))
+				    (let ((current-prefix-arg '(4))) ;; emulate C-u
+				      (eww (read-string "Enter URL: " "https://google.com")))))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 ;;; ----------------------------------------------------------------------------
 
