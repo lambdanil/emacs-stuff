@@ -1,0 +1,2983 @@
+#+TITLE: My System Config
+#+PROPERTY: header-args :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+This is my full-system config.
+
+- Currently it's deployed on a Debian system, but it's rather flexible and contains a full GNU Guix System configuration as well.
+- Install Guix and run a ~guix pull~ before doing importing the package manifest.
+- The configuration itself is placed in ~,~/git/emacs-stuff/configs~ and ~,~/git/emacs-stuff/configs-root~, from where the individual modules can be symlinked into place using [[https://www.gnu.org/software/stow/][GNU Stow]].
+- Make sure to tangle this file prior to linking the configs.
+  
+* Autostart
+
+Here I store my relevant autostart scripts.
+
+** .config/autostart/autostart.desktop
+
+First we need to add the actual .desktop file for the DE to load.
+#+BEGIN_SRC conf-desktop :tangle "~/git/emacs-stuff/configs/autostart/.config/autostart/autostart.desktop"
+  [Desktop Entry]	
+  Type=Application
+  Name=loginctl
+  Exec=/home/nil/.loginctl
+  Comment=Run loginctl script on login
+  X-GNOME-Autostart-enabled=true
+#+END_SRC
+
+** .loginctl
+
+Here's the actual autostart script.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
+  #xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+  emacs --daemon &
+  syncthing &
+  #setxkbmap cz -option 'ctrl:swapcaps' &
+  #timidity -iA &
+  #nitrogen --restore &
+  #picom &
+  #playerctld &
+  #exec i3 &
+#+END_SRC
+
+* Bash
+
+Let's move on to configuring the shell - bash in my case.
+
+** .bashrc
+
+I like to have a function to clear old guix builds by regex, helps keep the amount of garbage down.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+clean_build () { # clear guix build by regex
+    if [[ $1 ]]; then
+	CLEAR_BUILD_PATHS="$(ls --color=never -d /gnu/store/$1 | tr '\n' ' ')"
+    else
+	echo "no regex specified"
+	return 1
+    fi
+    if [[ $(echo "$CLEAR_BUILD_PATHS" | wc -c) -ne 1 ]]; then
+	guix gc --delete $CLEAR_BUILD_PATHS
+    else
+	echo "no match for regex found"
+	return 1
+    fi
+}
+#+END_SRC
+
+A small bit used to remind me when I'm inside a Guix environment.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+  if [ -n "$GUIX_ENVIRONMENT" ]; then
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+	PS1="${BASH_REMATCH[1]} [env]\\\$ "
+    fi
+  fi
+#+END_SRC
+
+Next let's set up the prompt with fancy colors and a cute lambda.
+Since ~tput~ isn't available on all distros (namely missing on GNU Guix), an alternative is provided.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+  if [[ $- == *i* ]]
+  then
+      _GREEN=$(tput setaf 2)
+      _MAGENTA=$(tput setaf 200)
+      _BLUE=$(tput setaf 4)
+      _RED=$(tput setaf 1)
+      _CYAN=$(tput setaf 45)
+      _RESET=$(tput sgr0)
+      _BOLD=$(tput bold)
+      #  _GREEN="\e[0;32m"
+      #  _MAGENTA="\e[0;35m"
+      #  _BLUE="\e[0;34m"
+      #  _RED="\e[0;31m"
+      #  _CYAN="\e[0;36m"
+      #  _RESET="\e[0m"
+      #  _BOLD="\e[1m"
+      #  export LD_LIBRARY_PATH=$LIBRARY_PATH
+      export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
+  fi
+#+END_SRC
+
+Let's add some aliases.
+The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled software.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+  alias ls="ls --color"
+  alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
+#+END_SRC
+
+Finally some variable exports - for Guix and Flatpak.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+  export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+  export GUIX_PACKAGE_PATH="/etc/guix-modules"
+#+END_SRC
+
+** .bash profile
+
+Let's move onto the bash profile, used in login shells.
+
+First run the bashrc if necessary.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+  # Honor per-interactive-shell startup file
+  if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+#+END_SRC
+
+Then we can go ahead and export Guix, but only when not inside a container.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+  if [ ! -f /.dockerenv ]; then
+    export GUIX_PROFILE="$HOME/.guix-profile"
+    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+    export PATH="$PATH:$HOME/.config/guix/current:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin"
+    . "$GUIX_PROFILE/etc/profile"
+  fi
+#+END_SRC
+
+* Custom Binaries
+
+Here I have some custom binaries, mostly scripts and stuff.
+
+** .bin/scr
+
+Just a screenshot shortcut.
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr"
+  #!/bin/sh
+  scrot "$HOME/Obrázky/$(date).png" 
+#+END_SRC
+
+** .bin/scr-area
+...And the same but for a selected area.
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr-area"
+  #!/bin/sh
+  scrot "$HOME/Obrázky/$(date).png" -f -s
+#+END_SRC
+
+** .bin/chromium-incognito
+
+And a shortcut for opening chromium in incognito mode.
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/chromium-incognito"
+  #!/bin/sh
+  chromium --incognito
+#+END_SRC
+
+* Containers
+
+I use distrobox docker/podman (depending on which is available, podman is prefered) on my installation.
+Here is some necessary configs for the containers.
+
+** .config/containers/policy.json
+
+This isn't super secure.
+#+BEGIN_SRC json :tangle "~/git/emacs-stuff/configs/containers/.config/containers/policy.json"
+  {
+      "default": [
+	  {
+	  "type": "insecureAcceptAnything"
+      }
+      ],
+      "transports":
+      {
+	  "docker-daemon":
+	  {
+	      "": [{"type":"insecureAcceptAnything"}]
+	  }
+      }
+  }
+#+END_SRC
+
+** .config/containers/registries.conf
+
+Add the necessary registries.
+#+BEGIN_SRC conf-unix :tangle "~/git/emacs-stuff/configs/containers/.config/containers/registries.conf"
+  # Copied from https://raw.githubusercontent.com/projectatomic/registries/master/registries.fedora
+  [registries.search]
+  registries = ['docker.io', 'registry.fedoraproject.org', 'registry.access.redhat.com']
+
+  [registries.insecure]
+  registries = []
+
+  # Docker only
+  [registries.block]
+  registries = []
+#+END_SRC
+
+* Guix
+
+GNU Guix is a very important part of my configuration.
+
+** .guix-manifest
+
+Just a straightforward (and very messy!) package manifest.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest"
+(specifications->manifest
+  (list "audacity"
+        "strawberry"
+        "lmms"
+        "arc-theme"
+        "gvfs"
+        "celluloid"
+        "xdg-desktop-portal-gtk"
+        "xdg-desktop-portal"
+        "gnome-tweaks"
+        "ungoogled-chromium"
+        "firefox"
+        "caja"
+        "mpv"
+        "gimp"
+        "flatpak"
+        "transmission:gui"
+        "transmission"
+        "retroarch-nonfree"
+        "aisleriot"
+        "qemu"
+        "virt-manager"
+        "qjackctl"
+        "i3status"
+        "xfce4-pulseaudio-plugin"
+        "xfce4-volumed-pulse"
+        "google-chrome-stable"
+        "sushi"
+        "libportal"
+        "steam-patched"
+        "dolphin"
+        "gzdoom"
+        "gnome-mines"
+        "gedit"
+        "pavucontrol"
+        "podman"
+        "libreoffice"
+        "eom"
+        "gthumb"
+        "obs"
+        "sdl2-ttf"
+        "yamagi-quake2"
+        "timidity++"
+        "kdenlive"
+        "sdl2-image"
+        "sdl2"
+        "sdl2-gfx"
+        "pulseaudio"
+        "sdl"
+        "openal"
+        "vlc"
+        "wine"
+        "brogue-ce"
+        "distrobox-docker"
+        "emacs-geiser-guile"
+        "pfetch"
+        "thunar"
+        "yt-dlp"
+        "ublock-origin-chromium"
+        "pandoc"
+        "openjdk"
+        "clang-toolchain"
+        "emacs"
+        "rofi"
+        "i3lock"
+        "lm-sensors"
+        "gpick"
+        "picom"
+        "nitrogen"
+        "i3-wm"
+        "xfce4-whiskermenu-plugin"
+        "xfce4-panel"
+        "piper"
+        "element-desktop"
+        "scrot"
+        "dconf-editor"
+        "tumbler"
+        "fluidsynth"
+        "libratbag"
+        "yaru-theme"
+        "tuxguitar"
+        "hyfetch"
+        "font-awesome"
+        "playerctl"
+        "i3blocks"
+        "font-google-noto-sans-cjk"
+        "emacs-vterm"
+        "emacs-use-package"
+        "xprop"
+        "cloc"
+        "dmenu"
+        "xset"
+        "setxkbmap"
+        "arc-icon-theme"
+        "scsh"
+        "sbcl"
+        "mcron"
+        "jq"
+        "gdb"
+        "font-google-noto-emoji"
+        "zstd"
+        "patchelf"
+        "gnome-shell-extension-dash-to-dock"
+        "python-pip"
+        "freepats-gm"
+        "p11-kit"
+        "flatpak-xdg-utils"
+        "vulkan-tools"
+        "vulkan-loader"
+        "libgudev"
+        "libxkbcommon"
+        "python"
+        "libxi"
+        "libxrandr"
+        "libxcursor"
+        "libgccjit"
+        "curl"
+        "gnome-shell-extension-appindicator"
+        "gnome-shell-extension-blur-my-shell"
+        "cmake"
+        "unrar"
+        "unzip"
+        "xrandr"
+        "stow"
+        "freepats"
+        "fluid-3"
+        "alsa-lib"
+        "htop"
+        "libvorbis"
+        "sqlite"
+        "neofetch"
+        "markdown"
+        "make"
+        "font-fira-mono"
+        "libvterm"
+        "libtool"
+        "glibc-locales"))
+#+END_SRC
+
+
+** .config/guix/channels.scm
+
+Here is the setup for channels, only read addition here is ~nonguix~.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.config/guix/channels.scm"
+(use-modules (guix ci))
+
+(cons* (channel-with-substitutes-available
+        %default-guix-channel
+        "https://ci.guix.gnu.org")
+       (channel
+        (name 'nonguix)
+        (url "https://gitlab.com/nonguix/nonguix")
+        ;; Enable signature verification:
+        (introduction
+         (make-channel-introduction
+          "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
+          (openpgp-fingerprint
+           "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+       %default-channels)
+
+#+END_SRC
+
+* Guix-run
+
+~guix-run~ is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
+
+** .bin/guix-run
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/guix-run/.bin/guix-run"
+  #!/bin/sh
+
+  export LD_LIBRARY_PATH=$LIBRARY_PATH
+  RUNNER=$(find ~/.guix-profile/lib/ -name 'ld-linux-*.so*')
+
+  $RUNNER "$@" #!/bin/sh
+
+  export LD_LIBRARY_PATH=$LIBRARY_PATH
+  RUNNER
+#+END_SRC
+
+* i3
+
+~i3~ is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have i3 here for completeness.
+
+** .config/i3/config
+
+Let's set some initial variables first.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  set $mod Mod4
+  set $HOME /home/nil
+  font pango:monospace 9
+  gaps inner 6px
+  for_window [class="^.*"] border pixel 2
+  floating_modifier $mod
+  tiling_drag modifier titlebar
+#+END_SRC
+
+Execute the startup environment, this is necessary for XDG autostart files.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  exec --no-startup-id dex --autostart --environment i3	
+#+END_SRC
+
+Now let's begin assigning some keybindings; all of these are rather self-explanatory.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  set $refresh_i3status killall -SIGUSR1 i3status
+  bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+  bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+  bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+  bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  bindsym Print exec --no-startup-id scr	
+  bindsym Shift+Print exec --no-startup-id scr-area
+
+  bindsym $mod+Return exec xfce4-terminal
+  bindsym $mod+q kill
+
+  bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show run
+  bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show window
+
+  bindsym $mod+e exec --no-startup-id emacsclient -c
+  bindsym $mod+a exec --no-startup-id thunar	
+#+END_SRC
+
+Window focus:
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  bindsym $mod+h focus left
+  bindsym $mod+j focus down
+  bindsym $mod+k focus up
+  bindsym $mod+l focus right
+  bindsym Mod1+Tab focus right
+  bindsym Mod1+Shift+Tab focus left
+  bindsym $mod+Left focus left
+  bindsym $mod+Down focus down
+  bindsym $mod+Up focus up
+  bindsym $mod+Right focus right
+#+END_SRC
+
+Moving and resizing windows:
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  bindsym $mod+Shift+h move left
+  bindsym $mod+Shift+j move down
+  bindsym $mod+Shift+k move up
+  bindsym $mod+Shift+l move right
+
+  bindsym $mod+Tab move right
+  bindsym $mod+Shift+Tab move left
+
+  bindsym $mod+Shift+Left move left
+  bindsym $mod+Shift+Down move down
+  bindsym $mod+Shift+Up move up
+  bindsym $mod+Shift+Right move right
+
+  bindsym $mod+Control+h resize shrink width 2 px or 2 ppt
+  bindsym $mod+Control+j resize grow height 2 px or 2 ppt
+  bindsym $mod+Control+k resize shrink height 2 px or 2 ppt
+  bindsym $mod+Control+l resize grow width 2 px or 2 ppt
+#+END_SRC
+
+Splitting and layouts:
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  bindsym $mod+v split h
+
+  bindsym $mod+c split v
+
+  bindsym $mod+s split toggle
+
+  bindsym $mod+f fullscreen toggle
+
+  bindsym $mod+Shift+s layout stacking
+  bindsym $mod+w layout tabbed
+  bindsym $mod+y layout toggle split
+
+  bindsym $mod+Shift+space floating toggle
+
+  bindsym $mod+space focus mode_toggle
+
+  bindsym $mod+Shift+x focus parent
+
+  bindsym $mod+x focus child
+#+END_SRC
+
+Next let's set some workspace names and bindings.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  set $ws1 "1:λ"
+  set $ws2 "2:α"
+  set $ws3 "3:β"
+  set $ws4 "4:γ"
+  set $ws5 "5:δ"
+  set $ws6 "6:ε"
+  set $ws7 "7:ζ"
+  set $ws8 "8:η"
+  set $ws9 "9:θ"
+  set $ws10 "10:ι"
+
+  # switch to workspace
+  bindsym $mod+plus workspace $ws1
+  bindsym $mod+ecaron workspace $ws2
+  bindsym $mod+scaron workspace $ws3
+  bindsym $mod+ccaron workspace $ws4
+  bindsym $mod+rcaron workspace $ws5
+  bindsym $mod+zcaron workspace $ws6
+  bindsym $mod+yacute workspace $ws7
+  bindsym $mod+aacute workspace $ws8
+  bindsym $mod+iacute workspace $ws9
+  bindsym $mod+eacute workspace $ws10
+
+  # move focused container to workspace
+  bindsym $mod+Shift+plus move container to workspace $ws1
+  bindsym $mod+Shift+ecaron move container to workspace $ws2
+  bindsym $mod+Shift+scaron move container to workspace $ws3
+  bindsym $mod+Shift+ccaron move container to workspace $ws4
+  bindsym $mod+Shift+rcaron move container to workspace $ws5
+  bindsym $mod+Shift+zcaron move container to workspace $ws6
+  bindsym $mod+Shift+yacute move container to workspace $ws7
+  bindsym $mod+Shift+aacute move container to workspace $ws8
+  bindsym $mod+Shift+iacute move container to workspace $ws9
+  bindsym $mod+Shift+eacute move container to workspace $ws10  
+#+END_SRC
+
+Now for session commands:
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  bindsym $mod+Shift+r reload
+  # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+  bindsym $mod+Control+r restart
+  # exit i3 (logs you out of your X session)
+  bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#+END_SRC
+
+Let's handle colors next; following the Nord colorscheme here.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  set $bg-color 	         #88c0d0
+  set $active-border-color #FFFFFF
+  set $inactive-bg-color   #2E3440
+  set $text-color          #f5f5f5
+  set $inactive-text-color #d8dee9
+  set $urgent-bg-color     #FF0000
+
+  client.focused          $bg-color           $bg-color          $inactive-bg-color          $active-border-color
+  client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+  client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+  client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
+
+
+  client.background       #2B2C2B
+#+END_SRC
+
+Finally let's configure the i3 bar.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  bar {
+  #strip_workspace_numbers yes
+  position top
+  mode dock
+#+END_SRC
+
+This part here is rather interesting, I pipe the status through my own wrapper, which makes extra modifications to the output.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  status_command i3status | ~/.config/i3/i3status_wrapper.py
+#+END_SRC
+
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+  colors {
+  background $inactive-bg-color
+  separator $inactive-bg-color
+  #                  border             background         text
+  focused_workspace  $bg-color          $bg-color          $inactive-bg-color
+  inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+  urgent_workspace   $urgent-bg-color   $urgent-bg-color   $inactive-bg-color
+  }
+  }
+#+END_SRC
+
+** .config/i3/i3status_wrapper.py
+
+This small python wrapper add the currently playing song as a prefix to the status. Rather neat but took a while to implement.
+I won't bother commenting this code, just believe me (and maybe pray) that it works.
+#+BEGIN_SRC python :tangle "~/git/emacs-stuff/configs/i3/.config/i3/i3status_wrapper.py"
+  #!/usr/bin/env python3
+  import json
+  import subprocess
+  import sys
+
+  def get_status():
+      status = subprocess.getoutput('playerctl status')
+      if 'Playing' in status:
+	  return "▶️"
+      elif 'Paused' in status:
+	  return "⏸︎"
+      elif 'Stopped' in status:
+	  return "⏹︎"
+      else:
+	  return ""
+
+  def get_current_music_title():
+      title = subprocess.getoutput('playerctl metadata title')
+      if 'No players found' in title:
+	  return ""
+      artist = subprocess.getoutput('playerctl metadata artist')
+      status = get_status()
+      return f"{status} {artist} - {title}"
+
+  def print_line(message):
+      """ Non-buffered printing to stdout. """
+      sys.stdout.write(message + '\n')
+      sys.stdout.flush()
+
+  def read_line():
+      """ Interrupted respecting reader for stdin. """
+      # try reading a line, removing any extra whitespace
+      try:
+	  line = sys.stdin.readline().strip()
+	  # i3status sends EOF, or an empty line
+	  if not line:
+	      sys.exit(3)
+	  return line
+      # exit on ctrl-c
+      except KeyboardInterrupt:
+	  sys.exit()
+
+
+  if __name__ == '__main__':
+      # Skip the first line which contains the version header.
+      print_line(read_line())
+
+      # The second line contains the start of the infinite array.
+      print_line(read_line())
+
+      while True:
+	  line, prefix = read_line(), ''
+
+	  # ignore comma at start of lines
+	  if line.startswith(','):
+	      line, prefix = line[1:], ','
+	      j = json.loads(line)
+
+	  music_title = get_current_music_title()
+	  # this is where the magic happens
+	  # https://i3wm.org/docs/i3bar-protocol.html
+	  j.insert(0, {
+	      # 'background': '#FFFFFF',
+	      'full_text': '%s' % music_title,
+	      'color': '#f442f7',
+	      'name': 'music_title',
+	      'separator_block_width': 0})
+	  j.insert(1, {
+	      # 'background': '#FFFFFF',
+	      'full_text': ' || ',
+	      'color': '#FFFFFF',
+	      'name': 'separator',
+	      'separator_block_width': 0})
+
+	  print_line(prefix+json.dumps(j))
+#+END_SRC
+
+** .config/i3status/config
+
+So this is the actual i3status config.
+
+Let's set some colors first of all.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+  general {
+  colors = true
+  color_good = "#a3be8c"
+  color_degraded = "#ebcb8b"
+  color_bad = "#bf616a"
+  interval = 1
+  }
+#+END_SRC
+
+Now let's set the order of the items.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+  order += "ethernet _first_"
+  order += separator
+  order += "volume master"
+  order += separator
+  order += "tztime local"
+#+END_SRC
+
+And finally configure the individual items.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+  volume master {
+  format = "|| %volume"
+  format_muted = "|| (%volume)"
+  device = "pulse:1"
+  }
+
+  wireless _first_ {
+  format_up = "W: (%quality at %essid) %ip"
+  format_down = "W: down"
+  }
+
+  ethernet _first_ {
+  format_up = "%ip"
+  format_down = "down"
+  }
+
+  battery all {
+  format = "%status %percentage %remaining"
+  }
+
+  disk "/" {
+  format = "%avail"
+  }
+
+  load {
+  format = "%1min"
+  }
+
+  memory {
+  format = "%used | %available"
+  threshold_degraded = "1G"
+  format_degraded = "MEMORY < %available"
+  }
+
+  tztime local {
+  format = "|| %H:%M %d.%m.%Y"
+  }
+#+END_SRC
+
+* Picom
+
+Picom is the compositor I choose to use with i3 and EXWM.
+
+** .config/picom/picom.conf
+#+BEGIN_SRC conf-unix :tangle "~/git/emacs-stuff/configs/picom/.config/picom/picom.conf"
+  #################################
+  #          Animations           #
+  #################################
+  # requires https://github.com/jonaburg/picom
+  # (These are also the default values)
+  transition-length = 300
+  #transition-length = 0
+  transition-pow-x = 0.1
+  transition-pow-y = 0.1
+  transition-pow-w = 0.1
+  transition-pow-h = 0.1
+  size-transition = true
+
+
+  #################################
+  #             Corners           #
+  #################################
+  # requires: https://github.com/sdhand/compton or https://github.com/jonaburg/picom
+  #corner-radius = 9.0;
+  corner-radius = 0;
+  rounded-corners-exclude = [
+  #"window_type = 'normal'",
+  "class_g = 'awesome'",
+  #  "class_g = 'dwm'",
+  "class_g = 'i3bar'",
+  "class_g = 'XTerm'",
+  "class_g = 'kitty'",
+  "class_g = 'Alacritty'",
+  "class_g = 'Polybar'",
+  "class_g = 'code-oss'",
+  #"class_g = 'TelegramDesktop'",
+  #  "class_g = 'firefox'",
+  "class_g = 'Thunderbird'"
+  ];
+  round-borders = 1;
+  round-borders-exclude = [
+  #"class_g = 'TelegramDesktop'",
+  ];
+
+  #################################
+  #             Shadows           #
+  #################################
+
+
+  # Enabled client-side shadows on windows. Note desktop windows 
+  # (windows with '_NET_WM_WINDOW_TYPE_DESKTOP') never get shadow, 
+  # unless explicitly requested using the wintypes option.
+  #
+  # shadow = false
+  shadow = false;
+
+  # The blur radius for shadows, in pixels. (defaults to 12)
+  # shadow-radius = 12
+  shadow-radius = 7;
+
+  # The opacity of shadows. (0.0 - 1.0, defaults to 0.75)
+  # shadow-opacity = .75
+
+  # The left offset for shadows, in pixels. (defaults to -15)
+  # shadow-offset-x = -15
+  shadow-offset-x = -7;
+
+  # The top offset for shadows, in pixels. (defaults to -15)
+  # shadow-offset-y = -15
+  shadow-offset-y = -7;
+
+  # Avoid drawing shadows on dock/panel windows. This option is deprecated,
+  # you should use the *wintypes* option in your config file instead.
+  #
+  # no-dock-shadow = false
+
+  # Don't draw shadows on drag-and-drop windows. This option is deprecated, 
+  # you should use the *wintypes* option in your config file instead.
+  #
+  # no-dnd-shadow = false
+
+  # Red color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-red = 0
+
+  # Green color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-green = 0
+
+  # Blue color value of shadow (0.0 - 1.0, defaults to 0).
+  # shadow-blue = 0
+
+  # Do not paint shadows on shaped windows. Note shaped windows 
+  # here means windows setting its shape through X Shape extension. 
+  # Those using ARGB background is beyond our control. 
+  # Deprecated, use 
+  #   shadow-exclude = 'bounding_shaped'
+  # or 
+  #   shadow-exclude = 'bounding_shaped && !rounded_corners'
+  # instead.
+  #
+  # shadow-ignore-shaped = ''
+
+  # Specify a list of conditions of windows that should have no shadow.
+  #
+  # examples:
+  #   shadow-exclude = "n:e:Notification";
+  #
+  # shadow-exclude = []
+  shadow-exclude = [
+  "name = 'Notification'",
+  "name = 'i3bar'",
+  "class_g = 'Conky'",
+  "class_g ?= 'Notify-osd'",
+  "class_g = 'Cairo-clock'",
+  "class_g = 'slop'",
+  "class_g = 'Polybar'",
+  "_GTK_FRAME_EXTENTS@:c"
+  ];
+
+  # Specify a X geometry that describes the region in which shadow should not
+  # be painted in, such as a dock window region. Use 
+  #    shadow-exclude-reg = "x10+0+0"
+  # for example, if the 10 pixels on the bottom of the screen should not have shadows painted on.
+  #
+  # shadow-exclude-reg = "" 
+
+  # Crop shadow of a window fully on a particular Xinerama screen to the screen.
+  # xinerama-shadow-crop = false
+
+
+  #################################
+  #           Fading              #
+  #################################
+
+
+  # Fade windows in/out when opening/closing and when opacity changes,
+  #  unless no-fading-openclose is used.
+  # fading = false
+  fading = true;
+
+  # Opacity change between steps while fading in. (0.01 - 1.0, defaults to 0.028)
+  # fade-in-step = 0.028
+  fade-in-step = 0.03;
+
+  # Opacity change between steps while fading out. (0.01 - 1.0, defaults to 0.03)
+  # fade-out-step = 0.03
+  fade-out-step = 0.03;
+
+  # The time between steps in fade step, in milliseconds. (> 0, defaults to 10)
+  # fade-delta = 10
+
+  # Specify a list of conditions of windows that should not be faded.
+  # don't need this, we disable fading for all normal windows with wintypes: {}
+  fade-exclude = [
+  "class_g = 'slop'"   # maim
+  ]
+
+  # Do not fade on window open/close.
+  # no-fading-openclose = false
+
+  # Do not fade destroyed ARGB windows with WM frame. Workaround of bugs in Openbox, Fluxbox, etc.
+  # no-fading-destroyed-argb = false
+
+
+  #################################
+  #   Transparency / Opacity      #
+  #################################
+
+
+  # Opacity of inactive windows. (0.1 - 1.0, defaults to 1.0)
+  # inactive-opacity = 1
+  inactive-opacity = 1;
+
+  # Opacity of window titlebars and borders. (0.1 - 1.0, disabled by default)
+  # frame-opacity = 1.0
+  frame-opacity = 1.0;
+
+  # Default opacity for dropdown menus and popup menus. (0.0 - 1.0, defaults to 1.0)
+  # menu-opacity = 1.0 
+  # menu-opacity is depreciated use dropdown-menu and popup-menu instead.
+
+  #If using these 2 below change their values in line 510 & 511 aswell
+  popup_menu = { opacity = 1; }
+  dropdown_menu = { opacity = 1; }
+
+
+  # Let inactive opacity set by -i override the '_NET_WM_OPACITY' values of windows.
+  # inactive-opacity-override = true
+  inactive-opacity-override = false;
+
+  # Default opacity for active windows. (0.0 - 1.0, defaults to 1.0)
+  active-opacity = 1.0;
+
+  # Dim inactive windows. (0.0 - 1.0, defaults to 0.0)
+  # inactive-dim = 0.0
+
+  # Specify a list of conditions of windows that should always be considered focused.
+  # focus-exclude = []
+  focus-exclude = [
+  "class_g = 'Cairo-clock'",
+  "class_g = 'Bar'",                    # lemonbar
+  "class_g = 'slop'"                    # maim
+  ];
+
+  # Use fixed inactive dim value, instead of adjusting according to window opacity.
+  # inactive-dim-fixed = 1.0
+
+  # Specify a list of opacity rules, in the format `PERCENT:PATTERN`, 
+  # like `50:name *= "Firefox"`. picom-trans is recommended over this. 
+  # Note we don't make any guarantee about possible conflicts with other 
+  # programs that set '_NET_WM_WINDOW_OPACITY' on frame or client windows.
+  # example:
+  #    opacity-rule = [ "80:class_g = 'URxvt'" ];
+  #
+  # opacity-rule = []
+  opacity-rule = [
+  "80:class_g     = 'Bar'",             # lemonbar
+  "100:class_g    = 'slop'",            # maim
+  "100:class_g    = 'XTerm'",
+  "100:class_g    = 'URxvt'",
+  "100:class_g    = 'kitty'",
+  "100:class_g    = 'Alacritty'",
+  "80:class_g     = 'Polybar'",
+  "98:class_g     = 'Emacs'",
+  "97:class_g     = 'Thunar'",
+  "100:class_g    = 'code-oss'",
+  "100:class_g    = 'Meld'",
+  "70:class_g     = 'TelegramDesktop'",
+  "90:class_g     = 'Joplin'",
+  "100:class_g    = 'firefox'",
+  "100:class_g    = 'Thunderbird'"
+  ];
+
+
+  #################################
+  #     Background-Blurring       #
+  #################################
+
+
+  # Parameters for background blurring, see the *BLUR* section for more information.
+  # blur-method = 
+  # blur-size = 12
+  #
+  # blur-deviation = false
+
+  # Blur background of semi-transparent / ARGB windows. 
+  # Bad in performance, with driver-dependent behavior. 
+  # The name of the switch may change without prior notifications.
+  #
+  # blur-background = true;
+
+  # Blur background of windows when the window frame is not opaque. 
+  # Implies:
+  #    blur-background 
+  # Bad in performance, with driver-dependent behavior. The name may change.
+  #
+  # blur-background-frame = false;
+
+
+  # Use fixed blur strength rather than adjusting according to window opacity.
+  # blur-background-fixed = false;
+
+
+  # Specify the blur convolution kernel, with the following format:
+  # example:
+  #   blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
+  #
+  # blur-kern = ''
+  # blur-kern = "3x3box";
+
+  blur: {
+  # requires: https://github.com/ibhagwan/picom
+  method = "kawase";
+  #method = "kernel";
+  strength = 3;
+  # deviation = 1.0;
+  # kernel = "11x11gaussian";
+  background = false;
+  background-frame = false;
+  background-fixed = false;
+  kern = "3x3box";
+  }
+
+  # Exclude conditions for background blur.
+  blur-background-exclude = [
+  #"window_type = 'dock'",
+  #"window_type = 'desktop'",
+  #"class_g = 'URxvt'",
+  #
+  # prevents picom from blurring the background
+  # when taking selection screenshot with `main`
+  # https://github.com/naelstrof/maim/issues/130
+  "class_g = 'slop'",
+  "_GTK_FRAME_EXTENTS@:c"
+  ];
+
+
+  #################################
+  #       General Settings        #
+  #################################
+
+  # Daemonize process. Fork to background after initialization. Causes issues with certain (badly-written) drivers.
+  # daemon = false
+
+  # Specify the backend to use: `xrender`, `glx`, or `xr_glx_hybrid`.
+  # `xrender` is the default one.
+  #
+  experimental-backends = true;
+  backend = "glx";
+  #backend = "xrender";
+
+
+  # Enable/disable VSync.
+  # vsync = false
+  vsync = true
+
+  # Enable remote control via D-Bus. See the *D-BUS API* section below for more details.
+  # dbus = false
+
+  # Try to detect WM windows (a non-override-redirect window with no 
+  # child that has 'WM_STATE') and mark them as active.
+  #
+  # mark-wmwin-focused = false
+  mark-wmwin-focused = true;
+
+  # Mark override-redirect windows that doesn't have a child window with 'WM_STATE' focused.
+  # mark-ovredir-focused = false
+  mark-ovredir-focused = true;
+
+  # Try to detect windows with rounded corners and don't consider them 
+  # shaped windows. The accuracy is not very high, unfortunately.
+  #
+  # detect-rounded-corners = false
+  detect-rounded-corners = true;
+
+  # Detect '_NET_WM_OPACITY' on client windows, useful for window managers
+  # not passing '_NET_WM_OPACITY' of client windows to frame windows.
+  #
+  # detect-client-opacity = false
+  detect-client-opacity = true;
+
+  # Specify refresh rate of the screen. If not specified or 0, picom will 
+  # try detecting this with X RandR extension.
+  #
+  # refresh-rate = 60
+  refresh-rate = 0
+
+  # Limit picom to repaint at most once every 1 / 'refresh_rate' second to 
+  # boost performance. This should not be used with 
+  #   vsync drm/opengl/opengl-oml
+  # as they essentially does sw-opti's job already, 
+  # unless you wish to specify a lower refresh rate than the actual value.
+  #
+  # sw-opti = 
+
+  # Use EWMH '_NET_ACTIVE_WINDOW' to determine currently focused window, 
+  # rather than listening to 'FocusIn'/'FocusOut' event. Might have more accuracy, 
+  # provided that the WM supports it.
+  #
+  # use-ewmh-active-win = false
+
+  # Unredirect all windows if a full-screen opaque window is detected, 
+  # to maximize performance for full-screen windows. Known to cause flickering 
+  # when redirecting/unredirecting windows. paint-on-overlay may make the flickering less obvious.
+  #
+  # unredir-if-possible = false
+
+  # Delay before unredirecting the window, in milliseconds. Defaults to 0.
+  # unredir-if-possible-delay = 0
+
+  # Conditions of windows that shouldn't be considered full-screen for unredirecting screen.
+  # unredir-if-possible-exclude = []
+
+  # Use 'WM_TRANSIENT_FOR' to group windows, and consider windows 
+  # in the same group focused at the same time.
+  #
+  # detect-transient = false
+  detect-transient = true
+
+  # Use 'WM_CLIENT_LEADER' to group windows, and consider windows in the same 
+  # group focused at the same time. 'WM_TRANSIENT_FOR' has higher priority if 
+  # detect-transient is enabled, too.
+  #
+  # detect-client-leader = false
+  detect-client-leader = true
+
+  # Resize damaged region by a specific number of pixels. 
+  # A positive value enlarges it while a negative one shrinks it. 
+  # If the value is positive, those additional pixels will not be actually painted 
+  # to screen, only used in blur calculation, and such. (Due to technical limitations, 
+  # with use-damage, those pixels will still be incorrectly painted to screen.) 
+  # Primarily used to fix the line corruption issues of blur, 
+  # in which case you should use the blur radius value here 
+  # (e.g. with a 3x3 kernel, you should use `--resize-damage 1`, 
+  # with a 5x5 one you use `--resize-damage 2`, and so on). 
+  # May or may not work with *--glx-no-stencil*. Shrinking doesn't function correctly.
+  #
+  # resize-damage = 1
+
+  # Specify a list of conditions of windows that should be painted with inverted color. 
+  # Resource-hogging, and is not well tested.
+  #
+  # invert-color-include = []
+
+  # GLX backend: Avoid using stencil buffer, useful if you don't have a stencil buffer. 
+  # Might cause incorrect opacity when rendering transparent content (but never 
+  # practically happened) and may not work with blur-background. 
+  # My tests show a 15% performance boost. Recommended.
+  #
+  # glx-no-stencil = false
+
+  # GLX backend: Avoid rebinding pixmap on window damage. 
+  # Probably could improve performance on rapid window content changes, 
+  # but is known to break things on some drivers (LLVMpipe, xf86-video-intel, etc.).
+  # Recommended if it works.
+  #
+  # glx-no-rebind-pixmap = false
+
+  # Disable the use of damage information. 
+  # This cause the whole screen to be redrawn everytime, instead of the part of the screen
+  # has actually changed. Potentially degrades the performance, but might fix some artifacts.
+  # The opposing option is use-damage
+  #
+  # no-use-damage = false
+  #use-damage = true (Causing Weird Black semi opaque rectangles when terminal is opened)
+  #Changing use-damage to false fixes the problem
+  use-damage = false
+
+  # Use X Sync fence to sync clients' draw calls, to make sure all draw 
+  # calls are finished before picom starts drawing. Needed on nvidia-drivers 
+  # with GLX backend for some users.
+  #
+  # xrender-sync-fence = false
+
+  # GLX backend: Use specified GLSL fragment shader for rendering window contents. 
+  # See `compton-default-fshader-win.glsl` and `compton-fake-transparency-fshader-win.glsl` 
+  # in the source tree for examples.
+  #
+  # glx-fshader-win = ''
+
+  # Force all windows to be painted with blending. Useful if you 
+  # have a glx-fshader-win that could turn opaque pixels transparent.
+  #
+  # force-win-blend = false
+
+  # Do not use EWMH to detect fullscreen windows. 
+  # Reverts to checking if a window is fullscreen based only on its size and coordinates.
+  #
+  # no-ewmh-fullscreen = false
+
+  # Dimming bright windows so their brightness doesn't exceed this set value. 
+  # Brightness of a window is estimated by averaging all pixels in the window, 
+  # so this could comes with a performance hit. 
+  # Setting this to 1.0 disables this behaviour. Requires --use-damage to be disabled. (default: 1.0)
+  #
+  # max-brightness = 1.0
+
+  # Make transparent windows clip other windows like non-transparent windows do,
+  # instead of blending on top of them.
+  #
+  # transparent-clipping = false
+
+  # Set the log level. Possible values are:
+  #  "trace", "debug", "info", "warn", "error"
+  # in increasing level of importance. Case doesn't matter. 
+  # If using the "TRACE" log level, it's better to log into a file 
+  # using *--log-file*, since it can generate a huge stream of logs.
+  #
+  # log-level = "debug"
+  log-level = "info";
+
+  # Set the log file.
+  # If *--log-file* is never specified, logs will be written to stderr. 
+  # Otherwise, logs will to written to the given file, though some of the early 
+  # logs might still be written to the stderr. 
+  # When setting this option from the config file, it is recommended to use an absolute path.
+  #
+  # log-file = '/path/to/your/log/file'
+
+  # Show all X errors (for debugging)
+  # show-all-xerrors = false
+
+  # Write process ID to a file.
+  # write-pid-path = '/path/to/your/log/file'
+
+  # Window type settings
+  # 
+  # 'WINDOW_TYPE' is one of the 15 window types defined in EWMH standard: 
+  #     "unknown", "desktop", "dock", "toolbar", "menu", "utility", 
+  #     "splash", "dialog", "normal", "dropdown_menu", "popup_menu", 
+  #     "tooltip", "notification", "combo", and "dnd".
+  # 
+  # Following per window-type options are available: ::
+  # 
+  #   fade, shadow:::
+  #     Controls window-type-specific shadow and fade settings.
+  # 
+  #   opacity:::
+  #     Controls default opacity of the window type.
+  # 
+  #   focus:::
+  #     Controls whether the window of this type is to be always considered focused. 
+  #     (By default, all window types except "normal" and "dialog" has this on.)
+  # 
+  #   full-shadow:::
+  #     Controls whether shadow is drawn under the parts of the window that you 
+  #     normally won't be able to see. Useful when the window has parts of it 
+  #     transparent, and you want shadows in those areas.
+  # 
+  #   redir-ignore:::
+  #     Controls whether this type of windows should cause screen to become 
+  #     redirected again after been unredirected. If you have unredir-if-possible
+  #     set, and doesn't want certain window to cause unnecessary screen redirection, 
+  #     you can set this to `true`.
+  #
+  wintypes:
+  {
+  normal = { fade = false; shadow = false; }
+  tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; full-shadow = false; };
+  dock = { shadow = false; }
+  dnd = { shadow = false; }
+  popup_menu = { opacity = 0.8; }
+  dropdown_menu = { opacity = 0.8; }
+  };	  
+#+END_SRC
+
+* Rofi
+
+Rofi is an application launcher, I use it with i3 and sometimes even with different desktop environments.
+
+** .config/rofi/nord.rasi
+
+This is my chosen rofi theme, fits with the i3 theme!
+Original source [[https://github.com/lr-tech/rofi-themes-collection][here]].
+
+#+BEGIN_SRC fundamental :tangle "~/git/emacs-stuff/configs/rofi/.config/rofi/nord.rasi"
+,* {
+    font:   "Fira Code 10";
+
+    nord0:     #2e3440;
+    nord1:     #3b4252;
+    nord2:     #434c5e;
+    nord3:     #4c566a;
+
+    nord4:     #d8dee9;
+    nord5:     #e5e9f0;
+    nord6:     #eceff4;
+
+    nord7:     #8fbcbb;
+    nord8:     #88c0d0;
+    nord9:     #81a1c1;
+    nord10:    #5e81ac;
+    nord11:    #bf616a;
+
+    nord12:    #d08770;
+    nord13:    #ebcb8b;
+    nord14:    #a3be8c;
+    nord15:    #b48ead;
+
+    background-color:   transparent;
+    text-color:         @nord4;
+    accent-color:       @nord8;
+
+    margin:     0px;
+    padding:    0px;
+    spacing:    0px;
+}
+
+window {
+    location:           north;
+    width:              100%;
+    background-color:   @nord0;
+    children:           [ mainbox,message ];
+}
+
+mainbox {
+    orientation:    horizontal;
+    children:       [ inputbar,listview ];
+}
+
+inputbar {
+    width:      25%;
+    padding:    1px 8px;
+    spacing:    8px;
+    children:   [ prompt, entry ];
+}
+
+prompt, entry, element-text, element-icon {
+    vertical-align: 0.5;
+}
+
+prompt {
+    text-color: @accent-color;
+}
+
+listview {
+    layout: horizontal;
+}
+
+element {
+    padding:    1px 8px;
+    spacing:    4px;
+}
+
+element normal urgent {
+    text-color: @nord13;
+}
+
+element normal active {
+    text-color: @accent-color;
+}
+
+element selected {
+    text-color: @nord0;
+}
+
+element selected normal {
+    background-color:   @accent-color;
+}
+
+element selected urgent {
+    background-color:   @nord13;
+}
+
+element selected active {
+    background-color:   @nord8;
+}
+
+element-icon {
+    size:   0.75em;
+}
+
+element-text {
+    text-color: inherit;
+} 
+#+END_SRC
+
+* Startx
+
+This bit is for a custom ~startx~ command, made to work with Guix.
+
+** .startx
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/startx/.startx"
+  #!/bin/sh
+
+  DIR=$HOME/.guix-profile
+
+  $DIR/bin/xinit -- $DIR/bin/Xorg :0 vt1 -keeptty \
+		 -configdir $DIR/share/X11/xorg.conf.d \
+		 -modulepath $DIR/lib/xorg/modules
+#+END_SRC
+
+* Xresources
+
+Here I apply some basic Xorg configuration.
+
+** .Xresources
+
+Just set the DPI and configure basic font rendering.
+#+BEGIN_SRC conf-xdefaults :tangle "~/git/emacs-stuff/configs/X/.Xresources"
+  Xft.antialias: true
+  Xft.autohint: false
+  Xft.dpi: 96
+  Xft.hinting: true
+  Xft.hintstyle: hintslight
+  Xft.lcdfilter: lcddefault
+  Xft.rgba: rgb
+  Emacs.Background: black
+#+END_SRC
+
+** .xsessionrc
+
+This here is necessary for Debian; makes Guix programs accessible from a desktop session.
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/X/.xsessionrc"
+  export PATH="$PATH:$HOME/.guix-profile/bin"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
+#+END_SRC
+
+* Guix system
+
+Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
+
+** /etc/config.scm
+
+Let's start by adding my custom modules. This isn't exactly clean but it is functional.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (add-to-load-path "/etc/guix-modules")
+#+END_SRC
+
+Now let's import the actual modules
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (use-modules (gnu)
+	       (gnu services)
+	       (gnu services dbus)
+	       (gnu packages gnome)
+	       (nongnu packages linux)
+	       (nongnu system linux-initrd)
+	       (gnu services virtualization)
+	       (gnu services shepherd)
+	       (gnu services admin)
+	       (guix channels)
+	       (gnu services mcron)
+	       (gnu services docker)
+	       (nil services mount-rshared)
+	       (gnu packages fonts)
+	       (gnu packages networking)
+	       (guix gexp)
+	       (guix packages)
+	       (srfi srfi-1))
+  (use-service-modules linux desktop networking ssh xorg)
+  (use-package-modules linux package-management)
+#+END_SRC
+
+Now let's redefine some services. Enable nonguix substitutes and blueman for a bluetooth applet.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (define %my-services
+    (modify-services %desktop-services
+		     (guix-service-type config => (guix-configuration
+						   (inherit config)
+						   (substitute-urls
+						    (append (list "https://substitutes.nonguix.org")
+							    %default-substitute-urls))
+						   (authorized-keys
+						    (append (list (local-file "./signing-key.pub"))
+							    %default-authorized-guix-keys))))
+		     (dbus-root-service-type config =>
+					     (dbus-configuration (inherit config)
+								 (services (list libratbag blueman))))))
+#+END_SRC
+
+Let's handle basic OS defaults first of all.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (operating-system
+
+   (locale "cs_CZ.utf8")
+   (timezone "Europe/Prague")
+   (keyboard-layout (keyboard-layout "cz"))
+
+   (host-name "eternity")
+#+END_SRC
+
+Now add the necessary firmware from nonguix.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (initrd microcode-initrd)
+  (firmware (list linux-firmware))
+#+END_SRC
+
+User and group setup is next in line:
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (groups 
+   (cons* 
+    (user-group (name "games")) ;; For libratbagd
+    (user-group (name "realtime"))
+    %base-groups))
+
+  (users (cons* (user-account
+		 (name "nil")
+		 (comment "(lambda () nil)")
+		 (group "users")
+		 (home-directory "/home/nil")
+		 (supplementary-groups
+		  '("wheel" "netdev" "audio" "video" "lp" "libvirt" "kvm" "games" "docker" "realtime")))
+		%base-user-accounts))
+#+END_SRC
+
+Let's add out system-level packages now; these are *only* the most necessary of packages.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (packages
+   (append
+    (map specification->package
+	 (list
+	  "nss-certs"
+	  "xf86-video-amdgpu"
+	  "amdgpu-firmware"
+	  "bluez"
+	  "blueman"
+	  "vim"
+	  "libratbag"
+	  "git"))
+    %base-packages))
+#+END_SRC
+
+Now for the second part of service configuration - appending my own services.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (services
+   (append
+    (list (service xfce-desktop-service-type)
+
+	  (service bluetooth-service-type
+		   (bluetooth-configuration
+		    (auto-enable? #f)))
+#+END_SRC
+
+This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  mount-rshared-service 
+#+END_SRC
+
+PAM limits for Wine Esync and realtime acces for ~jackd~
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (pam-limits-service
+   (list (pam-limits-entry "*" 'hard 'nofile 524288)
+	 (pam-limits-entry "@realtime" 'both 'rtprio 99)
+	 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
+#+END_SRC
+
+This is a bit of a work-around... Basically we place the linker where regular binaries expect it to be. This allows us to execute standard binaries more easily.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (extra-special-file "/lib64/ld-linux-x86-64.so.2"
+		      (file-append glibc "/lib/ld-linux-x86-64.so.2"))
+#+END_SRC
+
+And the final few services.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (set-xorg-configuration
+   (xorg-configuration
+    (keyboard-layout keyboard-layout)))
+
+  (service virtlog-service-type
+	   (virtlog-configuration
+	    (max-clients 1000)))
+
+  (service libvirt-service-type
+	   (libvirt-configuration
+	    (unix-sock-group "libvirt")
+	    (tls-port "16555")))
+
+  (service docker-service-type)
+
+  (service zram-device-service-type
+	   (zram-device-configuration
+	    (size "8172M")
+	    (compression-algorithm 'zstd))))
+  %my-services))
+#+END_SRC
+
+At last we can configure hardware-level stuff - bootloader and drives. Finally we can close the ~operating-system~ section.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (bootloader
+   (bootloader-configuration
+    (bootloader grub-efi-bootloader)
+    (targets '("/boot/efi"))
+    (timeout 3)
+    (keyboard-layout keyboard-layout)))
+  (file-systems
+   (cons*   
+    (file-system
+     (mount-point "/")
+     (device
+      (uuid "fd02d6c6-5ff1-48d9-b9cb-a444ceb260dd"
+	    'ext4))
+     (type "ext4"))
+    (file-system
+     (mount-point "/boot/efi")
+     (device
+      (uuid "D846-4633"
+	    'fat32))
+     (type "vfat"))
+    (file-system ;; Second hard drive
+     (mount-point "/mnt/media/nil/external")
+     (device
+      (uuid "6e008012-794a-40ad-99e9-69825235e4c5"
+	    'ext4))
+     (type "ext4"))
+    %base-file-systems)))
+#+END_SRC
+
+** /etc/signing-key.pub
+
+This is the key for nonguix.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/signing-key.pub"
+  (public-key 
+   (ecc 
+    (curve Ed25519)
+    (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)
+    )
+   )
+#+END_SRC
+
+* Custom Guix Modules
+
+I use some of my own custom Guix modules. These provide anything from services to (mainly) packages.
+
+** /etc/guix-modules/nil/packages
+
+Let's start with the packages first.
+
+*** brogue.scm
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/brogue.scm"
+  (define-module (nil packages brogue)
+    #:use-module (guix packages)
+    #:use-module (guix download)
+    #:use-module (guix build-system gnu)
+    #:use-module (guix licenses)
+    #:use-module (guix gexp)
+    #:use-module (gnu packages sdl))
+
+  (define-public brogue-ce
+    (package
+     (name "brogue-ce")
+     (version "1.12")
+     (source (origin
+	      (method url-fetch)
+	      (uri (string-append "https://github.com/tmewett/BrogueCE/archive/refs/tags/v" version
+				  ".tar.gz"))
+	      (sha256
+	       (base32
+		"0a6l7j91iq0mv7zrxnlxx6ll5rfwvgfyk5h1gc9m5qzll1n3zvdf"))))
+     (build-system gnu-build-system)
+     (arguments
+      (list 
+       #:make-flags #~(list "CC=gcc")
+       #:tests? #f
+       #:phases
+       #~(modify-phases %standard-phases
+			(delete 'configure)
+			(add-before 'build 'change-datadir-path
+				    (lambda _
+				      (map
+				       (lambda (substitutes)
+					 (substitute* "config.mk"
+						      (((car substitutes))
+						       (cdr substitutes))))
+				       `(("^DATADIR := ." . ,(string-append "DATADIR := " #$output "/share"))
+					 ("^RELEASE := NO" . "RELEASE := YES")))))
+			(replace 'install
+				 (lambda _
+				   (mkdir-p (string-append #$output "/bin"))
+				   (copy-file "bin/brogue" (string-append #$output "/bin/.brogue_real"))
+				   (call-with-output-file (string-append #$output "/bin/brogue") ; Wrap around executable and execute in ~/.local
+				     (lambda (file)
+				       (format file "~A" (string-append
+							  "mkdir -p \"$HOME/.local/share/brogue\" && cd \"$HOME/.local/share/brogue\" && "
+							  #$output "/bin/.brogue_real"))))
+				   (invoke "chmod" "+x" (string-append #$output "/bin/brogue"))
+				   (copy-recursively "bin/assets" (string-append #$output "/share/assets"))
+				   (make-desktop-entry-file
+				    (string-append  #$output "/share/applications/brogue.desktop")
+				    #:name "Brogue"
+				    #:exec "brogue"
+				    #:categories '("RolePlaying" "Game")
+				    #:keywords
+				    '("adventure" "singleplayer")
+				    #:comment
+				    '((#f "Brave the Dungeons of Doom!"))))))))
+     (inputs (list (sdl-union (list sdl2 sdl2-image))))
+     (synopsis "Brogue CE: A dungeon crawler roguelike")
+     (description "Community fork of Brogue")
+     (home-page "https://github.com/tmewett/BrogueCE")
+     (license agpl3)))
+#+END_SRC
+
+*** distrobox-docker.scm
+
+Since podman isn't currently fully functional on Guix we have to use docker instead. Unfortunately the Distrobox definition in Guix's repos relies on podman - thus making it practically broken. To solve this issue I modify the package to use docker instead.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/distrobox-docker.scm"
+  (define-module (nil packages distrobox-docker)
+    #:use-module (guix gexp)
+    #:use-module (gnu packages)
+    #:use-module (guix packages)
+    #:use-module (gnu packages docker)
+    #:use-module (guix utils)
+    #:use-module (guix build utils)
+    #:use-module (gnu packages containers))
+
+  (define-public distrobox-docker
+    (package
+     (inherit distrobox)
+     (name "distrobox-docker")
+     (inputs (modify-inputs (package-inputs distrobox)
+			    (append docker)
+			    (append docker-cli)
+			    (delete "podman")))
+     (arguments
+      (substitute-keyword-arguments (package-arguments distrobox)
+				    ((#:phases phases)
+				     #~(modify-phases #$phases
+						      (replace 'refer-to-inputs
+							       (lambda* (#:key inputs #:allow-other-keys)
+								 (copy-file "distrobox-init" "dinit") ; Temporarily move distrobox-init so it isn't affected by regex
+								 (substitute* (find-files "." "^distrobox.*[^1]$")
+									      (("docker") (search-input-file inputs "/bin/docker"))
+									      (("wget") (search-input-file inputs "/bin/wget"))
+									      (("command -v") "test -x"))
+								 (copy-file "dinit" "distrobox-init") ; move distrobox-init back
+								 (delete-file "dinit")))))))))
+#+END_SRC
+
+*** emulators.scm
+
+This is a custom retroarch definition, it adds the core downloader functionality which the Guix version doesn't have for licensing reasons.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/emulators.scm"
+  (define-module (nil packages emulators)
+    #:use-module (ice-9 match)
+    #:use-module (guix gexp)
+    #:use-module (guix packages)
+    #:use-module (guix utils)
+    #:use-module (gnu packages)
+    #:use-module (gnu packages gl)
+    #:use-module (gnu packages linux)
+    #:use-module (gnu packages emulators))
+
+  (define-public retroarch-nonfree
+    (package
+     (inherit retroarch)
+     (name "retroarch-nonfree")
+     (inputs (modify-inputs (package-inputs retroarch)
+			    (append glu)
+			    (append libaio)))
+     (arguments
+      (substitute-keyword-arguments (package-arguments retroarch)
+				    ((#:phases phases)
+				     #~(modify-phases #$phases
+						      (replace 'configure
+							       (lambda* (#:key inputs outputs #:allow-other-keys)
+								 (let* ((out (assoc-ref outputs "out"))
+									(etc (string-append out "/etc"))
+									(vulkan (assoc-ref inputs "vulkan-loader"))
+									(wayland-protocols (assoc-ref inputs
+												      "wayland-protocols")))
+								   ;; Hard-code some store file names.
+								   (substitute* "gfx/common/vulkan_common.c"
+										(("libvulkan.so")
+										 (string-append vulkan "/lib/libvulkan.so")))
+								   (substitute* "gfx/common/wayland/generate_wayland_protos.sh"
+										(("/usr/local/share/wayland-protocols")
+										 (string-append wayland-protocols
+												"/share/wayland-protocols")))
+
+								   ;; The configure script does not yet accept the extra arguments
+								   ;; (like ‘CONFIG_SHELL=’) passed by the default configure phase.
+								   (invoke "./configure"
+									   (string-append "--prefix=" out)
+									   ;; Non-free software are available through the core updater,
+									   ;; disable it.  See <https://issues.guix.gnu.org/38360>.
+									   "--disable-builtinzlib"))))
+						      (add-after 'install 'append-extra-libs
+								 (lambda* (#:key inputs #:allow-other-keys)
+								   (wrap-program (string-append #$output "/bin/retroarch")
+										 `("LD_LIBRARY_PATH" ":" prefix
+										   (,(string-append #$(this-package-input "glu")
+												    "/lib" ":"
+												    #$(this-package-input
+												       "libaio") "/lib"))))))))))))
+#+END_SRC
+
+*** steam-client.scm
+
+This is nonguix's Steam but with my second drive exposed through the sandbox. A couple of missing dependencies were added too.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/steam-client.scm"
+  ;;; SPDX-License-Identifier: GPL-3.0-or-later
+  ;;; Copyright © 2020 pkill-9
+  ;;; Copyright © 2020, 2021 ison <ison@airmail.cc>
+  ;;; Copyright © 2021 pineapples
+  ;;; Copyright © 2021 Jean-Baptiste Volatier <jbv@pm.me>
+  ;;; Copyright © 2021 Kozo <kozodev@runbox.com>
+  ;;; Copyright © 2021, 2022 John Kehayias <john.kehayias@protonmail.com>
+
+  ;;; The steam script provided by this package may optionally be started as
+  ;;; a shell instead of automatically launching Steam by setting the
+  ;;; environment variable DEBUG=1.  If the sandbox is started this way then
+  ;;; Steam should subsequently be launched via fhs-internal.
+
+  ;;; The sandbox shell aids in debugging missing container elements.  For
+  ;;; example a missing symlink may be created manually before launching Steam
+  ;;; to verify that the fix works before filing a bug report.
+
+  ;;; A container wrapper creates the following store items:
+  ;;; * Main container package [nonguix-container->package] (basically a dummy
+  ;;;   package with symlink to wrapper script)
+  ;;;   - Wrapper script [make-container-wrapper] (runs "guix shell")
+  ;;;     References:
+  ;;;     -> manifest.scm [make-container-manifest] (used by wrapper to guarantee
+  ;;;        exact store items)
+  ;;;     -> container-internal [make-container-internal] {inside container}
+  ;;;        (dummy package added to container with symlink to internal-script)
+  ;;;        - internal-script [make-internal-script] {inside container}
+  ;;;          (script run in-container which performs additional setup before
+  ;;;          launching the desired application)
+  ;;;          References:
+  ;;;          -> Wrapped package {inside container} (in this case Steam).
+
+  ;;; Note: The extra container-internal package is necessary because there is no
+  ;;; way to add the container package's own store path to its own manifest unless
+  ;;; the manifest is printed inside the build phases. However, the (guix gexp)
+  ;;; module is apparently disallowed inside build phases.
+
+  (define-module (nil packages steam-client)
+    #:use-module ((guix licenses) #:prefix license:)
+    #:use-module ((nonguix licenses) #:prefix license:)
+    #:use-module (guix gexp)
+    #:use-module (guix git-download)
+    #:use-module (guix utils)
+    #:use-module (guix packages)
+    #:use-module (guix records)
+    #:use-module (guix download)
+    #:use-module (guix build-system gnu)
+    #:use-module (guix build-system python)
+    #:use-module (guix build-system trivial)
+    #:use-module (guix transformations)
+    #:use-module (gnu packages)
+    #:use-module (gnu packages audio)
+    #:use-module (gnu packages base)
+    #:use-module (gnu packages bash)
+    #:use-module (gnu packages certs)
+    #:use-module (gnu packages compression)
+    #:use-module (gnu packages elf)
+    #:use-module (gnu packages file)
+    #:use-module (gnu packages fonts)
+    #:use-module (gnu packages fontutils)
+    #:use-module (gnu packages freedesktop)
+    #:use-module (gnu packages gawk)
+    #:use-module (gnu packages gcc)
+    #:use-module (gnu packages gl)
+    #:use-module (gnu packages glib)
+    #:use-module (gnu packages gnome)
+    #:use-module (gnu packages graphics)
+    #:use-module (gnu packages libbsd)
+    #:use-module (gnu packages libusb)
+    #:use-module (gnu packages linux)
+    #:use-module (gnu packages llvm)
+    #:use-module (gnu packages logging)
+    #:use-module (nongnu packages nvidia)
+    #:use-module (gnu packages pciutils)
+    #:use-module (gnu packages pulseaudio)
+    #:use-module (gnu packages python)
+    #:use-module (gnu packages python-web)
+    #:use-module (gnu packages python-xyz)
+    #:use-module (gnu packages toolkits)
+    #:use-module (gnu packages video)
+    #:use-module (gnu packages xorg)
+    #:use-module (nonguix utils))
+
+  (define-record-type* <nonguix-container>
+    nonguix-container make-nonguix-container
+    nonguix-container? this-nonguix-container
+    (name          ngc-name)
+    (binpath       ngc-binpath)
+    (version       ngc-version (default #f))
+    (wrap-package  ngc-wrap-package)
+    (run           ngc-run)
+    (wrapper-name  ngc-wrapper-name (default "nonguix-container-wrapper"))
+    (manifest-name ngc-manifest-name (default "nonguix-container-manifest.scm"))
+    (internal-name ngc-internal-name (default "fhs-internal"))
+    (sandbox-home  ngc-sandbox-home (default ".local/share/guix-sandbox-home"))
+    (union64       ngc-union64 (default '()))
+    (union32       ngc-union32 (default '()))
+    (preserved-env ngc-preserved-env (default '()))
+    (exposed       ngc-exposed (default '()))
+    (shared        ngc-shared (default '()))
+    (modules       ngc-modules (default '()))
+    (packages      ngc-packages (default '()))
+    (link-files    ngc-link-files (default '()))
+    (home-page     ngc-home-page (default #f))
+    (synopsis      ngc-synopsis (default #f))
+    (description   ngc-description (default #f))
+    (license       ngc-license (default #f)))
+
+  (define steam-client
+    (package
+     (name "steam-client")
+     (version "1.0.0.75")
+     (source
+      (origin
+       (method url-fetch)
+       (uri (string-append "http://repo.steampowered.com/steam/archive/precise/steam_"
+			   version ".tar.gz"))
+       (sha256
+	(base32
+	 "19rn29slsxv7b5fisr1jzn79bskzifbj5hmxqn2436ivwfjna9g5"))
+       (file-name (string-append name "-" version ".tar.gz"))))
+     (build-system gnu-build-system)
+     (arguments
+      `(#:tests? #f ; There are no tests.
+	#:validate-runpath? #f ; Looks for bin/steam which doesn't exist.
+	#:make-flags
+	(list "PREFIX=" (string-append "DESTDIR=" (assoc-ref %outputs "out")))
+	#:phases
+	(modify-phases %standard-phases
+		       (delete 'configure)
+		       ;; Patch Makefile so it creates links to the store rather than /lib.
+		       (add-after 'unpack 'patch-makefile
+				  (lambda _
+				    (substitute* "Makefile"
+						 (("-fns ")
+						  "-fns $(DESTDIR)"))))
+		       (delete 'patch-dot-desktop-files)
+		       (add-after 'unpack 'patch-startscript
+				  (lambda _
+				    (substitute* "bin_steam.sh"
+						 (("/usr") (assoc-ref %outputs "out")))))
+		       (add-after 'patch-dot-desktop-files 'patch-desktop-file
+				  (lambda _
+				    (let ((path (string-append (assoc-ref %outputs "out")
+							       "/share/applications/")))
+				      (substitute* (string-append path "steam.desktop")
+						   (("Exec=.*/steam") "Exec=steam"))
+				      (copy-file (string-append path "steam.desktop")
+						 (string-append path "steam-asound32.desktop"))
+				      (substitute* (string-append path "steam-asound32.desktop")
+						   (("Exec=steam %U") "Exec=steam %U -- --asound32")
+						   (("Name=Steam") "Name=Steam (32-bit ALSA)")))))
+		       ;; Steamdeps installs missing packages, which doesn't work with Guix.
+		       (add-after 'install-binaries 'post-install
+				  (lambda* (#:key inputs outputs #:allow-other-keys)
+				    (let ((out (assoc-ref %outputs "out")))
+				      (delete-file (string-append out "/lib/steam/bin_steamdeps.py"))
+				      (delete-file (string-append out "/bin/steamdeps"))))))))
+     (home-page "https://store.steampowered.com")
+     (synopsis "Digital distribution platform for managing and playing games")
+     (description "Steam is a digital software distribution platform created by Valve.")
+     (license (license:nonfree "file:///share/doc/steam/steam_subscriber_agreement.txt"))))
+
+  (define glibc-for-fhs
+    (package
+     (inherit glibc)
+     (name "glibc-for-fhs")
+     (source (origin (inherit (package-source glibc))
+		     ;; Remove Guix's patch to read ld.so.cache from /gnu/store
+		     ;; directories, re-enabling the default /etc/ld.so.cache
+		     ;; behavior.
+		     (patches (delete (car (search-patches "glibc-dl-cache.patch"))
+				      (origin-patches (package-source glibc))))))))
+
+  ;; After guix commit to add a replacement for expat (security fixes),
+  ;; https://git.savannah.gnu.org/cgit/guix.git/commit/?id=2045852b096131a714409aa0cc4fe17938f60b15
+  ;; a profile collision happens with the propagated expat (now grafted) from
+  ;; fontconfig.  See upstream report https://issues.guix.gnu.org/53406
+  ;; So we define a fontconfig variation that explicitly does the expat replacement
+  ;; which works around this bug for now, at the cost of building fontconfig.
+  ;; TODO: remove once upstream bug is fixed
+  (define fontconfig-fixed
+    (package
+     (inherit fontconfig)
+     (propagated-inputs
+      (modify-inputs (package-propagated-inputs fontconfig)
+		     (replace "expat" (@@ (gnu packages xml) expat/fixed))))))
+
+  (define fhs-min-libs
+    `(("glibc" ,glibc-for-fhs)
+      ("glibc-locales" ,glibc-locales)))
+
+  (define steam-client-libs
+    `(("bash" ,bash)                      ; Required for steam startup.
+      ("coreutils" ,coreutils)
+      ("diffutils" ,diffutils)
+      ("dbus-glib" ,dbus-glib)            ; Required for steam browser.
+      ("elfutils" ,elfutils)              ; Required for capturing library dependencies in pv.
+      ("eudev" ,eudev)                    ; Required for steamwebhelper/heavy runtime.
+      ;; TODO: set back to ,fontconfig once https://issues.guix.gnu.org/53406 is fixed
+      ("fontconfig" ,fontconfig-fixed)    ; Required for steam client.
+      ("file" ,file)                      ; Used for steam installation.
+      ("find" ,findutils)                 ; Required at least for some logging.
+      ("freetype" ,freetype)              ; Required for steam login.
+      ("gawk" ,gawk)
+      ("gcc:lib" ,gcc "lib")              ; Required for steam startup.
+      ("grep" ,grep)
+      ("libbsd" ,libbsd)
+      ("libcap" ,libcap)                  ; Required for SteamVR, but needs pkexec too.
+      ("libusb" ,libusb)                  ; Required for SteamVR.
+      ("libva" ,libva)                    ; Required for hardware video encoding/decoding.
+      ("libvdpau" ,libvdpau)              ; Required for hardware video encoding/decoding.
+      ("libvdpau-va-gl" ,libvdpau-va-gl)  ; Additional VDPAU support.
+      ("llvm" ,llvm-11)                   ; Required for mesa.
+      ("mesa" ,mesa)                      ; Required for steam startup.
+      ("nss-certs" ,nss-certs)            ; Required for steam login.
+      ("pciutils" ,pciutils)              ; Tries to run lspci at steam startup.
+      ("procps" ,procps)
+      ("sed" ,sed)
+      ("tar" ,tar)
+      ("usbutils" ,usbutils)              ; Required for SteamVR.
+      ("util-linux" ,util-linux)          ; Required for steam login.
+      ("wayland" ,wayland)                ; Required for mesa vulkan (e.g. libvulkan_radeon).
+      ("flatpak-xdg-utils" ,flatpak-xdg-utils)
+      ("xz" ,xz)
+      ("zenity" ,zenity)))                ; Required for progress dialogs.
+
+  (define steam-gameruntime-libs
+    `(("alsa-lib" ,alsa-lib)              ; Required for audio in most games.
+      ("xrandr" ,xrandr)                  ; Required for resolution setting in csgo
+      ("alsa-plugins:pulseaudio" ,alsa-plugins "pulseaudio") ; Required for audio in most games.
+      ("font-dejavu" ,font-dejavu)
+      ("font-liberation" ,font-liberation)
+      ("imgui" ,imgui-1.86)               ; Required for MangoHud.
+      ("mangohud" ,mangohud)
+      ("openal" ,openal)                  ; Prevents corrupt audio in Crypt of the Necrodancer.
+      ("pulseaudio" ,pulseaudio)          ; Prevents corrupt audio in Sven Coop.
+      ("python" ,python)                  ; Required for KillingFloor2 and Wreckfest.
+      ("spdlog" ,spdlog)))                ; Required for MangoHud.
+
+  (define* (fhs-union inputs #:key (name "fhs-union") (version "0.0") (system "x86_64-linux"))
+    "Create a package housing the union of inputs."
+    (package
+     (name name)
+     (version version)
+     (source #f)
+     (inputs inputs)
+     (build-system trivial-build-system)
+     (arguments
+      `(#:system ,system
+	#:modules ((guix build union))
+	#:builder
+	(begin
+	  (use-modules (ice-9 match)
+		       (guix build union))
+	  (match %build-inputs
+	    (((_ . directories) ...)
+	     (union-build (assoc-ref %outputs "out")
+			  directories)
+	     #t)))))
+     (home-page #f)
+     (synopsis "Libraries used for FHS")
+     (description "Libraries needed to build a guix container FHS.")
+     (license #f)))
+
+  (define (ld.so.conf->ld.so.cache ld-conf)
+    "Create a ld.so.cache file-like object from an ld.so.conf file."
+    (computed-file
+     "ld.so.cache"
+     (with-imported-modules
+      `((guix build utils))
+      #~(begin
+	  (use-modules (guix build utils))
+	  (let ((ldconfig (string-append #$glibc "/sbin/ldconfig")))
+	    (invoke ldconfig
+		    "-X"                 ; Don't update symbolic links.
+		    "-f" #$ld-conf       ; Use #$ld-conf as configuration file.
+		    "-C" #$output))))))  ; Use #$output as cache file.
+
+  (define (packages->ld.so.conf packages)
+    "Takes a list of package objects and returns a file-like object for ld.so.conf
+  in the Guix store"
+    (computed-file
+     "ld.so.conf"
+     (with-imported-modules
+      `((guix build union)
+	(guix build utils))
+      #~(begin
+	  (use-modules (guix build union)
+		       (guix build utils))
+	  ;; Need to quote "#$packages" as #$packages tries to "apply" the first item to the rest, like a procedure.
+	  (let* ((packages '#$packages)
+		 ;; Add "/lib" to each package.
+		 ;; TODO Make this more general for other needed directories.
+		 (dirs-lib
+		  (lambda (packages)
+		    (map (lambda (package)
+			   (string-append package "/lib"))
+			 packages)))
+		 (fhs-lib-dirs
+		  (dirs-lib packages)))
+	    (call-with-output-file #$output
+	      (lambda (port)
+		(for-each (lambda (directory)
+			    (display directory port)
+			    (newline port))
+			  fhs-lib-dirs)))
+	    #$output)))))
+
+  (define steam-ld.so.conf
+    (packages->ld.so.conf
+     (list (fhs-union `(,@steam-client-libs
+			,@steam-gameruntime-libs
+			,@fhs-min-libs)
+		      #:name "fhs-union-64")
+	   (fhs-union `(,@steam-client-libs
+			,@steam-gameruntime-libs
+			,@fhs-min-libs)
+		      #:name "fhs-union-32"
+		      #:system "i686-linux"))))
+
+  (define steam-ld.so.cache
+    (ld.so.conf->ld.so.cache steam-ld.so.conf))
+
+  (define (nonguix-container->package container)
+    "Return a package with wrapper script to launch the supplied container object
+  in a sandboxed FHS environment."
+    (let* ((fhs-internal (make-container-internal container))
+	   (fhs-manifest (make-container-manifest container fhs-internal))
+	   (fhs-wrapper (make-container-wrapper container fhs-manifest fhs-internal))
+	   (pkg (ngc-wrap-package container)))
+      (package
+       (name (ngc-name container))
+       (version (or (ngc-version container)
+		    (package-version pkg)))
+       (source #f)
+       (inputs `(("wrap-package" ,(ngc-wrap-package container))
+		 ,@(if (null? (ngc-union64 container))
+		       '()
+		       `(("fhs-union-64" ,(ngc-union64 container))))
+		 ,@(if (null? (ngc-union32 container))
+		       '()
+		       `(("fhs-union-32" ,(ngc-union32 container))))
+		 ("fhs-internal" ,fhs-internal)
+		 ("fhs-wrapper" ,fhs-wrapper)
+		 ("fhs-manifest" ,fhs-manifest)))
+       (build-system trivial-build-system)
+       (arguments
+	`(#:modules ((guix build utils))
+	  #:builder
+	  (begin
+	    (use-modules (guix build utils))
+	    (let* ((out (assoc-ref %outputs "out"))
+		   (internal-target (string-append (assoc-ref %build-inputs "fhs-internal")
+						   "/bin/" ,(ngc-internal-name container)))
+		   (internal-dest (string-append out "/sbin/" ,(ngc-internal-name container)))
+		   (manifest-target (assoc-ref %build-inputs "fhs-manifest"))
+		   (manifest-dest (string-append out "/etc/" ,(ngc-manifest-name container)))
+		   (wrapper-target (assoc-ref %build-inputs "fhs-wrapper"))
+		   (wrapper-dest (string-append out "/bin/" ,(ngc-binpath container)))
+		   (link-files ',(ngc-link-files container)))
+	      (mkdir-p (string-append out "/sbin"))
+	      (mkdir-p (string-append out "/etc"))
+	      (mkdir-p (string-append out "/bin"))
+	      (symlink internal-target internal-dest)
+	      (symlink wrapper-target wrapper-dest)
+	      (symlink manifest-target manifest-dest)
+	      (for-each
+	       (lambda (link)
+		 (mkdir-p (dirname (string-append out "/" link)))
+		 (symlink (string-append (assoc-ref %build-inputs "wrap-package")
+					 "/" link)
+			  (string-append out "/" link)))
+	       link-files)))))
+       (home-page (or (ngc-home-page container)
+		      (package-home-page pkg)))
+       (synopsis (or (ngc-synopsis container)
+		     (package-synopsis pkg)))
+       (description (or (ngc-description container)
+			(package-description pkg)))
+       (license (or (ngc-license container)
+		    (package-license pkg))))))
+
+  (define (make-container-wrapper container fhs-manifest fhs-internal)
+    "Return a script file-like object that launches the supplied container object
+  in a sandboxed FHS environment."
+    (program-file
+     (ngc-wrapper-name container)
+     (with-imported-modules
+      `((guix build utils))
+      #~(begin
+	  (use-modules (guix build utils))
+	  (define (preserve-var var)
+	    (string-append "--preserve=" var))
+	  (define* (add-path path #:key writable?)
+	    (let ((opt (if writable?
+			   "--share="
+			   "--expose=")))
+	      (if (pair? path)
+		  (string-append opt (car path) "=" (cdr path))
+		  (string-append opt path))))
+	  (define (exists-> file)
+	    (if (and file (file-exists? file))
+		`(,file) '()))
+	  (let* ((run #$(file-append fhs-internal "/bin/" (ngc-internal-name container)))
+		 (manifest-file #$(file-append fhs-manifest))
+		 (xdg-runtime (getenv "XDG_RUNTIME_DIR"))
+		 (home (getenv "HOME"))
+		 (sandbox-home (or (getenv "GUIX_SANDBOX_HOME")
+				   (string-append home "/" #$(ngc-sandbox-home container))))
+		 (preserved-env '("^DBUS_"
+				  "^DISPLAY$"
+				  "^DRI_PRIME$"
+				  "^GDK_SCALE$" ; For Steam UI scaling.
+				  "^PRESSURE_VESSEL_" ; For pressure vessel options.
+				  "_PROXY$"
+				  "_proxy$"
+				  "^SDL_"
+				  "^STEAM_"
+				  "^VDPAU_DRIVER_PATH$" ; For VDPAU drivers.
+				  "^XAUTHORITY$"
+				  ;; Matching all ^XDG_ vars causes issues
+				  ;; discussed in 80decf05.
+				  "^XDG_DATA_HOME$"
+				  "^XDG_RUNTIME_DIR$"
+				  ;; The following are useful for debugging.
+				  "^CAPSULE_DEBUG$"
+				  "^G_MESSAGES_DEBUG$"
+				  "^LD_DEBUG$"
+				  "^LIBGL_DEBUG$"))
+		 (expose `("/dev/bus/usb" ; Needed for libusb.
+			   "/dev/dri"
+			   "/dev/input"  ; Needed for controller input.
+			   "/dev/uinput" ; Needed for Steam Input.
+			   ,@(exists-> "/dev/nvidia0") ; needed for nvidia proprietary driver
+			   ,@(exists-> "/dev/nvidiactl")
+			   ,@(exists-> "/dev/nvidia-modeset")
+			   ,@(exists-> "/etc/machine-id")
+			   "/etc/localtime" ; Needed for correct time zone.
+			   "/sys/class/drm" ; Needed for hw monitoring like MangoHud.
+			   "/sys/class/hwmon" ; Needed for hw monitoring like MangoHud.
+			   "/sys/class/hidraw" ; Needed for devices like the Valve Index.
+			   "/sys/class/input" ; Needed for controller input.
+			   ,@(exists-> "/sys/class/power_supply") ; Needed for power monitoring like MangoHud.
+			   ,@(exists-> "/sys/class/powercap") ; Needed for power monitoring like MangoHud.
+			   "/sys/dev"
+			   "/sys/devices"
+			   "/mnt" ; Needed for access to mounted drives
+			   ,@(exists-> "/var/run/dbus")))
+		 ;; /dev/hidraw is needed for SteamVR to access the HMD, although here we
+		 ;; share all hidraw devices. Instead we could filter to only share specific
+		 ;; device. See, for example, this script:
+		 ;; https://arvchristos.github.io/post/matching-dev-hidraw-devices-with-physical-devices/
+		 (share `(,@(find-files "/dev" "hidraw")
+			  "/dev/shm"
+			  ;; "/tmp/.X11-unix" is needed for bwrap, and "/tmp" more generally
+			  ;; for writing things like crash dumps and "steam_chrome_shm".
+			  "/tmp"
+			  ,(string-append sandbox-home "=" home)
+			  ,@(exists-> (string-append home "/.config/pulse"))
+			  ,@(exists-> (string-append home "/.icons")) ; Fix mouse cursor
+			  ,@(exists-> (string-append xdg-runtime "/pulse"))
+			  ,@(exists-> (string-append xdg-runtime "/bus"))
+			  ,@(exists-> (getenv "XAUTHORITY"))))
+		 (DEBUG (equal? (getenv "DEBUG") "1"))
+		 (args (cdr (command-line)))
+		 (command (if DEBUG '()
+			      `("--" ,run ,@args))))
+	    ;; TODO: Remove once upstream change is merged and in stable pressure-vessel
+	    ;; (although may want to hold off for anyone using older pressure-vessel versions
+	    ;; for whatever reason), see:
+	    ;; https://gitlab.steamos.cloud/steamrt/steam-runtime-tools/-/merge_requests/406
+	    (setenv "PRESSURE_VESSEL_FILESYSTEMS_RO" "/gnu/store")
+	    ;; By default VDPAU drivers are searched for in libvdpau's store
+	    ;; path, so set this path to where the drivers will actually be
+	    ;; located in the container.
+	    (setenv "VDPAU_DRIVER_PATH" "/lib64/vdpau")
+	    (format #t "\n* Launching ~a in sandbox: ~a.\n\n"
+		    #$(package-name (ngc-wrap-package container)) sandbox-home)
+	    (when DEBUG
+	      (format #t "* DEBUG set to 1: Starting shell. Launch application manually with: ~a.\n\n"
+		      #$(ngc-internal-name container)))
+	    (mkdir-p sandbox-home)
+	    (invoke #$(file-append pulseaudio "/bin/pulseaudio")
+		    "--start"
+		    "--exit-idle-time=60")
+	    (apply invoke
+		   `("guix" "shell"
+		     "--container" "--no-cwd" "--network"
+		     ,@(map preserve-var preserved-env)
+		     ,@(map add-path expose)
+		     ,@(map (lambda (item)
+			      (add-path item #:writable? #t))
+			    share)
+		     "-m" ,manifest-file
+		     ,@command)))))))
+
+  (define (make-container-manifest container fhs-internal)
+    "Return a scheme file-like object to be used as package manifest for FHS
+  containers.  This manifest will use the 'modules' and 'packages' fields
+  specified in the container object, and will also include the exact store paths
+  of the containers 'wrap-package', 'union32', and 'union64' fields, as well as
+  the exact path for the fhs-internal package."
+    (scheme-file
+     (ngc-manifest-name container)
+     #~(begin
+	 (use-package-modules
+	  #$@(ngc-modules container))
+	 (use-modules (guix gexp)
+		      (guix utils)
+		      (guix profiles)
+		      (guix store)
+		      (guix scripts package)
+		      (srfi srfi-11))
+
+	 ;; Copied from guix/scripts/package.scm.
+	 (define (store-item->manifest-entry item)
+	   "Return a manifest entry for ITEM, a \"/gnu/store/...\" file name."
+	   (let-values (((name version)
+			 (package-name->name+version (store-path-package-name item)
+						     #\-)))
+	     (manifest-entry
+	      (name name)
+	      (version version)
+	      (output "out")             ;XXX: wild guess
+	      (item item))))
+
+	 (manifest-add
+	  (packages->manifest (list #$@(ngc-packages container)))
+	  (map store-item->manifest-entry
+	       '(#$(file-append (ngc-wrap-package container))
+		   #$(file-append (ngc-union64 container))
+		   #$(file-append (ngc-union32 container))
+		   #$(file-append fhs-internal)))))))
+
+  (define (make-container-internal container)
+    "Return a dummy package housing the fhs-internal script."
+    (package
+     (name (ngc-internal-name container))
+     (version (or (ngc-version container)
+		  (package-version (ngc-wrap-package container))))
+     (source #f)
+     (inputs `(("fhs-internal-script" ,(make-internal-script container))))
+     (build-system trivial-build-system)
+     (arguments
+      `(#:modules ((guix build utils))
+	#:builder
+	(begin
+	  (use-modules (guix build utils))
+	  (let* ((bin (string-append (assoc-ref %outputs "out") "/bin"))
+		 (internal-target (assoc-ref %build-inputs "fhs-internal-script"))
+		 (internal-dest (string-append bin "/" ,(ngc-internal-name container))))
+	    (mkdir-p bin)
+	    (symlink internal-target internal-dest)))))
+     (home-page #f)
+     (synopsis "Script used to set up sandbox")
+     (description "Script used inside the FHS Guix container to set up the
+  environment.")
+     (license #f)))
+
+  (define (make-internal-script container)
+    "Return an fhs-internal script which is used to perform additional steps to
+  set up the environment inside an FHS container before launching the desired
+  application."
+    ;; The ld cache is not created inside the container, meaning the paths it
+    ;; contains are directly to /gnu/store/. Instead, it could be generated with
+    ;; a generic ld.so.conf and result in paths more typical in an FHS distro,
+    ;; like /lib within the container. This may be useful for future compatibility.
+    (let* ((ld.so.conf steam-ld.so.conf)
+	   (ld.so.cache steam-ld.so.cache)
+	   (pkg (ngc-wrap-package container))
+	   (run (ngc-run container)))
+      (program-file
+       (ngc-internal-name container)
+       (with-imported-modules
+	`((guix build utils))
+	#~(begin
+	    (use-modules (guix build utils)
+			 (ice-9 getopt-long))
+	    (define (path->str path)
+	      (if (list? path)
+		  (string-join path "/")
+		  path))
+	    (define (new-symlink pair)
+	      (let ((target (path->str (car pair)))
+		    (dest (path->str (cdr pair))))
+		(unless (file-exists? dest)
+		  (symlink target dest))))
+	    (define (icd-symlink file)
+	      (new-symlink
+	       `(,file . ("/usr/share/vulkan/icd.d" ,(basename file)))))
+	    (define fhs-option-spec
+	      '((asound32 (value #f))))
+	    (let* ((guix-env (getenv "GUIX_ENVIRONMENT"))
+		   (union64 #$(file-append (ngc-union64 container)))
+		   (union32 #$(file-append (ngc-union32 container)))
+		   (ld.so.conf #$(file-append ld.so.conf))
+		   (ld.so.cache #$(file-append ld.so.cache))
+		   (all-args (cdr (command-line)))
+		   (fhs-args (member "--" all-args))
+		   (steam-args (if fhs-args
+				   (reverse (cdr (member "--" (reverse all-args))))
+				   all-args)))
+	      (delete-file "/bin/sh")
+	      (rmdir "/bin")
+	      (for-each
+	       mkdir-p
+	       '("/run/current-system/profile/etc"
+		 "/run/current-system/profile/share"
+		 "/sbin"
+		 "/usr/share/vulkan/icd.d"
+		 "/usr/share/vulkan/implicit_layer.d")) ; Implicit layers like MangoHud
+	      (for-each
+	       new-symlink
+	       `((,ld.so.cache . "/etc/ld.so.cache")
+		 (,ld.so.conf . "/etc/ld.so.conf") ;; needed?
+		 ((,guix-env "etc/ssl") . "/etc/ssl")
+		 ((,guix-env "etc/ssl") . "/run/current-system/profile/etc/ssl")
+		 ((,union32 "lib") . "/lib")
+		 ((,union32 "lib") . "/run/current-system/profile/lib")
+		 ((,union64 "bin") . "/bin")
+		 ((,union64 "bin") . "/usr/bin") ; Steam hardcodes some paths like xdg-open.
+		 ((,union64 "lib") . "/lib64")
+		 ((,union64 "lib") . "/run/current-system/profile/lib64")
+		 ((,union64 "lib/locale") . "/run/current-system/locale")
+		 ((,union64 "sbin/ldconfig") . "/sbin/ldconfig")
+		 ((,union64 "share/drirc.d") . "/usr/share/drirc.d")
+		 ((,union64 "share/fonts") . "/run/current-system/profile/share/fonts")
+		 ((,union64 "etc/fonts") . "/etc/fonts")
+		 ((,union64 "share/vulkan/explicit_layer.d") .
+		  "/usr/share/vulkan/explicit_layer.d")
+		 ;; The MangoHud layer has the same file name for 64- and 32-bit,
+		 ;; so create links with different names.
+		 ((,union64 "share/vulkan/implicit_layer.d/MangoHud.json") .
+		  "/usr/share/vulkan/implicit_layer.d/MangoHud.json")
+		 ((,union32 "share/vulkan/implicit_layer.d/MangoHud.json") .
+		  "/usr/share/vulkan/implicit_layer.d/MangoHud.x86.json")))
+	      (for-each
+	       icd-symlink
+	       ;; Use stat to follow links from packages like MangoHud.
+	       `(,@(find-files (string-append union32 "/share/vulkan/icd.d")
+			       #:directories? #t #:stat stat)
+		 ,@(find-files (string-append union64 "/share/vulkan/icd.d")
+			       #:directories? #t #:stat stat)))
+	      ;; TODO: Is this the right place for this?
+	      ;; Newer versions of Steam won't startup if they can't copy to here
+	      ;; (previous would output this error but continue).
+	      (if (file-exists? ".steam/root/bootstrap.tar.xz")
+		  (chmod ".steam/root/bootstrap.tar.xz" #o644))
+
+	      ;; Process FHS-specific command line options.
+	      (let* ((options (getopt-long (or fhs-args '("")) fhs-option-spec))
+		     (asound32-opt (option-ref options 'asound32 #f))
+		     (asound-lib (if asound32-opt "lib" "lib64")))
+		(if asound32-opt
+		    (display "\n\n/etc/asound.conf configured for 32-bit.\n\n\n")
+		    (display "\n\n/etc/asound.conf configured for 64-bit.\nLaunch steam with \"steam -- --asound32\" to use 32-bit instead.\n\n\n"))
+		(with-output-to-file "/etc/asound.conf"
+		  (lambda _ (format (current-output-port) "# Generated by steam-client
+
+  # Use PulseAudio by default
+  pcm_type.pulse {
+    lib \"/~a/alsa-lib/libasound_module_pcm_pulse.so\"
+  }
+
+  ctl_type.pulse {
+    lib \"/~a/alsa-lib/libasound_module_ctl_pulse.so\"
+  }
+
+  pcm.!default {
+    type pulse
+    fallback \"sysdefault\"
+    hint {
+      show on
+      description \"Default ALSA Output (currently PulseAudio Sound Server)\"
+    }
+  }
+
+  ctl.!default {
+    type pulse
+    fallback \"sysdefault\"
+  }\n\n" asound-lib asound-lib))))
+
+	      (apply system* `(#$(file-append pkg run) ,@steam-args))))))))
+
+  (define-public steam
+    (nonguix-container->package
+     (nonguix-container
+      (name "steam-patched")
+      (binpath "steam")
+      (wrap-package steam-client)
+      (run "/bin/steam")
+      (union64
+       (fhs-union `(,@steam-client-libs
+		    ,@steam-gameruntime-libs
+		    ,@fhs-min-libs)
+		  #:name "fhs-union-64"))
+      (union32
+       (fhs-union `(,@steam-client-libs
+		    ,@steam-gameruntime-libs
+		    ,@fhs-min-libs)
+		  #:name "fhs-union-32"
+		  #:system "i686-linux"))
+      (link-files '("share/applications/steam.desktop"
+		    "share/applications/steam-asound32.desktop"))
+      (description "Steam is a digital software distribution platform created by
+  Valve.  This package provides a script for launching Steam in a Guix container
+  which will use the directory @file{$HOME/.local/share/guix-sandbox-home} where
+  all games will be installed."))))
+
+  (define-public steam-nvidia
+    (nonguix-container->package
+     (nonguix-container
+      (name "steam-nvidia")
+      (binpath "steam-nvidia")
+      (wrap-package steam-client)
+      (run "/bin/steam")
+      (union64
+       (replace-mesa
+	(fhs-union `(,@steam-client-libs
+		     ,@steam-gameruntime-libs
+		     ,@fhs-min-libs)
+		   #:name "fhs-union-64")))
+      (union32
+       (replace-mesa
+	(fhs-union `(,@steam-client-libs
+		     ,@steam-gameruntime-libs
+		     ,@fhs-min-libs)
+		   #:name "fhs-union-32"
+		   #:system "i686-linux")))
+      (link-files '("share/applications/steam.desktop"
+		    "share/applications/steam-asound32.desktop"))
+      (description "Steam is a digital software distribution platform created by
+  Valve.  This package provides a script for launching Steam in a Guix container
+  which will use the directory @file{$HOME/.local/share/guix-sandbox-home} where
+  all games will be installed."))))
+
+  (define-public protonup-ng
+    (package
+     (name "protonup-ng")
+     (version "0.2.1")
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+	     (url "https://github.com/cloudishBenne/protonup-ng")
+	     (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "0yd2mhhqxzarqxk85zf42s931jzc94f1cssn1hblsqghr79laa45"))))
+     (build-system python-build-system)
+     (arguments
+      (list #:tests? #f)) ; there are no tests
+     (inputs
+      (list python-configparser python-requests))
+     (home-page "https://github.com/cloudishBenne/protonup-ng")
+     (synopsis "Manage Proton-GE Installations")
+     (description "ProtonUp-ng is a CLI program and API to automate the installation
+  and update of GloriousEggroll's Proton-GE.")
+     (license license:gpl3)))
+#+END_SRC
+
+** /etc/guix-modules/nil/services
+
+Moving on to services.
+
+*** mount-rshared.scm
+
+Tiny service used to remount the root as recursively shared on boot.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/services/mount-rshared.scm"
+  (define-module (nil services mount-rshared)
+    #:use-module (guix gexp)
+    #:use-module (gnu packages)
+    #:use-module (guix packages)
+    #:use-module (gnu packages linux)
+    #:use-module (guix utils)
+    #:use-module (gnu services)
+    #:use-module (gnu services shepherd)
+    #:use-module (guix build utils))
+
+  (define-public mount-rshared-service
+    (simple-service 'mount-rshared shepherd-root-service-type
+		    (list (shepherd-service
+			   (provision '(mount-rshared))
+			   (requirement '(user-processes))
+			   (start #~(lambda ()
+				      (invoke
+				       #$(file-append util-linux "/bin/mount")
+				       "--make-rshared" "/")))
+			   (respawn? #f)))))
+#+END_SRC
+
+* Emacs
+
+Finally - this is my Emacs config, now fully literate!
+
+It's pretty full-featured, yet rather short and straightforward. I try to keep this config as readable and maintainable as possible
+
+
+
+Let's start of with a quick listing of the relevant system-level dependencies:
+- ~clang~
+- ~ripgrep~
+- ~font-fira-mono~
+- ~sbcl~
+- ~clang~
+- ~cmake~
+- ~make~
+I usually install these using [[https://guix.gnu.org][GNU Guix]], at least when running Emacs on Linux.
+
+
+Let's start off with setting some basic information about the user.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setq user-mail-address "shadenk30011@gmail.com"
+	user-full-name "Jan Novotný")
+#+END_SRC
+
+  
+EXWM can be toggled here. It's configuration is handled within a separate file.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (defvar use-exwm nil)
+
+  (when use-exwm (load "~/.exwm.el"))
+#+END_SRC
+
+Next we need to setup our package archives so that we can ensure all the necessary packages are installed.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
+#+END_SRC
+
+Finally it's time to go over the package list and install everything.
+You'll notice the use of a very primitive function - no ~straight.el~ or ~use-package~ here!
+
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (dolist (package '(dumb-jump
+		     company
+		     ivy
+		     sudo-edit
+		     json-mode
+		     sly
+		     vterm
+		     elfeed
+		     magit
+		     guix
+		     tree-sitter
+		     tree-sitter-langs
+		     treemacs
+		     doom-themes
+		     treemacs-all-the-icons
+		     markdown-mode
+		     impatient-mode
+		     rainbow-delimiters
+		     ligature
+		     flycheck
+		     geiser
+		     geiser-guile
+		     org-present
+		     web-mode))
+    (unless (package-installed-p package)
+      (package-install package))
+    (require package))
+#+END_SRC
+
+Now we set some custom variables related to theming. This part here was automatically generated by Emacs.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(column-number-mode t)
+   '(custom-enabled-themes '(doom-dracula))
+   '(custom-safe-themes
+     '("944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4" "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
+   '(delete-selection-mode t)
+   '(package-selected-packages
+     '(org-present org-roam web-mode doom-themes vterm sly sudo-edit pacmacs rainbow-mode eglot nord-theme nyan-mode rainbow-delimiters tree-sitter-langs tree-sitter magit treemacs-icons-dired spacemacs-theme treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature markdown-mode ivy flycheck company dumb-jump))
+   '(safe-local-variable-values
+     '((eval modify-syntax-entry 43 "'")
+       (eval modify-syntax-entry 36 "'")
+       (eval modify-syntax-entry 126 "'")))
+   '(warning-suppress-types '((comp) (comp) (emacs))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
+#+END_SRC
+
+The Fira Code font has ligature support, so we implement it here.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (dolist (char/ligature-re
+	   `((?-  ,(rx (or (or "-->" "-<<" "->>" "-|" "-~" "-<" "->") (+ "-"))))
+	     (?/  ,(rx (or (or "/==" "/=" "/>" "/**" "/*") (+ "/"))))
+	     (?*  ,(rx (or (or "*>" "*/") (+ "*"))))
+	     (?<  ,(rx (or (or "<<=" "<<-" "<|||" "<==>" "<!--" "<=>" "<||" "<|>" "<-<"
+			       "<==" "<=<" "<-|" "<~>" "<=|" "<~~" "<$>" "<+>" "</>" "<*>"
+			       "<->" "<=" "<|" "<:" "<>"  "<$" "<-" "<~" "<+" "</" "<*")
+			   (+ "<"))))
+	     (?:  ,(rx (or (or ":?>" "::=" ":>" ":<" ":?" ":=") (+ ":"))))
+	     (?=  ,(rx (or (or "=>>" "==>" "=/=" "=!=" "=>" "=:=") (+ "="))))
+	     (?!  ,(rx (or (or "!==" "!=") (+ "!"))))
+	     (?>  ,(rx (or (or ">>-" ">>=" ">=>" ">]" ">:" ">-" ">=") (+ ">"))))
+	     (?&  ,(rx (+ "&")))
+	     (?|  ,(rx (or (or "|->" "|||>" "||>" "|=>" "||-" "||=" "|-" "|>" "|]" "|}" "|=")
+			   (+ "|"))))
+	     (?.  ,(rx (or (or ".?" ".=" ".-" "..<") (+ "."))))
+	     (?+  ,(rx (or "+>" (+ "+"))))
+	     (?\[ ,(rx (or "[<" "[|")))
+	     (?\{ ,(rx "{|"))
+	     (?\? ,(rx (or (or "?." "?=" "?:") (+ "?"))))
+	     (?#  ,(rx (or (or "#_(" "#[" "#{" "#=" "#!" "#:" "#_" "#?" "#(") (+ "#"))))
+	     (?\; ,(rx (+ ";")))
+	     (?_  ,(rx (or "_|_" "__")))
+	     (?~  ,(rx (or "~~>" "~~" "~>" "~-" "~@")))
+	     (?$  ,(rx "$>"))
+	     (?^  ,(rx "^="))
+	     (?\] ,(rx "]#"))))
+    (apply (lambda (char ligature-re)
+	     (set-char-table-range composition-function-table char
+				   `([,ligature-re 0 font-shape-gstring])))
+	   char/ligature-re))
+#+END_SRC
+
+** Variables
+
+It's finally time to set up some basic variables.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setq ring-bell-function 'ignore)
+  (setq vc-follow-symlinks t)
+  (setq all-the-icons-scale-factor 1.2)
+  (setq confirm-kill-processes nil)
+  (setq kill-buffer-query-functions nil)
+  (treemacs-load-theme "all-the-icons")
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  ;;(global-tab-line-mode t)
+  (setq inferior-lisp-program "sbcl")
+  (setf nyan-animate-nyancat t)
+  (setf nyan-animation-frame-interval 0.05)
+  (setf nyan-wavy-trail t)
+  (setq-default cursor-type 'bar)
+  (setq geiser-active-implementations '(guile))
+  (setq geiser-default-implementation 'guile)
+#+END_SRC
+
+Some window related stuff; supress opening the welcome screen for buffers opening files.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (when (> (length command-line-args) 1)
+    (setq inhibit-splash-screen t))
+  (add-to-list 'default-frame-alist '(height . 44))
+  (add-to-list 'default-frame-alist '(width . 140))
+  (setq frame-resize-pixelwise t)
+#+END_SRC
+
+Windows has some rather strange encoding issues when UTF-8 isn't explicitly set as the default.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-language-environment 'utf-8)
+  (set-selection-coding-system 'utf-8)
+ #+END_SRC
+
+Company is used for code completion. Here is a basic setup.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+(defun company-complete-common-or-cycle ()
+  "Company settings."
+  (interactive)
+  (when (company-manual-begin)
+    (if (eq last-command 'company-complete-common-or-cycle)
+        (let ((company-selection-wrap-around t))
+          (call-interactively 'company-select-next))
+      (call-interactively 'company-complete-common))))
+
+(define-key company-active-map [tab] 'company-complete-common-or-cycle)
+(define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+(setq company-insertion-on-trigger 'company-explicit-action-p)
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+#+END_SRC
+
+And here we arrive at the global modes.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (global-display-line-numbers-mode -1)
+  (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
+  (global-prettify-symbols-mode t)
+  (global-company-mode t)
+  (global-flycheck-mode t)
+  (ivy-mode t)
+  (global-tree-sitter-mode 1)
+  (electric-pair-mode t)
+  (global-hl-line-mode 1)
+  (desktop-save-mode -1)
+  ;;(nyan-mode t)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (add-hook 'scheme-mode-hook 'geiser-mode)
+#+END_SRC
+
+Impatient mode for Markdown, more about this later.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'markdown-mode-hook #'(lambda ()
+				    (markdown-impatient-start))) ; Impatient mode live preview
+  #+END_SRC
+
+Rainbow delimiters are a life-saver for Lisps!
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  #+END_SRC
+
+I like to have the selected line clearly highlighted.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+      (set-face-attribute 'hl-line nil :inherit nil :background "gray14")
+#+END_SRC
+
+Here is a very minimal setup for org-agenda.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (require 'org)
+  (setq org-log-done t)
+  (setq calendar-week-start-day 1)
+  (add-to-list 'org-agenda-files "~/org/agenda.org")
+  (define-key global-map "\C-ck" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+#+END_SRC
+
+This is for keybindings that should never be overwritten by minor modes.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+	(defvar my/keys-keymap (make-keymap)
+	  "Keymap for my/keys-mode.")
+
+	(define-minor-mode my/keys-mode
+	  "Minor mode for my personal keybindings."
+	  :init-value t
+	  :global t
+	  :keymap my/keys-keymap)
+
+	;; The keymaps in `emulation-mode-map-alists' take precedence over
+	;; `minor-mode-map-alist'
+	(add-to-list 'emulation-mode-map-alists
+		     `((my/keys-mode . ,my/keys-keymap)))
+#+END_SRC
+
+** Functions
+
+Some straightforward functions here, used to make my Emacs life a little easier.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (defun my-kill-buffer-and-window ()
+   "Kill the current buffer and delete the selected window."
+   (interactive)
+   (let ((window-to-delete (selected-window))
+	  (buffer-to-kill (current-buffer))
+	  (delete-window-hook (lambda () (ignore-errors (delete-window)))))
+     (unwind-protect
+	  (progn
+	    (add-hook 'kill-buffer-hook delete-window-hook t t)
+	    (if (kill-buffer (current-buffer))
+		;; If `delete-window' failed before, we rerun it to regenerate
+		;; the error so it can be seen in the echo area.
+		(when (eq (selected-window) window-to-delete)
+		  (delete-window)))))))
+
+  (defun new-vterm ()
+    (interactive)
+    (let ((current-prefix-arg '(4))) ;; emulate C-u
+      (call-interactively 'vterm)))
+
+  (defun dired-open-file ()
+    "In Dired, open the file named on this line."
+    (interactive)
+    (let* ((file (dired-get-filename nil t)))
+      (call-process "xdg-open" nil 0 nil file)))
+
+  (defun insert-above-and-jump ()
+    "Insert line above current line."
+    (interactive)
+    (beginning-of-line)
+    (newline-and-indent)
+    (forward-line -1)
+    (indent-according-to-mode))
+
+  (defun insert-line-below-and-jump ()
+    "Insert line below current line."
+    (interactive)
+    (end-of-line)
+    (newline-and-indent))
+
+  (defun my-enlarge-window-horizontally ()
+    "Enlarge window horizontally."
+    (interactive)
+    (enlarge-window-horizontally 4))
+
+  (defun my-shrink-window-horizontally ()
+    "Shrink window horizontally."
+    (interactive)
+    (shrink-window-horizontally 4))
+#+END_SRC
+
+Sometimes I like to take quick notes in Markdown with impatient mode used for a preview feature.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (defun markdown-html (buffer)
+    "Markdown HTML filter, supply BUFFER."
+    (princ (with-current-buffer buffer
+	     (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+	   (current-buffer)))
+
+  (defun markdown-impatient-start ()
+    "Start impatient mode with filter."
+    (interactive)
+    (impatient-mode)
+    (httpd-start)
+    (imp-set-user-filter 'markdown-html))
+#+END_SRC
+
+
+
+** Keybindings
+
+Finally we get to my extensive custom keybindings. I try to keep these to as few as possible, to avoid forgetting them over time.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (define-key my/keys-keymap (kbd "C-d") 'kill-line)
+  (global-set-key (kbd "C-l") 'forward-char)
+  (define-key my/keys-keymap (kbd "C-h") 'backward-char)
+  (define-key my/keys-keymap (kbd "C-k") 'previous-line)
+  (define-key my/keys-keymap (kbd "C-j") 'next-line)
+  (define-key my/keys-keymap (kbd "M-l") 'forward-word)
+  (define-key my/keys-keymap (kbd "M-h") 'backward-word)
+  (define-key my/keys-keymap (kbd "M-j") 'forward-paragraph)
+  (define-key my/keys-keymap (kbd "M-k") 'backward-paragraph)
+  (define-key my/keys-keymap (kbd "M-c") 'compile)
+  (define-key my/keys-keymap (kbd "C-b") 'ivy-switch-buffer)
+  (define-key my/keys-keymap (kbd "C-p") 'other-window)
+  (define-key my/keys-keymap (kbd "C-o") 'insert-line-above-and-jump)
+  (define-key my/keys-keymap (kbd "C-v") 'set-mark-command)
+  (define-key my/keys-keymap (kbd "<backtab>") 'indent-rigidly)
+  (define-key my/keys-keymap (kbd "C-=") 'indent-region)
+  (define-key my/keys-keymap (kbd "C-§") 'scroll-down-line)
+  (define-key my/keys-keymap (kbd "C-ů") 'scroll-up-line)
+  (define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
+  (define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
+  (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
+  (define-key my/keys-keymap (kbd "C-c r") 'replace-string)
+  (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
+  (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
+  (define-key my/keys-keymap (kbd "C-c n") 'elfeed)
+  (define-key my/keys-keymap (kbd "C-c y") 'yank-from-kill-ring)
+  (define-key my/keys-keymap (kbd "C-c p") 'treemacs)
+  (define-key my/keys-keymap (kbd "C-c l") 'treemacs-select-directory)
+  (define-key my/keys-keymap (kbd "C-c t") 'new-vterm)
+  (define-key my/keys-keymap (kbd "M-w") 'copy-region-as-kill)
+  (define-key my/keys-keymap (kbd "C-c h") 'help)
+  (define-key my/keys-keymap (kbd "C-M-h") 'previous-buffer)
+  (define-key my/keys-keymap (kbd "C-M-l") 'next-buffer)
+  (define-key my/keys-keymap (kbd "C-c v") #'(lambda ()
+					       (interactive)
+					       (split-window-horizontally)
+					       (run-with-idle-timer 0.05 nil
+								    'windmove-right)))
+  (define-key my/keys-keymap (kbd "C-c c") #'(lambda ()
+					       (interactive)
+					       (split-window-vertically)
+					       (run-with-idle-timer 0.05 nil
+								    'windmove-down)))
+  (define-key my/keys-keymap (kbd "C-c q") 'delete-window)
+  (define-key my/keys-keymap (kbd "C-c C-q") 'my-kill-buffer-and-window)
+  (define-key my/keys-keymap (kbd "C-c d") #'(lambda (command)
+					       (interactive (list (read-shell-command "$ ")))
+					       (start-process-shell-command command nil command)))
+  (global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
+  (global-set-key (kbd "C-c C-w") #'(lambda ()
+				      (interactive)
+				      (let ((current-prefix-arg '(4))) ;; emulate C-u
+					(eww (read-string "Enter URL: " "https://google.com")))))
+#+END_SRC
+
+These bindings are defined separately in the EXWM config, so they aren't necessary when using EXWM.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (when (not use-exwm)
+    (define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)
+    (define-key my/keys-keymap (kbd "C-)") #'(lambda () (interactive) (enlarge-window-horizontally 2)))
+    (define-key my/keys-keymap (kbd "C-ú") #'(lambda () (interactive) (shrink-window-horizontally 2)))
+    (define-key my/keys-keymap (kbd "M-ú") #'(lambda () (interactive) (shrink-window 2)))
+    (define-key my/keys-keymap (kbd "M-)") #'(lambda () (interactive) (enlarge-window 2))))
+#+END_SRC
+
+Some mode-specific bindings are added here.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'common-lisp-mode-hook #'(lambda ()
+				       (local-set-key (kbd "C-c d") 'sly-eval-defun)
+				       (local-set-key (kbd "C-c r") 'sly-eval-region)
+				       (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
+  (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
+#+END_SRC
+
+Some news feeds.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+(setq elfeed-feeds
+      '(("https://www.root.cz/rss/clanky" root.cz)
+        ("https://www.root.cz/rss/zpravicky" root.cz)
+        ("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
+#+END_SRC
+
+And we have reached the end!
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+(provide '.emacs)
+#+END_SRC
+
