@@ -58,6 +58,7 @@
 		   rainbow-delimiters
 		   ligature
 		   flycheck
+		   ox-pandoc
 		   web-mode))
   (unless (package-installed-p package)
     (package-install package))
