@@ -1,14 +1,14 @@
 {
     "default": [
-        {
-            "type": "insecureAcceptAnything"
-        }
+	{
+	"type": "insecureAcceptAnything"
+    }
     ],
     "transports":
-        {
-            "docker-daemon":
-                {
-                    "": [{"type":"insecureAcceptAnything"}]
-                }
-        }
+    {
+	"docker-daemon":
+	{
+	    "": [{"type":"insecureAcceptAnything"}]
+	}
+    }
 }

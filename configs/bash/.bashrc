@@ -1,15 +1,3 @@
-# Sample .bashrc for SUSE Linux
-# Copyright (c) SUSE Software Solutions Germany GmbH
-
-# There are 3 different types of shells in bash: the login shell, normal shell
-# and interactive shell. Login shells read ~/.profile and interactive shells
-# read ~/.bashrc; in our setup, /etc/profile sources ~/.bashrc - thus all
-# settings made here will also take effect in a login shell.
-#
-# NOTE: It is recommended to make language settings in ~/.profile rather than
-# here, since multilingual X sessions would not work properly if LANG is over-
-# ridden in every subshell.
-
 clean_build () { # clear guix build by regex
     if [[ $1 ]]; then
 	CLEAR_BUILD_PATHS="$(ls --color=never -d /gnu/store/$1 | tr '\n' ' ')"
@@ -25,7 +13,12 @@ clean_build () { # clear guix build by regex
     fi
 }
 
-test -s ~/.alias && . ~/.alias || true
+if [ -n "$GUIX_ENVIRONMENT" ]; then
+  if [[ $PS1 =~ (.*)"\\$" ]]; then
+      PS1="${BASH_REMATCH[1]} [env]\\\$ "
+  fi
+fi
+
 if [[ $- == *i* ]]
 then
     _GREEN=$(tput setaf 2)
@@ -45,18 +38,9 @@ then
     #  export LD_LIBRARY_PATH=$LIBRARY_PATH
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
 fi
-#export PS1="[\u@\h] \t\n(\w) λ "
+
 alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
-alias lol="distrobox enter ubuntu -- env LUTRIS_SKIP_INIT=1 ~/git/lutris/bin/lutris lutris:rungameid/1"
-
-# Automatically added by the Guix install script.
-if [ -n "$GUIX_ENVIRONMENT" ]; then
-    if [[ $PS1 =~ (.*)"\\$" ]]; then
-        PS1="${BASH_REMATCH[1]} [env]\\\$ "
-    fi
-fi
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"
-

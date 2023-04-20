@@ -1,0 +1,1842 @@
+This is emacs-guix.info, produced by makeinfo version 6.7 from
+emacs-guix.texi.
+
+This document describes Emacs-Guix, the Emacs interface for the GNU Guix
+(https://www.gnu.org/software/guix/) package manager.
+
+     Copyright © 2014-2019, 2021 Alex Kost
+     Copyright © 2018 Oleg Pykhalov
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.3 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, no Front-Cover Texts, and
+     no Back-Cover Texts.  A copy of the license is available at
+     <http://www.gnu.org/licenses/fdl.html>.
+
+INFO-DIR-SECTION Emacs
+START-INFO-DIR-ENTRY
+* Emacs-Guix: (Emacs-Guix).     Emacs interface for GNU Guix
+END-INFO-DIR-ENTRY
+
+
+File: emacs-guix.info,  Node: Top,  Next: Introduction,  Up: (dir)
+
+Emacs-Guix
+**********
+
+This document describes Emacs-Guix, the Emacs interface for the GNU Guix
+(https://www.gnu.org/software/guix/) package manager.
+
+     Copyright © 2014-2019, 2021 Alex Kost
+     Copyright © 2018 Oleg Pykhalov
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.3 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, no Front-Cover Texts, and
+     no Back-Cover Texts.  A copy of the license is available at
+     <http://www.gnu.org/licenses/fdl.html>.
+
+* Menu:
+
+* Introduction::        Quick overview.
+* Installation::        Installing Emacs-Guix.
+* Packages::            Interface for packages.
+* Profiles and Generations:: Interface for profiles and their generations.
+* System::              Interface for ‘operating-system’ and services.
+* Store Items::         Interface for store items.
+* Package Licenses::    Interface for licenses of packages.
+* Popup Interface::     Magit-like interface for Emacs-Guix commands.
+* Prettify Mode::       Abbreviating ‘/gnu/store/...’ file names.
+* Prettify Variables::  Split and indent Shell variables.
+* Build Log Mode::      Highlighting Guix build logs.
+* Completions::         Completing ‘guix’ shell command.
+* Development::         Highlighting and tools for Guix code.
+* List/Info Interface:: Describing “list”/”info” buffers.
+* Configuration::       Configuring Emacs-Guix.
+* Miscellaneous Commands:: ‘M-x guix-...’ uncovered by other sections.
+* Help::                Help commands.
+
+Indexes
+* Concept Index::       Concepts.
+* Command Index::       Commands and functions.
+* Variable Index::      Variables.
+
+
+File: emacs-guix.info,  Node: Introduction,  Next: Installation,  Prev: Top,  Up: Top
+
+1 Introduction
+**************
+
+Emacs-Guix (also known as “guix.el”) provides various interfaces and
+tools related to the GNU Guix package manager.
+
+   Call ‘M-x guix’ if you prefer to dive in right away (*note Popup
+Interface::).
+
+   In short, Emacs-Guix provides the following features:
+
+   • Interfaces for:
+
+        − profiles (*note Profiles::)
+        − profile generations (*note Generations::)
+        − packages (*note Packages::)
+        − package locations (*note Package Locations::)
+        − package licenses (*note Package Licenses::)
+        − ‘operating-system’ declaration (*note System From File::)
+        − services (*note Services::)
+        − service locations (*note Service Locations::)
+        − store items (*note Store Items::)
+
+   • Magit-like popup interface for all Emacs-Guix ‘M-x’ commands and
+     Guix shell commands (*note Popup Interface::).
+
+   • Modes to view logs of package builds (*note Build Log Mode::).
+
+   • Minor mode to “prettify” store file names (*note Prettify Mode::).
+
+   • Shell completions for all guix commands and options (*note
+     Completions::).
+
+   • Minor mode with additional functionality for ‘scheme-mode’ to work
+     with Guix Scheme files (*note Development::).
+
+
+File: emacs-guix.info,  Node: Installation,  Next: Packages,  Prev: Introduction,  Up: Top
+
+2 Installation
+**************
+
+There are several ways(1) to install Emacs-Guix:
+
+   • Installing using GNU Guix
+          $ guix package -i emacs-guix
+
+   • Installing from MELPA (http://melpa.org/)
+
+   • Using from a git checkout
+
+   For the first 2 options, you are all set, so you can skip this
+chapter.  If you want to use Emacs-Guix from a git checkout, read
+further.
+
+* Menu:
+
+* Requirements::        Required and optional dependencies.
+* Using from Git::      Using without installation.
+
+   ---------- Footnotes ----------
+
+   (1) It is not recommended to mix several installations (in
+particular, installations from Guix and MELPA), as it may lead to
+incompatibilities in the source (‘.scm’) and compiled (‘.go’) Guile
+files.
+
+
+File: emacs-guix.info,  Node: Requirements,  Next: Using from Git,  Up: Installation
+
+2.1 Requirements
+================
+
+Emacs-Guix depends on the following packages:
+
+   • GNU Emacs (http://www.gnu.org/software/emacs/), version 24.3 or
+     later.
+
+   • GNU Guix (http://www.gnu.org/software/guix/), version 0.11.0 or
+     later.  You need it for the most features of Emacs-Guix, but not
+     for all: Guix is not needed if you want to look at log files (*note
+     Build Log Mode::) or to “prettify” store file names (*note Prettify
+     Mode::).
+
+   • Guile-Gcrypt (https://notabug.org/cwebber/guile-gcrypt), version
+     0.1.0 or later.  It is needed only for ‘M-x guix-hash’ command
+     (*note Miscellaneous Commands::).
+
+   • Geiser (http://nongnu.org/geiser/), version 0.8 or later.  It is
+     used to communicate with the Guix daemon, and to receive various
+     info from the Guix Guile code.  So without Geiser, you can use the
+     same features as without Guix.
+
+   • dash library (https://github.com/magnars/dash.el), version 2.11.0
+     or later.
+
+   • BUI library (https://gitlab.com/alezost-emacs/bui), version 1.2.0
+     or later.  It is used to define various “list”/“info” interfaces
+     (to display packages, generations, licenses, etc.).
+
+   • magit-popup library (https://github.com/magit/magit-popup).  You
+     already have this library if you use Magit 2.1.0 or later.  This
+     library is required only for ‘M-x guix’ command (*note Popup
+     Interface::).
+
+   • edit-indirect library (https://github.com/Fanael/edit-indirect),
+     version 0.1.4 or later.  It is used only to edit
+     synopsis/description in ‘guix-devel-mode’ (*note Development::).
+
+   • Emacs-Build-Farm (https://gitlab.com/alezost-emacs/build-farm),
+     version 0.2.1 or later.  Emacs-Guix provides some integration
+     features for this package (if it is installed), for example, ‘B’
+     key in a list of packages (*note Package Keys::).
+
+   To sum up, most likely, you’ll need all the above dependencies except
+maybe ‘magit-popup’, ‘edit-indirect’ and ‘build-farm’.
+
+
+File: emacs-guix.info,  Node: Using from Git,  Prev: Requirements,  Up: Installation
+
+2.2 Using from Git
+==================
+
+You can use Emacs-Guix directly from a git checkout without any
+installation.
+
+   At first, you need to clone the repository and to run ‘autogen.sh’
+script (it’s just a wrapper for ‘autoreconf’ command).  If you don’t
+have all dependencies installed, you may use ‘guix.scm’ file to make an
+environment to build Emacs-Guix (*note (guix)Invoking guix
+environment::):
+
+     $ git clone https://notabug.org/alezost/emacs-guix.git
+     $ cd guix.el
+     $ guix environment --pure --load=guix.scm
+     $ ./autogen.sh
+
+   Now configure and make it (this will compile all Emacs-Lisp and
+Scheme files, and will generate ‘guix-autoloads.el’ file):
+
+     $ ./configure
+     $ make
+
+   Now all you need, is to add ‘elisp’ directory to the Emacs
+‘load-path’ and to load the generated autoloads.  This can be done by
+adding the following code into your Emacs init file (*note (emacs)Init
+File::):
+
+     (add-to-list 'load-path "/path/to/emacs-guix/elisp")
+     (require 'guix-autoloads nil t)
+
+   Now, if you start Emacs, all ‘M-x guix-...’ commands should become
+available.
+
+* Menu:
+
+* Using the Manual from Git::
+
+
+File: emacs-guix.info,  Node: Using the Manual from Git,  Up: Using from Git
+
+2.2.1 Using the Manual from Git
+-------------------------------
+
+After “make”-ing, the info manual is ready to use.  You can run it, for
+example, with ‘C-u C-h i’ command (the file is ‘doc/emacs-guix.info’).
+However it is not convenient.  You may want to have this manual in the
+top info directory along with the other manuals.  To make it possible,
+you need to do the following 2 steps:
+
+   • At first, you need to add the doc directory to your Info path.  One
+     way to do it is to extend INFOPATH environment variable:
+
+          export INFOPATH="/path/to/emacs-guix/doc${INFOPATH:+:}$INFOPATH"
+
+     Alternatively, you can adjust Info path inside Emacs, like this:
+
+          (with-eval-after-load 'info
+            (info-initialize)
+            (add-to-list 'Info-directory-list "/path/to/emacs-guix/doc"))
+
+   • And secondly, the doc directory should contain ‘dir’ file (*note
+     (texinfo)Directory File::).  It can be generated simply by running
+     the following command:
+
+          make doc/dir
+
+   Once the above 2 steps are done, ‘C-h i’ should display the
+Emacs-Guix entry.  Also you can use ‘M-x guix-info’ command to run the
+manual (*note Help::).
+
+
+File: emacs-guix.info,  Node: Packages,  Next: Profiles and Generations,  Prev: Installation,  Up: Top
+
+3 Packages
+**********
+
+Emacs-Guix provides a visual interface for packages where you can
+perform routine package management tasks, pretty much like the ‘guix
+package’ command (*note (guix)Invoking guix package::).
+
+* Menu:
+
+* Package Commands::    ‘M-x guix-...’ to show packages.
+* Package Keys::        Key bindings in package “list” and “info” buffers.
+* Package Locations::   Interface for locations of packages.
+* Lint Checkers::       Interface for package lint checkers.
+* More Package Commands:: Other ‘M-x guix-...’ related to packages.
+
+
+File: emacs-guix.info,  Node: Package Commands,  Next: Package Keys,  Up: Packages
+
+3.1 Package Commands
+====================
+
+There are multiple commands to display a list of Guix packages.  You can
+either perform some actions in such “package-list” buffer, or “describe”
+package(s) in “package-info” buffer using ‘<RET>’.
+
+   The following commands use the current profile, which can be changed
+globally with ‘M-x guix-set-current-profile’ (*note Profile Commands::).
+Alternatively, if you call any of the following commands with a prefix
+argument (‘C-u’), you will be prompted for a profile just for that
+command.
+
+‘M-x guix-all-packages’
+     Display all available packages.
+
+‘M-x guix-installed-packages’
+‘M-x guix-installed-user-packages’
+‘M-x guix-installed-system-packages’
+     Display installed packages.  As explained above, ‘M-x
+     guix-installed-packages’ uses an arbitrary profile that you can
+     specify, while the other commands display packages installed in 2
+     special profiles: ‘~/.guix-profile’ and
+     ‘/run/current-system/profile’ (only on Guix System).
+
+‘M-x guix-obsolete-packages’
+     Display obsolete or unknown packages (the packages that are
+     installed in a profile but cannot be found among the available
+     packages).
+
+‘M-x guix-superseded-packages’
+     Display packages that are superseded by the other packages.
+
+‘M-x guix-hidden-packages’
+     Display packages that are hidden from user interfaces (usually
+     because they are for internal use only).
+
+‘M-x guix-dependent-packages’
+     Display packages that depend on the specified package(s).  This
+     command is analogous to ‘guix refresh --list-dependent’ shell
+     command (*note (guix)Invoking guix refresh::).  You’ll be prompted
+     for a package name (or multiple names, separated by commas) and a
+     dependency type (it should be either “all” or “direct”).
+
+‘M-x guix-packages-by-name’
+     Display package(s) with the specified name.
+
+‘M-x guix-packages-by-regexp’
+     Search for packages by a specified regexp.  By default, “name”,
+     “synopsis” and “description” of the packages will be searched.
+     This can be changed by modifying ‘guix-package-search-params’
+     variable.
+
+‘M-x guix-packages-by-name-regexp’
+     Search for packages with names matching a specified regexp.  This
+     command is the same as ‘guix-packages-by-regexp’, except only a
+     package “name” is searched.
+
+‘M-x guix-packages-by-license’
+     Display package(s) with the specified license.
+
+‘M-x guix-packages-by-location’
+     Display package(s) located in the specified file.  These files
+     usually have the following form: ‘gnu/packages/emacs.scm’, but
+     don’t type them manually!  Press ‘<TAB>’ to complete the file name.
+
+‘M-x guix-package-from-file’
+     Display package that the code within the specified file evaluates
+     to.  *Note ‘--install-from-file’: (guix)Invoking guix package, for
+     an example of what such a file may look like.
+
+‘M-x guix-packages-from-system-config-file’
+     Display packages from the specified file with ‘operating-system’
+     declaration (*note (guix)Using the Configuration System::).
+
+   By default, these commands display each package *output* on a
+separate line.  If you prefer to see a list of packages—i.e., a list
+with a *package* per line, use the following setting:
+
+     (setq guix-package-list-type 'package)
+
+
+File: emacs-guix.info,  Node: Package Keys,  Next: Package Locations,  Prev: Package Commands,  Up: Packages
+
+3.2 Package Keys
+================
+
+3.2.1 List Buffer
+-----------------
+
+Along with the general “list” keys (*note List buffer::), a
+“package-list” buffer additionally provides the following key bindings:
+
+‘i’
+     Mark the current package for installation.
+‘d’
+     Mark the current package for deletion.
+‘U’
+     Mark the current package for upgrading.
+‘^’
+     Mark all obsolete packages for upgrading (with prefix, mark all
+     installed packages for upgrading).
+‘x’
+     Execute actions on the marked packages.
+‘e’
+     Edit the definition of the current package (go to its location).
+     This is similar to ‘guix edit’ command (*note (guix)Invoking guix
+     edit::), but for opening a package recipe in the current Emacs
+     instance.
+‘G’
+     Show graph for the current package (*note Graph Configuration::).
+‘z’
+     Show package size (*note (guix)Invoking guix size::).
+‘L’
+     Lint the current package (*note (guix)Invoking guix lint::).  With
+     prefix argument, you’ll be prompted for checker names.
+‘B’
+     Display latest builds (from the Guix build farm) of the current
+     package.
+
+3.2.2 Info Buffer
+-----------------
+
+Similarly, “package-info” buffer provides the following key bindings:
+
+‘i’
+     Install the current package.
+‘d’
+     Delete the current package.
+‘U’
+     Upgrade the current package.
+‘e’
+     Go to the package definition.
+‘G’
+     Show package graph.
+‘z’
+     Show package size.
+‘L’
+     Lint the package.
+
+
+File: emacs-guix.info,  Node: Package Locations,  Next: Lint Checkers,  Prev: Package Keys,  Up: Packages
+
+3.3 Package Locations
+=====================
+
+As you know, package definitions are placed in Guile files.  The
+following commands should help you not get lost in these “package
+locations”:
+
+‘M-x guix-package-locations’
+     Display a list of files with package definitions.  You can press
+     ‘P’ or ‘<RET>’ there to display packages placed in the current file
+     in the same way as ‘M-x guix-packages-by-location’ would do (*note
+     Package Commands::).  Note that when the point is on a location
+     button, ‘<RET>’ will open this location file.
+
+‘M-x guix-find-package-location-file’
+     Open a file with package definitions (press ‘<TAB>’ to choose a
+     file from the completion list).
+
+‘M-x guix-find-package-definition’
+‘M-x guix-edit’
+     Find location of a specified package.  This is an Emacs analog of
+     ‘guix edit’ command (*note (guix)Invoking guix edit::).  As with
+     ‘M-x guix-packages-by-name’, you can press ‘<TAB>’ to complete a
+     package name.
+
+   By default, when you should specify a package name (for example,
+after ‘M-x guix-edit’), you will be prompted for it in the minibuffer,
+but you can configure Emacs-Guix to use a package name at the current
+point position (unless ‘C-u’ is used):
+
+     (setq guix-read-package-name-function 'guix-read-package-name-at-point)
+
+
+File: emacs-guix.info,  Node: Lint Checkers,  Next: More Package Commands,  Prev: Package Locations,  Up: Packages
+
+3.4 Lint Checkers
+=================
+
+The following commands provides functionality similar to ‘guix lint’
+shell command (*note (guix)Invoking guix lint::).
+
+‘M-x guix-lint-checkers’
+     Display a list of available lint checkers.  You can press ‘L’ there
+     to lint the packages you will be prompted for with the marked
+     checkers.
+
+‘M-x guix-package-lint’
+     Lint packages.  You will be prompted for comma separated package
+     names.  With prefix argument, you will also be prompted for checker
+     names.
+
+
+File: emacs-guix.info,  Node: More Package Commands,  Prev: Lint Checkers,  Up: Packages
+
+3.5 More Package Commands
+=========================
+
+And some more commands related to packages:
+
+‘M-x guix-number-of-packages’
+     This command just displays a message (in the minibuffer) with the
+     number of available packages.  Along with the default Guix
+     packages, this number includes the packages from
+     ‘GUIX_PACKAGE_PATH’ environment variable (*note (guix)Package
+     Modules::).
+
+‘M-x guix-package-graph’
+     Show a package graph.  You’ll be prompted for a package name, graph
+     backend and graph node type (everything can be completed with
+     ‘<TAB>’ key).  *Note Graph Configuration::, if you want to set an
+     external graph viewer.
+
+‘M-x guix-package-size’
+     Show a package size (*note (guix)Invoking guix size::).  You’ll be
+     prompted for a package name and a size type (it should be either
+     “text” or “image”).
+
+
+File: emacs-guix.info,  Node: Profiles and Generations,  Next: System,  Prev: Packages,  Up: Top
+
+4 Profiles and Generations
+**************************
+
+As you know, packages are installed in “profiles”.  The default user
+profile is ‘~/.guix-profile’ (actually it is a symlink to the real
+profile) but you can also install packages to non-standard profiles
+(using ‘guix package --profile=...’).
+
+   Profiles have “generations”.  They appear whenever you perform any
+profile action (installing/removing packages).  These generations are
+just symlinks to the previous versions of profile, so you can easily
+roll-back to any previous generation.
+
+   As you may guess, Emacs-Guix provides an interface for profiles and
+their generations, where you can look at the packages from the old
+generations, switch to any generation, delete generations, etc.
+
+* Menu:
+
+* Profiles::            Interface for profiles.
+* Generations::         Interface for generations.
+
+
+File: emacs-guix.info,  Node: Profiles,  Next: Generations,  Up: Profiles and Generations
+
+4.1 Profiles
+============
+
+If you manage multiple Guix profiles, this section is for you.  ‘M-x
+guix-profiles’ is the entry point to display profiles.  There you can
+look at the profile generations, installed packages and more.  Read
+further for details.
+
+* Menu:
+
+* Profile Commands::    ‘M-x guix-profiles’ and friends.
+* Profile Keys::        Key bindings in profile “list” buffer.
+
+
+File: emacs-guix.info,  Node: Profile Commands,  Next: Profile Keys,  Up: Profiles
+
+4.1.1 Profile Commands
+----------------------
+
+‘M-x guix-profiles’
+     Show a list of available Guix profiles.  By default, it displays:
+
+     ‘~/.guix-profile’
+          the default user profile
+
+     ‘~/.config/guix/current’
+          profile, populated by ‘guix pull’
+
+     ‘/var/guix/profiles/system’
+          system profile (only on Guix System)
+
+     ‘GUIX_PROFILE’
+          (only if this environment variable is set and this profile is
+          not the same as one of the above)
+
+     and other profiles shown by ‘guix package --list-profiles’ shell
+     command.  If it is not enough for you, you can add even more
+     profiles to this list by setting ‘guix-profiles’ variable, for
+     example, like this:
+
+          (with-eval-after-load 'guix-ui-profile
+            (setq guix-profiles
+                  (append '("/path/to/my-profile1"
+                            "/path/to/my-profile2")
+                          (guix-all-profiles))))
+
+     The “profile-list” buffer provides some keys to work with profiles
+     (*note Profile Keys::), but also there are the following standalone
+     profile commands that can be called outside this buffer.
+
+‘M-x guix-set-current-profile’
+     Set the current profile (‘guix-current-profile’ variable) to the
+     specified one.  The current profile is used by the package commands
+     (*note Package Commands::) to check what package is installed in
+     this profile, and by generation commands (*note Generation
+     Commands::).
+
+‘M-x guix-apply-manifest’
+     Apply a manifest file to the current profile or a specified
+     profile, if the prefix argument is used.  This has the same meaning
+     as ‘--manifest’ option (*note (guix)Invoking guix package::).
+
+
+File: emacs-guix.info,  Node: Profile Keys,  Prev: Profile Commands,  Up: Profiles
+
+4.1.2 Profile Keys
+------------------
+
+Along with the general “list” keys (*note List buffer::), a
+“profile-list” buffer (displayed by ‘M-x guix-profiles’) additionally
+provides the following bindings:
+
+‘P’
+     Display packages installed in profile at point.
+‘G’
+     Display generations of profile at point.
+‘E’
+     Display “search paths” environment variables for the marked
+     profiles, or the current profile if nothing is marked.  This
+     command is analogous to ‘guix package --search-paths’ shell command
+     (*note (guix)Invoking guix package::).
+‘c’
+     Make profile at point the current profile for the package commands
+     (*note Packages::).
+‘M’
+     Apply manifest from a specified file to the profile at point.
+
+
+File: emacs-guix.info,  Node: Generations,  Prev: Profiles,  Up: Profiles and Generations
+
+4.2 Generations
+===============
+
+Each Guix profile may have multiple generations and Emacs-Guix allows
+you to display these generations, to switch to a particular generation,
+to look at the packages installed in it and to compare 2 generations.
+
+* Menu:
+
+* Generation Commands:: ‘M-x guix-...’ to show profile generations.
+* Generation Keys::     Key bindings in generation “list” buffer.
+
+
+File: emacs-guix.info,  Node: Generation Commands,  Next: Generation Keys,  Up: Generations
+
+4.2.1 Generation Commands
+-------------------------
+
+As with commands for displaying packages (*note Package Commands::),
+commands for displaying generations also use the current profile and can
+be called with a prefix argument.
+
+‘M-x guix-generations’
+     List all the generations.
+
+‘M-x guix-last-generations’
+     List the N last generations.  You will be prompted for the number
+     of generations.
+
+‘M-x guix-generations-by-time’
+     List generations matching time period.  You will be prompted for
+     the period using Org mode time prompt based on Emacs calendar
+     (*note (org)The date/time prompt::).
+
+   If you use Guix System, you may also look at the system generations
+using the similar commands (*note System Commands::).
+
+
+File: emacs-guix.info,  Node: Generation Keys,  Prev: Generation Commands,  Up: Generations
+
+4.2.2 Generation Keys
+---------------------
+
+Along with the general “list” keys (*note List buffer::), a
+“generation-list” buffer additionally provides the following bindings:
+
+‘P’
+     Display packages installed in the current generation.
+‘E’
+     Display “search paths” environment variables for the marked
+     generations.  This command is similar to the one for a list of
+     profiles (*note Profiles::).
+‘c’
+     Switch profile to the current generation.
+‘d’
+     Mark the current generation for deletion (with prefix, mark all
+     generations).
+‘x’
+     Execute actions on the marked generations—i.e., delete generations.
+‘e’
+     Run Ediff (*note (ediff)Top::) on package outputs installed in the
+     2 marked generations.  With prefix argument, run Ediff on manifests
+     of the marked generations.
+‘=’
+     Run Diff (*note (emacs)Diff Mode::) on package outputs installed in
+     the 2 marked generations.  With prefix argument, run Diff on
+     manifests of the marked generations.
+‘+’
+     List package outputs added to the latest marked generation
+     comparing with another marked generation.
+‘-’
+     List package outputs removed from the latest marked generation
+     comparing with another marked generation.
+
+
+File: emacs-guix.info,  Node: System,  Next: Store Items,  Prev: Profiles and Generations,  Up: Top
+
+5 System
+********
+
+This chapter describes Emacs-Guix features related to Guix System, in
+particular:
+
+   • interface for system configuration file;
+   • interface for system services;
+   • commands to display system profile and generations.
+
+* Menu:
+
+* System From File::    Interface for ‘operating-system’ declaration.
+* Services::            Interface for system services.
+* System Commands::     Other ‘M-x guix-...’ related to system.
+
+
+File: emacs-guix.info,  Node: System From File,  Next: Services,  Up: System
+
+5.1 System From File
+====================
+
+Your system configuration file (for Guix System) contains
+‘operating-system’ declaration (*note (guix)operating-system
+Reference::).
+
+   And Emacs-Guix provides an interface for this ‘operating-system’,
+where you can look at the packages, services, initrd modules that this
+system will install and some other stuff.
+
+‘guix-system-from-file’
+     Find your system configuration file and look at the system it
+     provides.
+
+
+File: emacs-guix.info,  Node: Services,  Next: System Commands,  Prev: System From File,  Up: System
+
+5.2 Services
+============
+
+If you use Guix System, you may have a wish to become more familiar with
+the system services (*note (guix)Services::).  Emacs-Guix provides
+several commands to display these services.
+
+* Menu:
+
+* Service Commands::    ‘M-x guix-...’ to show services.
+* Service Locations::   Interface for locations of services.
+
+
+File: emacs-guix.info,  Node: Service Commands,  Next: Service Locations,  Up: Services
+
+5.2.1 Service Commands
+----------------------
+
+The interface for services is very similar to the interface for packages
+(*note Packages::).  The following commands allows you to look at the
+Guix System services.
+
+‘M-x guix-all-services’
+     Display all available services.
+
+‘M-x guix-default-services’
+     Display services from ‘%base-services’ (*note (guix)Base
+     Services::) or ‘%desktop-services’ (*note (guix)Desktop
+     Services::).  You will be prompted in the minibuffer for the
+     variable name (completions available).
+
+‘M-x guix-services-by-name’
+     Display service(s) with the specified name.
+
+‘M-x guix-services-by-regexp’
+     Search for services by a specified regexp.  By default, “name” and
+     “description” of the services will be searched.  This can be
+     changed by modifying ‘guix-service-search-params’ variable.
+
+‘M-x guix-services-by-location’
+     Display service(s) located in the specified file.
+
+‘M-x guix-services-from-system-config-file’
+     Display services from the specified file with ‘operating-system’
+     declaration.
+
+
+File: emacs-guix.info,  Node: Service Locations,  Prev: Service Commands,  Up: Services
+
+5.2.2 Service Locations
+-----------------------
+
+Similarly to the package locations (*note Package Locations::), you may
+look at the service locations:
+
+‘M-x guix-service-locations’
+     Display a list of files with service locations.  Press ‘<RET>’
+     there to display services placed in the current location.
+
+‘M-x guix-find-service-location-file’
+     Open a file with service definitions (press ‘<TAB>’ to choose the
+     file from a completion list).
+
+‘M-x guix-find-service-definition’
+     Go to the service location—i.e., open a file with the specified
+     service and move the point to its definition.
+
+
+File: emacs-guix.info,  Node: System Commands,  Prev: Services,  Up: System
+
+5.3 System Commands
+===================
+
+Along with the commands for services and ‘operating-system’, there are
+commands to look at the system profile (‘/var/guix/profiles/system’),
+its generations and packages installed in it.
+
+‘M-x guix-system-profile’
+     Display “info” interface for the system profile.
+
+‘M-x guix-system-generations’
+‘M-x guix-last-system-generations’
+‘M-x guix-system-generations-by-time’
+     Display generations of the system profile.  These commands have the
+     same meaning as the usual generation commands (*note Generation
+     Commands::).
+
+‘M-x guix-installed-system-packages’
+     Display packages installed in the system profile.
+
+‘M-x guix-packages-from-system-config-file’
+‘M-x guix-services-from-system-config-file’
+     Display packages/services from the specified system configuration
+     file.  You can also look at these packages/services from the
+     “system-info” interface (*note System From File::).
+
+
+File: emacs-guix.info,  Node: Store Items,  Next: Package Licenses,  Prev: System,  Up: Top
+
+6 Store Items
+*************
+
+Your ‘/gnu/store’ is full of items, and Emacs-Guix provides several
+commands that allow you to look at these items closely.  Most of these
+commands are analogous to ‘guix gc’ shell commands with the according
+options (‘--referrers’, ‘--derivers’, etc.)  (*note (guix)Invoking guix
+gc::).
+
+* Menu:
+
+* Store Item Commands:: ‘M-x guix-...’ to show store items.
+* Store Item Keys::     Key bindings in store item “list” buffer.
+
+
+File: emacs-guix.info,  Node: Store Item Commands,  Next: Store Item Keys,  Up: Store Items
+
+6.1 Store Item Commands
+=======================
+
+‘M-x guix-store-item’
+     Display some info on the specified store file.
+
+‘M-x guix-store-item-referrers’
+     Display referrers of the specified store file.
+
+‘M-x guix-store-item-references’
+     Display references of the specified store file.
+
+‘M-x guix-store-item-requisites’
+     Display requisites of the specified store file.
+
+‘M-x guix-store-item-derivers’
+     Display derivers of the specified store file.
+
+‘M-x guix-store-failures’
+     Display store items corresponding to cached build failures.
+
+‘M-x guix-store-live-items’
+     Display live store items.  Note that this and the next commands may
+     take a long time if your store is big.
+
+‘M-x guix-store-dead-items’
+     Display dead store items.
+
+
+File: emacs-guix.info,  Node: Store Item Keys,  Prev: Store Item Commands,  Up: Store Items
+
+6.2 Store Item Keys
+===================
+
+Along with the general “list” keys (*note List buffer::), a
+“store-item-list” buffer additionally provides the following key
+bindings:
+
+‘e’
+     Go to the current store item.
+‘d’
+     Mark the current store item for deletion (with prefix, mark all
+     store items).
+‘x’
+     Execute operation on the marked store items—i.e., attempt to delete
+     them.  This is similar to ‘guix gc --delete ...’.
+‘z’
+     Show minibuffer message with total size of the marked store items.
+‘D’
+     Show derivers of the current (or marked) store item(s).
+‘R’
+     Show requisites of the current (or marked) store item(s).
+‘f’
+     Show referrers of the current (or marked) store item(s).
+‘F’
+     Show references of the current (or marked) store item(s).
+
+
+File: emacs-guix.info,  Node: Package Licenses,  Next: Popup Interface,  Prev: Store Items,  Up: Top
+
+7 Package Licenses
+******************
+
+If you want to browse the URL of a particular license, or to look at a
+list of licenses, you may use the following commands:
+
+‘M-x guix-browse-license-url’
+     Choose a license from a completion list to browse its URL using
+     ‘browse-url’ function (*note (emacs)Browse-URL::).
+
+‘M-x guix-licenses’
+     Display a list of available licenses.  You can press ‘P’ key there
+     to display packages with this license in the same way as
+     ‘M-x guix-packages-by-license’ would do (*note Package Commands::).
+
+‘M-x guix-find-license-location-file’
+     Open ‘.../guix/licenses.scm’ file.
+
+‘M-x guix-find-license-definition’
+     Open ‘.../guix/licenses.scm’ and move to the specified license.
+
+
+File: emacs-guix.info,  Node: Popup Interface,  Next: Prettify Mode,  Prev: Package Licenses,  Up: Top
+
+8 Popup Interface
+*****************
+
+If you ever used Magit, you know what “popup interface” is (*note
+(magit-popup)Top::).  Even if you are not acquainted with Magit, there
+should be no worries as it is very intuitive.
+
+   So, ‘M-x guix’ command provides a top-level popup interface for
+almost all the available Emacs-Guix commands.  It has 2 advantages
+comparing with calling ‘M-x guix-...’ commands directly:
+
+   • There is no need to remember the names of Emacs-Guix commands, as
+     you can always find them in ‘M-x guix’ and its sub-popups.
+
+   • It is faster (well, if you know what you are going to call), as it
+     may serve as a shortcut.  For example, instead of calling
+     ‘M-x guix-packages-by-name’, you can press: ‘M-x guix p n’.
+
+   If you use ‘M-x guix’ often, you may wish to bind it to some easy
+accessible key combination, for example, to ‘<super>-g’:
+
+     (global-set-key (kbd "s-g") 'guix)
+
+* Menu:
+
+* Guix Popup Interface::
+
+
+File: emacs-guix.info,  Node: Guix Popup Interface,  Up: Popup Interface
+
+8.1 Guix Popup Interface
+========================
+
+There is one rather special sub-popup in ‘M-x guix’.  It is bind to ‘c’
+by default, and you can call it separately with ‘M-x guix-command’.  It
+is a popup interface for ‘guix ...’ shell commands.  It is probably not
+very useful, as it provides all the options and flags for all the shell
+actions and subcommands, so it may be confusing to see them all at once.
+Nevertheless, a description of this thing follows.
+
+   When you select an option, you’ll be prompted for a value in the
+minibuffer.  Many values have completions, so don’t hesitate to press
+‘<TAB>’ key.  Multiple values (for example, packages or lint checkers)
+should be separated by commas.
+
+   After specifying all options and switches for a command, you may
+choose one of the available actions.  The following default actions are
+available for all commands:
+
+   • Run the command in the Guix REPL. It is faster than running
+     ‘guix ...’ command directly in shell, as there is no need to run
+     another guile process and to load required modules there.
+
+   • Run the command in a shell buffer.  You can set
+     ‘guix-run-in-shell-function’ variable to fine tune the shell buffer
+     you want to use.
+
+   • Add the command line to the kill ring (*note (emacs)Kill Ring::).
+
+   Several commands (‘guix graph’, ‘guix system shepherd-graph’ and
+‘guix system extension-graph’) also have a “View graph” action, which
+allows you to view a generated graph (*note Graph Configuration::).
+
+
+File: emacs-guix.info,  Node: Prettify Mode,  Next: Prettify Variables,  Prev: Popup Interface,  Up: Top
+
+9 Guix Prettify Mode
+********************
+
+Emacs-Guix also comes with “guix-prettify.el”.  It provides a minor mode
+for abbreviating store file names by replacing hash sequences of symbols
+with “...”:
+
+     /gnu/store/72f54nfp6g1hz873w8z3gfcah0h4nl9p-foo-0.1
+     ⇒ /gnu/store/…-foo-0.1
+
+‘M-x guix-prettify-mode’
+     Enable/disable prettifying for the current buffer.
+
+‘M-x global-guix-prettify-mode’
+     Enable/disable prettifying globally.
+
+   If you wish to enable ‘global-guix-prettify-mode’ automatically on
+Emacs start, you may do it by adding the following line to your Emacs
+init file:
+
+     (add-hook 'after-init-hook 'global-guix-prettify-mode)
+
+   If you want to enable it only for specific major modes, add it to the
+mode hooks (*note (emacs)Hooks::), for example:
+
+     (add-hook 'shell-mode-hook 'guix-prettify-mode)
+     (add-hook 'dired-mode-hook 'guix-prettify-mode)
+
+
+File: emacs-guix.info,  Node: Prettify Variables,  Next: Build Log Mode,  Prev: Prettify Mode,  Up: Top
+
+10 Guix Environment Variables Mode
+**********************************
+
+Emacs-Guix provides a major mode based on ‘sh-mode’ for prettifying
+‘environment-variables’ and ‘profile’ files.  It will split all exported
+variables and separate them with a newline.  All
+‘/tmp/guix-build-*-*.drv-*/environment-variables’ and ‘/etc/profile’
+will be prettified by default.
+
+   If you want to disable this prettifying, set
+‘guix-env-var-enable-formatting’ variable to nil.
+
+   You could also directly use ‘guix-env-var-prettify-buffer’ to
+prettify the current buffer without changing its major mode and
+‘guix-env-var-prettify-variable’ to prettify a variable at current line.
+
+‘M-x guix-env-var-mode’
+     Enable/disable prettifying for the current buffer.
+
+‘M-x guix-env-var-prettify-buffer’
+     Prettify current buffer without switching to ‘guix-env-var-mode’.
+
+‘M-x guix-env-var-prettify-variable’
+     Prettify variable assignment at current line.
+
+
+File: emacs-guix.info,  Node: Build Log Mode,  Next: Completions,  Prev: Prettify Variables,  Up: Top
+
+11 Build Log Mode
+*****************
+
+Emacs-Guix provides major and minor modes for highlighting build logs.
+So when you have a file with a package build output—for example, a file
+returned by ‘guix build --log-file ...’ command (*note (guix)Invoking
+guix build::), you may call ‘M-x guix-build-log-mode’ command in the
+buffer with this file.  This major mode highlights some lines specific
+to build output and provides the following key bindings:
+
+‘M-n’
+     Move to the next build phase.
+
+‘M-p’
+     Move to the previous build phase.
+
+‘<TAB>’
+     Toggle (show/hide) the body of the current build phase.
+
+‘S-<TAB>’
+     Toggle (show/hide) the bodies of all build phases.
+
+   There is also ‘M-x guix-build-log-minor-mode’ which also provides the
+same highlighting and the same key bindings as the major mode, but
+prefixed with ‘C-c’.  You may find this minor mode useful for shell
+buffers (*note (emacs)Interactive Shell::).  It can be enabled there
+like this:
+
+     (add-hook 'shell-mode-hook 'guix-build-log-minor-mode)
+
+
+File: emacs-guix.info,  Node: Completions,  Next: Development,  Prev: Build Log Mode,  Up: Top
+
+12 Shell Completions
+********************
+
+Another available feature is completing ‘guix’ subcommands, options,
+packages and other things in ‘shell’ (*note (emacs)Interactive Shell::)
+and ‘eshell’ (*note (eshell)Top::) buffers.
+
+   It works the same way as other completions do.  Just press ‘<TAB>’
+when your intuition tells you.
+
+   And here are some examples, where pressing ‘<TAB>’ may complete
+something:
+
+     ‘guix pa’‘<TAB>’
+     ‘guix package -’‘<TAB>’
+     ‘guix package --’‘<TAB>’
+     ‘guix package -i gei’‘<TAB>’
+     ‘guix build -L/tm’‘<TAB>’
+     ‘guix build --sy’‘<TAB>’
+     ‘guix build --system=i’‘<TAB>’
+     ‘guix system rec’‘<TAB>’
+     ‘guix lint --checkers=sy’‘<TAB>’
+     ‘guix lint --checkers=synopsis,des’‘<TAB>’
+     ‘guix graph --backend=’‘<TAB>’
+
+
+File: emacs-guix.info,  Node: Development,  Next: List/Info Interface,  Prev: Completions,  Up: Top
+
+13 Development
+**************
+
+If you often work with Guix package files, you may want to see some
+highlighting and to have some indentation rules specific for Guix
+keywords.  There is a minor mode to help you—‘M-x guix-devel-mode’.  It
+can be enabled in Scheme buffers like this:
+
+     (add-hook 'scheme-mode-hook 'guix-devel-mode)
+
+   Along with highlighting and indentation, this minor mode provides the
+following key bindings:
+
+‘C-c . k’
+     Copy the name of the current Guile module into kill ring
+     (‘guix-devel-copy-module-as-kill’).
+
+‘C-c . u’
+     Use the current Guile module.  Often after opening a Scheme file,
+     you want to use a module it defines, so you switch to the Geiser
+     REPL and write ‘,use (some module)’ there.  You may just use this
+     command instead (‘guix-devel-use-module’).
+
+‘C-c . b’
+     Build a package defined by the current variable definition.  The
+     building process is run in the current Geiser REPL. If you modified
+     the current package definition, don’t forget to reevaluate it
+     before calling this command—for example, with ‘C-M-x’ (*note
+     (geiser)To eval or not to eval::)
+     (‘guix-devel-build-package-definition’).
+
+‘C-c . s’
+     Build a source derivation of the package defined by the current
+     variable definition.  This command has the same meaning as ‘guix
+     build -S’ shell command (*note (guix)Invoking guix build::)
+     (‘guix-devel-build-package-source’).
+
+‘C-c . d’
+     Download a source of the package defined by the current variable
+     definition.  This command is the same as running ‘guix download’
+     shell command on the package source (*note (guix)Invoking guix
+     download::) (‘guix-devel-download-package-source’).
+
+‘C-c . l’
+     Lint (check) a package defined by the current variable definition
+     (*note (guix)Invoking guix lint::) (‘guix-devel-lint-package’).
+
+‘C-c . '’
+     Edit ‘description’ or ‘synopsis’ of the current package in
+     ‘texinfo-mode’ (‘guix-devel-code-block-edit’).
+
+   Unluckily, there is a limitation related to long-running REPL
+commands.  When there is a running process in a Geiser REPL, you are not
+supposed to evaluate anything in a scheme buffer, because this will
+“freeze” the REPL: it will stop producing any output (however, the
+evaluating process will continue—you will just not see any progress
+anymore).  Be aware: even moving the point in a scheme buffer may
+“break” the REPL if Autodoc (*note (geiser)Autodoc and friends::) is
+enabled (which is the default).
+
+   So you have to postpone editing your scheme buffers until the running
+evaluation will be finished in the REPL.
+
+   Alternatively, to avoid this limitation, you may just run another
+Geiser REPL, and while something is being evaluated in the previous
+REPL, you can continue editing a scheme file with the help of the
+current one.
+
+   To find a patch file at point with ‘M-x ffap’ command, you may use:
+
+     (add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch))
+
+
+File: emacs-guix.info,  Node: List/Info Interface,  Next: Configuration,  Prev: Development,  Up: Top
+
+14 List/Info Interface
+**********************
+
+As you probably already know, there are multiple commands that display
+various lists (of packages, licenses, etc.).  This is so-called “list”
+interface.  Also you can get the same data displayed in “info”
+interface.  This chapter describes these interfaces.
+
+* Menu:
+
+* List/Info Keys::              Common keys for both interfaces.
+* “List” buffer: List buffer. List-like interface.
+* “Info” buffer: Info buffer. Help-like interface.
+
+
+File: emacs-guix.info,  Node: List/Info Keys,  Next: List buffer,  Up: List/Info Interface
+
+14.1 List/Info Keys
+===================
+
+The following keys are available for both “list” and “info” interfaces:
+
+‘h’
+     Show “hint” (a message with available key bindings).
+
+‘l’
+‘r’
+     Go backward/forward by the history of the displayed results (this
+     history is similar to the history of the Emacs ‘help-mode’ or
+     ‘Info-mode’).
+
+‘g’
+     Revert current buffer: update (receive it again) the currently
+     displayed data and redisplay it.
+
+‘R’
+     Redisplay current buffer (without updating the data).
+
+‘?’
+     Describe current mode.
+
+   Also some buffers provide the following keys:
+
+‘M’
+     Apply manifest file to the current profile (*note
+     ‘guix-apply-manifest’: Miscellaneous Commands.).
+
+‘C-c C-z’
+     Go to the Guix REPL (*note (geiser)The REPL::).
+
+   _Hint:_ If you need several “list” or “info” buffers, you can simply
+‘M-x clone-buffer’ them, and each buffer will have its own history.
+
+
+File: emacs-guix.info,  Node: List buffer,  Next: Info buffer,  Prev: List/Info Keys,  Up: List/Info Interface
+
+14.2 “List” buffer
+==================
+
+An interface of a “list” buffer is similar to the interface provided by
+“package.el” (*note (emacs)Package Menu::).
+
+   And here are the default key bindings (some of them may be rebound to
+more specific commands):
+
+‘m’
+     Mark the current entry (with prefix, mark all entries).
+‘u’
+     Unmark the current entry (with prefix, unmark all entries).
+‘<DEL>’
+     Unmark backward.
+‘<RET>’
+‘i’
+     Display “info” interface for the marked entries (or the current
+     entry if nothing is marked).
+‘s’
+     Sort entries by column specified by the prefix argument (counting
+     from 0).
+
+
+File: emacs-guix.info,  Node: Info buffer,  Prev: List buffer,  Up: List/Info Interface
+
+14.3 “Info” buffer
+==================
+
+The interface of an “info” buffer is similar to the interface of
+‘help-mode’ (*note (emacs)Help Mode::), or rather ‘Custom-mode’ (*note
+(emacs)Easy Customization::), as it is full of various buttons that can
+be used to open files, browse URLs, do some actions (like
+installing/removing packages), etc.
+
+   As always, you may use ‘<TAB>’ / ‘S-<TAB>’ to move between buttons
+and ‘<RET>’ to press a button, or you can just use mouse (*note
+(emacs)Mouse References::).
+
+   Finally, you can copy any button label (a link to an URL or a file)
+by pressing ‘c’ on a button.
+
+
+File: emacs-guix.info,  Node: Configuration,  Next: Miscellaneous Commands,  Prev: List/Info Interface,  Up: Top
+
+15 Configuration
+****************
+
+There are many variables you can modify to change the appearance or
+behavior of Emacs-Guix.  Some of these variables are described in this
+section.  Also you can use Custom Interface (*note (emacs)Easy
+Customization::) to explore/set variables and faces—‘M-x customize-group
+<RET> guix’.
+
+* Menu:
+
+* Graph Configuration::         Set external viewer for graphs, etc.
+* Guile and Build Options::     Settings for Guix REPL, Guile, etc.
+* List/Info Configuration::     Variables for various interfaces.
+* Buffer Names::                Names of Guix buffers.
+* Keymaps::                     Configuring key bindings.
+* Miscellaneous Configuration:: Other configuration variables.
+
+
+File: emacs-guix.info,  Node: Graph Configuration,  Next: Guile and Build Options,  Up: Configuration
+
+15.1 Graph Configuration
+========================
+
+Some commands may display a graph image.  Currently Guix provides 2
+graph backends (*note (guix)Invoking guix graph::):
+
+‘d3js’
+     Such graph will be displayed in your browser using ‘browse-url’
+     function (*note (emacs)Browse-URL::).
+‘graphviz’
+     Such graph will be displayed inside Emacs by default, but this can
+     be configured ...
+
+   ... Graphs are opened using ‘guix-find-file-function’, so if you want
+to use an external viewer, you need to set this variable.  Probably the
+easiest way to set an external viewer is to use a functionality provided
+by the Org Mode.  For example, if you want to open the generated graphs
+(PNG files) with ‘sxiv’ image viewer, you can do it like this:
+
+     (setq guix-find-file-function 'org-open-file)
+     (add-to-list 'org-file-apps '("\\.png\\'" . "sxiv %s"))
+
+   Now some deeper details and configuration options.
+
+   The ‘graphviz’ graph is converted into an image file using ‘dot’
+command specified by ‘guix-dot-program’ and ‘guix-dot-default-arguments’
+variables.  By default, a PNG file is generated and saved as
+‘/tmp/emacs-guix-XXXXXX/graph-XXXXXX.png’.  If you want to change an
+output format (for example, into PDF), you also need to change
+‘guix-dot-file-name-function’ (to make ‘.pdf’ extension of the output
+file).  This can be done like this:
+
+     (defun my-guix-pdf-graph ()
+       "/tmp/my-current-guix-graph.pdf")
+
+     (setq guix-dot-default-arguments '("-Tpdf")
+           guix-dot-file-name-function 'my-guix-pdf-graph)
+
+
+File: emacs-guix.info,  Node: Guile and Build Options,  Next: List/Info Configuration,  Prev: Graph Configuration,  Up: Configuration
+
+15.2 Guile and Build Options
+============================
+
+‘guix-guile-program’
+     If you have some special needs for starting a Guile process, you
+     may set this variable.  For example, by default, Guile is started
+     with ‘--no-auto-compile’ flag (because auto-compilation may take a
+     very long time), so if you just want ‘guile’ without any flags, you
+     may just use:
+
+          (setq guix-guile-program "guile")
+
+‘guix-load-path’
+‘guix-load-compiled-path’
+     Directory or a list of directories prepended to Guile’s
+     ‘%load-path’ and ‘%load-compiled-path’ (*note (guile)Load Paths::).
+
+     If you use Guix from a git checkout (*note (guix)Running Guix
+     Before It Is Installed::), you may want Emacs-Guix to use the same
+     guix from git.  All you need is to point Emacs-Guix to this
+     checkout:
+
+          (setq guix-load-path "/path/to/guix-git-dir")
+
+     Note that setting ‘guix-load-compiled-path’ is not needed when
+     Scheme (‘.scm’) and compiled (‘.go’) files are placed in the same
+     directories.
+
+‘guix-use-substitutes’
+     Has the same meaning as ‘--no-substitutes’ option (*note
+     (guix)Invoking guix build::)—i.e., when non-nil, substitutes are
+     enabled.
+
+‘guix-dry-run’
+     Has the same meaning as ‘--dry-run’ option (*note (guix)Invoking
+     guix build::)—i.e., when non-nil, do not build the derivations.
+
+‘guix-repl-use-server’
+     By default, along with the main Guix REPL, an additional (internal)
+     REPL is started.  This allows you to display packages, generations
+     and to receive other info from the Scheme side, while there is some
+     active process in the main Guix REPL (e.g., while downloading or
+     building packages).  If you don’t want to have the second REPL, set
+     this variable to nil.
+
+‘guix-repl-use-latest’
+     Set this variable to nil, if you don’t want to use the latest Guix
+     code received with ‘guix pull’ command (*note (guix)Invoking guix
+     pull::).
+
+
+File: emacs-guix.info,  Node: List/Info Configuration,  Next: Buffer Names,  Prev: Guile and Build Options,  Up: Configuration
+
+15.3 List/Info Configuration
+============================
+
+If you wish to change the appearance of various “list” and “info”
+buffers (*note List/Info Interface::), you may look at
+‘guix-ENTRY-TYPE-BUFFER-TYPE-...’ variables.  Here, “BUFFER-TYPE” is
+either ‘list’ or ‘info’, and “ENTRY-TYPE” is one of the following:
+
+‘package’
+‘package-location’
+‘output’
+‘profile’
+‘generation’
+‘system’
+‘system-generation’
+‘service’
+‘service-location’
+‘license’
+
+   The main variable of them is ‘guix-ENTRY-TYPE-BUFFER-TYPE-format’: it
+defines what parameters, in what order and in what way are displayed.
+You are welcome to play with these “format” variables and to explore the
+other ones.
+
+
+File: emacs-guix.info,  Node: Buffer Names,  Next: Keymaps,  Prev: List/Info Configuration,  Up: Configuration
+
+15.4 Buffer Names
+=================
+
+Default names of various Emacs-Guix buffers (“*Guix ...*”) may be
+changed with the following variables:
+
+‘guix-ENTRY-TYPE-BUFFER-TYPE-buffer-name’
+     *Note List/Info Configuration::, for the meaning of ‘ENTRY-TYPE’
+     and ‘BUFFER-TYPE’.
+
+‘guix-ui-buffer-name-function’
+     By default, many Guix buffers contain profile name (e.g., ‘*Guix
+     Packages: <profile>*’).  This variable allows you to control how
+     this profile name is displayed.  If you want to remove profile name
+     from the buffer names, you can do it like this:
+
+          (setq guix-ui-buffer-name-function 'guix-ui-buffer-name-simple)
+
+‘guix-repl-buffer-name’
+
+‘guix-internal-repl-buffer-name’
+
+‘guix-search-paths-buffer-name’
+
+‘guix-help-buffer-name’
+
+‘guix-about-buffer-name’
+
+
+File: emacs-guix.info,  Node: Keymaps,  Next: Miscellaneous Configuration,  Prev: Buffer Names,  Up: Configuration
+
+15.5 Keymaps
+============
+
+If you want to change default key bindings, look at the following
+keymaps (*note (emacs)Init Rebinding::):
+
+‘guix-ui-map’
+     Parent keymap with general keys for buffers used for Guix package
+     management.
+
+‘guix-ENTRY-TYPE-BUFFER-TYPE-mode-map’
+     *Note List/Info Configuration::, for the meaning of ‘ENTRY-TYPE’
+     and ‘BUFFER-TYPE’.
+
+‘guix-build-log-common-map’
+
+‘guix-build-log-mode-map’
+
+‘guix-build-log-minor-mode-map’
+
+‘guix-devel-keys-map’
+
+‘guix-devel-mode-map’
+
+
+File: emacs-guix.info,  Node: Miscellaneous Configuration,  Prev: Keymaps,  Up: Configuration
+
+15.6 Miscellaneous Configuration
+================================
+
+‘guix-support-dired’
+     Some Emacs-Guix commands (for example, ‘M-x guix-hash’ or ‘M-x
+     guix-package-from-file’) may or may not support ‘dired-mode’ (*note
+     (emacs)Dired::).  By default, whenever you run them in a Dired
+     buffer, they will use the file name at point—i.e., you will not be
+     prompted for it.  If you wish to disable this feature, set
+     ‘guix-support-dired’ variable to nil.
+
+‘guix-file-size-string-function’
+     You may meet a string with file size in several places, in
+     particular, in interface for store items (*note Store Items::).  By
+     default, this string looks like this: ‘96.5k (98765 bytes)’.  You
+     can modify this format by using your own function, for example:
+
+          (defun my-guix-file-size-string (size)
+            (file-size-human-readable size 'si))
+
+          (setq guix-file-size-string-function 'my-guix-file-size-string)
+
+
+File: emacs-guix.info,  Node: Miscellaneous Commands,  Next: Help,  Prev: Configuration,  Up: Top
+
+16 Miscellaneous Commands
+*************************
+
+And some more commands that were not covered by the other chapters.
+
+‘M-x guix-report-bug’
+     Open a mail buffer to report a bug for GNU Guix similarly to
+     ‘M-x report-emacs-bug’ command.
+
+‘M-x guix-set-emacs-environment’
+     Set current Emacs environment according to a specified profile.
+     Note that there is no way to restore the original environment (you
+     have to restart Emacs if you wish to do it).
+
+‘M-x guix-pull’
+     It is the same as ‘guix pull’ shell command (*note (guix)Invoking
+     guix pull::).  With ‘C-u’, make it verbose.
+
+     Once ‘guix pull’ has succeeded, the Guix REPL is restarted(1).
+     This allows you to keep using the Emacs interface with the updated
+     Guix code.
+
+‘M-x guix-hash’
+     Compute and copy to the kill ring (*note (emacs)Yanking::) the
+     SHA256 hash of a file (*note (guix)Invoking guix hash::).  With
+     ‘C-u’, prompt for a hash format.
+
+     If you call this command on a directory, its hash will be
+     calculated recursively without version-controlled files (so you can
+     use this hash in a package recipe).
+
+   ---------- Footnotes ----------
+
+   (1) Note that name/version pairs cannot be used to identify packages
+(because a name is not necessarily unique), so Emacs-Guix uses special
+identifiers that live only during a guile session, so if the Guix REPL
+was restarted, you may want to revert “list” buffer (by pressing ‘g’).
+
+
+File: emacs-guix.info,  Node: Help,  Next: Concept Index,  Prev: Miscellaneous Commands,  Up: Top
+
+17 Help
+*******
+
+So many commands, so many buffers!  This chapter describes few more
+commands that should help you not to get lost.
+
+‘M-x guix-help’
+     Display a buffer with the summary of the available Emacs-Guix
+     commands.  Buttons in this buffer allow you to run commands and to
+     look at their docstrings and manual entries.
+
+‘M-x guix-info’
+     Show this Emacs-Guix info manual.  With prefix argument, show the
+     Guix info manual.
+
+‘M-x guix-switch-to-buffer’
+     Switch to one of the Emacs-Guix buffers.  This is like a usual
+     ‘switch-to-buffer’ (bound to ‘C-x b’ by default), except it
+     completes only Guix buffers names.  If you are going to use this
+     command, it is probably better to bind it to some key, for example:
+
+          (global-set-key (kbd "C-x B") 'guix-switch-to-buffer)
+
+‘M-x guix-extended-command’
+     Run Emacs-Guix command.  This is like ‘M-x’ (*note (emacs)M-x::),
+     except it completes only Guix command names.  And again, this is
+     not a very useful command unless it is bound to some key, for
+     example:
+
+          (global-set-key (kbd "M-X") 'guix-extended-command)
+
+
+File: emacs-guix.info,  Node: Concept Index,  Next: Command Index,  Prev: Help,  Up: Top
+
+Concept Index
+*************
+
+ [index ]
+* Menu:
+
+* build log:                             Build Log Mode.       (line  6)
+* buttons:                               Info buffer.          (line 12)
+* completions:                           Completions.          (line  6)
+* customization group:                   Configuration.        (line  6)
+* ffap:                                  Development.          (line 71)
+* generations:                           Generations.          (line  6)
+* graph:                                 Package Keys.         (line 29)
+* graph <1>:                             More Package Commands.
+                                                               (line 15)
+* graph <2>:                             Guix Popup Interface. (line 32)
+* graph <3>:                             Graph Configuration.  (line  6)
+* Guix REPL:                             List/Info Keys.       (line 34)
+* Guix REPL <1>:                         Guile and Build Options.
+                                                               (line 40)
+* Guix REPL <2>:                         Miscellaneous Commands.
+                                                               (line 21)
+* installation:                          Installation.         (line  6)
+* package licenses:                      Package Licenses.     (line  6)
+* package locations:                     Package Locations.    (line  6)
+* packages:                              Packages.             (line  6)
+* profiles:                              Profiles.             (line  6)
+* service Locations:                     Service Locations.    (line  6)
+* services:                              Services.             (line  6)
+* shell:                                 Completions.          (line  6)
+* store items:                           Store Items.          (line  6)
+* system:                                System From File.     (line  6)
+
+
+File: emacs-guix.info,  Node: Command Index,  Next: Variable Index,  Prev: Concept Index,  Up: Top
+
+Command Index
+*************
+
+ [index ]
+* Menu:
+
+* global-guix-prettify-mode:             Prettify Mode.        (line 16)
+* guix:                                  Popup Interface.      (line 10)
+* guix-all-packages:                     Package Commands.     (line 16)
+* guix-all-services:                     Service Commands.     (line 10)
+* guix-apply-manifest:                   Profile Commands.     (line 44)
+* guix-browse-license-url:               Package Licenses.     (line  9)
+* guix-build-log-minor-mode:             Build Log Mode.       (line 25)
+* guix-build-log-mode:                   Build Log Mode.       (line  6)
+* guix-command:                          Guix Popup Interface. (line  6)
+* guix-default-services:                 Service Commands.     (line 13)
+* guix-dependent-packages:               Package Commands.     (line 40)
+* guix-devel-mode:                       Development.          (line  6)
+* guix-edit:                             Package Locations.    (line 22)
+* guix-env-var-mode:                     Prettify Variables.   (line 19)
+* guix-env-var-prettify-buffer:          Prettify Variables.   (line 22)
+* guix-env-var-prettify-variable:        Prettify Variables.   (line 25)
+* guix-extended-command:                 Help.                 (line 26)
+* guix-find-license-definition:          Package Licenses.     (line 21)
+* guix-find-license-location-file:       Package Licenses.     (line 18)
+* guix-find-package-definition:          Package Locations.    (line 21)
+* guix-find-package-location-file:       Package Locations.    (line 17)
+* guix-find-service-definition:          Service Locations.    (line 17)
+* guix-find-service-location-file:       Service Locations.    (line 13)
+* guix-generations:                      Generation Commands.  (line 10)
+* guix-generations-by-time:              Generation Commands.  (line 17)
+* guix-hash:                             Miscellaneous Commands.
+                                                               (line 25)
+* guix-help:                             Help.                 (line  9)
+* guix-hidden-packages:                  Package Commands.     (line 36)
+* guix-info:                             Help.                 (line 14)
+* guix-installed-packages:               Package Commands.     (line 19)
+* guix-installed-system-packages:        Package Commands.     (line 21)
+* guix-installed-system-packages <1>:    System Commands.      (line 20)
+* guix-installed-user-packages:          Package Commands.     (line 20)
+* guix-last-generations:                 Generation Commands.  (line 13)
+* guix-last-system-generations:          System Commands.      (line 14)
+* guix-licenses:                         Package Licenses.     (line 13)
+* guix-lint-checkers:                    Lint Checkers.        (line  9)
+* guix-number-of-packages:               More Package Commands.
+                                                               (line  8)
+* guix-obsolete-packages:                Package Commands.     (line 28)
+* guix-package-from-file:                Package Commands.     (line 69)
+* guix-package-graph:                    More Package Commands.
+                                                               (line 15)
+* guix-package-lint:                     Lint Checkers.        (line 14)
+* guix-package-locations:                Package Locations.    (line 10)
+* guix-package-size:                     More Package Commands.
+                                                               (line 21)
+* guix-packages-by-license:              Package Commands.     (line 61)
+* guix-packages-by-location:             Package Commands.     (line 64)
+* guix-packages-by-name:                 Package Commands.     (line 47)
+* guix-packages-by-name-regexp:          Package Commands.     (line 56)
+* guix-packages-by-regexp:               Package Commands.     (line 50)
+* guix-packages-from-system-config-file: Package Commands.     (line 74)
+* guix-packages-from-system-config-file <1>: System Commands.  (line 23)
+* guix-prettify-mode:                    Prettify Mode.        (line 13)
+* guix-profiles:                         Profile Commands.     (line  6)
+* guix-pull:                             Miscellaneous Commands.
+                                                               (line 17)
+* guix-report-bug:                       Miscellaneous Commands.
+                                                               (line  8)
+* guix-service-locations:                Service Locations.    (line  9)
+* guix-services-by-location:             Service Commands.     (line 27)
+* guix-services-by-name:                 Service Commands.     (line 19)
+* guix-services-by-regexp:               Service Commands.     (line 22)
+* guix-services-from-system-config-file: Service Commands.     (line 30)
+* guix-services-from-system-config-file <1>: System Commands.  (line 24)
+* guix-set-current-profile:              Package Commands.     (line 10)
+* guix-set-current-profile <1>:          Profile Commands.     (line 37)
+* guix-set-emacs-environment:            Miscellaneous Commands.
+                                                               (line 12)
+* guix-store-dead-items:                 Store Item Commands.  (line 28)
+* guix-store-failures:                   Store Item Commands.  (line 21)
+* guix-store-item:                       Store Item Commands.  (line  6)
+* guix-store-item-derivers:              Store Item Commands.  (line 18)
+* guix-store-item-references:            Store Item Commands.  (line 12)
+* guix-store-item-referrers:             Store Item Commands.  (line  9)
+* guix-store-item-requisites:            Store Item Commands.  (line 15)
+* guix-store-live-items:                 Store Item Commands.  (line 24)
+* guix-superseded-packages:              Package Commands.     (line 33)
+* guix-switch-to-buffer:                 Help.                 (line 18)
+* guix-system-from-file:                 System From File.     (line 14)
+* guix-system-generations:               System Commands.      (line 13)
+* guix-system-generations-by-time:       System Commands.      (line 15)
+* guix-system-profile:                   System Commands.      (line 10)
+
+
+File: emacs-guix.info,  Node: Variable Index,  Prev: Command Index,  Up: Top
+
+Variable Index
+**************
+
+ [index ]
+* Menu:
+
+* guix-about-buffer-name:                Buffer Names.         (line 29)
+* guix-build-log-common-map:             Keymaps.              (line 17)
+* guix-build-log-minor-mode-map:         Keymaps.              (line 21)
+* guix-build-log-mode-map:               Keymaps.              (line 19)
+* guix-current-profile:                  Profile Commands.     (line 37)
+* guix-devel-keys-map:                   Keymaps.              (line 23)
+* guix-devel-mode-map:                   Keymaps.              (line 25)
+* guix-dot-default-arguments:            Graph Configuration.  (line 27)
+* guix-dot-file-name-function:           Graph Configuration.  (line 27)
+* guix-dot-program:                      Graph Configuration.  (line 27)
+* guix-dry-run:                          Guile and Build Options.
+                                                               (line 36)
+* guix-ENTRY-TYPE-BUFFER-TYPE-buffer-name: Buffer Names.       (line  9)
+* guix-ENTRY-TYPE-BUFFER-TYPE-format:    List/Info Configuration.
+                                                               (line 22)
+* guix-ENTRY-TYPE-BUFFER-TYPE-mode-map:  Keymaps.              (line 13)
+* guix-env-var-enable-formatting:        Prettify Variables.   (line 12)
+* guix-file-size-string-function:        Miscellaneous Configuration.
+                                                               (line 14)
+* guix-find-file-function:               Graph Configuration.  (line 16)
+* guix-guile-program:                    Guile and Build Options.
+                                                               (line  6)
+* guix-help-buffer-name:                 Buffer Names.         (line 27)
+* guix-internal-repl-buffer-name:        Buffer Names.         (line 23)
+* guix-load-compiled-path:               Guile and Build Options.
+                                                               (line 15)
+* guix-load-path:                        Guile and Build Options.
+                                                               (line 15)
+* guix-package-list-type:                Package Commands.     (line 78)
+* guix-package-search-params:            Package Commands.     (line 50)
+* guix-profiles:                         Profile Commands.     (line  6)
+* guix-read-package-name-function:       Package Locations.    (line 29)
+* guix-repl-buffer-name:                 Buffer Names.         (line 21)
+* guix-repl-use-latest:                  Guile and Build Options.
+                                                               (line 48)
+* guix-repl-use-server:                  Guile and Build Options.
+                                                               (line 40)
+* guix-run-in-shell-function:            Guix Popup Interface. (line 26)
+* guix-search-paths-buffer-name:         Buffer Names.         (line 25)
+* guix-service-search-params:            Service Commands.     (line 22)
+* guix-support-dired:                    Miscellaneous Configuration.
+                                                               (line  6)
+* guix-ui-buffer-name-function:          Buffer Names.         (line 13)
+* guix-ui-map:                           Keymaps.              (line  9)
+* guix-use-substitutes:                  Guile and Build Options.
+                                                               (line 31)
+
+
+
+Tag Table:
+Node: Top802
+Node: Introduction2626
+Node: Installation4000
+Ref: Installation-Footnote-14632
+Node: Requirements4844
+Node: Using from Git6981
+Node: Using the Manual from Git8242
+Node: Packages9518
+Node: Package Commands10191
+Node: Package Keys13723
+Node: Package Locations15372
+Node: Lint Checkers16849
+Node: More Package Commands17501
+Node: Profiles and Generations18484
+Node: Profiles19458
+Node: Profile Commands19949
+Node: Profile Keys21809
+Node: Generations22670
+Node: Generation Commands23161
+Node: Generation Keys24011
+Node: System25388
+Node: System From File25946
+Node: Services26505
+Node: Service Commands26953
+Node: Service Locations28162
+Node: System Commands28890
+Node: Store Items29963
+Node: Store Item Commands30536
+Node: Store Item Keys31427
+Node: Package Licenses32350
+Node: Popup Interface33223
+Node: Guix Popup Interface34318
+Node: Prettify Mode35949
+Node: Prettify Variables36968
+Node: Build Log Mode38064
+Node: Completions39226
+Node: Development40207
+Node: List/Info Interface43401
+Node: List/Info Keys44005
+Node: List buffer45087
+Node: Info buffer45865
+Node: Configuration46594
+Node: Graph Configuration47429
+Node: Guile and Build Options49127
+Node: List/Info Configuration51304
+Node: Buffer Names52186
+Node: Keymaps53139
+Node: Miscellaneous Configuration53800
+Node: Miscellaneous Commands54889
+Ref: Miscellaneous Commands-Footnote-156199
+Node: Help56493
+Node: Concept Index57756
+Node: Command Index59773
+Node: Variable Index66072
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
