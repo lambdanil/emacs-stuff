@@ -138,7 +138,7 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
 #+END_SRC
 
 This is a lightdm-specific bit. Basically lightdm ignores ~.bash_profile~ on login, so we have to ensure the proper exports here as well.
-#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   if [ ! -f /.dockerenv ]; then
       export GUIX_PROFILE="$HOME/.guix-profile"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
