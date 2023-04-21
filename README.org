@@ -50,7 +50,7 @@ Here I store my relevant autostart scripts.
 
 ** .config/autostart/autostart.desktop
 
-First we need to add the actual .desktop file for the DE to load.
+First we need to add a .desktop file for the DE to load.
 #+BEGIN_SRC conf-desktop :tangle "~/git/emacs-stuff/configs/autostart/.config/autostart/autostart.desktop"
   [Desktop Entry]	
   Type=Application
@@ -2371,7 +2371,7 @@ I usually install these using [[https://guix.gnu.org][GNU Guix]], at least when 
 Let's start off with setting some basic information about the user.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (setq user-mail-address "shadenk30011@gmail.com"
-	user-full-name "Jan Novotný")
+	user-full-name "(λ () nil)")
 #+END_SRC
 
   
@@ -2866,7 +2866,8 @@ Some news feeds.
   (setq elfeed-feeds
 	'(("https://www.root.cz/rss/clanky" root.cz)
 	  ("https://www.root.cz/rss/zpravicky" root.cz)
-	  ("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
+	  ("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)
+	  ("https://protesilaos.com/master.xml" protesilaos.com)))
 #+END_SRC
 
 And we have reached the end of the main Emacs file!

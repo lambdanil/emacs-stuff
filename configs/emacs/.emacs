@@ -1,5 +1,5 @@
 (setq user-mail-address "shadenk30011@gmail.com"
-      user-full-name "Jan Novotný")
+      user-full-name "(λ () nil)")
 
 (defvar use-exwm nil)
 
@@ -403,6 +403,7 @@
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)
 	("https://www.root.cz/rss/zpravicky" root.cz)
-	("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
+	("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)
+	("https://protesilaos.com/master.xml" protesilaos.com)))
 
 (provide '.emacs)
