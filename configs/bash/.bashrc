@@ -43,5 +43,12 @@ alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
 alias tf="xrandr --output HDMI-A-1 --set TearFree"
 
+if [ ! -f /.dockerenv ]; then
+    export GUIX_PROFILE="$HOME/.guix-profile"
+    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+    export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
+    . "$GUIX_PROFILE/etc/profile"
+fi
+
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"

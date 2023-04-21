@@ -164,8 +164,16 @@
 (setq org-log-done t)
 (setq calendar-week-start-day 1)
 (add-to-list 'org-agenda-files "~/org/agenda.org")
-(define-key global-map "\C-ck" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
+
+(defun org-babel-insert-code-block ()
+  (interactive)
+  (move-beginning-of-line 1)
+  (insert "#+BEGIN_SRC ")
+  (end-of-line)
+  (newline)
+  (insert "#+END_SRC")
+  (forward-line -1)
+  (end-of-line))
 
 (defun org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
@@ -176,6 +184,10 @@
 ;; (add-hook 'org-mode-hook
 ;; 	  (lambda ()
 ;; 	    (add-hook 'after-save-hook #'org-babel-tangle-config)))
+
+(define-key global-map "\C-ck" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(define-key org-mode-map "\C-c\C-vw" 'org-babel-insert-code-block)
 
 (defun my-with-theme (orig-fun &rest args)
   (load-theme my-org-html-export-theme)

@@ -2567,12 +2567,20 @@ Here is a very minimal setup for org-agenda.
   (setq org-log-done t)
   (setq calendar-week-start-day 1)
   (add-to-list 'org-agenda-files "~/org/agenda.org")
-  (define-key global-map "\C-ck" 'org-store-link)
-  (define-key global-map "\C-ca" 'org-agenda)
 #+END_SRC
 
 Automatically tangle config on save, currently disabled.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (defun org-babel-insert-code-block ()
+    (interactive)
+    (move-beginning-of-line 1)
+    (insert "#+BEGIN_SRC ")
+    (end-of-line)
+    (newline)
+    (insert "#+END_SRC")
+    (forward-line -1)
+    (end-of-line))
+
   (defun org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
 			(expand-file-name "~/git/emacs-stuff/README.org"))
@@ -2582,6 +2590,13 @@ Automatically tangle config on save, currently disabled.
   ;; (add-hook 'org-mode-hook
   ;; 	  (lambda ()
   ;; 	    (add-hook 'after-save-hook #'org-babel-tangle-config)))
+#+END_SRC
+
+Org-mode specific keybindings.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (define-key global-map "\C-ck" 'org-store-link)
+  (define-key global-map "\C-ca" 'org-agenda)
+  (define-key org-mode-map "\C-c\C-vw" 'org-babel-insert-code-block)
 #+END_SRC
 
 Ensure ~org-html-export-html~ switches to the correct theme before exporting - this solves code legibility issues. It's a bit of a flashbang for a couple of seconds though...
