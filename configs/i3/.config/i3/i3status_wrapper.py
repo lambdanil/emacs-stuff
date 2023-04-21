@@ -8,9 +8,9 @@ def get_status():
     if 'Playing' in status:
         return "▶️"
     elif 'Paused' in status:
-        return "⏸︎"
+        return "⏸️"
     elif 'Stopped' in status:
-        return "⏹︎"
+        return "⏹️"
     else:
         return ""
 

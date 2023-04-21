@@ -66,24 +66,24 @@ First we need to add a .desktop file for the DE to load.
 ** .loginctl
 
 Here's the actual autostart script.
-#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
   emacs --daemon &
   syncthing &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  # nm-applet &
-  # blueman-applet &
-  # mate-volume-control-status-icon &
-  # /usr/bin/gnome-keyring-daemon --start --components=secrets &
-  # mate-power-manager &
-  # setxkbmap cz -option 'ctrl:swapcaps' &
+  xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
+  nm-applet &
+  blueman-applet &
+  mate-volume-control-status-icon &
+  /usr/bin/gnome-keyring-daemon --start --components=secrets &
+  mate-power-manager &
+  setxkbmap cz -option 'ctrl:swapcaps' &
   # timidity -iA &
-  # nitrogen --restore &
-  # picom &
-  # playerctld &
+  nitrogen --restore &
+  picom &
+  playerctld &
   # exec i3 & # for use with xfce
 #+END_SRC
 
@@ -199,14 +199,14 @@ Here I have some custom binaries, mostly scripts and stuff.
 ** .bin/scr
 
 Just a screenshot shortcut.
-#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr"
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr" :shebang "#!/bin/sh"
   #!/bin/sh
   scrot "$HOME/Obrázky/$(date).png" 
 #+END_SRC
 
 ** .bin/scr-area
 ...And the same but for a selected area.
-#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr-area"
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr-area" :shebang "#!/bin/sh"
   #!/bin/sh
   scrot "$HOME/Obrázky/$(date).png" -f -s
 #+END_SRC
@@ -214,8 +214,7 @@ Just a screenshot shortcut.
 ** .bin/chromium-incognito
 
 And a shortcut for opening chromium in incognito mode.
-#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/chromium-incognito"
-  #!/bin/sh
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/chromium-incognito" :shebang "#!/bin/sh"
   chromium --incognito
 #+END_SRC
 
@@ -446,9 +445,7 @@ Here is the setup for channels, only real addition here is ~nonguix~.
 ~guix-run~ is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
 
 ** .bin/guix-run
-#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/guix-run/.bin/guix-run"
-  #!/bin/sh
-
+#+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/guix-run/.bin/guix-run" :shebang "#!/bin/sh"
   export LD_LIBRARY_PATH=$LIBRARY_PATH
   RUNNER=$(find ~/.guix-profile/lib/ -name 'ld-linux-*.so*')
 
@@ -468,7 +465,7 @@ Let's set some initial variables first.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
   set $mod Mod4
   set $HOME /home/nil
-  font pango:monospace 9
+  font pango:Fira Code 9
   gaps inner 6px
   for_window [class="^.*"] border pixel 2
   floating_modifier $mod
@@ -653,8 +650,7 @@ This part here is rather interesting, I pipe the status through my own wrapper, 
 
 This small python wrapper add the currently playing song as a prefix to the status. Rather neat but took a while to implement.
 I won't bother commenting this code, just believe me (and maybe pray) that it works.
-#+BEGIN_SRC python :tangle "~/git/emacs-stuff/configs/i3/.config/i3/i3status_wrapper.py"
-#!/usr/bin/env python3
+#+BEGIN_SRC python :tangle "~/git/emacs-stuff/configs/i3/.config/i3/i3status_wrapper.py" :shebang "#!/usr/bin/env python3"
 import json
 import subprocess
 import sys
@@ -664,9 +660,9 @@ def get_status():
     if 'Playing' in status:
         return "▶️"
     elif 'Paused' in status:
-        return "⏸︎"
+        return "⏸️"
     elif 'Stopped' in status:
-        return "⏹︎"
+        return "⏹️"
     else:
         return ""
 

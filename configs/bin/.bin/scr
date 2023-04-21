@@ -1,2 +1,3 @@
 #!/bin/sh
+#!/bin/sh
 scrot "$HOME/Obrázky/$(date).png"
