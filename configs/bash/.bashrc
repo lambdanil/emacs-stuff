@@ -45,8 +45,9 @@ alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
 alias tf="xrandr --output HDMI-A-1 --set TearFree"
 alias python3="$HOME/.py/bin/python3" # venv
+alias pip="$HOME/.py/bin/pip"
 
-if [ ! -f /.dockerenv ]; then
+if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
     export GUIX_PROFILE="$HOME/.guix-profile"
     export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
     export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"

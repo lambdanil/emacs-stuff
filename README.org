@@ -4,6 +4,8 @@
 
 *Click [[https://raw.githack.com/CuBeRJAN/emacs-stuff/main/README.html][here]] for a properly formatted HTML version :)*
 
+* Introduction
+
 This is my highly modular and entirely literate full-system configuration.
 
 /Guix with i3/
@@ -151,11 +153,12 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
   alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
   alias tf="xrandr --output HDMI-A-1 --set TearFree"
   alias python3="$HOME/.py/bin/python3" # venv
+  alias pip="$HOME/.py/bin/pip"
 #+END_SRC
 
 This is a lightdm-specific bit. Basically lightdm ignores ~.bash_profile~ on login, so we have to ensure the proper exports here as well.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-  if [ ! -f /.dockerenv ]; then
+  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
       export GUIX_PROFILE="$HOME/.guix-profile"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
       export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
@@ -181,7 +184,7 @@ First run the bashrc if necessary.
 
 Then we can go ahead and export Guix, but only when not inside a container.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [ ! -f /.dockerenv ]; then
+  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
       export GUIX_PROFILE="$HOME/.guix-profile"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
       export PATH="$PATH:$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin"
