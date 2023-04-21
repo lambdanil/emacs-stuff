@@ -136,7 +136,7 @@ bar {
 position top
 mode dock
 
-status_command i3status # | ~/.config/i3/i3status_wrapper.py # broken
+status_command i3status | ~/.config/i3/i3status_wrapper.py
 
 colors {
 background $inactive-bg-color

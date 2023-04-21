@@ -2831,7 +2831,7 @@ Now we ~require~ all the necessary packages and set a few defaults.
   (setq exwm-workspace-number 4)
   (display-time-mode 1)
   (setq display-time-24hr-format t)
-  (start-process-shell-command "sh" nil "sh ~/.loginctl")
+  (call-process "/usr/bin/bash" "~/.loginctl")
 #+END_SRC
 
 Define some custom functions.

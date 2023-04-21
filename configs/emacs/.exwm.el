@@ -12,6 +12,7 @@
 (setq exwm-workspace-number 4)
 (display-time-mode 1)
 (setq display-time-24hr-format t)
+(call-process "/usr/bin/bash" "~/.loginctl")
 
 (defun new-vterm-exwm ()
   (interactive)
