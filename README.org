@@ -2422,6 +2422,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     geiser-guile
 		     org-present
 		     visual-fill-column
+		     org-bullets
 		     web-mode))
     (unless (package-installed-p package)
       (package-install package))
@@ -2634,6 +2635,7 @@ Ensure ~org-html-export-html~ switches to the correct theme before exporting - t
 
 Let's make ~org-mode~ a little bit prettier to look at.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   (require 'org-faces)
   (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'light :height 120)
   (set-face-attribute 'variable-pitch nil :font "Fira Code" :weight 'light :height 1.0)
@@ -2669,7 +2671,7 @@ Let's make ~org-mode~ a little bit prettier to look at.
 Now for presentations in Emacs using ~org-present~.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (defun my/org-present-start ()
-    (setq visual-fill-column-width 110 ; Set the width
+    (setq visual-fill-column-width 160 ; Set the width
 	  visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
     (visual-line-mode 1) ; Center text

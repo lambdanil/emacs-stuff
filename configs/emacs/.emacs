@@ -36,6 +36,7 @@
 		   geiser-guile
 		   org-present
 		   visual-fill-column
+		   org-bullets
 		   web-mode))
   (unless (package-installed-p package)
     (package-install package))
@@ -201,6 +202,7 @@
 (with-eval-after-load "ox-html"
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
 
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (require 'org-faces)
 (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'light :height 120)
 (set-face-attribute 'variable-pitch nil :font "Fira Code" :weight 'light :height 1.0)
@@ -233,7 +235,7 @@
 ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
 (defun my/org-present-start ()
-  (setq visual-fill-column-width 110 ; Set the width
+  (setq visual-fill-column-width 160 ; Set the width
 	visual-fill-column-center-text t)
   (visual-fill-column-mode 1)
   (visual-line-mode 1) ; Center text
