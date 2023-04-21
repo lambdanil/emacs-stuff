@@ -84,6 +84,7 @@ These are only necessary when using a standalone window manager.
   nitrogen --restore &
   picom &
   playerctld &
+  xrandr --output HDMI-A-1 --set TearFree on &
   # exec i3 & # for use with xfce
 #+END_SRC
 
@@ -950,12 +951,13 @@ Now let's add some general settings.
 #+END_SRC
 
 The GLX backend offers superior functionality, it also eliminates screen tearing with vsync. Experimental backedns improve compositor performance.
+- NOTE: Currently using the TearFree option instead
 #+BEGIN_SRC conf-unix :tangle "~/git/emacs-stuff/configs/picom/.config/picom/picom.conf"
   # `xrender`, `glx`, or `xr_glx_hybrid`.
   experimental-backends = true;
   backend = "glx";
   #backend = "xrender";
-  vsync = true
+  vsync = false
 #+END_SRC
 
 I don't know what these do exactly, but it works this way.

@@ -13,4 +13,5 @@ setxkbmap cz -option 'ctrl:swapcaps' &
 nitrogen --restore &
 picom &
 playerctld &
+xrandr --output HDMI-A-1 --set TearFree on &
 # exec i3 & # for use with xfce
