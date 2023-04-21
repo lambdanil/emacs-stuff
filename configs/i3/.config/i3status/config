@@ -16,7 +16,8 @@ order += "tztime local"
 volume master {
 format = "|| %volume"
 format_muted = "|| (%volume)"
-device = "pulse:1"
+device = "default"
+mixer = "Master"
 }
 
 wireless _first_ {
