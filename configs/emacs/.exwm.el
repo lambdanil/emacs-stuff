@@ -10,6 +10,13 @@
 (setq exwm-layout-show-all-buffers t)
 (setq exwm-workspace-show-all-buffers t)
 (setq exwm-workspace-number 4)
+(display-time-mode 1)
+(setq display-time-24hr-format t)
+
+(defun new-vterm-exwm ()
+  (interactive)
+  (let ((current-prefix-arg '(4))) ;; emulate C-u
+    (call-interactively 'vterm)))
 
 (defun exwm-move-window-to-workspace (workspace-number)
   (interactive)
@@ -78,7 +85,7 @@
 (exwm-input-set-key (kbd "C-c q") #'kill-current-buffer)
 (exwm-input-set-key (kbd "s-,") #'exwm-workspace-switch-to-buffer)
 (exwm-input-set-key (kbd "s-f") #'exwm-layout-toggle-fullscreen)
-(exwm-input-set-key (kbd "s-<return>") #'+vterm/here)
+(exwm-input-set-key (kbd "s-<return>") #'new-vterm-exwm)
 (exwm-input-set-key (kbd "s-c") #'vterm)
 (exwm-input-set-key (kbd "s-d") (lambda (command)
 				  (interactive (list (read-shell-command "$ ")))

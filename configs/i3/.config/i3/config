@@ -7,6 +7,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id $HOME/.loginctl
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
@@ -135,7 +136,7 @@ bar {
 position top
 mode dock
 
-status_command i3status | ~/.config/i3/i3status_wrapper.py
+status_command i3status # | ~/.config/i3/i3status_wrapper.py # broken
 
 colors {
 background $inactive-bg-color

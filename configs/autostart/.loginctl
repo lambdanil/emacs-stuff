@@ -1,9 +1,15 @@
-#xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
-emacs --daemon &
+#emacs --daemon &
 syncthing &
-#setxkbmap cz -option 'ctrl:swapcaps' &
+
+xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
+nm-applet &
+blueman-applet &
+mate-volume-control-status-icon &
+/usr/bin/gnome-keyring-daemon --start --components=secrets &
+mate-power-manager &
+setxkbmap cz -option 'ctrl:swapcaps' &
 #timidity -iA &
-#nitrogen --restore &
-#picom &
-#playerctld &
-#exec i3 &
+nitrogen --restore &
+picom &
+playerctld &
+#exec i3 & # for use with xfce
