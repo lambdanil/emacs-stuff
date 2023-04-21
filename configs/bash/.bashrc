@@ -14,9 +14,9 @@ clean_build () { # clear guix build by regex
 }
 
 if [ -n "$GUIX_ENVIRONMENT" ]; then
-  if [[ $PS1 =~ (.*)"\\$" ]]; then
-      PS1="${BASH_REMATCH[1]} [env]\\\$ "
-  fi
+    if [[ $PS1 =~ (.*)"\\$" ]]; then
+	PS1="${BASH_REMATCH[1]} [env]\\\$ "
+    fi
 fi
 
 if [[ $- == *i* ]]
@@ -41,6 +41,7 @@ fi
 
 alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
+alias tf="xrandr --output HDMI-A-1 --set TearFree"
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"

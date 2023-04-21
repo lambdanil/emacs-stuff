@@ -20,6 +20,7 @@
 		   elfeed
 		   magit
 		   guix
+		   systemd
 		   tree-sitter
 		   tree-sitter-langs
 		   treemacs
@@ -111,6 +112,7 @@
 (setq-default cursor-type 'bar)
 (setq geiser-active-implementations '(guile))
 (setq geiser-default-implementation 'guile)
+(defvar my-org-html-export-theme 'leuven)
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))
@@ -128,8 +130,8 @@
   (interactive)
   (when (company-manual-begin)
     (if (eq last-command 'company-complete-common-or-cycle)
-        (let ((company-selection-wrap-around t))
-          (call-interactively 'company-select-next))
+	(let ((company-selection-wrap-around t))
+	  (call-interactively 'company-select-next))
       (call-interactively 'company-complete-common))))
 
 (define-key company-active-map [tab] 'company-complete-common-or-cycle)
@@ -165,6 +167,25 @@
 (define-key global-map "\C-ck" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+(defun org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+		      (expand-file-name "~/git/emacs-stuff/README.org"))
+    (let ((org-config-babel-evaluate nil))
+      (org-babel-tangle))))
+
+;; (add-hook 'org-mode-hook
+;; 	  (lambda ()
+;; 	    (add-hook 'after-save-hook #'org-babel-tangle-config)))
+
+(defun my-with-theme (orig-fun &rest args)
+  (load-theme my-org-html-export-theme)
+  (unwind-protect
+      (apply orig-fun args)
+    (disable-theme my-org-html-export-theme)))
+
+(with-eval-after-load "ox-html"
+  (advice-add 'org-html-export-to-html :around 'my-with-theme))
+
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
 
@@ -180,12 +201,12 @@
 	     `((my/keys-mode . ,my/keys-keymap)))
 
 (defun my-kill-buffer-and-window ()
- "Kill the current buffer and delete the selected window."
- (interactive)
- (let ((window-to-delete (selected-window))
+  "Kill the current buffer and delete the selected window."
+  (interactive)
+  (let ((window-to-delete (selected-window))
 	(buffer-to-kill (current-buffer))
 	(delete-window-hook (lambda () (ignore-errors (delete-window)))))
-   (unwind-protect
+    (unwind-protect
 	(progn
 	  (add-hook 'kill-buffer-hook delete-window-hook t t)
 	  (if (kill-buffer (current-buffer))
@@ -311,7 +332,7 @@
 
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)
-        ("https://www.root.cz/rss/zpravicky" root.cz)
-        ("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
+	("https://www.root.cz/rss/zpravicky" root.cz)
+	("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)))
 
 (provide '.emacs)

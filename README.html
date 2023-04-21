@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-21 Fri 01:45 -->
+<!-- 2023-04-21 Fri 17:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My System Config</title>
@@ -23,125 +23,187 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb5feda1">1. Autostart</a>
+<li><a href="#orga7f9828">1. Autostart</a>
 <ul>
-<li><a href="#org016cb87">1.1. .config/autostart/autostart.desktop</a></li>
-<li><a href="#org296d75d">1.2. .loginctl</a></li>
+<li><a href="#org5af13b0">1.1. .config/autostart/autostart.desktop</a></li>
+<li><a href="#org07e1b32">1.2. .loginctl</a></li>
 </ul>
 </li>
-<li><a href="#org06be266">2. Bash</a>
+<li><a href="#orge2420da">2. Bash</a>
 <ul>
-<li><a href="#orgffc8af2">2.1. .bashrc</a></li>
-<li><a href="#org96c0d78">2.2. .bash profile</a></li>
+<li><a href="#org1b2052a">2.1. .bashrc</a></li>
+<li><a href="#org0169ac2">2.2. .bash profile</a></li>
 </ul>
 </li>
-<li><a href="#orge22fde4">3. Custom Binaries</a>
+<li><a href="#org1aef30e">3. Custom Binaries</a>
 <ul>
-<li><a href="#orgf79f893">3.1. .bin/scr</a></li>
-<li><a href="#org97aef75">3.2. .bin/scr-area</a></li>
-<li><a href="#orgf1a0410">3.3. .bin/chromium-incognito</a></li>
+<li><a href="#org9c9df13">3.1. .bin/scr</a></li>
+<li><a href="#org9639e53">3.2. .bin/scr-area</a></li>
+<li><a href="#orgfa85a0b">3.3. .bin/chromium-incognito</a></li>
 </ul>
 </li>
-<li><a href="#org6fb302a">4. Containers</a>
+<li><a href="#org746d25c">4. Containers</a>
 <ul>
-<li><a href="#org078cb0a">4.1. .config/containers/policy.json</a></li>
-<li><a href="#org2fb5a00">4.2. .config/containers/registries.conf</a></li>
+<li><a href="#orge2c6a5e">4.1. .config/containers/policy.json</a></li>
+<li><a href="#orgc841cfc">4.2. .config/containers/registries.conf</a></li>
 </ul>
 </li>
-<li><a href="#org4eafbb4">5. Guix</a>
+<li><a href="#org2f940ee">5. Guix</a>
 <ul>
-<li><a href="#org6e3e04f">5.1. .guix-manifest</a></li>
-<li><a href="#orgd20669f">5.2. .config/guix/channels.scm</a></li>
+<li><a href="#org3ca2982">5.1. .guix-manifest</a></li>
+<li><a href="#org2c02484">5.2. .config/guix/channels.scm</a></li>
 </ul>
 </li>
-<li><a href="#orgde1aa42">6. Guix-run</a>
+<li><a href="#org722af81">6. Guix-run</a>
 <ul>
-<li><a href="#org3b004ca">6.1. .bin/guix-run</a></li>
+<li><a href="#org6b4bc53">6.1. .bin/guix-run</a></li>
 </ul>
 </li>
-<li><a href="#orge13fefa">7. i3</a>
+<li><a href="#orgde95a6f">7. i3</a>
 <ul>
-<li><a href="#org55d0225">7.1. .config/i3/config</a></li>
-<li><a href="#org2deee67">7.2. .config/i3/i3status<sub>wrapper.py</sub></a></li>
-<li><a href="#org9623c58">7.3. .config/i3status/config</a></li>
+<li><a href="#org04bfc9a">7.1. .config/i3/config</a></li>
+<li><a href="#org3d1d63a">7.2. .config/i3/i3status wrapper.py</a></li>
+<li><a href="#orge33f098">7.3. .config/i3status/config</a></li>
 </ul>
 </li>
-<li><a href="#orgb2850ce">8. Picom</a>
+<li><a href="#org04b7e4a">8. Picom</a>
 <ul>
-<li><a href="#org278bd41">8.1. .config/picom/picom.conf</a></li>
+<li><a href="#org8d062cf">8.1. .config/picom/picom.conf</a></li>
 </ul>
 </li>
-<li><a href="#orgec04147">9. Rofi</a>
+<li><a href="#org7d3ea7c">9. Rofi</a>
 <ul>
-<li><a href="#org22cb089">9.1. .config/rofi/nord.rasi</a></li>
+<li><a href="#org58977ad">9.1. .config/rofi/nord.rasi</a></li>
 </ul>
 </li>
-<li><a href="#orgeec3fdb">10. Startx</a>
+<li><a href="#orgb1b3d1c">10. Startx</a>
 <ul>
-<li><a href="#org66d37d9">10.1. .startx</a></li>
+<li><a href="#org0fa4bce">10.1. .startx</a></li>
 </ul>
 </li>
-<li><a href="#orgc5e9109">11. Xresources</a>
+<li><a href="#org8dfd692">11. Xresources</a>
 <ul>
-<li><a href="#org756eedf">11.1. .Xresources</a></li>
-<li><a href="#org2793667">11.2. .xsessionrc</a></li>
+<li><a href="#orgcadcb0f">11.1. .Xresources</a></li>
+<li><a href="#org2866096">11.2. .xsessionrc</a></li>
 </ul>
 </li>
-<li><a href="#orgd133faf">12. Guix system</a>
+<li><a href="#orgbb0fecf">12. Guix system</a>
 <ul>
-<li><a href="#orgcfaaebe">12.1. /etc/config.scm</a></li>
-<li><a href="#org4e81d2f">12.2. /etc/signing-key.pub</a></li>
+<li><a href="#org4a410e6">12.1. /etc/config.scm</a></li>
+<li><a href="#org540638d">12.2. /etc/signing-key.pub</a></li>
 </ul>
 </li>
-<li><a href="#org7b560eb">13. Custom Guix Modules</a>
+<li><a href="#org01d573e">13. Custom Guix Modules</a>
 <ul>
-<li><a href="#org8c6a0d8">13.1. /etc/guix-modules/nil/packages</a>
+<li><a href="#org2aec99e">13.1. /etc/guix-modules/nil/packages</a>
 <ul>
-<li><a href="#org7ab00f0">13.1.1. brogue.scm</a></li>
-<li><a href="#org6d6017d">13.1.2. distrobox-docker.scm</a></li>
-<li><a href="#orge5388b3">13.1.3. emulators.scm</a></li>
-<li><a href="#orgedac612">13.1.4. steam-client.scm</a></li>
+<li><a href="#orgcf93717">13.1.1. brogue.scm</a></li>
+<li><a href="#orgba953e4">13.1.2. distrobox-docker.scm</a></li>
+<li><a href="#org16d5e19">13.1.3. emulators.scm</a></li>
+<li><a href="#orgd8f1631">13.1.4. steam-client.scm</a></li>
 </ul>
 </li>
-<li><a href="#org9ae4e64">13.2. /etc/guix-modules/nil/services</a>
+<li><a href="#org886b76a">13.2. /etc/guix-modules/nil/services</a>
 <ul>
-<li><a href="#org752ea22">13.2.1. mount-rshared.scm</a></li>
+<li><a href="#orga348106">13.2.1. mount-rshared.scm</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org537acd1">14. Emacs</a>
+<li><a href="#org8b7e121">14. ZRAM on non-guix distros</a>
 <ul>
-<li><a href="#org1d2df8e">14.1. Variables</a></li>
-<li><a href="#org0f419a5">14.2. Functions</a></li>
-<li><a href="#org0c0f654">14.3. Keybindings</a></li>
+<li><a href="#org82f98df">14.1. /etc/modules-load.d/zram.conf</a></li>
+<li><a href="#org951b996">14.2. /etc/modprobe.d/zram.conf</a></li>
+<li><a href="#orge099651">14.3. /etc/udev/rules.d/99-zram.rules</a></li>
+<li><a href="#org0a9ea75">14.4. /etc/systemd/system/zram.service</a></li>
 </ul>
 </li>
+<li><a href="#org9d6afdb">15. Emacs</a>
+<ul>
+<li><a href="#org3acb36b">15.1. Initial variables</a></li>
+<li><a href="#org680b2cb">15.2. Packages</a></li>
+<li><a href="#orgaa61484">15.3. Variables</a></li>
+<li><a href="#org345210e">15.4. Functions</a></li>
+<li><a href="#orga2e20dc">15.5. Keybindings</a></li>
+<li><a href="#org1c3a983">15.6. .exwm.el</a></li>
+</ul>
+</li>
+<li><a href="#org3d48bd7">16. Non-Guix Services</a></li>
 </ul>
 </div>
 </div>
 <p>
-This is my full-system config.
+<b>Click <a href="https://raw.githack.com/CuBeRJAN/emacs-stuff/main/README.html">here</a> for a properly formatted HTML version :)</b>
+</p>
+
+<p>
+This is my highly modular and entirely literate full-system configuration.
+</p>
+
+<p>
+<i>Guix with i3</i>
+<img src="./new_scr.png" alt="new_scr.png" />
+</p>
+
+<p>
+<i>Debian with MATE (current setup)</i>
+<img src="./debian-scr.png" alt="debian-scr.png" />
 </p>
 
 <ul class="org-ul">
 <li>Currently it's deployed on a Debian system, but it's rather flexible and contains a full GNU Guix System configuration as well.</li>
-<li>Install Guix and run a <code>guix pull</code> before doing importing the package manifest.</li>
-<li>The configuration itself is placed in <code>~/git/emacs-stuff/configs</code> and <code>~/git/emacs-stuff/configs-root</code>, from where the individual modules can be symlinked into place using <a href="https://www.gnu.org/software/stow/">GNU Stow</a>.</li>
-<li>Some modules like <code>fonts</code>, <code>icons</code> and <code>firefox</code> aren't generated by tangle.</li>
-<li>Make sure to tangle this file prior to linking the configs.</li>
+<li><b>Make sure to tangle this file with <code>org-babel-tangle</code> to actually apply changes</b>.</li>
+<li>Install Guix and run a <code>guix pull</code> before importing the Guix package manifest.</li>
+<li><code>~/git/emacs-stuff/configs-unlinked</code> is a special directory for configs which should be copied into place as opposed to symlinked.</li>
+<li>The configuration itself is placed in <code>~/git/emacs-stuff/configs</code> and <code>~/git/emacs-stuff/configs-root</code>
+<ul class="org-ul">
+<li><p>
+From there individual modules can be installed using <a href="https://www.gnu.org/software/stow/">GNU Stow</a>:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #006FE0;">cd</span> ./configs
+<span style="color: #006DAF;">stow</span> <span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">module</span> <span style="color: #D0372D;">-t</span> <span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span>
+<span style="color: #006FE0;">cd</span> ..
+</pre>
+</div></li>
+<li><p>
+Or all at once with overwrite for existing:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #006FE0;">cd</span> ./configs
+<span style="color: #006DAF;">stow</span> * <span style="color: #D0372D;">-t</span> <span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span> <span style="color: #D0372D;">--adopt</span>
+<span style="color: #006FE0;">cd</span> ..
+<span style="color: #006DAF;">git</span> reset <span style="color: #D0372D;">--hard</span>
+</pre>
+</div></li>
+<li>The <code>configs-root</code> directory contains files only editable by root (ensure permissions are set correctly)
+<ul class="org-ul">
+<li>These files should be linked into the root filesystem (<code>/</code>) instead of <code>$HOME</code>.</li>
+</ul></li>
+</ul></li>
+<li>Some modules depend on each other (for example <code>guix</code> depends <code>guix-modules</code> for some package definitions)</li>
+<li>Some modules like aren't generated by tangle, these include:
+<ul class="org-ul">
+<li><code>dconf</code></li>
+<li><code>firefox</code></li>
+<li><code>fonts</code></li>
+<li><code>icons</code></li>
+<li><code>wallpapers</code></li>
+<li><code>tuxguitar</code></li>
+<li><code>xfce4</code></li>
+</ul></li>
 </ul>
 
-<div id="outline-container-orgb5feda1" class="outline-2">
-<h2 id="orgb5feda1"><span class="section-number-2">1.</span> Autostart</h2>
+<div id="outline-container-orga7f9828" class="outline-2">
+<h2 id="orga7f9828"><span class="section-number-2">1.</span> Autostart</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Here I store my relevant autostart scripts.
 </p>
 </div>
 
-<div id="outline-container-org016cb87" class="outline-3">
-<h3 id="org016cb87"><span class="section-number-3">1.1.</span> .config/autostart/autostart.desktop</h3>
+<div id="outline-container-org5af13b0" class="outline-3">
+<h3 id="org5af13b0"><span class="section-number-3">1.1.</span> .config/autostart/autostart.desktop</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 First we need to add the actual .desktop file for the DE to load.
@@ -158,8 +220,8 @@ First we need to add the actual .desktop file for the DE to load.
 </div>
 </div>
 
-<div id="outline-container-org296d75d" class="outline-3">
-<h3 id="org296d75d"><span class="section-number-3">1.2.</span> .loginctl</h3>
+<div id="outline-container-org07e1b32" class="outline-3">
+<h3 id="org07e1b32"><span class="section-number-3">1.2.</span> .loginctl</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Here's the actual autostart script.
@@ -180,16 +242,16 @@ Here's the actual autostart script.
 </div>
 </div>
 
-<div id="outline-container-org06be266" class="outline-2">
-<h2 id="org06be266"><span class="section-number-2">2.</span> Bash</h2>
+<div id="outline-container-orge2420da" class="outline-2">
+<h2 id="orge2420da"><span class="section-number-2">2.</span> Bash</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Let's move on to configuring the shell - bash in my case.
 </p>
 </div>
 
-<div id="outline-container-orgffc8af2" class="outline-3">
-<h3 id="orgffc8af2"><span class="section-number-3">2.1.</span> .bashrc</h3>
+<div id="outline-container-org1b2052a" class="outline-3">
+<h3 id="org1b2052a"><span class="section-number-3">2.1.</span> .bashrc</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 I like to have a function to clear old guix builds by regex, helps keep the amount of garbage down.
@@ -217,9 +279,9 @@ A small bit used to remind me when I'm inside a Guix environment.
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #0000FF;">if</span> <span style="color: #707183;">[</span> -n <span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">GUIX_ENVIRONMENT</span><span style="color: #008000;">"</span> <span style="color: #707183;">]</span><span style="color: #0000FF;">;</span> <span style="color: #0000FF;">then</span>
-  <span style="color: #0000FF;">if</span> <span style="color: #707183;">[</span><span style="color: #7388D6;">[</span> <span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">PS1</span> =~ <span style="color: #909183;">(</span>.*<span style="color: #909183;">)</span>"\\$" <span style="color: #7388D6;">]</span><span style="color: #707183;">]</span><span style="color: #0000FF;">;</span> <span style="color: #0000FF;">then</span>
-      <span style="color: #BA36A5; font-style: italic;">PS1</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">${</span><span style="color: #D0372D; background-color: #FFFFFF; font-style: italic;">BASH_REMATCH</span><span style="color: #333333; background-color: #FFFFFF;">[1]</span><span style="color: #0000FF;">}</span><span style="color: #008000;"> [env]\\\$ "</span>
-  <span style="color: #0000FF;">fi</span>
+    <span style="color: #0000FF;">if</span> <span style="color: #707183;">[</span><span style="color: #7388D6;">[</span> <span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">PS1</span> =~ <span style="color: #909183;">(</span>.*<span style="color: #909183;">)</span>"\\$" <span style="color: #7388D6;">]</span><span style="color: #707183;">]</span><span style="color: #0000FF;">;</span> <span style="color: #0000FF;">then</span>
+        <span style="color: #BA36A5; font-style: italic;">PS1</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">${</span><span style="color: #D0372D; background-color: #FFFFFF; font-style: italic;">BASH_REMATCH</span><span style="color: #333333; background-color: #FFFFFF;">[1]</span><span style="color: #0000FF;">}</span><span style="color: #008000;"> [env]\\\$ "</span>
+    <span style="color: #0000FF;">fi</span>
 <span style="color: #0000FF;">fi</span>
 </pre>
 </div>
@@ -258,6 +320,20 @@ The <code>ld_libs</code> is useful for exporting Guix's libraries to run precomp
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #006FE0;">alias</span> ls=<span style="color: #008000;">"ls --color"</span>
 <span style="color: #006FE0;">alias</span> ld_libs=<span style="color: #008000;">"export LD_LIBRARY_PATH=</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">LIBRARY_PATH</span><span style="color: #008000;">"</span>
+<span style="color: #006FE0;">alias</span> tf=<span style="color: #008000;">"xrandr --output HDMI-A-1 --set TearFree"</span>
+</pre>
+</div>
+
+<p>
+This is a lightdm-specific bit. Basically lightdm ignores <code>.bash_profile</code> on login, so we have to ensure the proper exports here as well.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #0000FF;">if</span> <span style="color: #707183;">[</span> ! -f /.dockerenv <span style="color: #707183;">]</span><span style="color: #0000FF;">;</span> <span style="color: #0000FF;">then</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_PROFILE</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile"</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_LOCPATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile/lib/locale"</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.config/guix/current/bin:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.bin:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.local/share/flatpak/exports/bin:</span><span style="color: #0000FF;">$</span><span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span><span style="color: #008000;">"</span>
+    <span style="color: #006DAF;">.</span> <span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">GUIX_PROFILE</span><span style="color: #008000;">/etc/profile"</span>
+<span style="color: #0000FF;">fi</span>
 </pre>
 </div>
 
@@ -272,8 +348,8 @@ Finally some variable exports - for Guix and Flatpak.
 </div>
 </div>
 
-<div id="outline-container-org96c0d78" class="outline-3">
-<h3 id="org96c0d78"><span class="section-number-3">2.2.</span> .bash profile</h3>
+<div id="outline-container-org0169ac2" class="outline-3">
+<h3 id="org0169ac2"><span class="section-number-3">2.2.</span> .bash profile</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Let's move onto the bash profile, used in login shells.
@@ -293,10 +369,10 @@ Then we can go ahead and export Guix, but only when not inside a container.
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #0000FF;">if</span> <span style="color: #707183;">[</span> ! -f /.dockerenv <span style="color: #707183;">]</span><span style="color: #0000FF;">;</span> <span style="color: #0000FF;">then</span>
-  <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_PROFILE</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile"</span>
-  <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_LOCPATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile/lib/locale"</span>
-  <span style="color: #0000FF;">export</span> <span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span><span style="color: #008000;">:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.config/guix/current:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.bin:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.local/share/flatpak/exports/bin"</span>
-  <span style="color: #006DAF;">.</span> <span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">GUIX_PROFILE</span><span style="color: #008000;">/etc/profile"</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_PROFILE</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile"</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #BA36A5; font-style: italic;">GUIX_LOCPATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.guix-profile/lib/locale"</span>
+    <span style="color: #0000FF;">export</span> <span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span>=<span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #ff0000; font-weight: bold; font-style: italic;">PATH</span><span style="color: #008000;">:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.config/guix/current/bin:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.bin:</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span><span style="color: #008000;">/.local/share/flatpak/exports/bin"</span>
+    <span style="color: #006DAF;">.</span> <span style="color: #008000;">"</span><span style="color: #0000FF;">$</span><span style="color: #D0372D; font-style: italic;">GUIX_PROFILE</span><span style="color: #008000;">/etc/profile"</span>
 <span style="color: #0000FF;">fi</span>
 </pre>
 </div>
@@ -304,16 +380,16 @@ Then we can go ahead and export Guix, but only when not inside a container.
 </div>
 </div>
 
-<div id="outline-container-orge22fde4" class="outline-2">
-<h2 id="orge22fde4"><span class="section-number-2">3.</span> Custom Binaries</h2>
+<div id="outline-container-org1aef30e" class="outline-2">
+<h2 id="org1aef30e"><span class="section-number-2">3.</span> Custom Binaries</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Here I have some custom binaries, mostly scripts and stuff.
 </p>
 </div>
 
-<div id="outline-container-orgf79f893" class="outline-3">
-<h3 id="orgf79f893"><span class="section-number-3">3.1.</span> .bin/scr</h3>
+<div id="outline-container-org9c9df13" class="outline-3">
+<h3 id="org9c9df13"><span class="section-number-3">3.1.</span> .bin/scr</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Just a screenshot shortcut.
@@ -326,8 +402,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-org97aef75" class="outline-3">
-<h3 id="org97aef75"><span class="section-number-3">3.2.</span> .bin/scr-area</h3>
+<div id="outline-container-org9639e53" class="outline-3">
+<h3 id="org9639e53"><span class="section-number-3">3.2.</span> .bin/scr-area</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 &#x2026;And the same but for a selected area.
@@ -340,8 +416,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-orgf1a0410" class="outline-3">
-<h3 id="orgf1a0410"><span class="section-number-3">3.3.</span> .bin/chromium-incognito</h3>
+<div id="outline-container-orgfa85a0b" class="outline-3">
+<h3 id="orgfa85a0b"><span class="section-number-3">3.3.</span> .bin/chromium-incognito</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 And a shortcut for opening chromium in incognito mode.
@@ -355,8 +431,8 @@ And a shortcut for opening chromium in incognito mode.
 </div>
 </div>
 
-<div id="outline-container-org6fb302a" class="outline-2">
-<h2 id="org6fb302a"><span class="section-number-2">4.</span> Containers</h2>
+<div id="outline-container-org746d25c" class="outline-2">
+<h2 id="org746d25c"><span class="section-number-2">4.</span> Containers</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 I use distrobox docker/podman (depending on which is available, podman is prefered) on my installation.
@@ -364,34 +440,34 @@ Here is some necessary configs for the containers.
 </p>
 </div>
 
-<div id="outline-container-org078cb0a" class="outline-3">
-<h3 id="org078cb0a"><span class="section-number-3">4.1.</span> .config/containers/policy.json</h3>
+<div id="outline-container-orge2c6a5e" class="outline-3">
+<h3 id="orge2c6a5e"><span class="section-number-3">4.1.</span> .config/containers/policy.json</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 This isn't super secure.
 </p>
 <div class="org-src-container">
-<pre class="src src-json">{
-    "default": [
-	{
-	"type": "insecureAcceptAnything"
-    }
-    ],
-    "transports":
-    {
-	"docker-daemon":
-	{
-	    "": [{"type":"insecureAcceptAnything"}]
-	}
-    }
-}
+<pre class="src src-json"><span style="color: #707183; background-color: #FFFFFF;">{</span>
+    <span style="color: #0000FF;">"default"</span>: <span style="color: #7388D6; background-color: #FFFFFF;">[</span>
+        <span style="color: #909183; background-color: #FFFFFF;">{</span>
+        <span style="color: #0000FF;">"type"</span>: <span style="color: #008000;">"insecureAcceptAnything"</span>
+    <span style="color: #909183; background-color: #FFFFFF;">}</span>
+    <span style="color: #7388D6; background-color: #FFFFFF;">]</span>,
+    <span style="color: #0000FF;">"transports"</span>:
+    <span style="color: #7388D6; background-color: #FFFFFF;">{</span>
+        <span style="color: #0000FF;">"docker-daemon"</span>:
+        <span style="color: #909183; background-color: #FFFFFF;">{</span>
+            <span style="color: #0000FF;">""</span>: <span style="color: #709870; background-color: #FFFFFF;">[</span><span style="color: #907373; background-color: #FFFFFF;">{</span><span style="color: #0000FF;">"type"</span>:<span style="color: #008000;">"insecureAcceptAnything"</span><span style="color: #907373; background-color: #FFFFFF;">}</span><span style="color: #709870; background-color: #FFFFFF;">]</span>
+        <span style="color: #909183; background-color: #FFFFFF;">}</span>
+    <span style="color: #7388D6; background-color: #FFFFFF;">}</span>
+<span style="color: #707183; background-color: #FFFFFF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2fb5a00" class="outline-3">
-<h3 id="org2fb5a00"><span class="section-number-3">4.2.</span> .config/containers/registries.conf</h3>
+<div id="outline-container-orgc841cfc" class="outline-3">
+<h3 id="orgc841cfc"><span class="section-number-3">4.2.</span> .config/containers/registries.conf</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Add the necessary registries.
@@ -413,169 +489,185 @@ Add the necessary registries.
 </div>
 </div>
 
-<div id="outline-container-org4eafbb4" class="outline-2">
-<h2 id="org4eafbb4"><span class="section-number-2">5.</span> Guix</h2>
+<div id="outline-container-org2f940ee" class="outline-2">
+<h2 id="org2f940ee"><span class="section-number-2">5.</span> Guix</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 GNU Guix is a very important part of my configuration.
 </p>
 </div>
 
-<div id="outline-container-org6e3e04f" class="outline-3">
-<h3 id="org6e3e04f"><span class="section-number-3">5.1.</span> .guix-manifest</h3>
+<div id="outline-container-org3ca2982" class="outline-3">
+<h3 id="org3ca2982"><span class="section-number-3">5.1.</span> .guix-manifest</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Just a straightforward (and very messy!) package manifest.
 </p>
+
+<p>
+Let's start with theming and fonts.
+</p>
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span>specifications-&gt;manifest
-  <span style="color: #7388D6;">(</span>list <span style="color: #008000;">"audacity"</span>
-        <span style="color: #008000;">"strawberry"</span>
-        <span style="color: #008000;">"lmms"</span>
-        <span style="color: #008000;">"arc-theme"</span>
-        <span style="color: #008000;">"gvfs"</span>
-        <span style="color: #008000;">"celluloid"</span>
-        <span style="color: #008000;">"xdg-desktop-portal-gtk"</span>
-        <span style="color: #008000;">"xdg-desktop-portal"</span>
-        <span style="color: #008000;">"gnome-tweaks"</span>
-        <span style="color: #008000;">"ungoogled-chromium"</span>
-        <span style="color: #008000;">"firefox"</span>
-        <span style="color: #008000;">"caja"</span>
-        <span style="color: #008000;">"mpv"</span>
-        <span style="color: #008000;">"gimp"</span>
-        <span style="color: #008000;">"flatpak"</span>
-        <span style="color: #008000;">"transmission:gui"</span>
-        <span style="color: #008000;">"transmission"</span>
-        <span style="color: #008000;">"retroarch-nonfree"</span>
-        <span style="color: #008000;">"aisleriot"</span>
-        <span style="color: #008000;">"qemu"</span>
-        <span style="color: #008000;">"virt-manager"</span>
-        <span style="color: #008000;">"qjackctl"</span>
-        <span style="color: #008000;">"i3status"</span>
-        <span style="color: #008000;">"xfce4-pulseaudio-plugin"</span>
-        <span style="color: #008000;">"xfce4-volumed-pulse"</span>
-        <span style="color: #008000;">"google-chrome-stable"</span>
-        <span style="color: #008000;">"sushi"</span>
-        <span style="color: #008000;">"libportal"</span>
-        <span style="color: #008000;">"steam-patched"</span>
-        <span style="color: #008000;">"dolphin"</span>
-        <span style="color: #008000;">"gzdoom"</span>
-        <span style="color: #008000;">"gnome-mines"</span>
-        <span style="color: #008000;">"gedit"</span>
-        <span style="color: #008000;">"pavucontrol"</span>
-        <span style="color: #008000;">"podman"</span>
-        <span style="color: #008000;">"libreoffice"</span>
-        <span style="color: #008000;">"eom"</span>
-        <span style="color: #008000;">"gthumb"</span>
-        <span style="color: #008000;">"obs"</span>
-        <span style="color: #008000;">"sdl2-ttf"</span>
-        <span style="color: #008000;">"yamagi-quake2"</span>
-        <span style="color: #008000;">"timidity++"</span>
-        <span style="color: #008000;">"kdenlive"</span>
-        <span style="color: #008000;">"sdl2-image"</span>
-        <span style="color: #008000;">"sdl2"</span>
-        <span style="color: #008000;">"sdl2-gfx"</span>
-        <span style="color: #008000;">"pulseaudio"</span>
-        <span style="color: #008000;">"sdl"</span>
-        <span style="color: #008000;">"openal"</span>
-        <span style="color: #008000;">"vlc"</span>
-        <span style="color: #008000;">"wine"</span>
-        <span style="color: #008000;">"brogue-ce"</span>
-        <span style="color: #008000;">"distrobox-docker"</span>
-        <span style="color: #008000;">"emacs-geiser-guile"</span>
-        <span style="color: #008000;">"pfetch"</span>
-        <span style="color: #008000;">"thunar"</span>
-        <span style="color: #008000;">"yt-dlp"</span>
-        <span style="color: #008000;">"ublock-origin-chromium"</span>
-        <span style="color: #008000;">"pandoc"</span>
-        <span style="color: #008000;">"openjdk"</span>
-        <span style="color: #008000;">"clang-toolchain"</span>
-        <span style="color: #008000;">"emacs"</span>
-        <span style="color: #008000;">"rofi"</span>
-        <span style="color: #008000;">"i3lock"</span>
-        <span style="color: #008000;">"lm-sensors"</span>
-        <span style="color: #008000;">"gpick"</span>
-        <span style="color: #008000;">"picom"</span>
-        <span style="color: #008000;">"nitrogen"</span>
-        <span style="color: #008000;">"i3-wm"</span>
-        <span style="color: #008000;">"xfce4-whiskermenu-plugin"</span>
-        <span style="color: #008000;">"xfce4-panel"</span>
-        <span style="color: #008000;">"piper"</span>
-        <span style="color: #008000;">"element-desktop"</span>
-        <span style="color: #008000;">"scrot"</span>
-        <span style="color: #008000;">"dconf-editor"</span>
-        <span style="color: #008000;">"tumbler"</span>
-        <span style="color: #008000;">"fluidsynth"</span>
-        <span style="color: #008000;">"libratbag"</span>
-        <span style="color: #008000;">"yaru-theme"</span>
-        <span style="color: #008000;">"tuxguitar"</span>
-        <span style="color: #008000;">"hyfetch"</span>
-        <span style="color: #008000;">"font-awesome"</span>
-        <span style="color: #008000;">"playerctl"</span>
-        <span style="color: #008000;">"i3blocks"</span>
-        <span style="color: #008000;">"font-google-noto-sans-cjk"</span>
-        <span style="color: #008000;">"emacs-vterm"</span>
-        <span style="color: #008000;">"emacs-use-package"</span>
-        <span style="color: #008000;">"xprop"</span>
-        <span style="color: #008000;">"cloc"</span>
-        <span style="color: #008000;">"dmenu"</span>
-        <span style="color: #008000;">"xset"</span>
-        <span style="color: #008000;">"setxkbmap"</span>
-        <span style="color: #008000;">"arc-icon-theme"</span>
-        <span style="color: #008000;">"scsh"</span>
-        <span style="color: #008000;">"sbcl"</span>
-        <span style="color: #008000;">"mcron"</span>
-        <span style="color: #008000;">"jq"</span>
-        <span style="color: #008000;">"gdb"</span>
-        <span style="color: #008000;">"font-google-noto-emoji"</span>
-        <span style="color: #008000;">"zstd"</span>
-        <span style="color: #008000;">"patchelf"</span>
-        <span style="color: #008000;">"gnome-shell-extension-dash-to-dock"</span>
-        <span style="color: #008000;">"python-pip"</span>
-        <span style="color: #008000;">"freepats-gm"</span>
-        <span style="color: #008000;">"p11-kit"</span>
-        <span style="color: #008000;">"flatpak-xdg-utils"</span>
-        <span style="color: #008000;">"vulkan-tools"</span>
-        <span style="color: #008000;">"vulkan-loader"</span>
-        <span style="color: #008000;">"libgudev"</span>
-        <span style="color: #008000;">"libxkbcommon"</span>
-        <span style="color: #008000;">"python"</span>
-        <span style="color: #008000;">"libxi"</span>
-        <span style="color: #008000;">"libxrandr"</span>
-        <span style="color: #008000;">"libxcursor"</span>
-        <span style="color: #008000;">"libgccjit"</span>
-        <span style="color: #008000;">"curl"</span>
-        <span style="color: #008000;">"gnome-shell-extension-appindicator"</span>
-        <span style="color: #008000;">"gnome-shell-extension-blur-my-shell"</span>
-        <span style="color: #008000;">"cmake"</span>
-        <span style="color: #008000;">"unrar"</span>
-        <span style="color: #008000;">"unzip"</span>
-        <span style="color: #008000;">"xrandr"</span>
-        <span style="color: #008000;">"stow"</span>
-        <span style="color: #008000;">"freepats"</span>
-        <span style="color: #008000;">"fluid-3"</span>
-        <span style="color: #008000;">"alsa-lib"</span>
-        <span style="color: #008000;">"htop"</span>
-        <span style="color: #008000;">"libvorbis"</span>
-        <span style="color: #008000;">"sqlite"</span>
-        <span style="color: #008000;">"neofetch"</span>
-        <span style="color: #008000;">"markdown"</span>
-        <span style="color: #008000;">"make"</span>
-        <span style="color: #008000;">"font-fira-mono"</span>
-        <span style="color: #008000;">"libvterm"</span>
-        <span style="color: #008000;">"libtool"</span>
-        <span style="color: #008000;">"glibc-locales"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+ <span style="color: #7388D6;">(</span>list <span style="color: #008000;">"arc-theme"</span>
+       <span style="color: #008000;">"font-google-noto-sans-cjk"</span>
+       <span style="color: #008000;">"font-google-noto-emoji"</span>
+       <span style="color: #008000;">"font-awesome"</span>
+       <span style="color: #008000;">"font-fira-mono"</span>
+</pre>
+</div>
+
+<p>
+Next we can look into development related packages and libraries.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #008000;">"sdl2-ttf"</span>
+<span style="color: #008000;">"sdl2-image"</span>
+<span style="color: #008000;">"sdl2"</span>
+<span style="color: #008000;">"sdl2-gfx"</span>
+<span style="color: #008000;">"scsh"</span>
+<span style="color: #008000;">"sbcl"</span>
+<span style="color: #008000;">"python-pip"</span>
+<span style="color: #008000;">"patchelf"</span>
+<span style="color: #008000;">"make"</span>
+<span style="color: #008000;">"cmake"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #008000;">"audacity"</span>
+<span style="color: #008000;">"strawberry"</span>
+<span style="color: #008000;">"lmms"</span>
+<span style="color: #008000;">"syncthing"</span>
+<span style="color: #008000;">"gvfs"</span>
+<span style="color: #008000;">"celluloid"</span>
+<span style="color: #008000;">"xdg-desktop-portal-gtk"</span>
+<span style="color: #008000;">"xdg-desktop-portal"</span>
+<span style="color: #008000;">"gnome-tweaks"</span>
+<span style="color: #008000;">"ungoogled-chromium"</span>
+<span style="color: #008000;">"firefox"</span>
+<span style="color: #008000;">"caja"</span>
+<span style="color: #008000;">"mpv"</span>
+<span style="color: #008000;">"gimp"</span>
+<span style="color: #008000;">"flatpak"</span>
+<span style="color: #008000;">"transmission:gui"</span>
+<span style="color: #008000;">"transmission"</span>
+<span style="color: #008000;">"retroarch-nonfree"</span>
+<span style="color: #008000;">"aisleriot"</span>
+<span style="color: #008000;">"qemu"</span>
+<span style="color: #008000;">"virt-manager"</span>
+<span style="color: #008000;">"qjackctl"</span>
+<span style="color: #008000;">"i3status"</span>
+<span style="color: #008000;">"xfce4-pulseaudio-plugin"</span>
+<span style="color: #008000;">"xfce4-volumed-pulse"</span>
+<span style="color: #008000;">"google-chrome-stable"</span>
+<span style="color: #008000;">"sushi"</span>
+<span style="color: #008000;">"libportal"</span>
+<span style="color: #008000;">"steam-patched"</span>
+<span style="color: #008000;">"dolphin"</span>
+<span style="color: #008000;">"gzdoom"</span>
+<span style="color: #008000;">"gnome-mines"</span>
+<span style="color: #008000;">"gedit"</span>
+<span style="color: #008000;">"pavucontrol"</span>
+<span style="color: #008000;">"podman"</span>
+<span style="color: #008000;">"libreoffice"</span>
+<span style="color: #008000;">"eom"</span>
+<span style="color: #008000;">"gthumb"</span>
+<span style="color: #008000;">"obs"</span>
+<span style="color: #008000;">"yamagi-quake2"</span>
+<span style="color: #008000;">"timidity++"</span>
+<span style="color: #008000;">"kdenlive"</span>
+<span style="color: #008000;">"pulseaudio"</span>
+<span style="color: #008000;">"sdl"</span>
+<span style="color: #008000;">"openal"</span>
+<span style="color: #008000;">"vlc"</span>
+<span style="color: #008000;">"wine"</span>
+<span style="color: #008000;">"brogue-ce"</span>
+<span style="color: #008000;">"distrobox-docker"</span>
+<span style="color: #008000;">"emacs-geiser-guile"</span>
+<span style="color: #008000;">"pfetch"</span>
+<span style="color: #008000;">"thunar"</span>
+<span style="color: #008000;">"yt-dlp"</span>
+<span style="color: #008000;">"ublock-origin-chromium"</span>
+<span style="color: #008000;">"pandoc"</span>
+<span style="color: #008000;">"openjdk"</span>
+<span style="color: #008000;">"clang-toolchain"</span>
+<span style="color: #008000;">"emacs"</span>
+<span style="color: #008000;">"rofi"</span>
+<span style="color: #008000;">"i3lock"</span>
+<span style="color: #008000;">"lm-sensors"</span>
+<span style="color: #008000;">"gpick"</span>
+<span style="color: #008000;">"picom"</span>
+<span style="color: #008000;">"nitrogen"</span>
+<span style="color: #008000;">"i3-wm"</span>
+<span style="color: #008000;">"xfce4-whiskermenu-plugin"</span>
+<span style="color: #008000;">"xfce4-panel"</span>
+<span style="color: #008000;">"piper"</span>
+<span style="color: #008000;">"element-desktop"</span>
+<span style="color: #008000;">"scrot"</span>
+<span style="color: #008000;">"dconf-editor"</span>
+<span style="color: #008000;">"tumbler"</span>
+<span style="color: #008000;">"fluidsynth"</span>
+<span style="color: #008000;">"libratbag"</span>
+<span style="color: #008000;">"yaru-theme"</span>
+<span style="color: #008000;">"tuxguitar"</span>
+<span style="color: #008000;">"hyfetch"</span>
+<span style="color: #008000;">"playerctl"</span>
+<span style="color: #008000;">"i3blocks"</span>
+<span style="color: #008000;">"emacs-vterm"</span>
+<span style="color: #008000;">"emacs-use-package"</span>
+<span style="color: #008000;">"xprop"</span>
+<span style="color: #008000;">"cloc"</span>
+<span style="color: #008000;">"dmenu"</span>
+<span style="color: #008000;">"xset"</span>
+<span style="color: #008000;">"setxkbmap"</span>
+<span style="color: #008000;">"arc-icon-theme"</span>
+<span style="color: #008000;">"mcron"</span>
+<span style="color: #008000;">"jq"</span>
+<span style="color: #008000;">"gdb"</span>
+<span style="color: #008000;">"zstd"</span>
+<span style="color: #008000;">"gnome-shell-extension-dash-to-dock"</span>
+<span style="color: #008000;">"freepats-gm"</span>
+<span style="color: #008000;">"p11-kit"</span>
+<span style="color: #008000;">"flatpak-xdg-utils"</span>
+<span style="color: #008000;">"vulkan-tools"</span>
+<span style="color: #008000;">"vulkan-loader"</span>
+<span style="color: #008000;">"libgudev"</span>
+<span style="color: #008000;">"libxkbcommon"</span>
+<span style="color: #008000;">"python"</span>
+<span style="color: #008000;">"libxi"</span>
+<span style="color: #008000;">"libxrandr"</span>
+<span style="color: #008000;">"libxcursor"</span>
+<span style="color: #008000;">"libgccjit"</span>
+<span style="color: #008000;">"curl"</span>
+<span style="color: #008000;">"gnome-shell-extension-appindicator"</span>
+<span style="color: #008000;">"gnome-shell-extension-blur-my-shell"</span>
+<span style="color: #008000;">"unrar"</span>
+<span style="color: #008000;">"unzip"</span>
+<span style="color: #008000;">"xrandr"</span>
+<span style="color: #008000;">"stow"</span>
+<span style="color: #008000;">"freepats"</span>
+<span style="color: #008000;">"fluid-3"</span>
+<span style="color: #008000;">"alsa-lib"</span>
+<span style="color: #008000;">"htop"</span>
+<span style="color: #008000;">"libvorbis"</span>
+<span style="color: #008000;">"sqlite"</span>
+<span style="color: #008000;">"neofetch"</span>
+<span style="color: #008000;">"markdown"</span>
+<span style="color: #008000;">"libvterm"</span>
+<span style="color: #008000;">"libtool"</span>
+<span style="color: #008000;">"glibc-locales"</span><span style="color: #000000; background-color: #FFA5A5; font-weight: bold; text-decoration: underline;">))</span>
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgd20669f" class="outline-3">
-<h3 id="orgd20669f"><span class="section-number-3">5.2.</span> .config/guix/channels.scm</h3>
+<div id="outline-container-org2c02484" class="outline-3">
+<h3 id="org2c02484"><span class="section-number-3">5.2.</span> .config/guix/channels.scm</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Here is the setup for channels, only read addition here is <code>nonguix</code>.
+Here is the setup for channels, only real addition here is <code>nonguix</code>.
 </p>
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF;">use-modules</span> <span style="color: #7388D6;">(</span>guix ci<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
@@ -600,16 +692,16 @@ Here is the setup for channels, only read addition here is <code>nonguix</code>.
 </div>
 </div>
 
-<div id="outline-container-orgde1aa42" class="outline-2">
-<h2 id="orgde1aa42"><span class="section-number-2">6.</span> Guix-run</h2>
+<div id="outline-container-org722af81" class="outline-2">
+<h2 id="org722af81"><span class="section-number-2">6.</span> Guix-run</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <code>guix-run</code> is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
 </p>
 </div>
 
-<div id="outline-container-org3b004ca" class="outline-3">
-<h3 id="org3b004ca"><span class="section-number-3">6.1.</span> .bin/guix-run</h3>
+<div id="outline-container-org6b4bc53" class="outline-3">
+<h3 id="org6b4bc53"><span class="section-number-3">6.1.</span> .bin/guix-run</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #8D8D84; font-style: italic;">#!/bin/sh</span>
@@ -627,16 +719,16 @@ Here is the setup for channels, only read addition here is <code>nonguix</code>.
 </div>
 </div>
 
-<div id="outline-container-orge13fefa" class="outline-2">
-<h2 id="orge13fefa"><span class="section-number-2">7.</span> i3</h2>
+<div id="outline-container-orgde95a6f" class="outline-2">
+<h2 id="orgde95a6f"><span class="section-number-2">7.</span> i3</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 <code>i3</code> is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have i3 here for completeness.
 </p>
 </div>
 
-<div id="outline-container-org55d0225" class="outline-3">
-<h3 id="org55d0225"><span class="section-number-3">7.1.</span> .config/i3/config</h3>
+<div id="outline-container-org04bfc9a" class="outline-3">
+<h3 id="org04bfc9a"><span class="section-number-3">7.1.</span> .config/i3/config</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Let's set some initial variables first.
@@ -858,8 +950,8 @@ This part here is rather interesting, I pipe the status through my own wrapper, 
 </div>
 </div>
 
-<div id="outline-container-org2deee67" class="outline-3">
-<h3 id="org2deee67"><span class="section-number-3">7.2.</span> .config/i3/i3status<sub>wrapper.py</sub></h3>
+<div id="outline-container-org3d1d63a" class="outline-3">
+<h3 id="org3d1d63a"><span class="section-number-3">7.2.</span> .config/i3/i3status wrapper.py</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 This small python wrapper add the currently playing song as a prefix to the status. Rather neat but took a while to implement.
@@ -946,8 +1038,8 @@ I won't bother commenting this code, just believe me (and maybe pray) that it wo
 </div>
 </div>
 
-<div id="outline-container-org9623c58" class="outline-3">
-<h3 id="org9623c58"><span class="section-number-3">7.3.</span> .config/i3status/config</h3>
+<div id="outline-container-orge33f098" class="outline-3">
+<h3 id="orge33f098"><span class="section-number-3">7.3.</span> .config/i3status/config</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 So this is the actual i3status config.
@@ -1026,37 +1118,36 @@ And finally configure the individual items.
 </div>
 </div>
 
-<div id="outline-container-orgb2850ce" class="outline-2">
-<h2 id="orgb2850ce"><span class="section-number-2">8.</span> Picom</h2>
+<div id="outline-container-org04b7e4a" class="outline-2">
+<h2 id="org04b7e4a"><span class="section-number-2">8.</span> Picom</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Picom is the compositor I choose to use with i3 and EXWM.
 </p>
 </div>
 
-<div id="outline-container-org278bd41" class="outline-3">
-<h3 id="org278bd41"><span class="section-number-3">8.1.</span> .config/picom/picom.conf</h3>
+<div id="outline-container-org8d062cf" class="outline-3">
+<h3 id="org8d062cf"><span class="section-number-3">8.1.</span> .config/picom/picom.conf</h3>
 <div class="outline-text-3" id="text-8-1">
+<p>
+Animations, these require a special picom fork so they do not work currently.
+</p>
 <div class="org-src-container">
-<pre class="src src-conf-unix"><span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#          </span><span style="color: #8D8D84; font-style: italic;">Animations           #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">requires https://github.com/jonaburg/picom</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">(These are also the default values)</span>
-<span style="color: #BA36A5;">transition-length</span> = 300
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">transition-length</span> = 300
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">transition-length = 0</span>
 <span style="color: #BA36A5;">transition-pow-x</span> = 0.1
 <span style="color: #BA36A5;">transition-pow-y</span> = 0.1
 <span style="color: #BA36A5;">transition-pow-w</span> = 0.1
 <span style="color: #BA36A5;">transition-pow-h</span> = 0.1
 <span style="color: #BA36A5;">size-transition</span> = true
+</pre>
+</div>
 
-
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#             </span><span style="color: #8D8D84; font-style: italic;">Corners           #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">requires: https://github.com/sdhand/compton or https://github.com/jonaburg/picom</span>
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">corner-radius = 9.0;</span>
+<p>
+Now for rounded corners.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">corner-radius = 9.0;</span>
 <span style="color: #BA36A5;">corner-radius</span> = 0;
 <span style="color: #BA36A5;">rounded-corners-exclude</span> = [
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">"window_type = 'normal'",</span>
@@ -1076,70 +1167,27 @@ Picom is the compositor I choose to use with i3 and EXWM.
 <span style="color: #BA36A5;">round-borders-exclude</span> = [
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">"class_g = 'TelegramDesktop'",</span>
 ];
+</pre>
+</div>
 
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#             </span><span style="color: #8D8D84; font-style: italic;">Shadows           #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Enabled client-side shadows on windows. Note desktop windows </span>
+<p>
+Some minimal shadows.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Enabled client-side shadows on windows. Note desktop windows </span>
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">(windows with '_NET_WM_WINDOW_TYPE_DESKTOP') never get shadow, </span>
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">unless explicitly requested using the wintypes option.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow = false</span>
 <span style="color: #BA36A5;">shadow</span> = false;
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The blur radius for shadows, in pixels. (defaults to 12)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-radius = 12</span>
 <span style="color: #BA36A5;">shadow-radius</span> = 7;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The opacity of shadows. (0.0 - 1.0, defaults to 0.75)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-opacity = .75</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The left offset for shadows, in pixels. (defaults to -15)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-offset-x = -15</span>
+<span style="color: #BA36A5;">shadow-opacity</span> = .75
 <span style="color: #BA36A5;">shadow-offset-x</span> = -7;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The top offset for shadows, in pixels. (defaults to -15)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-offset-y = -15</span>
 <span style="color: #BA36A5;">shadow-offset-y</span> = -7;
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Avoid drawing shadows on dock/panel windows. This option is deprecated,</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">you should use the *wintypes* option in your config file instead.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-dock-shadow = false</span>
+<span style="color: #BA36A5;">shadow-red</span> = 0
+<span style="color: #BA36A5;">shadow-green</span> = 0
+<span style="color: #BA36A5;">shadow-blue</span> = 0
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Don't draw shadows on drag-and-drop windows. This option is deprecated, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">you should use the *wintypes* option in your config file instead.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-dnd-shadow = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Red color value of shadow (0.0 - 1.0, defaults to 0).</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-red = 0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Green color value of shadow (0.0 - 1.0, defaults to 0).</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-green = 0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Blue color value of shadow (0.0 - 1.0, defaults to 0).</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-blue = 0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Do not paint shadows on shaped windows. Note shaped windows </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">here means windows setting its shape through X Shape extension. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Those using ARGB background is beyond our control. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Deprecated, use </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude = 'bounding_shaped'</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">or </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude = 'bounding_shaped &amp;&amp; !rounded_corners'</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">instead.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-ignore-shaped = ''</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a list of conditions of windows that should have no shadow.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">examples:</span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude = "n:e:Notification";</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude = []</span>
 <span style="color: #BA36A5;">shadow-exclude</span> = [
 <span style="color: #008000;">"name = 'Notification'"</span>,
 <span style="color: #008000;">"name = 'i3bar'"</span>,
@@ -1151,102 +1199,52 @@ Picom is the compositor I choose to use with i3 and EXWM.
 <span style="color: #008000;">"_GTK_FRAME_EXTENTS@:c"</span>
 ];
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a X geometry that describes the region in which shadow should not</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">be painted in, such as a dock window region. Use </span>
-<span style="color: #8D8D84; font-style: italic;">#    </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude-reg = "x10+0+0"</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">for example, if the 10 pixels on the bottom of the screen should not have shadows painted on.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shadow-exclude-reg = "" </span>
+Crop shadow of a window fully on a particular Xinerama screen to the screen.
+<span style="color: #BA36A5;">xinerama-shadow-crop</span> = false
+</pre>
+</div>
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Crop shadow of a window fully on a particular Xinerama screen to the screen.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">xinerama-shadow-crop = false</span>
+<p>
+Windows fading on close/workspace switch.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">fading</span> = true;
 
-
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#           </span><span style="color: #8D8D84; font-style: italic;">Fading              #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Fade windows in/out when opening/closing and when opacity changes,</span>
-<span style="color: #8D8D84; font-style: italic;">#  </span><span style="color: #8D8D84; font-style: italic;">unless no-fading-openclose is used.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">fading = false</span>
-<span style="color: #BA36A5;">fading</span> = true;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Opacity change between steps while fading in. (0.01 - 1.0, defaults to 0.028)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">fade-in-step = 0.028</span>
 <span style="color: #BA36A5;">fade-in-step</span> = 0.03;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Opacity change between steps while fading out. (0.01 - 1.0, defaults to 0.03)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">fade-out-step = 0.03</span>
 <span style="color: #BA36A5;">fade-out-step</span> = 0.03;
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The time between steps in fade step, in milliseconds. (&gt; 0, defaults to 10)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">fade-delta = 10</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a list of conditions of windows that should not be faded.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">don't need this, we disable fading for all normal windows with wintypes: {}</span>
 <span style="color: #BA36A5;">fade-exclude</span> = [
 <span style="color: #008000;">"class_g = 'slop'"</span>   <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">maim</span>
 ]
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Do not fade on window open/close.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-fading-openclose = false</span>
+<span style="color: #BA36A5;">no-fading-openclose</span> = false
 
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Do not fade destroyed ARGB windows with WM frame. Workaround of bugs in Openbox, Fluxbox, etc.</span>
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-fading-destroyed-argb = false</span>
+</pre>
+</div>
 
-
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">Transparency / Opacity      #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Opacity of inactive windows. (0.1 - 1.0, defaults to 1.0)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">inactive-opacity = 1</span>
-<span style="color: #BA36A5;">inactive-opacity</span> = 1;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Opacity of window titlebars and borders. (0.1 - 1.0, disabled by default)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">frame-opacity = 1.0</span>
+<p>
+Opactiy settings.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">inactive-opacity</span> = 1;
 <span style="color: #BA36A5;">frame-opacity</span> = 1.0;
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Default opacity for dropdown menus and popup menus. (0.0 - 1.0, defaults to 1.0)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">menu-opacity = 1.0 </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">menu-opacity is depreciated use dropdown-menu and popup-menu instead.</span>
-
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">If using these 2 below change their values in line 510 &amp; 511 aswell</span>
 <span style="color: #BA36A5;">popup_menu</span> = { opacity = 1; }
 <span style="color: #BA36A5;">dropdown_menu</span> = { opacity = 1; }
 
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Let inactive opacity set by -i override the '_NET_WM_OPACITY' values of windows.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">inactive-opacity-override = true</span>
 <span style="color: #BA36A5;">inactive-opacity-override</span> = false;
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Default opacity for active windows. (0.0 - 1.0, defaults to 1.0)</span>
 <span style="color: #BA36A5;">active-opacity</span> = 1.0;
+<span style="color: #BA36A5;">inactive-dim</span> = 0.0
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Dim inactive windows. (0.0 - 1.0, defaults to 0.0)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">inactive-dim = 0.0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a list of conditions of windows that should always be considered focused.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">focus-exclude = []</span>
 <span style="color: #BA36A5;">focus-exclude</span> = [
 <span style="color: #008000;">"class_g = 'Cairo-clock'"</span>,
 <span style="color: #008000;">"class_g = 'Bar'"</span>,                    <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">lemonbar</span>
 <span style="color: #008000;">"class_g = 'slop'"</span>                    <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">maim</span>
 ];
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use fixed inactive dim value, instead of adjusting according to window opacity.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">inactive-dim-fixed = 1.0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a list of opacity rules, in the format `PERCENT:PATTERN`, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">like `50:name *= "Firefox"`. picom-trans is recommended over this. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Note we don't make any guarantee about possible conflicts with other </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">programs that set '_NET_WM_WINDOW_OPACITY' on frame or client windows.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">example:</span>
-<span style="color: #8D8D84; font-style: italic;">#    </span><span style="color: #8D8D84; font-style: italic;">opacity-rule = [ "80:class_g = 'URxvt'" ];</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">opacity-rule = []</span>
 <span style="color: #BA36A5;">opacity-rule</span> = [
 <span style="color: #008000;">"80:class_g     = 'Bar'"</span>,             <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">lemonbar</span>
 <span style="color: #008000;">"100:class_g    = 'slop'"</span>,            <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">maim</span>
@@ -1264,45 +1262,14 @@ Picom is the compositor I choose to use with i3 and EXWM.
 <span style="color: #008000;">"100:class_g    = 'firefox'"</span>,
 <span style="color: #008000;">"100:class_g    = 'Thunderbird'"</span>
 ];
+</pre>
+</div>
 
-
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Background-Blurring       #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Parameters for background blurring, see the *BLUR* section for more information.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-method = </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-size = 12</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-deviation = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Blur background of semi-transparent / ARGB windows. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Bad in performance, with driver-dependent behavior. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The name of the switch may change without prior notifications.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-background = true;</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Blur background of windows when the window frame is not opaque. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Implies:</span>
-<span style="color: #8D8D84; font-style: italic;">#    </span><span style="color: #8D8D84; font-style: italic;">blur-background </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Bad in performance, with driver-dependent behavior. The name may change.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-background-frame = false;</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use fixed blur strength rather than adjusting according to window opacity.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-background-fixed = false;</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify the blur convolution kernel, with the following format:</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">example:</span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">blur-kern = "5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-kern = ''</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">blur-kern = "3x3box";</span>
-
-blur: {
+<p>
+Background blurring.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix">blur: {
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">requires: https://github.com/ibhagwan/picom</span>
 <span style="color: #BA36A5;">method</span> = <span style="color: #008000;">"kawase"</span>;
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">method = "kernel";</span>
@@ -1318,236 +1285,55 @@ blur: {
 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Exclude conditions for background blur.</span>
 <span style="color: #BA36A5;">blur-background-exclude</span> = [
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">"window_type = 'dock'",</span>
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">"window_type = 'desktop'",</span>
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">"class_g = 'URxvt'",</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">prevents picom from blurring the background</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">when taking selection screenshot with `main`</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">https://github.com/naelstrof/maim/issues/130</span>
 <span style="color: #008000;">"class_g = 'slop'"</span>,
 <span style="color: #008000;">"_GTK_FRAME_EXTENTS@:c"</span>
 ];
+</pre>
+</div>
 
+<p>
+Now let's add some general settings.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">daemon = false</span>
+</pre>
+</div>
 
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-<span style="color: #8D8D84; font-style: italic;">#       </span><span style="color: #8D8D84; font-style: italic;">General Settings        #</span>
-<span style="color: #8D8D84; font-style: italic;">#################################</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Daemonize process. Fork to background after initialization. Causes issues with certain (badly-written) drivers.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">daemon = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify the backend to use: `xrender`, `glx`, or `xr_glx_hybrid`.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">`xrender` is the default one.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
+<p>
+The GLX backend offers superior functionality, it also eliminates screen tearing with vsync. Experimental backedns improve compositor performance.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">`xrender`, `glx`, or `xr_glx_hybrid`.</span>
 <span style="color: #BA36A5;">experimental-backends</span> = true;
 <span style="color: #BA36A5;">backend</span> = <span style="color: #008000;">"glx"</span>;
 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">backend = "xrender";</span>
-
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Enable/disable VSync.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">vsync = false</span>
 <span style="color: #BA36A5;">vsync</span> = true
+</pre>
+</div>
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Enable remote control via D-Bus. See the *D-BUS API* section below for more details.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">dbus = false</span>
+<p>
+I don't know what these do exactly, but it works this way.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">dbus</span> = false
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Try to detect WM windows (a non-override-redirect window with no </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">child that has 'WM_STATE') and mark them as active.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">mark-wmwin-focused = false</span>
 <span style="color: #BA36A5;">mark-wmwin-focused</span> = true;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Mark override-redirect windows that doesn't have a child window with 'WM_STATE' focused.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">mark-ovredir-focused = false</span>
 <span style="color: #BA36A5;">mark-ovredir-focused</span> = true;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Try to detect windows with rounded corners and don't consider them </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shaped windows. The accuracy is not very high, unfortunately.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">detect-rounded-corners = false</span>
 <span style="color: #BA36A5;">detect-rounded-corners</span> = true;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Detect '_NET_WM_OPACITY' on client windows, useful for window managers</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">not passing '_NET_WM_OPACITY' of client windows to frame windows.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">detect-client-opacity = false</span>
 <span style="color: #BA36A5;">detect-client-opacity</span> = true;
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify refresh rate of the screen. If not specified or 0, picom will </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">try detecting this with X RandR extension.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">refresh-rate = 60</span>
 <span style="color: #BA36A5;">refresh-rate</span> = 0
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Limit picom to repaint at most once every 1 / 'refresh_rate' second to </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">boost performance. This should not be used with </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">vsync drm/opengl/opengl-oml</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">as they essentially does sw-opti's job already, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">unless you wish to specify a lower refresh rate than the actual value.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">sw-opti = </span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use EWMH '_NET_ACTIVE_WINDOW' to determine currently focused window, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">rather than listening to 'FocusIn'/'FocusOut' event. Might have more accuracy, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">provided that the WM supports it.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">use-ewmh-active-win = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Unredirect all windows if a full-screen opaque window is detected, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">to maximize performance for full-screen windows. Known to cause flickering </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">when redirecting/unredirecting windows. paint-on-overlay may make the flickering less obvious.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">unredir-if-possible = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Delay before unredirecting the window, in milliseconds. Defaults to 0.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">unredir-if-possible-delay = 0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Conditions of windows that shouldn't be considered full-screen for unredirecting screen.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">unredir-if-possible-exclude = []</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use 'WM_TRANSIENT_FOR' to group windows, and consider windows </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">in the same group focused at the same time.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">detect-transient = false</span>
 <span style="color: #BA36A5;">detect-transient</span> = true
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use 'WM_CLIENT_LEADER' to group windows, and consider windows in the same </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">group focused at the same time. 'WM_TRANSIENT_FOR' has higher priority if </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">detect-transient is enabled, too.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">detect-client-leader = false</span>
 <span style="color: #BA36A5;">detect-client-leader</span> = true
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Resize damaged region by a specific number of pixels. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">A positive value enlarges it while a negative one shrinks it. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">If the value is positive, those additional pixels will not be actually painted </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">to screen, only used in blur calculation, and such. (Due to technical limitations, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">with use-damage, those pixels will still be incorrectly painted to screen.) </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Primarily used to fix the line corruption issues of blur, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">in which case you should use the blur radius value here </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">(e.g. with a 3x3 kernel, you should use `--resize-damage 1`, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">with a 5x5 one you use `--resize-damage 2`, and so on). </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">May or may not work with *--glx-no-stencil*. Shrinking doesn't function correctly.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">resize-damage = 1</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Specify a list of conditions of windows that should be painted with inverted color. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Resource-hogging, and is not well tested.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">invert-color-include = []</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">GLX backend: Avoid using stencil buffer, useful if you don't have a stencil buffer. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Might cause incorrect opacity when rendering transparent content (but never </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">practically happened) and may not work with blur-background. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">My tests show a 15% performance boost. Recommended.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">glx-no-stencil = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">GLX backend: Avoid rebinding pixmap on window damage. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Probably could improve performance on rapid window content changes, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">but is known to break things on some drivers (LLVMpipe, xf86-video-intel, etc.).</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Recommended if it works.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">glx-no-rebind-pixmap = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Disable the use of damage information. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">This cause the whole screen to be redrawn everytime, instead of the part of the screen</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">has actually changed. Potentially degrades the performance, but might fix some artifacts.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">The opposing option is use-damage</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-use-damage = false</span>
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">use-damage = true (Causing Weird Black semi opaque rectangles when terminal is opened)</span>
-<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">Changing use-damage to false fixes the problem</span>
 <span style="color: #BA36A5;">use-damage</span> = false
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Use X Sync fence to sync clients' draw calls, to make sure all draw </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">calls are finished before picom starts drawing. Needed on nvidia-drivers </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">with GLX backend for some users.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">xrender-sync-fence = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">GLX backend: Use specified GLSL fragment shader for rendering window contents. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">See `compton-default-fshader-win.glsl` and `compton-fake-transparency-fshader-win.glsl` </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">in the source tree for examples.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">glx-fshader-win = ''</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Force all windows to be painted with blending. Useful if you </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">have a glx-fshader-win that could turn opaque pixels transparent.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">force-win-blend = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Do not use EWMH to detect fullscreen windows. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Reverts to checking if a window is fullscreen based only on its size and coordinates.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">no-ewmh-fullscreen = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Dimming bright windows so their brightness doesn't exceed this set value. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Brightness of a window is estimated by averaging all pixels in the window, </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">so this could comes with a performance hit. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Setting this to 1.0 disables this behaviour. Requires --use-damage to be disabled. (default: 1.0)</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">max-brightness = 1.0</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Make transparent windows clip other windows like non-transparent windows do,</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">instead of blending on top of them.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">transparent-clipping = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Set the log level. Possible values are:</span>
-<span style="color: #8D8D84; font-style: italic;">#  </span><span style="color: #8D8D84; font-style: italic;">"trace", "debug", "info", "warn", "error"</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">in increasing level of importance. Case doesn't matter. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">If using the "TRACE" log level, it's better to log into a file </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">using *--log-file*, since it can generate a huge stream of logs.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">log-level = "debug"</span>
 <span style="color: #BA36A5;">log-level</span> = <span style="color: #008000;">"info"</span>;
+</pre>
+</div>
 
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Set the log file.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">If *--log-file* is never specified, logs will be written to stderr. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Otherwise, logs will to written to the given file, though some of the early </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">logs might still be written to the stderr. </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">When setting this option from the config file, it is recommended to use an absolute path.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">log-file = '/path/to/your/log/file'</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Show all X errors (for debugging)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">show-all-xerrors = false</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Write process ID to a file.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">write-pid-path = '/path/to/your/log/file'</span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Window type settings</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">'WINDOW_TYPE' is one of the 15 window types defined in EWMH standard: </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">"unknown", "desktop", "dock", "toolbar", "menu", "utility", </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">"splash", "dialog", "normal", "dropdown_menu", "popup_menu", </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">"tooltip", "notification", "combo", and "dnd".</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Following per window-type options are available: ::</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">fade, shadow:::</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Controls window-type-specific shadow and fade settings.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">opacity:::</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Controls default opacity of the window type.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">focus:::</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Controls whether the window of this type is to be always considered focused. </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">(By default, all window types except "normal" and "dialog" has this on.)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">full-shadow:::</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Controls whether shadow is drawn under the parts of the window that you </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">normally won't be able to see. Useful when the window has parts of it </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">transparent, and you want shadows in those areas.</span>
-<span style="color: #8D8D84; font-style: italic;"># </span>
-<span style="color: #8D8D84; font-style: italic;">#   </span><span style="color: #8D8D84; font-style: italic;">redir-ignore:::</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">Controls whether this type of windows should cause screen to become </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">redirected again after been unredirected. If you have unredir-if-possible</span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">set, and doesn't want certain window to cause unnecessary screen redirection, </span>
-<span style="color: #8D8D84; font-style: italic;">#     </span><span style="color: #8D8D84; font-style: italic;">you can set this to `true`.</span>
-<span style="color: #8D8D84; font-style: italic;">#</span>
-wintypes:
+<p>
+Finally implement the actual window type rules.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix">wintypes:
 {
 <span style="color: #BA36A5;">normal</span> = { fade = false; shadow = false; }
 <span style="color: #BA36A5;">tooltip</span> = { fade = true; shadow = true; opacity = 0.75; focus = true; full-shadow = false; };
@@ -1562,16 +1348,16 @@ wintypes:
 </div>
 </div>
 
-<div id="outline-container-orgec04147" class="outline-2">
-<h2 id="orgec04147"><span class="section-number-2">9.</span> Rofi</h2>
+<div id="outline-container-org7d3ea7c" class="outline-2">
+<h2 id="org7d3ea7c"><span class="section-number-2">9.</span> Rofi</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Rofi is an application launcher, I use it with i3 and sometimes even with different desktop environments.
 </p>
 </div>
 
-<div id="outline-container-org22cb089" class="outline-3">
-<h3 id="org22cb089"><span class="section-number-3">9.1.</span> .config/rofi/nord.rasi</h3>
+<div id="outline-container-org58977ad" class="outline-3">
+<h3 id="org58977ad"><span class="section-number-3">9.1.</span> .config/rofi/nord.rasi</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 This is my chosen rofi theme, fits with the i3 theme!
@@ -1579,121 +1365,121 @@ Original source <a href="https://github.com/lr-tech/rofi-themes-collection">here
 </p>
 
 <div class="org-src-container">
-<pre class="src src-fundamental">* {
-    font:   "Fira Code 10";
+<pre class="src src-css"><span style="color: #006FE0;">*</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">font</span>:   <span style="color: #008000;">"Fira Code 10"</span>;
 
-    nord0:     #2e3440;
-    nord1:     #3b4252;
-    nord2:     #434c5e;
-    nord3:     #4c566a;
+    <span style="color: #BA36A5;">nord0</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">2e3440</span>;
+    <span style="color: #BA36A5;">nord1</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">3b4252</span>;
+    <span style="color: #BA36A5;">nord2</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">434c5e</span>;
+    <span style="color: #BA36A5;">nord3</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">4c566a</span>;
 
-    nord4:     #d8dee9;
-    nord5:     #e5e9f0;
-    nord6:     #eceff4;
+    <span style="color: #BA36A5;">nord4</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">d8dee9</span>;
+    <span style="color: #BA36A5;">nord5</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">e5e9f0</span>;
+    <span style="color: #BA36A5;">nord6</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">eceff4</span>;
 
-    nord7:     #8fbcbb;
-    nord8:     #88c0d0;
-    nord9:     #81a1c1;
-    nord10:    #5e81ac;
-    nord11:    #bf616a;
+    <span style="color: #BA36A5;">nord7</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">8fbcbb</span>;
+    <span style="color: #BA36A5;">nord8</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">88c0d0</span>;
+    <span style="color: #BA36A5;">nord9</span>:     <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">81a1c1</span>;
+    <span style="color: #BA36A5;">nord10</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">5e81ac</span>;
+    <span style="color: #BA36A5;">nord11</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">bf616a</span>;
 
-    nord12:    #d08770;
-    nord13:    #ebcb8b;
-    nord14:    #a3be8c;
-    nord15:    #b48ead;
+    <span style="color: #BA36A5;">nord12</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">d08770</span>;
+    <span style="color: #BA36A5;">nord13</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">ebcb8b</span>;
+    <span style="color: #BA36A5;">nord14</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">a3be8c</span>;
+    <span style="color: #BA36A5;">nord15</span>:    <span style="color: #008000; background-color: #FFFFFF; font-weight: bold;">#</span><span style="color: #008000; font-weight: bold;">b48ead</span>;
 
-    background-color:   transparent;
-    text-color:         @nord4;
-    accent-color:       @nord8;
+    <span style="color: #BA36A5;">background-color</span>:   <span style="color: #0000FF;">transparent</span>;
+    <span style="color: #BA36A5;">text-color</span>:         <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">4</span>;
+    <span style="color: #BA36A5;">accent-color</span>:       <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">8</span>;
 
-    margin:     0px;
-    padding:    0px;
-    spacing:    0px;
-}
+    <span style="color: #BA36A5;">margin</span>:     <span style="color: #D0372D;">0</span><span style="color: #6434A3;">px</span>;
+    <span style="color: #BA36A5;">padding</span>:    <span style="color: #D0372D;">0</span><span style="color: #6434A3;">px</span>;
+    <span style="color: #BA36A5;">spacing</span>:    <span style="color: #D0372D;">0</span><span style="color: #6434A3;">px</span>;
+<span style="color: #707183;">}</span>
 
-window {
-    location:           north;
-    width:              100%;
-    background-color:   @nord0;
-    children:           [ mainbox,message ];
-}
+<span style="color: #006FE0;">window</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">location</span>:           <span style="color: #0000FF;">north</span>;
+    <span style="color: #BA36A5;">width</span>:              <span style="color: #D0372D;">100</span><span style="color: #6434A3;">%</span>;
+    <span style="color: #BA36A5;">background-color</span>:   <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">0</span>;
+    <span style="color: #006FE0;">children</span>:           <span style="color: #7388D6;">[</span> <span style="color: #006FE0;">mainbox</span><span style="color: #333333; background-color: #FFFFFF;">,</span><span style="color: #006FE0;">message</span> <span style="color: #7388D6;">]</span>;
+<span style="color: #707183;">}</span>
 
-mainbox {
-    orientation:    horizontal;
-    children:       [ inputbar,listview ];
-}
+<span style="color: #006FE0;">mainbox</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">orientation</span>:    <span style="color: #0000FF;">horizontal</span>;
+    <span style="color: #006FE0;">children</span>:       <span style="color: #7388D6;">[</span> <span style="color: #006FE0;">inputbar</span><span style="color: #333333; background-color: #FFFFFF;">,</span><span style="color: #006FE0;">listview</span> <span style="color: #7388D6;">]</span>;
+<span style="color: #707183;">}</span>
 
-inputbar {
-    width:      25%;
-    padding:    1px 8px;
-    spacing:    8px;
-    children:   [ prompt, entry ];
-}
+<span style="color: #006FE0;">inputbar</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">width</span>:      <span style="color: #D0372D;">25</span><span style="color: #6434A3;">%</span>;
+    <span style="color: #BA36A5;">padding</span>:    <span style="color: #D0372D;">1</span><span style="color: #6434A3;">px</span> <span style="color: #D0372D;">8</span><span style="color: #6434A3;">px</span>;
+    <span style="color: #BA36A5;">spacing</span>:    <span style="color: #D0372D;">8</span><span style="color: #6434A3;">px</span>;
+    <span style="color: #006FE0;">children</span>:   <span style="color: #7388D6;">[</span> <span style="color: #006FE0;">prompt</span><span style="color: #333333; background-color: #FFFFFF;">,</span> <span style="color: #006FE0;">entry</span> <span style="color: #7388D6;">]</span>;
+<span style="color: #707183;">}</span>
 
-prompt, entry, element-text, element-icon {
-    vertical-align: 0.5;
-}
+<span style="color: #006FE0;">prompt</span><span style="color: #333333; background-color: #FFFFFF;">,</span> <span style="color: #006FE0;">entry</span><span style="color: #333333; background-color: #FFFFFF;">,</span> <span style="color: #006FE0;">element-text</span><span style="color: #333333; background-color: #FFFFFF;">,</span> <span style="color: #006FE0;">element-icon</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">vertical-align</span>: <span style="color: #D0372D;">0.5</span>;
+<span style="color: #707183;">}</span>
 
-prompt {
-    text-color: @accent-color;
-}
+<span style="color: #006FE0;">prompt</span> <span style="color: #707183;">{</span>
+    <span style="color: #808080; font-weight: bold;">text-color</span>: <span style="color: #0000FF;">@accent-color</span>;
+<span style="color: #707183;">}</span>
 
-listview {
-    layout: horizontal;
-}
+<span style="color: #006FE0;">listview</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">layout</span>: <span style="color: #0000FF;">horizontal</span>;
+<span style="color: #707183;">}</span>
 
-element {
-    padding:    1px 8px;
-    spacing:    4px;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">padding</span>:    <span style="color: #D0372D;">1</span><span style="color: #6434A3;">px</span> <span style="color: #D0372D;">8</span><span style="color: #6434A3;">px</span>;
+    <span style="color: #BA36A5;">spacing</span>:    <span style="color: #D0372D;">4</span><span style="color: #6434A3;">px</span>;
+<span style="color: #707183;">}</span>
 
-element normal urgent {
-    text-color: @nord13;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">normal</span> <span style="color: #006FE0;">urgent</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">text-color</span>: <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">13</span>;
+<span style="color: #707183;">}</span>
 
-element normal active {
-    text-color: @accent-color;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">normal</span> <span style="color: #006FE0;">active</span> <span style="color: #707183;">{</span>
+    <span style="color: #808080; font-weight: bold;">text-color</span>: <span style="color: #0000FF;">@accent-color</span>;
+<span style="color: #707183;">}</span>
 
-element selected {
-    text-color: @nord0;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">selected</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">text-color</span>: <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">0</span>;
+<span style="color: #707183;">}</span>
 
-element selected normal {
-    background-color:   @accent-color;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">selected</span> <span style="color: #006FE0;">normal</span> <span style="color: #707183;">{</span>
+    <span style="color: #808080; font-weight: bold;">background-color</span>:   <span style="color: #0000FF;">@accent-color</span>;
+<span style="color: #707183;">}</span>
 
-element selected urgent {
-    background-color:   @nord13;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">selected</span> <span style="color: #006FE0;">urgent</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">background-color</span>:   <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">13</span>;
+<span style="color: #707183;">}</span>
 
-element selected active {
-    background-color:   @nord8;
-}
+<span style="color: #006FE0;">element</span> <span style="color: #006FE0;">selected</span> <span style="color: #006FE0;">active</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">background-color</span>:   <span style="color: #0000FF;">@nord</span><span style="color: #D0372D;">8</span>;
+<span style="color: #707183;">}</span>
 
-element-icon {
-    size:   0.75em;
-}
+<span style="color: #006FE0;">element-icon</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">size</span>:   <span style="color: #D0372D;">0.75</span><span style="color: #6434A3;">em</span>;
+<span style="color: #707183;">}</span>
 
-element-text {
-    text-color: inherit;
-} 
+<span style="color: #006FE0;">element-text</span> <span style="color: #707183;">{</span>
+    <span style="color: #BA36A5;">text-color</span>: <span style="color: #0000FF;">inherit</span>;
+<span style="color: #707183;">}</span> 
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgeec3fdb" class="outline-2">
-<h2 id="orgeec3fdb"><span class="section-number-2">10.</span> Startx</h2>
+<div id="outline-container-orgb1b3d1c" class="outline-2">
+<h2 id="orgb1b3d1c"><span class="section-number-2">10.</span> Startx</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 This bit is for a custom <code>startx</code> command, made to work with Guix.
 </p>
 </div>
 
-<div id="outline-container-org66d37d9" class="outline-3">
-<h3 id="org66d37d9"><span class="section-number-3">10.1.</span> .startx</h3>
+<div id="outline-container-org0fa4bce" class="outline-3">
+<h3 id="org0fa4bce"><span class="section-number-3">10.1.</span> .startx</h3>
 <div class="outline-text-3" id="text-10-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #8D8D84; font-style: italic;">#!/bin/sh</span>
@@ -1709,16 +1495,16 @@ This bit is for a custom <code>startx</code> command, made to work with Guix.
 </div>
 </div>
 
-<div id="outline-container-orgc5e9109" class="outline-2">
-<h2 id="orgc5e9109"><span class="section-number-2">11.</span> Xresources</h2>
+<div id="outline-container-org8dfd692" class="outline-2">
+<h2 id="org8dfd692"><span class="section-number-2">11.</span> Xresources</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 Here I apply some basic Xorg configuration.
 </p>
 </div>
 
-<div id="outline-container-org756eedf" class="outline-3">
-<h3 id="org756eedf"><span class="section-number-3">11.1.</span> .Xresources</h3>
+<div id="outline-container-orgcadcb0f" class="outline-3">
+<h3 id="orgcadcb0f"><span class="section-number-3">11.1.</span> .Xresources</h3>
 <div class="outline-text-3" id="text-11-1">
 <p>
 Just set the DPI and configure basic font rendering.
@@ -1737,8 +1523,8 @@ Just set the DPI and configure basic font rendering.
 </div>
 </div>
 
-<div id="outline-container-org2793667" class="outline-3">
-<h3 id="org2793667"><span class="section-number-3">11.2.</span> .xsessionrc</h3>
+<div id="outline-container-org2866096" class="outline-3">
+<h3 id="org2866096"><span class="section-number-3">11.2.</span> .xsessionrc</h3>
 <div class="outline-text-3" id="text-11-2">
 <p>
 This here is necessary for Debian; makes Guix programs accessible from a desktop session.
@@ -1752,16 +1538,16 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
 </div>
 </div>
 
-<div id="outline-container-orgd133faf" class="outline-2">
-<h2 id="orgd133faf"><span class="section-number-2">12.</span> Guix system</h2>
+<div id="outline-container-orgbb0fecf" class="outline-2">
+<h2 id="orgbb0fecf"><span class="section-number-2">12.</span> Guix system</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
 </p>
 </div>
 
-<div id="outline-container-orgcfaaebe" class="outline-3">
-<h3 id="orgcfaaebe"><span class="section-number-3">12.1.</span> /etc/config.scm</h3>
+<div id="outline-container-org4a410e6" class="outline-3">
+<h3 id="org4a410e6"><span class="section-number-3">12.1.</span> /etc/config.scm</h3>
 <div class="outline-text-3" id="text-12-1">
 <p>
 Let's start by adding my custom modules. This isn't exactly clean but it is functional.
@@ -1987,8 +1773,8 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
 </div>
 </div>
 
-<div id="outline-container-org4e81d2f" class="outline-3">
-<h3 id="org4e81d2f"><span class="section-number-3">12.2.</span> /etc/signing-key.pub</h3>
+<div id="outline-container-org540638d" class="outline-3">
+<h3 id="org540638d"><span class="section-number-3">12.2.</span> /etc/signing-key.pub</h3>
 <div class="outline-text-3" id="text-12-2">
 <p>
 This is the key for nonguix.
@@ -2006,24 +1792,24 @@ This is the key for nonguix.
 </div>
 </div>
 
-<div id="outline-container-org7b560eb" class="outline-2">
-<h2 id="org7b560eb"><span class="section-number-2">13.</span> Custom Guix Modules</h2>
+<div id="outline-container-org01d573e" class="outline-2">
+<h2 id="org01d573e"><span class="section-number-2">13.</span> Custom Guix Modules</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 I use some of my own custom Guix modules. These provide anything from services to (mainly) packages.
 </p>
 </div>
 
-<div id="outline-container-org8c6a0d8" class="outline-3">
-<h3 id="org8c6a0d8"><span class="section-number-3">13.1.</span> /etc/guix-modules/nil/packages</h3>
+<div id="outline-container-org2aec99e" class="outline-3">
+<h3 id="org2aec99e"><span class="section-number-3">13.1.</span> /etc/guix-modules/nil/packages</h3>
 <div class="outline-text-3" id="text-13-1">
 <p>
 Let's start with the packages first.
 </p>
 </div>
 
-<div id="outline-container-org7ab00f0" class="outline-4">
-<h4 id="org7ab00f0"><span class="section-number-4">13.1.1.</span> brogue.scm</h4>
+<div id="outline-container-orgcf93717" class="outline-4">
+<h4 id="orgcf93717"><span class="section-number-4">13.1.1.</span> brogue.scm</h4>
 <div class="outline-text-4" id="text-13-1-1">
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages brogue</span><span style="color: #7388D6;">)</span>
@@ -2092,8 +1878,8 @@ Let's start with the packages first.
 </div>
 </div>
 
-<div id="outline-container-org6d6017d" class="outline-4">
-<h4 id="org6d6017d"><span class="section-number-4">13.1.2.</span> distrobox-docker.scm</h4>
+<div id="outline-container-orgba953e4" class="outline-4">
+<h4 id="orgba953e4"><span class="section-number-4">13.1.2.</span> distrobox-docker.scm</h4>
 <div class="outline-text-4" id="text-13-1-2">
 <p>
 Since podman isn't currently fully functional on Guix we have to use docker instead. Unfortunately the Distrobox definition in Guix's repos relies on podman - thus making it practically broken. To solve this issue I modify the package to use docker instead.
@@ -2134,8 +1920,8 @@ Since podman isn't currently fully functional on Guix we have to use docker inst
 </div>
 </div>
 
-<div id="outline-container-orge5388b3" class="outline-4">
-<h4 id="orge5388b3"><span class="section-number-4">13.1.3.</span> emulators.scm</h4>
+<div id="outline-container-org16d5e19" class="outline-4">
+<h4 id="org16d5e19"><span class="section-number-4">13.1.3.</span> emulators.scm</h4>
 <div class="outline-text-4" id="text-13-1-3">
 <p>
 This is a custom retroarch definition, it adds the core downloader functionality which the Guix version doesn't have for licensing reasons.
@@ -2198,8 +1984,8 @@ This is a custom retroarch definition, it adds the core downloader functionality
 </div>
 </div>
 
-<div id="outline-container-orgedac612" class="outline-4">
-<h4 id="orgedac612"><span class="section-number-4">13.1.4.</span> steam-client.scm</h4>
+<div id="outline-container-orgd8f1631" class="outline-4">
+<h4 id="orgd8f1631"><span class="section-number-4">13.1.4.</span> steam-client.scm</h4>
 <div class="outline-text-4" id="text-13-1-4">
 <p>
 This is nonguix's Steam but with my second drive exposed through the sandbox. A couple of missing dependencies were added too.
@@ -2971,16 +2757,16 @@ This is nonguix's Steam but with my second drive exposed through the sandbox. A 
 </div>
 </div>
 
-<div id="outline-container-org9ae4e64" class="outline-3">
-<h3 id="org9ae4e64"><span class="section-number-3">13.2.</span> /etc/guix-modules/nil/services</h3>
+<div id="outline-container-org886b76a" class="outline-3">
+<h3 id="org886b76a"><span class="section-number-3">13.2.</span> /etc/guix-modules/nil/services</h3>
 <div class="outline-text-3" id="text-13-2">
 <p>
 Moving on to services.
 </p>
 </div>
 
-<div id="outline-container-org752ea22" class="outline-4">
-<h4 id="org752ea22"><span class="section-number-4">13.2.1.</span> mount-rshared.scm</h4>
+<div id="outline-container-orga348106" class="outline-4">
+<h4 id="orga348106"><span class="section-number-4">13.2.1.</span> mount-rshared.scm</h4>
 <div class="outline-text-4" id="text-13-2-1">
 <p>
 Tiny service used to remount the root as recursively shared on boot.
@@ -3013,9 +2799,86 @@ Tiny service used to remount the root as recursively shared on boot.
 </div>
 </div>
 
-<div id="outline-container-org537acd1" class="outline-2">
-<h2 id="org537acd1"><span class="section-number-2">14.</span> Emacs</h2>
+<div id="outline-container-org8b7e121" class="outline-2">
+<h2 id="org8b7e121"><span class="section-number-2">14.</span> ZRAM on non-guix distros</h2>
 <div class="outline-text-2" id="text-14">
+<p>
+This is the distribution-agnostic ZRAM implementation for use with systems other than GNU Guix. This module isn't necessary (or desired) with Guix System.
+</p>
+<ul class="org-ul">
+<li>Dependent on <code>systemd</code>.</li>
+<li>It is necessary to manually disable regular swap in <code>/etc/fstab</code>.</li>
+</ul>
+</div>
+
+<div id="outline-container-org82f98df" class="outline-3">
+<h3 id="org82f98df"><span class="section-number-3">14.1.</span> /etc/modules-load.d/zram.conf</h3>
+<div class="outline-text-3" id="text-14-1">
+<p>
+First let's load the kernel module.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix">zram            
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org951b996" class="outline-3">
+<h3 id="org951b996"><span class="section-number-3">14.2.</span> /etc/modprobe.d/zram.conf</h3>
+<div class="outline-text-3" id="text-14-2">
+<p>
+Now to configure the module a little bit.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">options zram num_devices</span>=1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge099651" class="outline-3">
+<h3 id="orge099651"><span class="section-number-3">14.3.</span> /etc/udev/rules.d/99-zram.rules</h3>
+<div class="outline-text-3" id="text-14-3">
+<p>
+Set the ZRAM size - 16GB in this case.
+</p>
+<div class="org-src-container">
+<pre class="src src-conf-unix"><span style="color: #BA36A5;">KERNEL</span>==<span style="color: #008000;">"zram0"</span>, ATTR{disksize}=<span style="color: #008000;">"16384M"</span>,TAG+=<span style="color: #008000;">"systemd"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a9ea75" class="outline-3">
+<h3 id="org0a9ea75"><span class="section-number-3">14.4.</span> /etc/systemd/system/zram.service</h3>
+<div class="outline-text-3" id="text-14-4">
+<p>
+Finally we need a systemd service to automatically enable zram on boot.
+</p>
+<div class="org-src-container">
+<pre class="src src-systemd"><span style="color: #6434A3;">[Unit]</span>
+<span style="color: #0000FF;">Description</span>=Swap with zram
+<span style="color: #0000FF;">After</span>=multi-user.target
+
+<span style="color: #6434A3;">[Service]</span>
+<span style="color: #0000FF;">Type</span>=<span style="color: #006FE0;">oneshot</span>
+<span style="color: #0000FF;">RemainAfterExit</span>=<span style="color: #D0372D;">true</span>
+<span style="color: #0000FF;">ExecStartPre</span>=/sbin/mkswap /dev/zram0
+<span style="color: #0000FF;">ExecStart</span>=/sbin/swapon /dev/zram0
+<span style="color: #0000FF;">ExecStop</span>=/sbin/swapoff /dev/zram0
+
+<span style="color: #6434A3;">[Install]</span>
+<span style="color: #0000FF;">WantedBy</span>=multi-user.target
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d6afdb" class="outline-2">
+<h2 id="org9d6afdb"><span class="section-number-2">15.</span> Emacs</h2>
+<div class="outline-text-2" id="text-15">
 <p>
 Finally - this is my Emacs config, now fully literate!
 </p>
@@ -3041,8 +2904,12 @@ Let's start of with a quick listing of the relevant system-level dependencies:
 <p>
 I usually install these using <a href="https://guix.gnu.org">GNU Guix</a>, at least when running Emacs on Linux.
 </p>
+</div>
 
 
+<div id="outline-container-org3acb36b" class="outline-3">
+<h3 id="org3acb36b"><span class="section-number-3">15.1.</span> Initial variables</h3>
+<div class="outline-text-3" id="text-15-1">
 <p>
 Let's start off with setting some basic information about the user.
 </p>
@@ -3062,7 +2929,12 @@ EXWM can be toggled here. It's configuration is handled within a separate file.
 <span style="color: #707183;">(</span><span style="color: #0000FF;">when</span> use-exwm <span style="color: #7388D6;">(</span>load <span style="color: #008000;">"~/.exwm.el"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org680b2cb" class="outline-3">
+<h3 id="org680b2cb"><span class="section-number-3">15.2.</span> Packages</h3>
+<div class="outline-text-3" id="text-15-2">
 <p>
 Next we need to setup our package archives so that we can ensure all the necessary packages are installed.
 </p>
@@ -3090,6 +2962,7 @@ You'll notice the use of a very primitive function - no <code>straight.el</code>
                    elfeed
                    magit
                    guix
+                   systemd
                    tree-sitter
                    tree-sitter-langs
                    treemacs
@@ -3178,10 +3051,11 @@ The Fira Code font has ligature support, so we implement it here.
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org1d2df8e" class="outline-3">
-<h3 id="org1d2df8e"><span class="section-number-3">14.1.</span> Variables</h3>
-<div class="outline-text-3" id="text-14-1">
+<div id="outline-container-orgaa61484" class="outline-3">
+<h3 id="orgaa61484"><span class="section-number-3">15.3.</span> Variables</h3>
+<div class="outline-text-3" id="text-15-3">
 <p>
 It's finally time to set up some basic variables.
 </p>
@@ -3203,6 +3077,7 @@ It's finally time to set up some basic variables.
 <span style="color: #707183;">(</span><span style="color: #0000FF;">setq-default</span> cursor-type 'bar<span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> geiser-active-implementations '<span style="color: #7388D6;">(</span>guile<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> geiser-default-implementation 'guile<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defvar</span> <span style="color: #BA36A5;">my-org-html-export-theme</span> 'leuven<span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -3308,6 +3183,37 @@ Here is a very minimal setup for org-agenda.
 </div>
 
 <p>
+Automatically tangle config on save, currently disabled.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">defun</span> <span style="color: #006699;">org-babel-tangle-config</span> <span style="color: #7388D6;">()</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">when</span> <span style="color: #909183;">(</span>string-equal <span style="color: #709870;">(</span>buffer-file-name<span style="color: #709870;">)</span>
+                      <span style="color: #709870;">(</span>expand-file-name <span style="color: #008000;">"~/git/emacs-stuff/README.org"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">(</span><span style="color: #907373;">(</span>org-config-babel-evaluate nil<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>org-babel-tangle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">(add-hook 'org-mode-hook</span>
+<span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">       (lambda ()</span>
+<span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">         (add-hook 'after-save-hook #'org-babel-tangle-config)))</span>
+</pre>
+</div>
+
+<p>
+Ensure <code>org-html-export-html</code> switches to the correct theme before exporting - this solves code legibility issues. It's a bit of a flashbang for a couple of seconds though&#x2026;
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-with-theme</span> <span style="color: #7388D6;">(</span>orig-fun <span style="color: #6434A3;">&amp;rest</span> args<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span>load-theme my-org-html-export-theme<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">unwind-protect</span>
+      <span style="color: #909183;">(</span>apply orig-fun args<span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>disable-theme my-org-html-export-theme<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">with-eval-after-load</span> <span style="color: #008000;">"ox-html"</span>
+  <span style="color: #7388D6;">(</span>advice-add 'org-html-export-to-html <span style="color: #006FE0;">:around</span> 'my-with-theme<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
 This is for keybindings that should never be overwritten by minor modes.
 </p>
 <div class="org-src-container">
@@ -3329,20 +3235,20 @@ This is for keybindings that should never be overwritten by minor modes.
 </div>
 </div>
 
-<div id="outline-container-org0f419a5" class="outline-3">
-<h3 id="org0f419a5"><span class="section-number-3">14.2.</span> Functions</h3>
-<div class="outline-text-3" id="text-14-2">
+<div id="outline-container-org345210e" class="outline-3">
+<h3 id="org345210e"><span class="section-number-3">15.4.</span> Functions</h3>
+<div class="outline-text-3" id="text-15-4">
 <p>
 Some straightforward functions here, used to make my Emacs life a little easier.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-kill-buffer-and-window</span> <span style="color: #7388D6;">()</span>
- <span style="color: #036A07; font-style: italic;">"Kill the current buffer and delete the selected window."</span>
- <span style="color: #7388D6;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #7388D6;">)</span>
- <span style="color: #7388D6;">(</span><span style="color: #0000FF;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>window-to-delete <span style="color: #907373;">(</span>selected-window<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+  <span style="color: #036A07; font-style: italic;">"Kill the current buffer and delete the selected window."</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>window-to-delete <span style="color: #907373;">(</span>selected-window<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
         <span style="color: #709870;">(</span>buffer-to-kill <span style="color: #907373;">(</span>current-buffer<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
         <span style="color: #709870;">(</span>delete-window-hook <span style="color: #907373;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #6276BA;">()</span> <span style="color: #6276BA;">(</span><span style="color: #0000FF;">ignore-errors</span> <span style="color: #858580;">(</span>delete-window<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-   <span style="color: #909183;">(</span><span style="color: #0000FF;">unwind-protect</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">unwind-protect</span>
         <span style="color: #709870;">(</span><span style="color: #0000FF;">progn</span>
           <span style="color: #907373;">(</span>add-hook 'kill-buffer-hook delete-window-hook t t<span style="color: #907373;">)</span>
           <span style="color: #907373;">(</span><span style="color: #0000FF;">if</span> <span style="color: #6276BA;">(</span>kill-buffer <span style="color: #858580;">(</span>current-buffer<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
@@ -3411,9 +3317,9 @@ Sometimes I like to take quick notes in Markdown with impatient mode used for a 
 
 
 
-<div id="outline-container-org0c0f654" class="outline-3">
-<h3 id="org0c0f654"><span class="section-number-3">14.3.</span> Keybindings</h3>
-<div class="outline-text-3" id="text-14-3">
+<div id="outline-container-orga2e20dc" class="outline-3">
+<h3 id="orga2e20dc"><span class="section-number-3">15.5.</span> Keybindings</h3>
+<div class="outline-text-3" id="text-15-5">
 <p>
 Finally we get to my extensive custom keybindings. I try to keep these to as few as possible, to avoid forgetting them over time.
 </p>
@@ -3511,19 +3417,190 @@ Some news feeds.
 </div>
 
 <p>
-And we have reached the end!
+And we have reached the end of the main Emacs file!
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">provide</span> '<span style="color: #D0372D;">.emacs</span><span style="color: #707183;">)</span>
 </pre>
 </div>
+
+<p>
+Let's move onto EXWM configuration next.
+</p>
 </div>
+</div>
+
+<div id="outline-container-org1c3a983" class="outline-3">
+<h3 id="org1c3a983"><span class="section-number-3">15.6.</span> .exwm.el</h3>
+<div class="outline-text-3" id="text-15-6">
+<p>
+The EXWM configuration is stored in a separate file from the Emacs config, this helps keep it modular and easy to switch on or off.
+</p>
+
+<p>
+Let's ensure the <code>exwm</code> package is installed first.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">unless</span> <span style="color: #7388D6;">(</span>package-installed-p 'exwm<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span>package-install 'exwm<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Now we <code>require</code> all the necessary packages and set a few defaults.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">exwm</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">exwm-config</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-config-default<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">require</span> '<span style="color: #D0372D;">exwm-systemtray</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-systemtray-enable<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> exwm-systemtray-height 16<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> exwm-layout-show-all-buffers t<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> exwm-workspace-show-all-buffers t<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">setq</span> exwm-workspace-number 4<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Define some custom functions.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">defun</span> <span style="color: #006699;">exwm-move-window-to-workspace</span> <span style="color: #7388D6;">(</span>workspace-number<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>frame <span style="color: #907373;">(</span>exwm-workspace--workspace-from-frame-or-index workspace-number<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>id <span style="color: #907373;">(</span>exwm--buffer-&gt;id <span style="color: #6276BA;">(</span>window-buffer<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>exwm-workspace-move-window frame id<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">exwm-set-key-progn</span> <span style="color: #7388D6;">(</span>key <span style="color: #6434A3;">&amp;rest</span> body<span style="color: #7388D6;">)</span>
+  `<span style="color: #7388D6;">(</span>exwm-input-set-key <span style="color: #909183;">(</span>kbd ,key<span style="color: #909183;">)</span>
+                       <span style="color: #909183;">(</span><span style="color: #0000FF;">lambda</span><span style="color: #709870;">()</span>
+                         ,@body<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">exwm-key-to-workspace</span> <span style="color: #7388D6;">(</span>key workspace<span style="color: #7388D6;">)</span>
+  `<span style="color: #7388D6;">(</span>exwm-set-key-progn ,key
+                       <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #909183;">)</span>
+                       <span style="color: #909183;">(</span>exwm-workspace-switch ,workspace<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">exwm-key-send-to-workspace</span> <span style="color: #7388D6;">(</span>key workspace<span style="color: #7388D6;">)</span>
+  `<span style="color: #7388D6;">(</span>exwm-set-key-progn ,key
+                       <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #909183;">)</span>
+                       <span style="color: #909183;">(</span>exwm-move-window-to-workspace ,workspace<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defmacro</span> <span style="color: #006699;">exwm-key-to-command</span> <span style="color: #7388D6;">(</span>key command<span style="color: #7388D6;">)</span>
+  `<span style="color: #7388D6;">(</span>exwm-set-key-progn ,key
+                       <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #909183;">)</span>
+                       <span style="color: #909183;">(</span>start-process-shell-command ,command nil ,command<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defun</span> <span style="color: #006699;">my-kill-buffer-and-window</span> <span style="color: #7388D6;">()</span>
+  <span style="color: #036A07; font-style: italic;">"Kill the current buffer and delete the selected window."</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>window-to-delete <span style="color: #907373;">(</span>selected-window<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>buffer-to-kill <span style="color: #907373;">(</span>current-buffer<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>delete-window-hook <span style="color: #907373;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #6276BA;">()</span> <span style="color: #6276BA;">(</span><span style="color: #0000FF;">ignore-errors</span> <span style="color: #858580;">(</span>delete-window<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">unwind-protect</span>
+        <span style="color: #709870;">(</span><span style="color: #0000FF;">progn</span>
+          <span style="color: #907373;">(</span>add-hook 'kill-buffer-hook delete-window-hook t t<span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span><span style="color: #0000FF;">if</span> <span style="color: #6276BA;">(</span>kill-buffer <span style="color: #858580;">(</span>current-buffer<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+              <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">If `</span><span style="color: #D0372D; font-style: italic;">delete-window</span><span style="color: #8D8D84; font-style: italic;">' failed before, we rerun it to regenerate</span>
+              <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">the error so it can be seen in the echo area.</span>
+              <span style="color: #6276BA;">(</span><span style="color: #0000FF;">when</span> <span style="color: #858580;">(</span>eq <span style="color: #80A880;">(</span>selected-window<span style="color: #80A880;">)</span> window-to-delete<span style="color: #858580;">)</span>
+                <span style="color: #858580;">(</span>delete-window<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Time to configure the keybindings.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-&#233;"</span> 0<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-+"</span> 1<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-&#283;"</span> 2<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-&#353;"</span> 3<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-&#269;"</span> 4<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-workspace <span style="color: #008000;">"s-&#345;"</span> 5<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-0"</span> 0<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-1"</span> 1<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-2"</span> 2<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-3"</span> 3<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-4"</span> 4<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-send-to-workspace <span style="color: #008000;">"s-5"</span> 5<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-Q"</span><span style="color: #7388D6;">)</span> #'my-kill-buffer-and-window<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-R"</span><span style="color: #7388D6;">)</span> #'exwm-reset<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-x"</span><span style="color: #7388D6;">)</span> #'exwm-input-toggle-keyboard<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-h"</span><span style="color: #7388D6;">)</span> #'windmove-left<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-j"</span><span style="color: #7388D6;">)</span> #'windmove-down<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-k"</span><span style="color: #7388D6;">)</span> #'windmove-up<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-l"</span><span style="color: #7388D6;">)</span> #'windmove-right<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-q"</span><span style="color: #7388D6;">)</span> #'delete-window<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"C-c q"</span><span style="color: #7388D6;">)</span> #'kill-current-buffer<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-,"</span><span style="color: #7388D6;">)</span> #'exwm-workspace-switch-to-buffer<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-f"</span><span style="color: #7388D6;">)</span> #'exwm-layout-toggle-fullscreen<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-&lt;return&gt;"</span><span style="color: #7388D6;">)</span> #'+vterm/here<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-c"</span><span style="color: #7388D6;">)</span> #'vterm<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-d"</span><span style="color: #7388D6;">)</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">(</span>command<span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span> <span style="color: #709870;">(</span>list <span style="color: #907373;">(</span>read-shell-command <span style="color: #008000;">"$ "</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span>start-process-shell-command command nil command<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-b"</span><span style="color: #7388D6;">)</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span>
+                                  <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span>split-window-vertically<span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span>run-with-idle-timer 0.05 nil <span style="color: #709870;">(</span><span style="color: #0000FF;">lambda</span><span style="color: #907373;">()</span> <span style="color: #907373;">(</span>windmove-down<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-v"</span><span style="color: #7388D6;">)</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span>
+                                  <span style="color: #909183;">(</span><span style="color: #0000FF;">interactive</span><span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span>split-window-horizontally<span style="color: #909183;">)</span>
+                                  <span style="color: #909183;">(</span>run-with-idle-timer 0.05 nil <span style="color: #709870;">(</span><span style="color: #0000FF;">lambda</span><span style="color: #907373;">()</span> <span style="color: #907373;">(</span>windmove-right<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-L"</span><span style="color: #7388D6;">)</span> #'<span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span> <span style="color: #909183;">(</span>enlarge-window-horizontally 2<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-H"</span><span style="color: #7388D6;">)</span> #'<span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span> <span style="color: #909183;">(</span>shrink-window-horizontally 2<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-J"</span><span style="color: #7388D6;">)</span> #'<span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span> <span style="color: #909183;">(</span>shrink-window 2<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-K"</span><span style="color: #7388D6;">)</span> #'<span style="color: #7388D6;">(</span><span style="color: #0000FF;">lambda</span> <span style="color: #909183;">()</span> <span style="color: #909183;">(</span>enlarge-window 2<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-F"</span><span style="color: #7388D6;">)</span> #'exwm-floating-toggle-floating<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-&lt;tab&gt;"</span><span style="color: #7388D6;">)</span> #'exwm-workspace-add<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-input-set-key <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"s-&lt;iso-lefttab&gt;"</span><span style="color: #7388D6;">)</span> #'exwm-workspace-delete<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-command <span style="color: #008000;">"s-M"</span> <span style="color: #008000;">"pavucontrol"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-command <span style="color: #008000;">"&lt;XF86AudioRaiseVolume&gt;"</span> <span style="color: #008000;">"pamixer -i 5"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-command <span style="color: #008000;">"&lt;XF86AudioLowerVolume&gt;"</span> <span style="color: #008000;">"pamixer -d 5"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-command <span style="color: #008000;">"&lt;XF86AudioMute&gt;"</span> <span style="color: #008000;">"pamixer -t"</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>exwm-key-to-command <span style="color: #008000;">"s-&lt;f6&gt;"</span> <span style="color: #008000;">"pamixer --default-source -t"</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Finally let's push the super key and escape as <code>exwm-input-prefix-keys</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #0000FF;">push</span> ?\s-  exwm-input-prefix-keys<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">push</span> <span style="color: #7388D6;">(</span>kbd <span style="color: #008000;">"&lt;escape&gt;"</span><span style="color: #7388D6;">)</span> exwm-input-prefix-keys<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d48bd7" class="outline-2">
+<h2 id="org3d48bd7"><span class="section-number-2">16.</span> Non-Guix Services</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+Some additional services may need to be enabled on non-guix distributions.
+</p>
+<ul class="org-ul">
+<li><code>sudo systemctl enable zram</code></li>
+<li><code>sudo systemctl enable bluetooth</code></li>
+</ul>
+
+
+<p>
+And that's all for the configs!
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Novotný</p>
-<p class="date">Created: 2023-04-21 Fri 01:45</p>
+<p class="date">Created: 2023-04-21 Fri 17:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
