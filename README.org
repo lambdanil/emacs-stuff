@@ -132,9 +132,12 @@ Since ~tput~ isn't available on all distros (namely missing on GNU Guix), an alt
 Let's add some aliases.
 The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled software.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
+  alias sudo="sudo "
+  alias apt="nala"
   alias ls="ls --color"
   alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
   alias tf="xrandr --output HDMI-A-1 --set TearFree"
+  alias python3="$HOME/.py/bin/python3" # venv
 #+END_SRC
 
 This is a lightdm-specific bit. Basically lightdm ignores ~.bash_profile~ on login, so we have to ensure the proper exports here as well.

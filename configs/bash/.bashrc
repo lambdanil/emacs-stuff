@@ -39,9 +39,12 @@ then
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
 fi
 
+alias sudo="sudo "
+alias apt="nala"
 alias ls="ls --color"
 alias ld_libs="export LD_LIBRARY_PATH=$LIBRARY_PATH"
 alias tf="xrandr --output HDMI-A-1 --set TearFree"
+alias python3="$HOME/.py/bin/python3" # venv
 
 if [ ! -f /.dockerenv ]; then
     export GUIX_PROFILE="$HOME/.guix-profile"
