@@ -733,6 +733,7 @@ So this is the actual i3status config.
 Let's set some colors first of all.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
   general {
+  output_format = "i3bar"
   colors = true
   color_good = "#a3be8c"
   color_degraded = "#ebcb8b"
