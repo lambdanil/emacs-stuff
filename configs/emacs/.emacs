@@ -1,7 +1,7 @@
 (setq user-mail-address "shadenk30011@gmail.com"
       user-full-name "Jan Novotný")
 
-(defvar use-exwm t)
+(defvar use-exwm nil)
 
 (when use-exwm (load "~/.exwm.el"))
 
