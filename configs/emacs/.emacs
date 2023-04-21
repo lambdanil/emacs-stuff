@@ -16,6 +16,7 @@
 		   sudo-edit
 		   json-mode
 		   sly
+		   elcord
 		   vterm
 		   elfeed
 		   magit
@@ -34,6 +35,7 @@
 		   geiser
 		   geiser-guile
 		   org-present
+		   visual-fill-column
 		   web-mode))
   (unless (package-installed-p package)
     (package-install package))
@@ -113,6 +115,7 @@
 (setq geiser-active-implementations '(guile))
 (setq geiser-default-implementation 'guile)
 (defvar my-org-html-export-theme 'leuven)
+(elcord-mode)
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))
@@ -197,6 +200,59 @@
 
 (with-eval-after-load "ox-html"
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
+
+(require 'org-faces)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'light :height 120)
+(set-face-attribute 'variable-pitch nil :font "Fira Code" :weight 'light :height 1.0)
+
+;; Hide emphasis markers on formatted text
+(setq org-hide-emphasis-markers t)
+
+;; Resize Org headings
+(dolist (face '((org-level-1 . 1.2)
+		(org-level-2 . 1.1)
+		(org-level-3 . 1.05)
+		(org-level-4 . 1.0)
+		(org-level-5 . 1.1)
+		(org-level-6 . 1.1)
+		(org-level-7 . 1.1)
+		(org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font "Fira Code" :weight 'medium :height (cdr face)))
+
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font "Fira Code" :weight 'bold :height 1.3)
+
+;; ;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(defun my/org-present-start ()
+  (setq visual-fill-column-width 110 ; Set the width
+	visual-fill-column-center-text t)
+  (visual-fill-column-mode 1)
+  (visual-line-mode 1) ; Center text
+  (setq-local face-remapping-alist '((default (:height 1.6) variable-pitch) ; Set font sizes
+				     (header-line (:height 4.0) variable-pitch)
+				     (org-document-title (:height 1.75) org-document-title)
+				     (org-code (:height 0.9) org-code)
+				     (org-verbatim (:height 0.9) org-verbatim)
+				     (org-block (:height 0.9) org-block)
+				     (org-block-begin-line (:height 0.7) org-block))))
+
+
+(defun my/org-present-end ()
+  (visual-fill-column-mode 0)
+  (visual-line-mode 0)
+  (setq-local face-remapping-alist '((default variable-pitch default))))
+
+(add-hook 'org-present-mode-hook 'my/org-present-start)
+(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
 
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
