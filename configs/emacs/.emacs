@@ -142,6 +142,7 @@
 (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
 (setq company-insertion-on-trigger 'company-explicit-action-p)
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+(set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 
 (global-display-line-numbers-mode -1)
 (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
@@ -206,7 +207,7 @@
 	    (setq-local face-remapping-alist '((default variable-pitch default)))))
 (require 'org-faces)
 (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
+(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.06)
 
 ;; Hide emphasis markers on formatted text
 (setq org-hide-emphasis-markers t)

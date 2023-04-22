@@ -2579,6 +2579,7 @@ Company is used for code completion. Here is a basic setup.
   (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
   (setq company-insertion-on-trigger 'company-explicit-action-p)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 #+END_SRC
 
 And here we arrive at the global modes.
@@ -2670,7 +2671,7 @@ Make ~org-mode~ a little bit prettier to look at.
 	      (setq-local face-remapping-alist '((default variable-pitch default)))))
   (require 'org-faces)
   (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
+  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.06)
 
   ;; Hide emphasis markers on formatted text
   (setq org-hide-emphasis-markers t)
