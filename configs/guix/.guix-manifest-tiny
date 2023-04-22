@@ -1,5 +1,6 @@
 (specifications->manifest
  (list "xfce4-terminal"
+       "pamixer"
        "rofi"
        "playerctl"
        "syncthing"

@@ -427,6 +427,7 @@ Due to the above manifest becoming rather bloated a minimal replacement is provi
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest-tiny"
   (specifications->manifest
    (list "xfce4-terminal"
+	 "pamixer"
 	 "rofi"
 	 "playerctl"
 	 "syncthing"
@@ -510,9 +511,9 @@ Execute the startup environment, this is necessary for XDG autostart files.
 Now let's begin assigning some keybindings; all of these are rather self-explanatory.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
   set $refresh_i3status killall -SIGUSR1 i3status
-  bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-  bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
-  bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+  bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
+  bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 10
+  bindsym XF86AudioMute exec --no-startup-id pamixer -t
   bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
   bindsym Print exec --no-startup-id scr	
   bindsym Shift+Print exec --no-startup-id scr-area
