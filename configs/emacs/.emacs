@@ -184,7 +184,6 @@
 		      (expand-file-name "~/git/emacs-stuff/README.org"))
     (let ((org-config-babel-evaluate nil))
       (org-babel-tangle))))
-
 ;; (add-hook 'org-mode-hook
 ;; 	  (lambda ()
 ;; 	    (add-hook 'after-save-hook #'org-babel-tangle-config)))
@@ -202,10 +201,12 @@
 (with-eval-after-load "ox-html"
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
 
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook
+	  (lambda () (org-bullets-mode 1)
+	    (setq-local face-remapping-alist '((default variable-pitch default)))))
 (require 'org-faces)
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'light :height 120)
-(set-face-attribute 'variable-pitch nil :font "Fira Code" :weight 'light :height 1.0)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
+(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
 
 ;; Hide emphasis markers on formatted text
 (setq org-hide-emphasis-markers t)
@@ -222,17 +223,17 @@
   (set-face-attribute (car face) nil :font "Fira Code" :weight 'medium :height (cdr face)))
 
 ;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font "Fira Code" :weight 'bold :height 1.3)
+(set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)
 
-;; ;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
-;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-;; (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
 (defun my/org-present-start ()
   (setq visual-fill-column-width 160 ; Set the width
@@ -242,9 +243,9 @@
   (setq-local face-remapping-alist '((default (:height 1.6) variable-pitch) ; Set font sizes
 				     (header-line (:height 4.0) variable-pitch)
 				     (org-document-title (:height 1.75) org-document-title)
-				     (org-code (:height 0.9) org-code)
-				     (org-verbatim (:height 0.9) org-verbatim)
-				     (org-block (:height 0.9) org-block)
+				     (org-code (:height 1.2) org-code)
+				     (org-verbatim (:height 1.2) org-verbatim)
+				     (org-block (:height 1.2) org-block)
 				     (org-block-begin-line (:height 0.7) org-block))))
 
 
@@ -399,11 +400,14 @@
 				     (local-set-key (kbd "C-c r") 'sly-eval-region)
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
+(add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c c") 'eval-region)))
 
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)
 	("https://www.root.cz/rss/zpravicky" root.cz)
 	("https://forum.root.cz/index.php?action=.xml;type=rss2;limit=30;sa=news" root.cz forum)
 	("https://protesilaos.com/master.xml" protesilaos.com)))
+(add-hook 'elfeed-show-mode-hook
+	  (lambda () (buffer-face-set 'variable-pitch)))
 
 (provide '.emacs)
