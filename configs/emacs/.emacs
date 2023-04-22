@@ -59,12 +59,6 @@
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")))
  '(warning-suppress-types '((comp) (comp) (emacs))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 120 :width normal)))))
 
 (dolist (char/ligature-re
 	 `((?-  ,(rx (or (or "-->" "-<<" "->>" "-|" "-~" "-<" "->") (+ "-"))))
@@ -118,7 +112,7 @@
 (defvar my-org-html-export-theme 'leuven)
 (elcord-mode)
 (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
+(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.08)
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))
@@ -205,16 +199,17 @@
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
 
 (add-hook 'org-mode-hook
-	  (lambda () (org-bullets-mode 1)
-	    (setq-local face-remapping-alist '((default variable-pitch default)))
-	    (dolist (face '((org-level-1 . 1.2)
-			    (org-level-2 . 1.1)
-			    (org-level-3 . 1.05)
-			    (org-level-4 . 1.0)
-			    (org-level-5 . 1.1)
-			    (org-level-6 . 1.1)
-			    (org-level-7 . 1.1)
-			    (org-level-8 . 1.1)))
+	  (lambda ()
+	    (org-bullets-mode 1)
+	    (setq-local face-remapping-alist '())
+	    (dolist (face '((org-level-1 . 1.3)
+			    (org-level-2 . 1.2)
+			    (org-level-3 . 1.1)
+			    (org-level-4 . 1.05)
+			    (org-level-5 . 1.2)
+			    (org-level-6 . 1.2)
+			    (org-level-7 . 1.2)
+			    (org-level-8 . 1.2)))
 	      (set-face-attribute (car face) nil :font "Fira Code" :weight 'medium :height (cdr face)))))
 (require 'org-faces)
 
@@ -235,26 +230,27 @@
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
 (defun my/org-present-start ()
-  (setq visual-fill-column-width 160 ; Set the width
-	visual-fill-column-center-text t)
-  (visual-fill-column-mode 1)
-  (visual-line-mode 1) ; Center text
-  (setq-local face-remapping-alist '((default (:height 1.6) variable-pitch) ; Set font sizes
-				     (header-line (:height 4.0) variable-pitch)
-				     (org-document-title (:height 1.75) org-document-title)
-				     (org-code (:height 1.2) org-code)
-				     (org-verbatim (:height 1.2) org-verbatim)
-				     (org-block (:height 1.2) org-block)
-				     (org-block-begin-line (:height 0.7) org-block))))
+    (setq visual-fill-column-width 160 ; Set the width
+	  visual-fill-column-center-text t)
+    (visual-fill-column-mode 1)
+    (visual-line-mode 1) ; Center text
+    (setq-local face-remapping-alist '((default (:height 1.6) variable-pitch) ; Set font sizes
+				       (header-line (:height 4.0) variable-pitch)
+				       (org-document-title (:height 1.75) org-document-title)
+				       (org-code (:height 1.2) org-code)
+				       (org-verbatim (:height 1.2) org-verbatim)
+				       (org-block (:height 1.2) org-block)
+				       (org-block-begin-line (:height 0.7) org-block))))
 
 
-(defun my/org-present-end ()
-  (visual-fill-column-mode 0)
-  (visual-line-mode 0)
-  (setq-local face-remapping-alist '((default variable-pitch default))))
+  (defun my/org-present-end ()
+    (visual-fill-column-mode 0)
+    (visual-line-mode 0)
+;    (setq-local face-remapping-alist '((default variable-pitch default)))
+    (setq-local face-remapping-alist '()))
 
-(add-hook 'org-present-mode-hook 'my/org-present-start)
-(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
+  (add-hook 'org-present-mode-hook 'my/org-present-start)
+  (add-hook 'org-present-mode-quit-hook 'my/org-present-end)
 
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode.")
