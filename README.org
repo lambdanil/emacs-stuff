@@ -19,7 +19,8 @@ This is my highly modular and entirely literate full-system configuration.
 
 - Currently it's deployed on a Debian system, but it's rather flexible and contains a full GNU Guix System configuration as well.
 - *Make sure to tangle this file with ~org-babel-tangle~ to actually apply changes*.
-- Install Guix and run a ~guix pull~ before importing the Guix package manifest.
+- Install Guix and run a ~guix pull~ before Guix package manifests.
+- The guix manifest providing the bare minimum dependencies is part of the ~guix~ module and can be installed with ~guix package -m $HOME/.guix-manifest-tiny~
 - ~~/git/emacs-stuff/configs-unlinked~ is a special directory for configs which should be copied into place as opposed to symlinked.
 - The configuration itself is placed in ~~/git/emacs-stuff/configs~ and ~~/git/emacs-stuff/configs-root~
   - From there individual modules can be installed using [[https://www.gnu.org/software/stow/][GNU Stow]]:
@@ -418,6 +419,33 @@ Next we can look into development related packages and libraries.
   "glibc-locales"))
 #+END_SRC
 
+
+** .guix-manifest-tiny
+
+Due to the above manifest becoming rather bloated a minimal replacement is provided here. This includes only the necessary dependencies to get the system running correctly
+
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest-tiny"
+  (specifications->manifest
+   (list "xfce4-terminal"
+	 "rofi"
+	 "playerctl"
+	 "syncthing"
+	 "xrandr"
+	 "xinput"
+	 "markdown"
+	 "sbcl"
+	 "guile"
+	 "cmake"
+	 "make"
+	 "clang"
+	 "blueman"
+	 "picom"
+	 "network-manager-applet"
+	 "mate-media"
+	 "mate-power-manager"
+	 "nitrogen"
+	 "setxkbmap"))
+#+END_SRC
 
 ** .config/guix/channels.scm
 
@@ -3017,7 +3045,7 @@ Finally let's push the super key and escape as ~exwm-input-prefix-keys~.
   (push (kbd "<escape>") exwm-input-prefix-keys)
 #+END_SRC
 
-* Non-Guix Services
+* Non-Guix Services and dependencies
 
 Some additional services may need to be enabled on non-guix distributions.
 - ~sudo systemctl enable zram~
