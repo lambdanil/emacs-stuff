@@ -117,6 +117,8 @@
 (setq geiser-default-implementation 'guile)
 (defvar my-org-html-export-theme 'leuven)
 (elcord-mode)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
+(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))
@@ -204,24 +206,20 @@
 
 (add-hook 'org-mode-hook
 	  (lambda () (org-bullets-mode 1)
-	    (setq-local face-remapping-alist '((default variable-pitch default)))))
+	    (setq-local face-remapping-alist '((default variable-pitch default)))
+	    (dolist (face '((org-level-1 . 1.2)
+			    (org-level-2 . 1.1)
+			    (org-level-3 . 1.05)
+			    (org-level-4 . 1.0)
+			    (org-level-5 . 1.1)
+			    (org-level-6 . 1.1)
+			    (org-level-7 . 1.1)
+			    (org-level-8 . 1.1)))
+	      (set-face-attribute (car face) nil :font "Fira Code" :weight 'medium :height (cdr face)))))
 (require 'org-faces)
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.06)
 
 ;; Hide emphasis markers on formatted text
 (setq org-hide-emphasis-markers t)
-
-;; Resize Org headings
-(dolist (face '((org-level-1 . 1.2)
-		(org-level-2 . 1.1)
-		(org-level-3 . 1.05)
-		(org-level-4 . 1.0)
-		(org-level-5 . 1.1)
-		(org-level-6 . 1.1)
-		(org-level-7 . 1.1)
-		(org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "Fira Code" :weight 'medium :height (cdr face)))
 
 ;; Make the document title a bit bigger
 (set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)
