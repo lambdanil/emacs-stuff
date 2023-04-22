@@ -202,14 +202,12 @@ Here I have some custom binaries, mostly scripts and stuff.
 
 Just a screenshot shortcut.
 #+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr" :shebang "#!/bin/sh"
-  #!/bin/sh
   scrot "$HOME/Obrázky/$(date).png" 
 #+END_SRC
 
 ** .bin/scr-area
 ...And the same but for a selected area.
 #+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr-area" :shebang "#!/bin/sh"
-  #!/bin/sh
   scrot "$HOME/Obrázky/$(date).png" -f -s
 #+END_SRC
 
