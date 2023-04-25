@@ -24,7 +24,7 @@ bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show r
 bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show window
 
 bindsym $mod+e exec --no-startup-id emacsclient -c
-bindsym $mod+a exec --no-startup-id thunar
+bindsym $mod+a exec --no-startup-id caja
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
