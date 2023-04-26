@@ -115,7 +115,7 @@
   (select-frame frame)
   (set-face-attribute 'default nil :font "Fira Code" :weight 'medium :height 120)
   (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.08)
+  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
 
   (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 
