@@ -110,10 +110,31 @@
 (setq geiser-active-implementations '(guile))
 (setq geiser-default-implementation 'guile)
 (defvar my-org-html-export-theme 'leuven)
-(elcord-mode)
-(set-face-attribute 'default nil :font "Fira Code" :weight 'medium :height 120)
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
-(set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.08)
+
+(defun load-my-fonts (frame)
+  (select-frame frame)
+  (set-face-attribute 'default nil :font "Fira Code" :weight 'medium :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :weight 'medium :height 120)
+  (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.08)
+
+  (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
+
+  ;; Make the document title a bit bigger
+  (set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)
+
+  ;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'load-my-fonts)
+  (load-my-fonts))
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))
@@ -139,10 +160,8 @@
 (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
 (setq company-insertion-on-trigger 'company-explicit-action-p)
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-(set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 
 (global-display-line-numbers-mode -1)
-(add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
 (global-prettify-symbols-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
@@ -151,9 +170,11 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (desktop-save-mode -1)
+(elcord-mode)
 ;;(nyan-mode t)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (add-hook 'scheme-mode-hook 'geiser-mode)
+(add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
 
 (add-hook 'markdown-mode-hook #'(lambda ()
 				  (markdown-impatient-start))) ; Impatient mode live preview
@@ -203,7 +224,6 @@
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (setq-local face-remapping-alist '((default variable-pitch default)))
-	    (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 	    (dolist (face '((org-level-1 . 1.3)
 			    (org-level-2 . 1.2)
 			    (org-level-3 . 1.1)
@@ -217,19 +237,6 @@
 
 ;; Hide emphasis markers on formatted text
 (setq org-hide-emphasis-markers t)
-
-;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)
-
-;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
 (defun my/org-present-start ()
   (setq visual-fill-column-width 160 ; Set the width
@@ -250,8 +257,7 @@
   (visual-fill-column-mode 0)
   (org-remove-inline-images)
   (visual-line-mode 0)
-  (setq-local face-remapping-alist '((default variable-pitch default)))
-  (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120))
+  (setq-local face-remapping-alist '((default variable-pitch default))))
 
 (add-hook 'org-present-mode-hook 'my/org-present-start)
 (add-hook 'org-present-mode-quit-hook 'my/org-present-end)
