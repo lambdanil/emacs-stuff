@@ -181,7 +181,7 @@
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
-(set-face-attribute 'hl-line nil :inherit nil :background "gray14")
+(set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
 
 (require 'org)
 (setq org-log-done t)
@@ -224,6 +224,7 @@
 	  (lambda ()
 	    (org-bullets-mode 1)
 	    (setq-local face-remapping-alist '((default variable-pitch default)))
+	    (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 	    (dolist (face '((org-level-1 . 1.3)
 			    (org-level-2 . 1.2)
 			    (org-level-3 . 1.1)
@@ -257,7 +258,8 @@
   (visual-fill-column-mode 0)
   (org-remove-inline-images)
   (visual-line-mode 0)
-  (setq-local face-remapping-alist '((default variable-pitch default))))
+  (setq-local face-remapping-alist '((default variable-pitch default)))
+  (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120))
 
 (add-hook 'org-present-mode-hook 'my/org-present-start)
 (add-hook 'org-present-mode-quit-hook 'my/org-present-end)
