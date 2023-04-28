@@ -68,26 +68,32 @@ First we need to add a .desktop file for the DE to load.
 ** .loginctl
 
 Here's the actual autostart script.
+
+I use Syncthing to sync my org agenda between different devices.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
+  syncthing &
+#+END_SRC
+
+Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
   emacs --daemon &
-  syncthing &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  nm-applet &
-  blueman-applet &
-  mate-volume-control-status-icon &
-  /usr/bin/gnome-keyring-daemon --start --components=secrets &
-  mate-power-manager &
-  setxkbmap cz -option 'ctrl:swapcaps' &
-  # timidity -iA &
-  nitrogen --restore &
-  picom &
-  playerctld &
-  xrandr --output HDMI-A-1 --set TearFree on &
-  # exec i3 & # for use with xfce
+  # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
+  # nm-applet &
+  # blueman-applet &
+  # mate-volume-control-status-icon &
+  # /usr/bin/gnome-keyring-daemon --start --components=secrets &
+  # mate-power-manager &
+  # setxkbmap cz -option 'ctrl:swapcaps' &
+  # # timidity -iA &
+  # nitrogen --restore &
+  # picom &
+  # playerctld &
+  # xrandr --output HDMI-A-1 --set TearFree on &
+  # # exec i3 & # for use with xfce
 #+END_SRC
 
 * Bash
