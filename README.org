@@ -2571,7 +2571,7 @@ Emacsclient requires fonts to be loaded on frame creation instead of daemon star
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions #'load-my-fonts)
-    (load-my-fonts))
+    (load-my-fonts (selected-frame)))
 #+END_SRC
 
 Some window related stuff; supress opening the welcome screen for buffers opening files.
@@ -3073,7 +3073,7 @@ Some additional services may need to be enabled on non-guix distributions.
 
 * Install script
 
-Here I provide a super small installation script, this should deploy this system configuration on a Debian system.
+Here I provide a super small installation script, this should deploy the system configuration on a Debian system.
 - It isn't currently super well tested and manual intervention may be necessary.
 - Place this repository into ~~/git/emacs-stuff~ then run the script from there.
 
