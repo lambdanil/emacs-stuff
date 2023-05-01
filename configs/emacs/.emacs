@@ -134,7 +134,7 @@
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions #'load-my-fonts)
-  (load-my-fonts))
+  (load-my-fonts (selected-frame)))
 
 (when (> (length command-line-args) 1)
   (setq inhibit-splash-screen t))

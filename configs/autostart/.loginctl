@@ -1,5 +1,5 @@
 #!/bin/sh
-syncthing &
+syncthing serve --no-browser &
 
 emacs --daemon &
 

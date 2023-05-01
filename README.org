@@ -71,7 +71,7 @@ Here's the actual autostart script.
 
 I use Syncthing to sync my org agenda between different devices.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
-  syncthing &
+  syncthing serve --no-browser &
 #+END_SRC
 
 Having an Emacs daemon means instant startup times for emacsclient.
@@ -1450,7 +1450,8 @@ Let's start with the packages first.
 
 *** distrobox-docker.scm
 
-Since podman isn't currently fully functional on Guix we have to use docker instead. Unfortunately the Distrobox definition in Guix's repos relies on podman - thus making it practically broken. To solve this issue I modify the package to use docker instead.
+Since podman isn't currently fully functional on Guix we have to use docker instead.
+Unfortunately the Distrobox definition in Guix's repos relies on podman, making it practically broken. To solve this issue I modify the package to use docker instead.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/distrobox-docker.scm"
   (define-module (nil packages distrobox-docker)
     #:use-module (guix gexp)
