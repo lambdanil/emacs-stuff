@@ -413,7 +413,7 @@
 				     (local-set-key (kbd "C-c r") 'sly-eval-region)
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
-(add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c c") 'eval-region)))
+(add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
 
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)
