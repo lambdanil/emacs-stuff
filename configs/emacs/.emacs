@@ -16,6 +16,7 @@
 		   sudo-edit
 		   json-mode
 		   sly
+		   transmission
 		   elcord
 		   vterm
 		   elfeed
@@ -24,6 +25,7 @@
 		   systemd
 		   tree-sitter
 		   tree-sitter-langs
+		   emms
 		   treemacs
 		   doom-themes
 		   treemacs-all-the-icons
@@ -182,6 +184,10 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
+
+(require 'emms-setup)
+(emms-all)
+(setq emms-player-list '(emms-player-mpv))
 
 (require 'org)
 (setq org-log-done t)

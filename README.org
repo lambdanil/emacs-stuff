@@ -2440,6 +2440,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     sudo-edit
 		     json-mode
 		     sly
+		     transmission
 		     elcord
 		     vterm
 		     elfeed
@@ -2448,6 +2449,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     systemd
 		     tree-sitter
 		     tree-sitter-langs
+		     emms
 		     treemacs
 		     doom-themes
 		     treemacs-all-the-icons
@@ -2641,6 +2643,13 @@ Rainbow delimiters are a life-saver for Lisps!
 I like to have the selected line clearly highlighted.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
+#+END_SRC
+
+Set up EMMS playback with MPV.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (require 'emms-setup)
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpv))
 #+END_SRC
 
 Here is a very minimal setup for org-agenda.
