@@ -75,7 +75,7 @@ I use Syncthing to sync my org agenda between different devices.
 #+END_SRC
 
 Having an Emacs daemon means instant startup times for emacsclient.
-#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   emacs --daemon &
 #+END_SRC
 
@@ -427,7 +427,7 @@ Next we can look into development related packages and libraries.
 
 ** .guix-manifest-tiny
 
-Due to the above manifest becoming rather bloated a minimal replacement is provided here. This includes only the necessary dependencies to get the system running correctly
+Due to the above manifest becoming rather bloated a minimal replacement is provided here. This includes only the necessary dependencies to get the system running correctly.
 
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest-tiny"
   (specifications->manifest
@@ -2866,7 +2866,7 @@ Finally we get to my extensive custom keybindings. I try to keep these to as few
   (define-key my/keys-keymap (kbd "M-ů") #'(lambda () (interactive) (scroll-up 4)))
   (define-key my/keys-keymap (kbd "M-§") #'(lambda () (interactive) (scroll-down 4)))
   (define-key my/keys-keymap (kbd "C-x c") #'(lambda () (interactive) (load-file "~/.emacs")))
-  (define-key my/keys-keymap (kbd "C-c r") 'replace-string)
+  (define-key my/keys-keymap (kbd "C-c r") 'replace-regexp)
   (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
   (define-key my/keys-keymap (kbd "M-/") 'undo-redo)
   (define-key my/keys-keymap (kbd "C-c n") 'elfeed)
