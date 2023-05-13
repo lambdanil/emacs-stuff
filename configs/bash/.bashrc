@@ -47,12 +47,5 @@ alias tf="xrandr --output HDMI-A-1 --set TearFree"
 alias python3="$HOME/.py/bin/python3" # venv
 alias pip="$HOME/.py/bin/pip"
 
-if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
-    export GUIX_PROFILE="$HOME/.guix-profile"
-    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-    export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
-    . "$GUIX_PROFILE/etc/profile"
-fi
-
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"

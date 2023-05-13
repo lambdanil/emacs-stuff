@@ -165,16 +165,6 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
   alias pip="$HOME/.py/bin/pip"
 #+END_SRC
 
-This is a lightdm-specific bit. Basically lightdm ignores ~.bash_profile~ on login, so we have to ensure the proper exports here as well.
-#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
-      export GUIX_PROFILE="$HOME/.guix-profile"
-      export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-      export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
-      . "$GUIX_PROFILE/etc/profile"
-  fi
-#+END_SRC
-
 Finally some variable exports - for Guix and Flatpak.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
@@ -197,6 +187,9 @@ Then we can go ahead and export Guix, but only when not inside a container.
       export GUIX_PROFILE="$HOME/.guix-profile"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
       export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
+      export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
+      export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
+      export GIT_SSL_CAINFO="$SSL_CERT_FILE"
       . "$GUIX_PROFILE/etc/profile"
   fi
 #+END_SRC
