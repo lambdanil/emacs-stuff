@@ -2398,6 +2398,16 @@ EXWM can be toggled here. It's configuration is handled within a separate file.
   (when use-exwm (load "~/.exwm.el"))
 #+END_SRC
 
+** Packages
+
+Next we need to setup our package archives so that we can ensure all the necessary packages are installed.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
+#+END_SRC
+
 A small patch needs to be applied before we start setting up packages - the ~elcord~ package needs to be patched to work with flatpak Discord.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (unless (package-installed-p 'elcord)
@@ -2407,16 +2417,6 @@ A small patch needs to be applied before we start setting up packages - the ~elc
   (require 'el-patch)
   (el-patch-feature elcord)
   (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
-#+END_SRC
-
-** Packages
-
-Next we need to setup our package archives so that we can ensure all the necessary packages are installed.
-#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-  (package-initialize)
 #+END_SRC
 
 Finally it's time to go over the package list and install everything.

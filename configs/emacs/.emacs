@@ -5,6 +5,11 @@
 
 (when use-exwm (load "~/.exwm.el"))
 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
 (unless (package-installed-p 'elcord)
   (package-install 'elcord))
 (unless (package-installed-p 'el-patch)
@@ -12,11 +17,6 @@
 (require 'el-patch)
 (el-patch-feature elcord)
 (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
-
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
 
 (dolist (package '(dumb-jump
 		   company
