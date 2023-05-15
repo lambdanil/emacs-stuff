@@ -2400,6 +2400,8 @@ EXWM can be toggled here. It's configuration is handled within a separate file.
 
 A small patch needs to be applied before we start setting up packages - the ~elcord~ package needs to be patched to work with flatpak Discord.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (unless (package-installed-p 'elcord)
+    (package-install 'elcord))
   (unless (package-installed-p 'el-patch)
     (package-install 'el-patch))
   (require 'el-patch)
@@ -2427,7 +2429,6 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     json-mode
 		     sly
 		     transmission
-		     elcord
 		     vterm
 		     elfeed
 		     magit

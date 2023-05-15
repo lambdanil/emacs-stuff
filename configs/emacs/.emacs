@@ -5,6 +5,8 @@
 
 (when use-exwm (load "~/.exwm.el"))
 
+(unless (package-installed-p 'elcord)
+  (package-install 'elcord))
 (unless (package-installed-p 'el-patch)
   (package-install 'el-patch))
 (require 'el-patch)
@@ -23,7 +25,6 @@
 		   json-mode
 		   sly
 		   transmission
-		   elcord
 		   vterm
 		   elfeed
 		   magit
