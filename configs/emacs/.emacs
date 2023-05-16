@@ -128,6 +128,7 @@
 
   (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
 
+
   ;; Make the document title a bit bigger
   (set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)
 

@@ -190,6 +190,7 @@ Then we can go ahead and export Guix, but only when not inside a container.
       export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
       export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
       export GIT_SSL_CAINFO="$SSL_CERT_FILE"
+      export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
       . "$GUIX_PROFILE/etc/profile"
   fi
 #+END_SRC
@@ -2545,6 +2546,7 @@ Emacsclient requires fonts to be loaded on frame creation instead of daemon star
     (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :weight 'medium :height 1.1)
 
     (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
+  
 
     ;; Make the document title a bit bigger
     (set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.3)

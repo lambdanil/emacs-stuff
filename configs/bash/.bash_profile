@@ -8,5 +8,6 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
     export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
     export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
     export GIT_SSL_CAINFO="$SSL_CERT_FILE"
+    export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
     . "$GUIX_PROFILE/etc/profile"
 fi
