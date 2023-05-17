@@ -257,12 +257,18 @@ Add the necessary registries.
 #+END_SRC
 
 * Dictionaries
+
 This module provides the Czech hunspell dictionary since it currently isn't available in Guix.
 The files were taken from the [[https://github.com/LibreOffice/dictionaries][LibreOffice dictionaries repository]].
+
 * Firefox
+
 This module provides my Firefox configuration. For tree style tab it's necessary to import ~$HOME/.mozilla/firefox/default/treestyletab.css~.
+
 * Fonts
+
 This module provides the necessary fonts.
+
 * Guix
 
 *This module depends on the ~guix-modules~ module for certain package definitions!*
@@ -2622,11 +2628,6 @@ Company is used for code completion. Here is a basic setup.
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 #+END_SRC
 
-Enable languages for the Jinx spell checker.
-#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (jinx-languages "en_US cs")
-#+END_SRC
-
 And here we arrive at the global modes.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (global-display-line-numbers-mode -1)
@@ -2660,6 +2661,11 @@ Rainbow delimiters are a life-saver for Lisps!
 I like to have the selected line clearly highlighted.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
+#+END_SRC
+
+Enable languages for the Jinx spell checker.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setq jinx-languages "en_US cs")
 #+END_SRC
 
 Set up EMMS playback with MPV.

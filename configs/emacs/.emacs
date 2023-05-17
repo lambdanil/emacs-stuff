@@ -180,8 +180,6 @@
 (setq company-insertion-on-trigger 'company-explicit-action-p)
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-(jinx-languages "en_US cs")
-
 (global-display-line-numbers-mode -1)
 (global-prettify-symbols-mode t)
 (global-company-mode t)
@@ -204,6 +202,8 @@
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
+
+(setq jinx-languages "en_US cs")
 
 (require 'emms-setup)
 (emms-all)
