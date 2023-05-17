@@ -10,13 +10,21 @@
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(unless (package-installed-p 'elcord)
-  (package-install 'elcord))
 (unless (package-installed-p 'el-patch)
   (package-install 'el-patch))
 (require 'el-patch)
+
+(dolist (package '(el-patch
+		   elcord
+		   nyan-mode))
+  (unless (package-installed-p package)
+    (package-install package)))
+
 (el-patch-feature elcord)
 (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
+
+(el-patch-feature nyan-mode)
+(el-patch-defconst nyan-directory (file-name-directory "~/.emacs.d/nyan-custom/img"))
 
 (dolist (package '(dumb-jump
 		   company
@@ -30,6 +38,7 @@
 		   magit
 		   guix
 		   systemd
+		   jinx
 		   tree-sitter
 		   tree-sitter-langs
 		   emms
@@ -171,10 +180,13 @@
 (setq company-insertion-on-trigger 'company-explicit-action-p)
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
+(jinx-languages "en_US cs")
+
 (global-display-line-numbers-mode -1)
 (global-prettify-symbols-mode t)
 (global-company-mode t)
 (global-flycheck-mode t)
+(global-jinx-mode t)
 (ivy-mode t)
 (global-tree-sitter-mode 1)
 (electric-pair-mode t)
@@ -249,6 +261,7 @@
 
 (add-hook 'org-mode-hook
 	  (lambda ()
+	    (company-mode -1)
 	    (org-bullets-mode 1)
 	    (setq-local face-remapping-alist '((default variable-pitch default)))
 	    (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
