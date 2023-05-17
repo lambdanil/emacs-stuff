@@ -191,7 +191,7 @@
 (global-hl-line-mode 1)
 (desktop-save-mode -1)
 (elcord-mode)
-;;(nyan-mode t)
+;(nyan-mode t)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (add-hook 'scheme-mode-hook 'geiser-mode)
 (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
