@@ -20,4 +20,6 @@
        "mate-media"
        "mate-power-manager"
        "nitrogen"
+       "hunspell-dict-en-us"
+       "enchant"
        "setxkbmap"))

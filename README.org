@@ -424,6 +424,8 @@ Next we can look into development related packages and libraries.
   "markdown"
   "libvterm"
   "libtool"
+  "hunspell-dict-en-us"
+  "enchant"
   "glibc-locales"))
 #+END_SRC
 
@@ -455,6 +457,8 @@ Due to the above manifest becoming rather bloated a minimal replacement is provi
 	 "mate-media"
 	 "mate-power-manager"
 	 "nitrogen"
+	 "hunspell-dict-en-us"
+	 "enchant"
 	 "setxkbmap"))
 #+END_SRC
 
