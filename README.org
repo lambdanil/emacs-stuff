@@ -1185,6 +1185,7 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
 
 * Wallpapers
 This module provides a few nice wallpapers I like to use. The path to these wallpapers is ~$HOME/.local/share/wallpapers~.
+
 * Guix system
 
 Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
