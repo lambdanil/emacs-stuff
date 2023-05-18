@@ -456,8 +456,8 @@
 				     (local-set-key (kbd "C-c r") 'sly-eval-region)
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
-(add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
-(add-hook 'erc-mode #'(lambda ()
+(add-hook 'emacs-lisp-mode-hook #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
+(add-hook 'erc-mode-hook #'(lambda ()
 			(local-set-key (kbd "C-c s") 'my-erc-channel-search)))
 
 (setq elfeed-feeds
