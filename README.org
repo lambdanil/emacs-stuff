@@ -2680,6 +2680,11 @@ Set up EMMS playback with MPV.
   (setq emms-player-list '(emms-player-mpv))
 #+END_SRC
 
+Disable annoying keybind suggestions.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setq suggest-key-bindings nil)
+#+END_SRC
+
 Here is a very minimal setup for org-agenda.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (require 'org)
@@ -2920,6 +2925,9 @@ Finally we get to my extensive custom keybindings. I try to keep these to as few
   (define-key my/keys-keymap (kbd "C-c h") 'help)
   (define-key my/keys-keymap (kbd "C-M-h") 'previous-buffer)
   (define-key my/keys-keymap (kbd "C-M-l") 'next-buffer)
+  (define-key my/keys-keymap (kbd "C-c i") #'(lambda ()
+					       (interactive)
+					       (erc-tls)))
   (define-key my/keys-keymap (kbd "C-c v") #'(lambda ()
 					       (interactive)
 					       (split-window-horizontally)
@@ -2971,6 +2979,17 @@ Setup elfeed for news.
 	  ("https://protesilaos.com/master.xml" protesilaos.com)))
   (add-hook 'elfeed-show-mode-hook
 	    (lambda () (buffer-face-set 'variable-pitch)))
+#+END_SRC
+
+Next I like to configure IRC.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setq erc-server "irc.libera.chat"
+	erc-nick "lambdanil"
+	erc-user-full-name "(λ () nil)"
+	erc-track-shorten-start 8
+	erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs" "#guix"))
+	erc-kill-buffer-on-part t
+	erc-auto-query 'bury)
 #+END_SRC
 
 And we have reached the end of the main Emacs file!

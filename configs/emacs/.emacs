@@ -209,6 +209,8 @@
 (emms-all)
 (setq emms-player-list '(emms-player-mpv))
 
+(setq suggest-key-bindings nil)
+
 (require 'org)
 (setq org-log-done t)
 (setq calendar-week-start-day 1)
@@ -414,6 +416,9 @@
 (define-key my/keys-keymap (kbd "C-c h") 'help)
 (define-key my/keys-keymap (kbd "C-M-h") 'previous-buffer)
 (define-key my/keys-keymap (kbd "C-M-l") 'next-buffer)
+(define-key my/keys-keymap (kbd "C-c i") #'(lambda ()
+					     (interactive)
+					     (erc-tls)))
 (define-key my/keys-keymap (kbd "C-c v") #'(lambda ()
 					     (interactive)
 					     (split-window-horizontally)
@@ -456,5 +461,13 @@
 	("https://protesilaos.com/master.xml" protesilaos.com)))
 (add-hook 'elfeed-show-mode-hook
 	  (lambda () (buffer-face-set 'variable-pitch)))
+
+(setq erc-server "irc.libera.chat"
+      erc-nick "lambdanil"
+      erc-user-full-name "(λ () nil)"
+      erc-track-shorten-start 8
+      erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs" "#guix"))
+      erc-kill-buffer-on-part t
+      erc-auto-query 'bury)
 
 (provide '.emacs)
