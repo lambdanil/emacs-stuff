@@ -177,9 +177,9 @@ First run the bashrc if necessary.
   if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 #+END_SRC
 
-Then we can go ahead and export Guix, but only when not inside a container.
+Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ]; then
+  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
       export GUIX_PROFILE="$HOME/.guix-profile"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
       export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
