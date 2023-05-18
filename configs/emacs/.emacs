@@ -370,6 +370,10 @@
   (interactive)
   (shrink-window-horizontally 4))
 
+(defun my-erc-channel-search ()
+  (interactive)
+  (insert "/msg alis LIST **"))
+
 (defun markdown-html (buffer)
   "Markdown HTML filter, supply BUFFER."
   (princ (with-current-buffer buffer
@@ -453,6 +457,8 @@
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 (add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
+(add-hook 'erc-mode #'(lambda ()
+			(local-set-key (kbd "C-c s") 'my-erc-channel-search)))
 
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)

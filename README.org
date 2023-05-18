@@ -2868,6 +2868,10 @@ Some straightforward functions here, used to make my Emacs life a little easier.
     "Shrink window horizontally."
     (interactive)
     (shrink-window-horizontally 4))
+
+  (defun my-erc-channel-search ()
+    (interactive)
+    (insert "/msg alis LIST **"))
 #+END_SRC
 
 Sometimes I like to take quick notes in Markdown with impatient mode used for a preview feature.
@@ -2885,8 +2889,6 @@ Sometimes I like to take quick notes in Markdown with impatient mode used for a 
     (httpd-start)
     (imp-set-user-filter 'markdown-html))
 #+END_SRC
-
-
 
 ** Keybindings
 
@@ -2968,6 +2970,8 @@ Some mode-specific bindings are added here.
 				       (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
   (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
   (add-hook 'emacs-lisp-mode #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
+  (add-hook 'erc-mode #'(lambda ()
+			  (local-set-key (kbd "C-c s") 'my-erc-channel-search)))
 #+END_SRC
 
 Setup elfeed for news.
@@ -2981,7 +2985,7 @@ Setup elfeed for news.
 	    (lambda () (buffer-face-set 'variable-pitch)))
 #+END_SRC
 
-Next I like to configure IRC.
+Set up IRC with a few channels next.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (setq erc-server "irc.libera.chat"
 	erc-nick "lambdanil"
