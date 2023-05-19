@@ -31,15 +31,27 @@ Most importantly all of the relevant dotfiles should be present and should be se
 To ensure this is the case I sometimes try to set up my environment in a virtual machine so that I can check if I missed any important files.
 
 *** Separation
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 The user environment should exist almost entirely separately from the system environment. 
 
 *** Modularity
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 I should be able to easily pick which parts of the configuration I want to deploy.
 
 *** Organization
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 There should be no confusion over how to deploy this system, nor should there be any confusion over where individual files belong, etc. All files should have their own clearly defined place.
 
 *** Maintainability
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 The configuration should be easy to keep current, it should also be robust and reliable.
 
 ** The implementation
