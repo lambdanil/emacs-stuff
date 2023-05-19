@@ -4,9 +4,6 @@
 
 *Click [[https://raw.githack.com/CuBeRJAN/emacs-stuff/main/README.html][here]] for a properly formatted HTML version :)*
 
-* Introduction
-
-This is my highly modular and entirely literate full-system configuration.
 
 /Guix with i3/
 [[./screenshots/new_scr.png]]
@@ -14,13 +11,60 @@ This is my highly modular and entirely literate full-system configuration.
 /Debian with EXWM/
 [[./screenshots/exwm-scr.png]]
 
-/Debian with MATE (current setup)/
+/Debian with MATE/
 [[./screenshots/debian-scr.png]]
 
-- Currently deployed on a Debian system, but it's rather flexible and contains a full GNU Guix System configuration as well.
-- Configuration deployment uses ~org-mode~'s ~tangle~ feature to extract each module into it's own directory, from where modules are symlinked using [[https://www.gnu.org/software/stow/][GNU Stow]].
-- *Make sure to tangle this file with ~org-babel-tangle~ to actually apply changes*.
-- Install Guix and run a ~guix pull~ before Guix package manifests.
+All of these are different flavors and approaches to deploying this configuration.
+
+* Introduction
+
+This is my highly modular and entirely literate full-system configuration.
+
+Let's talk about the implementation first - how I handle it and why.
+
+** The why
+There are multiple important ideas in place here.
+
+*** Reproducibility
+I should be able to deploy this configuration quickly and easily, achieving an identical (= reasonably close to identical) result every time.
+Most importantly all of the relevant dotfiles should be present and should be set up in a way that allows them to work when deployed anywhere. Every file that is relevant to reproducing this configuration should be present.
+To ensure this is the case I sometimes try to set up my environment in a virtual machine so that I can check if I missed any important files.
+
+*** Separation
+The user environment should exist almost entirely separately from the system environment. 
+
+*** Modularity
+I should be able to easily pick which parts of the configuration I want to deploy.
+
+*** Organization
+There should be no confusion over how to deploy this system, nor should there be any confusion over where individual files belong, etc. All files should have their own clearly defined place.
+
+*** Maintainability
+The configuration should be easy to keep current, it should also be robust and reliable.
+
+** The implementation
+I'll start by outlining the structure, then I'll go over each step and explain its role.
+
+*** README.org
+The centerpiece of this implementation is the ~README.org~ file. This file includes all of the plaintext dotfiles that are part of this system, as well as information about every other file.
+Using ~org~ to describe these files allows for the configuration to remain readable and properly organized. Each chapter in this file corresponds to a single "module" (more on these below).
+
+This ~org~ file is then ~tangled~ into the ~configs~ directory, where the individual files are placed into separate directories, or as I called them above, "modules".
+
+*** Modules
+Each module is a group of files that fullfill a certain role.
+These modules should be self-reliant and shouldn't depend on other modules. In practice there are a few exceptions - for example some modules rely on the ~guix~ module to ship dependencies.
+Non-plaintext modules are also present in the ~configs~ directory. These aren't tangled but are still described in the ~org~ file.
+These are mostly things that cannot be defined in plaintext such as fonts, icons, wallpapers and similar.
+
+All of these modules are symlinked into the home directory using GNU Stow. Using the modules in this way allows picking out specific parts of the configuration.
+
+*** Packages
+The GNU Guix package manager is used for installing dependencies. This means the dependencies for this environment can be installed anywhere where Guix can run, further separating the user environment from the rest of the system and ensuring better reliability.
+
+*** Deployment
+- *Make sure to tangle this file with ~org-babel-tangle~ to actually apply changes made to plaintext files*.
+- Install Guix and run a ~guix pull~ before importing Guix package manifests.
 - The guix manifest providing the bare minimum dependencies is part of the ~guix~ module and can be installed with ~guix package -m $HOME/.guix-manifest-tiny~
 - The configuration itself is placed in ~~/git/emacs-stuff/configs~ and ~~/git/emacs-stuff/configs-root~
   - From there individual modules can be installed:
@@ -36,14 +80,8 @@ This is my highly modular and entirely literate full-system configuration.
       cd ..
       git reset --hard
     #+END_SRC
-  - The ~configs-root~ directory contains files only editable by root (ensure permissions are set correctly)
+  - The ~configs-root~ directory contains system environment modules. Please ensure the permissions are set correctly.
     - These files should be linked into the root filesystem (~/~) instead of ~$HOME~.
-- Some modules depend on each other (for example ~guix~ depends ~guix-modules~ for some package definitions)
-- Some modules like aren't generated by tangle, these include:
-  - ~firefox~
-  - ~fonts~
-  - ~icons~
-  - ~wallpapers~
   
 * Autostart
 
