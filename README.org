@@ -26,6 +26,9 @@ Let's talk about the implementation first - how I handle it and why.
 There are multiple important ideas in place here.
 
 *** Reproducibility
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 I should be able to deploy this configuration quickly and easily, achieving an identical (= reasonably close to identical) result every time.
 Most importantly all of the relevant dotfiles should be present and should be set up in a way that allows them to work when deployed anywhere. Every file that is relevant to reproducing this configuration should be present.
 To ensure this is the case I sometimes try to set up my environment in a virtual machine so that I can check if I missed any important files.
