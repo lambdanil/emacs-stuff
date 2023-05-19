@@ -6,15 +6,22 @@
 
 
 /Guix with i3/
+#+attr_html: :width 720px
 [[./screenshots/new_scr.png]]
 
 /Debian with EXWM/
+#+attr_html: :width 720px
 [[./screenshots/exwm-scr.png]]
 
 /Debian with MATE/
+#+attr_html: :width 720px
 [[./screenshots/debian-scr.png]]
 
-All of these are different flavors and approaches to deploying this configuration.
+/MicroOS Desktop with Gnome/
+#+attr_html: :width 720px
+[[./screenshots/microos-scr.png]]
+
+All of these are different flavors of this configuration.
 
 * Introduction
 
