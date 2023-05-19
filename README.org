@@ -61,12 +61,18 @@ The configuration should be easy to keep current, it should also be robust and r
 I'll start by outlining the structure, then I'll go over each step and explain its role.
 
 *** README.org
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 The centerpiece of this implementation is the ~README.org~ file. This file includes all of the plaintext dotfiles that are part of this system, as well as information about every other file.
 Using ~org~ to describe these files allows for the configuration to remain readable and properly organized. Each chapter in this file corresponds to a single "module" (more on these below).
 
 This ~org~ file is then ~tangled~ into the ~configs~ directory, where the individual files are placed into separate directories, or as I called them above, "modules".
 
 *** Modules
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 Each module is a group of files that fullfill a certain role.
 These modules should be self-reliant and shouldn't depend on other modules. In practice there are a few exceptions - for example some modules rely on the ~guix~ module to ship dependencies.
 Non-plaintext modules are also present in the ~configs~ directory. These aren't tangled but are still described in the ~org~ file.
@@ -75,9 +81,15 @@ These are mostly things that cannot be defined in plaintext such as fonts, icons
 All of these modules are symlinked into the home directory using GNU Stow. Using the modules in this way allows picking out specific parts of the configuration.
 
 *** Packages
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 The GNU Guix package manager is used for installing dependencies. This means the dependencies for this environment can be installed anywhere where Guix can run, further separating the user environment from the rest of the system and ensuring better reliability.
 
 *** Deployment
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 - *Make sure to tangle this file with ~org-babel-tangle~ to actually apply changes made to plaintext files*.
 - Install Guix and run a ~guix pull~ before importing Guix package manifests.
 - The guix manifest providing the bare minimum dependencies is part of the ~guix~ module and can be installed with ~guix package -m $HOME/.guix-manifest-tiny~
