@@ -2534,6 +2534,8 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     treemacs-all-the-icons
 		     markdown-mode
 		     impatient-mode
+		     ement
+		     counsel
 		     rainbow-delimiters
 		     ligature
 		     flycheck
@@ -2617,6 +2619,7 @@ It's finally time to set up some basic variables.
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
+  (counsel-mode t)
   ;;(global-tab-line-mode t)
   (setq inferior-lisp-program "sbcl")
   (setf nyan-animate-nyancat t)
