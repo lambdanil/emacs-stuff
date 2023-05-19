@@ -510,28 +510,14 @@ Due to the above manifest becoming rather bloated a minimal replacement is provi
   (specifications->manifest
    (list "glibc-locales"
 	 "gcc"
-	 "xfce4-terminal"
-	 "pamixer"
-	 "rofi"
-	 "playerctl"
 	 "syncthing"
-	 "xrandr"
-	 "xinput"
-	 "markdown"
 	 "sbcl"
 	 "guile"
 	 "cmake"
 	 "make"
-	 "clang"
-	 "blueman"
-	 "picom"
-	 "network-manager-applet"
-	 "mate-media"
-	 "mate-power-manager"
-	 "nitrogen"
+	 "emacs"
 	 "hunspell-dict-en-us"
-	 "enchant"
-	 "setxkbmap"))
+	 "enchant"))
 #+END_SRC
 
 ** .config/guix/channels.scm
