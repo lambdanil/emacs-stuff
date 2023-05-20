@@ -3047,15 +3047,6 @@ Setup elfeed for news.
 	    (lambda () (buffer-face-set 'variable-pitch)))
 #+END_SRC
 
-I also set up autologin for Ement.el
-#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (defun my/ement-connect ()
-  (interactive)
-  (ement-connect :uri-prefix "http://localhost:8009"
-                 :user-id "@cuberjan:matrix.org"
-                 :password (+pass-get-secret "Matrix/cuberjan")))
-#+END_SRC
-
 And we have reached the end of the main Emacs file!
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (provide '.emacs)

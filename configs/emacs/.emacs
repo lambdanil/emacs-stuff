@@ -472,10 +472,4 @@
 (add-hook 'elfeed-show-mode-hook
 	  (lambda () (buffer-face-set 'variable-pitch)))
 
-(defun my/ement-connect ()
-(interactive)
-(ement-connect :uri-prefix "http://localhost:8009"
-               :user-id "@cuberjan:matrix.org"
-               :password (+pass-get-secret "Matrix/cuberjan")))
-
 (provide '.emacs)
