@@ -79,7 +79,9 @@
 
 (custom-set-faces
  '(ement-room-message-text ((t (:inherit (variable-pitch default)))))
- '(ement-room-name ((t (:inherit (variable-pitch font-lock-function-name-face))))))
+ '(ement-room-name ((t (:inherit (variable-pitch font-lock-function-name-face)))))
+ '(erc-default-face ((t (:inherit (variable-pitch default)))))
+ '(erc-nick-default-face ((t (:inherit variable-pitch :weight bold)))))
 
 (dolist (char/ligature-re
 	 `((?-  ,(rx (or (or "-->" "-<<" "->>" "-|" "-~" "-<" "->") (+ "-"))))
