@@ -80,6 +80,7 @@
 (custom-set-faces
  '(ement-room-message-text ((t (:inherit (variable-pitch default)))))
  '(ement-room-name ((t (:inherit (variable-pitch font-lock-function-name-face)))))
+ '(ement-room-user ((t (:inherit (variable-pitch font-lock-function-name-face) :overline nil :weight bold))))
  '(erc-default-face ((t (:inherit (variable-pitch default)))))
  '(erc-nick-default-face ((t (:inherit variable-pitch :weight bold)))))
 
