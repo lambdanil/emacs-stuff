@@ -11,3 +11,8 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
     . "$GUIX_PROFILE/etc/profile"
 fi
+
+# if [[ "$(tty)" == "/dev/tty1" ]]
+# then
+#     exec sway
+# fi

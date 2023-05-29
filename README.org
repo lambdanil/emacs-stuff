@@ -17,7 +17,7 @@
 #+attr_html: :width 720px
 [[./screenshots/debian-scr.png]]
 
-/MicroOS Desktop with Gnome/
+/openSUSE Aeon with Gnome/
 #+attr_html: :width 720px
 [[./screenshots/microos-scr.png]]
 
@@ -251,16 +251,24 @@ First run the bashrc if necessary.
 
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
-      export GUIX_PROFILE="$HOME/.guix-profile"
-      export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-      export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
-      export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
-      export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
-      export GIT_SSL_CAINFO="$SSL_CERT_FILE"
-      export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
-      . "$GUIX_PROFILE/etc/profile"
-  fi
+    if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
+	export GUIX_PROFILE="$HOME/.guix-profile"
+	export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+	export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
+	export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
+	export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
+	export GIT_SSL_CAINFO="$SSL_CERT_FILE"
+	export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
+	. "$GUIX_PROFILE/etc/profile"
+    fi
+#+END_SRC
+
+This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+  # if [[ "$(tty)" == "/dev/tty1" ]]
+  # then
+  #     exec sway
+  # fi
 #+END_SRC
 
 * Custom Binaries
@@ -557,31 +565,43 @@ Here is the setup for channels, only real addition here is ~nonguix~.
   RUNNER
 #+END_SRC
 
-* i3
+* Sway
 
-~i3~ is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have i3 here for completeness.
+~Sway~ is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have i3 here for completeness.
 
-** .config/i3/config
+** .config/sway/config
 
 Set some initial variables first.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $mod Mod4
   set $HOME /home/nil
+  set $term emacsclient -c -e "(vterm)"
+  set $files emacsclient -c -e "(dired \"~\")"
   font pango:Fira Code 9
   gaps inner 6px
   for_window [class="^.*"] border pixel 2
   floating_modifier $mod
-  tiling_drag modifier titlebar
+  # tiling_drag modifier titlebar
+#+END_SRC
+
+I'll need my keyboard layout.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  input * {
+  xkb_layout "cz"
+  xkb_options "ctrl:swapcaps"	     
+  }
 #+END_SRC
 
 Execute the startup environment, this is necessary for XDG autostart files.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
-  exec --no-startup-id dex --autostart --environment i3
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+  exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
   exec --no-startup-id $HOME/.loginctl
+  exec /usr/libexec/polkit-gnome-authentication-agent-1
 #+END_SRC
 
 Now assignin some keybindings; all of these are rather self-explanatory.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $refresh_i3status killall -SIGUSR1 i3status
   bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
   bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 10
@@ -590,18 +610,18 @@ Now assignin some keybindings; all of these are rather self-explanatory.
   bindsym Print exec --no-startup-id scr	
   bindsym Shift+Print exec --no-startup-id scr-area
 
-  bindsym $mod+Return exec xfce4-terminal
+  bindsym $mod+Return exec $term
   bindsym $mod+q kill
 
-  bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show run
-  bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show window
+  bindsym $mod+d exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show run
+  bindsym $mod+b exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show window
 
   bindsym $mod+e exec --no-startup-id emacsclient -c
-  bindsym $mod+a exec --no-startup-id caja	
+  bindsym $mod+a exec --no-startup-id $files	
 #+END_SRC
 
 Window focus:
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   bindsym $mod+h focus left
   bindsym $mod+j focus down
   bindsym $mod+k focus up
@@ -615,7 +635,7 @@ Window focus:
 #+END_SRC
 
 Moving and resizing windows:
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   bindsym $mod+Shift+h move left
   bindsym $mod+Shift+j move down
   bindsym $mod+Shift+k move up
@@ -636,7 +656,7 @@ Moving and resizing windows:
 #+END_SRC
 
 Splitting and layouts:
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   bindsym $mod+v split h
 
   bindsym $mod+c split v
@@ -659,7 +679,7 @@ Splitting and layouts:
 #+END_SRC
 
 Next set some workspace names and bindings.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $ws1 "1:λ"
   set $ws2 "2:α"
   set $ws3 "3:β"
@@ -697,16 +717,17 @@ Next set some workspace names and bindings.
 #+END_SRC
 
 Now for session commands:
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   bindsym $mod+Shift+r reload
-  # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-  bindsym $mod+Control+r restart
-  # exit i3 (logs you out of your X session)
-  bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+  # restart sway inplace (preserves your layout/session, can be used to upgrade sway)
+    # leftover from i3, not supported by sway!
+    # bindsym $mod+Control+r restart
+  # exit sway (logs you out of your Wayland session)
+  bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'"
 #+END_SRC
 
 Handle colors next; following the Nord colorscheme here.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $bg-color 	         #88c0d0
   set $active-border-color #FFFFFF
   set $inactive-bg-color   #2E3440
@@ -723,8 +744,8 @@ Handle colors next; following the Nord colorscheme here.
   client.background       #2B2C2B
 #+END_SRC
 
-Configure the i3 bar.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+Configure the sway bar.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   bar {
   #strip_workspace_numbers yes
   position top
@@ -732,12 +753,12 @@ Configure the i3 bar.
 #+END_SRC
 
 I pipe the status command through a wrapper, which makes extra modifications to the output.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
-  status_command i3status | ~/.config/i3/i3status_wrapper.py
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  status_command i3status | ~/.config/sway/i3status_wrapper.py
 #+END_SRC
 
 And finally set colors.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   colors {
   background $inactive-bg-color
   separator $inactive-bg-color
@@ -749,10 +770,10 @@ And finally set colors.
   }
 #+END_SRC
 
-** .config/i3/i3status wrapper.py
+** .config/sway/i3status wrapper.py
 
 This small python wrapper adds the currently playing song as a prefix to the status.
-#+BEGIN_SRC python :tangle "~/git/emacs-stuff/configs/i3/.config/i3/i3status_wrapper.py" :shebang "#!/usr/bin/env python3"
+#+BEGIN_SRC python :tangle "~/git/emacs-stuff/configs/sway/.config/sway/i3status_wrapper.py" :shebang "#!/usr/bin/env python3"
 import json
 import subprocess
 import sys
@@ -834,7 +855,7 @@ if __name__ == '__main__':
 This is the actual i3status config.
 
 Let's set some colors first of all.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/i3status/config"
   general {
   output_format = "i3bar"
   colors = true
@@ -846,7 +867,7 @@ Let's set some colors first of all.
 #+END_SRC
 
 Now set the order of the items.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/i3status/config"
   order += "ethernet _first_"
   order += separator
   order += "volume master"
@@ -855,7 +876,7 @@ Now set the order of the items.
 #+END_SRC
 
 And configure the individual items.
-#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/i3/.config/i3status/config"
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/i3status/config"
   volume master {
   format = "|| %volume"
   format_muted = "|| (%volume)"
@@ -1093,14 +1114,14 @@ Finally implement the actual window type rules.
 
 * Rofi
 
-Rofi is an application launcher, I use it with i3 and sometimes even with different desktop environments.
+Wofi is an application launcher, I use it with sway and sometimes even with different desktop environments.
 
-** .config/rofi/nord.rasi
+** .config/wofi/nord.rasi
 
-This is my chosen rofi theme, fits with the i3 theme!
+This is my chosen wofi theme, fits with the sway theme!
 Original source [[https://github.com/lr-tech/rofi-themes-collection][here]].
 
-#+BEGIN_SRC css :tangle "~/git/emacs-stuff/configs/rofi/.config/rofi/nord.rasi"
+#+BEGIN_SRC css :tangle "~/git/emacs-stuff/configs/wofi/.config/wofi/nord.rasi"
   ,* {
       font:   "Fira Code 10";
 
@@ -2730,6 +2751,12 @@ Rainbow delimiters are a life-saver for Lisps!
 I like to have the selected line clearly highlighted.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
+#+END_SRC
+
+Add the Guix development environment for Geiser.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "~/guix"))
 #+END_SRC
 
 Enable languages for the Jinx spell checker.

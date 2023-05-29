@@ -209,6 +209,9 @@
 
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
 
+(with-eval-after-load 'geiser-guile
+  (add-to-list 'geiser-guile-load-path "~/guix"))
+
 (setq jinx-languages "en_US cs")
 
 (require 'emms-setup)
