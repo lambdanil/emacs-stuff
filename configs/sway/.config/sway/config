@@ -1,13 +1,22 @@
 set $mod Mod4
 set $HOME /home/nil
+set $term emacsclient -c -e "(vterm)"
+set $files emacsclient -c -e "(dired \"~\")"
 font pango:Fira Code 9
 gaps inner 6px
 for_window [class="^.*"] border pixel 2
 floating_modifier $mod
-tiling_drag modifier titlebar
+# tiling_drag modifier titlebar
 
-exec --no-startup-id dex --autostart --environment i3
+input * {
+xkb_layout "cz"
+xkb_options "ctrl:swapcaps"	     
+}
+
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
 exec --no-startup-id $HOME/.loginctl
+exec /usr/libexec/polkit-gnome-authentication-agent-1
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
@@ -17,14 +26,14 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym Print exec --no-startup-id scr	
 bindsym Shift+Print exec --no-startup-id scr-area
 
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
-bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show run
-bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/rofi/nord.rasi -show window
+bindsym $mod+d exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show run
+bindsym $mod+b exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show window
 
 bindsym $mod+e exec --no-startup-id emacsclient -c
-bindsym $mod+a exec --no-startup-id caja
+bindsym $mod+a exec --no-startup-id $files
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -111,10 +120,11 @@ bindsym $mod+Shift+iacute move container to workspace $ws9
 bindsym $mod+Shift+eacute move container to workspace $ws10
 
 bindsym $mod+Shift+r reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Control+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# restart sway inplace (preserves your layout/session, can be used to upgrade sway)
+  # leftover from i3, not supported by sway!
+  # bindsym $mod+Control+r restart
+# exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'"
 
 set $bg-color 	         #88c0d0
 set $active-border-color #FFFFFF
@@ -136,7 +146,7 @@ bar {
 position top
 mode dock
 
-status_command i3status | ~/.config/i3/i3status_wrapper.py
+status_command i3status | ~/.config/sway/i3status_wrapper.py
 
 colors {
 background $inactive-bg-color
