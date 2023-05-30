@@ -1,4 +1,4 @@
-(define-module (nil packages brogue)
+(define-module (nil packages gnome)
   #:use-module (guix)
   #:use-module (gnu packages gnome))
 

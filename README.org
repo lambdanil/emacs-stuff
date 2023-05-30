@@ -1637,7 +1637,7 @@ This is a custom retroarch definition, it adds the core downloader functionality
 
 Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace ~gnome-console~ with ~gnome-terminal~ as it is more full-featured.
 #+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/gnome.scm"
-  (define-module (nil packages brogue)
+  (define-module (nil packages gnome)
     #:use-module (guix)
     #:use-module (gnu packages gnome))
 
