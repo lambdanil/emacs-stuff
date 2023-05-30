@@ -1,0 +1,10 @@
+;; ~/.config/emacs/templates
+
+org-mode
+
+(file "#+TITLE: " p n "#+AUTHOR: " p n "#+SETUPFILE: ~/.org-html.css.org" n "#+OPTIONS: toc:nil num:nil author:nil date:nil timestamp:nil html-postamble:nil")
+
+;; Local Variables:
+;; mode: lisp-data
+;; outline-regexp: "[a-z]"
+;; End:
