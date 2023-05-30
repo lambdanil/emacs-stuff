@@ -1,5 +1,7 @@
 (define-module (nil packages gnome)
-  #:use-module (guix)
+  #:use-module (guix utils)
+  #:use-module (guix packages)
+  #:use-module (gnu packages)
   #:use-module (gnu packages gnome))
 
 (define-public gnome-minimal

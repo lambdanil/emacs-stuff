@@ -1639,7 +1639,9 @@ This is a custom retroarch definition, it adds the core downloader functionality
 Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace ~gnome-console~ with ~gnome-terminal~ as it is more full-featured.
 #+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/gnome.scm"
   (define-module (nil packages gnome)
-    #:use-module (guix)
+    #:use-module (guix utils)
+    #:use-module (guix packages)
+    #:use-module (gnu packages)
     #:use-module (gnu packages gnome))
 
   (define-public gnome-minimal
@@ -2799,7 +2801,9 @@ I like to have the selected line clearly highlighted.
 Add the Guix development environment for Geiser along with the ~tempel~ completions.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path "~/guix"))
+    (add-to-list 'geiser-guile-load-path "~/guix")
+    (add-to-list 'geiser-guile-load-path "~/nonguix")
+    (add-to-list 'geiser-guile-load-path "/etc/guix-modules"))
 
   (with-eval-after-load 'tempel
     ;; Ensure tempel-path is a list -- it may also be a string.

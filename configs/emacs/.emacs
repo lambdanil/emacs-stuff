@@ -212,7 +212,9 @@
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
 
 (with-eval-after-load 'geiser-guile
-  (add-to-list 'geiser-guile-load-path "~/guix"))
+  (add-to-list 'geiser-guile-load-path "~/guix")
+  (add-to-list 'geiser-guile-load-path "~/nonguix")
+  (add-to-list 'geiser-guile-load-path "/etc/guix-modules"))
 
 (with-eval-after-load 'tempel
   ;; Ensure tempel-path is a list -- it may also be a string.
