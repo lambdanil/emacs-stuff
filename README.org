@@ -1327,6 +1327,7 @@ Let's handle basic OS defaults first of all.
 
 Now add the necessary firmware from nonguix.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (kernel linux)
   (initrd microcode-initrd)
   (firmware (list linux-firmware))
 #+END_SRC

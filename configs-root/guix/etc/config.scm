@@ -44,6 +44,7 @@
 
  (host-name "eternity")
 
+(kernel linux)
 (initrd microcode-initrd)
 (firmware (list linux-firmware))
 
