@@ -1646,17 +1646,16 @@ Since the default Gnome package in Guix ships quite a few unnecessary dependenci
       (inherit gnome)
       (name "gnome-minimal")
       (propagated-inputs
-       (append
-	(modify-inputs (package-propagated-inputs gnome)
-	  (delete "epiphany")
-	  (delete "gnome-weather")
-	  (delete "simple-scan")
-	  (delete "gnome-maps")
-	  (delete "cheese")
-	  (delete "gnome-boxes")
-	  (delete "gnome-console")
-	  (delete "gnome-contacts")
-	  (append gnome-terminal))))))
+       (modify-inputs (package-propagated-inputs gnome)
+	 (delete "epiphany")
+	 (delete "gnome-weather")
+	 (delete "simple-scan")
+	 (delete "gnome-maps")
+	 (delete "cheese")
+	 (delete "gnome-boxes")
+	 (delete "gnome-console")
+	 (delete "gnome-contacts")
+	 (append gnome-terminal)))))
 #+end_src
 
 *** steam-client.scm
