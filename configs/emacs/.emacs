@@ -214,6 +214,12 @@
 (with-eval-after-load 'geiser-guile
   (add-to-list 'geiser-guile-load-path "~/guix"))
 
+(with-eval-after-load 'tempel
+  ;; Ensure tempel-path is a list -- it may also be a string.
+  (unless (listp 'tempel-path)
+    (setq tempel-path (list tempel-path)))
+  (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
+
 (setq jinx-languages "en_US cs")
 
 (require 'emms-setup)
