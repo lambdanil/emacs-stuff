@@ -455,7 +455,6 @@
 				    (let ((current-prefix-arg '(4))) ;; emulate C-u
 				      (eww (read-string "Enter URL: " "https://google.com")))))
 (define-key my/keys-keymap (kbd "M-+") 'tempel-complete)
-(define-key my/keys-keymap (kbd "M-.") 'tempel-insert)
 
 (when (not use-exwm)
   (define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)

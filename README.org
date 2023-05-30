@@ -251,16 +251,10 @@ First run the bashrc if necessary.
 
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-    if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
-	export GUIX_PROFILE="$HOME/.guix-profile"
-	export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-	export PATH="$HOME/.config/guix/current/bin:$HOME/.bin:$HOME/.local/share/flatpak/exports/bin:$PATH"
-	export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
-	export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
-	export GIT_SSL_CAINFO="$SSL_CERT_FILE"
-	export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
-	. "$GUIX_PROFILE/etc/profile"
-    fi
+  if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
+      source "$HOME/.guix-profile/etc/profile"
+      source "$HOME/.config/guix/current/etc/profile"
+  fi
 #+END_SRC
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
@@ -3063,7 +3057,6 @@ Finally we get to my extensive custom keybindings. I try to keep these to as few
 				      (let ((current-prefix-arg '(4))) ;; emulate C-u
 					(eww (read-string "Enter URL: " "https://google.com")))))
   (define-key my/keys-keymap (kbd "M-+") 'tempel-complete)
-  (define-key my/keys-keymap (kbd "M-.") 'tempel-insert)
 #+END_SRC
 
 These bindings are defined separately in the EXWM config, so they aren't necessary when using EXWM.
