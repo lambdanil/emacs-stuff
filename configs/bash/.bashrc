@@ -21,6 +21,8 @@ fi
 
 if [[ $- == *i* ]]
 then
+    GUIX_PROFILE="/home/nil/.config/guix/current"
+    . "$GUIX_PROFILE/etc/profile"
     _GREEN=$(tput setaf 2)
     _MAGENTA=$(tput setaf 200)
     _BLUE=$(tput setaf 4)
