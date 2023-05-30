@@ -2547,6 +2547,8 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     guix
 		     systemd
 		     jinx
+		     tempel
+		     tempel-collection
 		     tree-sitter
 		     tree-sitter-langs
 		     emms
@@ -2965,6 +2967,14 @@ Some straightforward functions here, used to make my Emacs life a little easier.
     (insert "/msg alis LIST **"))
 #+END_SRC
 
+I use ~tempel~ for inserting snippets. This is copied right from their docs!
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+#+END_SRC
+
 Sometimes I like to take quick notes in Markdown with impatient mode used for a preview feature.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (defun markdown-html (buffer)
@@ -3041,6 +3051,8 @@ Finally we get to my extensive custom keybindings. I try to keep these to as few
 				      (interactive)
 				      (let ((current-prefix-arg '(4))) ;; emulate C-u
 					(eww (read-string "Enter URL: " "https://google.com")))))
+  (define-key my/keys-keymap (kbd "M-+") 'tempel-complete)
+  (define-key my/keys-keymap (kbd "M-.") 'tempel-insert)
 #+END_SRC
 
 These bindings are defined separately in the EXWM config, so they aren't necessary when using EXWM.
@@ -3063,6 +3075,8 @@ Some mode-specific bindings are added here.
   (add-hook 'emacs-lisp-mode-hook #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
   (add-hook 'erc-mode-hook #'(lambda ()
 			  (local-set-key (kbd "C-c s") 'my-erc-channel-search)))
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
 #+END_SRC
 
 Setup elfeed for news.
