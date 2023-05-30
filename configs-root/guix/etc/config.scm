@@ -13,6 +13,7 @@
 	     (gnu services mcron)
 	     (gnu services docker)
 	     (nil services mount-rshared)
+	     (nil packages gnome)
 	     (gnu packages fonts)
 	     (gnu packages networking)
 	     (guix gexp)
@@ -77,7 +78,9 @@
 
 (services
  (append
-  (list (service xfce-desktop-service-type)
+  (list (service gnome-desktop-service-type
+		 (gnome-configuration
+		  (gnome gnome-minimal)))
 
 	(service bluetooth-service-type
 		 (bluetooth-configuration

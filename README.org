@@ -1287,6 +1287,7 @@ Now import the actual modules
 	       (gnu services mcron)
 	       (gnu services docker)
 	       (nil services mount-rshared)
+	       (nil packages gnome)
 	       (gnu packages fonts)
 	       (gnu packages networking)
 	       (guix gexp)
@@ -1369,7 +1370,9 @@ Now for the second part of service configuration - appending my own services.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (services
    (append
-    (list (service xfce-desktop-service-type)
+    (list (service gnome-desktop-service-type
+		   (gnome-configuration
+		    (gnome gnome-minimal)))
 
 	  (service bluetooth-service-type
 		   (bluetooth-configuration
@@ -1381,7 +1384,7 @@ This one is a custom service, essentially distrobox needs the root (/) to be mou
   mount-rshared-service 
 #+END_SRC
 
-PAM limits for Wine Esync and realtime acces for ~jackd~
+PAM limits for Wine Esync and realtime acces for ~jackd~.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (pam-limits-service
    (list (pam-limits-entry "*" 'hard 'nofile 524288)
@@ -1629,6 +1632,32 @@ This is a custom retroarch definition, it adds the core downloader functionality
 												    #$(this-package-input
 												       "libaio") "/lib"))))))))))))
 #+END_SRC
+
+*** gnome.scm
+
+Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace ~gnome-console~ with ~gnome-terminal~ as it is more full-featured.
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/gnome.scm"
+  (define-module (nil packages brogue)
+    #:use-module (guix)
+    #:use-module (gnu packages gnome))
+
+  (define-public gnome-minimal
+    (package
+      (inherit gnome)
+      (name "gnome-minimal")
+      (propagated-inputs
+       (append
+	(modify-inputs (package-propagated-inputs gnome)
+	  (delete "epiphany")
+	  (delete "gnome-weather")
+	  (delete "simple-scan")
+	  (delete "gnome-maps")
+	  (delete "cheese")
+	  (delete "gnome-boxes")
+	  (delete "gnome-console")
+	  (delete "gnome-contacts")
+	  (append gnome-terminal))))))
+#+end_src
 
 *** steam-client.scm
 
