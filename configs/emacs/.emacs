@@ -39,6 +39,8 @@
 		   guix
 		   systemd
 		   jinx
+		   tempel
+		   tempel-collection
 		   tree-sitter
 		   tree-sitter-langs
 		   emms
@@ -225,16 +227,6 @@
 (setq calendar-week-start-day 1)
 (add-to-list 'org-agenda-files "~/org/agenda.org")
 
-(defun org-babel-insert-code-block ()
-  (interactive)
-  (move-beginning-of-line 1)
-  (insert "#+BEGIN_SRC ")
-  (end-of-line)
-  (newline)
-  (insert "#+END_SRC")
-  (forward-line -1)
-  (end-of-line))
-
 (defun org-insert-file-header ()
   (interactive)
   (insert "#+TITLE: ")
@@ -259,7 +251,6 @@
 
 (define-key global-map "\C-ck" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(define-key org-mode-map "\C-c\C-vw" 'org-babel-insert-code-block)
 
 (defun my-with-theme (orig-fun &rest args)
   (load-theme my-org-html-export-theme)
@@ -383,6 +374,11 @@
   (interactive)
   (insert "/msg alis LIST **"))
 
+(defun tempel-setup-capf ()
+  (setq-local completion-at-point-functions
+              (cons #'tempel-expand
+                    completion-at-point-functions)))
+
 (defun markdown-html (buffer)
   "Markdown HTML filter, supply BUFFER."
   (princ (with-current-buffer buffer
@@ -452,6 +448,8 @@
 				    (interactive)
 				    (let ((current-prefix-arg '(4))) ;; emulate C-u
 				      (eww (read-string "Enter URL: " "https://google.com")))))
+(define-key my/keys-keymap (kbd "M-+") 'tempel-complete)
+(define-key my/keys-keymap (kbd "M-.") 'tempel-insert)
 
 (when (not use-exwm)
   (define-key my/keys-keymap (kbd "C-<return>") 'new-vterm)
@@ -468,6 +466,8 @@
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
 (add-hook 'erc-mode-hook #'(lambda ()
 			(local-set-key (kbd "C-c s") 'my-erc-channel-search)))
+(add-hook 'prog-mode-hook 'tempel-setup-capf)
+(add-hook 'text-mode-hook 'tempel-setup-capf)
 
 (setq elfeed-feeds
       '(("https://www.root.cz/rss/clanky" root.cz)
