@@ -21,7 +21,9 @@ fi
 
 if [[ $- == *i* ]]
 then
-    GUIX_PROFILE="/home/nil/.config/guix/current"
+    GUIX_PROFILE="$HOME/.guix-profile"
+    . "$GUIX_PROFILE/etc/profile"
+    GUIX_PROFILE="$HOME/.config/guix/current"
     . "$GUIX_PROFILE/etc/profile"
     _GREEN=$(tput setaf 2)
     _MAGENTA=$(tput setaf 200)
