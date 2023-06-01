@@ -21,10 +21,6 @@ fi
 
 if [[ $- == *i* ]]
 then
-    GUIX_PROFILE="$HOME/.guix-profile"
-    . "$GUIX_PROFILE/etc/profile"
-    GUIX_PROFILE="$HOME/.config/guix/current"
-    . "$GUIX_PROFILE/etc/profile"
     _GREEN=$(tput setaf 2)
     _MAGENTA=$(tput setaf 200)
     _BLUE=$(tput setaf 4)
@@ -41,6 +37,13 @@ then
     #  _BOLD="\e[1m"
     #  export LD_LIBRARY_PATH=$LIBRARY_PATH
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
+fi
+
+if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ] && [[ $- == *i* ]]; then
+    GUIX_PROFILE="$HOME/.guix-profile"
+    . "$GUIX_PROFILE/etc/profile"
+    GUIX_PROFILE="$HOME/.config/guix/current"
+    . "$GUIX_PROFILE/etc/profile"
 fi
 
 alias sudo="sudo "
