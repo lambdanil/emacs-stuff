@@ -35,10 +35,12 @@
 		   transmission
 		   vterm
 		   elfeed
+		   which-key
 		   magit
 		   guix
 		   systemd
 		   jinx
+		   toc-org
 		   tempel
 		   tempel-collection
 		   tree-sitter
@@ -193,6 +195,7 @@
 (global-company-mode t)
 (global-flycheck-mode t)
 (global-jinx-mode t)
+(which-key-mode t)
 (ivy-mode t)
 (global-tree-sitter-mode 1)
 (electric-pair-mode t)
@@ -222,7 +225,7 @@
     (setq tempel-path (list tempel-path)))
   (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
 
-(setq jinx-languages "en_US cs")
+(setq jinx-languages "en_US cs_CZ")
 
 (require 'emms-setup)
 (emms-all)
@@ -272,6 +275,7 @@
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (company-mode -1)
+	    (org-toc-mode 1)
 	    (org-bullets-mode 1)
 	    (setq-local face-remapping-alist '((default variable-pitch default)))
 	    (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
