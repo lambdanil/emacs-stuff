@@ -275,7 +275,7 @@
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (company-mode -1)
-	    (org-toc-mode 1)
+	    (toc-org-mode 1)
 	    (org-bullets-mode 1)
 	    (setq-local face-remapping-alist '((default variable-pitch default)))
 	    (set-face-attribute 'company-tooltip nil :font "Fira Code" :weight 'medium :height 120)
