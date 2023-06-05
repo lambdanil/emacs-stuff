@@ -150,8 +150,8 @@ Having an Emacs daemon means instant startup times for emacsclient.
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  # nm-applet &
-  # blueman-applet &
+  nm-applet &
+  blueman-applet &
   # mate-volume-control-status-icon &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # mate-power-manager &
@@ -200,25 +200,25 @@ A small bit used to remind me when I'm inside a Guix environment.
 Set up the prompt with fancy colors and a cute lambda.
 Since ~tput~ isn't available on all distros (namely missing on GNU Guix), an alternative is provided.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-    if [[ $- == *i* ]]
-    then
-	_GREEN=$(tput setaf 2)
-	_MAGENTA=$(tput setaf 200)
-	_BLUE=$(tput setaf 4)
-	_RED=$(tput setaf 1)
-	_CYAN=$(tput setaf 45)
-	_RESET=$(tput sgr0)
-	_BOLD=$(tput bold)
-	#  _GREEN="\e[0;32m"
-	#  _MAGENTA="\e[0;35m"
-	#  _BLUE="\e[0;34m"
-	#  _RED="\e[0;31m"
-	#  _CYAN="\e[0;36m"
-	#  _RESET="\e[0m"
-	#  _BOLD="\e[1m"
-	#  export LD_LIBRARY_PATH=$LIBRARY_PATH
-	export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
-    fi
+  if [[ $- == *i* ]]
+  then
+      # _GREEN=$(tput setaf 2)
+      # _MAGENTA=$(tput setaf 200)
+      # _BLUE=$(tput setaf 4)
+      # _RED=$(tput setaf 1)
+      # _CYAN=$(tput setaf 45)
+      # _RESET=$(tput sgr0)
+      # _BOLD=$(tput bold)
+       _GREEN="\e[0;32m"
+       _MAGENTA="\e[0;35m"
+       _BLUE="\e[0;34m"
+       _RED="\e[0;31m"
+       _CYAN="\e[0;36m"
+       _RESET="\e[0m"
+       _BOLD="\e[1m"
+      #  export LD_LIBRARY_PATH=$LIBRARY_PATH
+      export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
+  fi
 #+END_SRC
 
 Guix needs to be separately sourced in non-container interactive shells.
@@ -269,10 +269,10 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  # if [[ "$(tty)" == "/dev/tty1" ]]
-  # then
-  #     exec sway
-  # fi
+  if [[ "$(tty)" == "/dev/tty1" ]]
+  then
+      exec sway
+  fi
 #+END_SRC
 
 * Custom Binaries
@@ -398,7 +398,6 @@ Next we can look into development related packages and libraries.
   "gnome-tweaks"
   "ungoogled-chromium"
   "firefox"
-  "caja"
   "mpv"
   "gimp"
   "flatpak"
@@ -410,13 +409,10 @@ Next we can look into development related packages and libraries.
   "virt-manager"
   "qjackctl"
   "i3status"
-  "xfce4-pulseaudio-plugin"
-  "xfce4-volumed-pulse"
   "google-chrome-stable"
   "sushi"
   "libportal"
   "steam-patched"
-  "dolphin"
   "gzdoom"
   "gnome-mines"
   "gedit"
@@ -440,6 +436,8 @@ Next we can look into development related packages and libraries.
   "pfetch"
   "thunar"
   "yt-dlp"
+  "sway"
+  "wofi"
   "ublock-origin-chromium"
   "pandoc"
   "openjdk"
@@ -455,7 +453,6 @@ Next we can look into development related packages and libraries.
   "xfce4-whiskermenu-plugin"
   "xfce4-panel"
   "piper"
-  "element-desktop"
   "scrot"
   "dconf-editor"
   "tumbler"
@@ -492,8 +489,6 @@ Next we can look into development related packages and libraries.
   "libxcursor"
   "libgccjit"
   "curl"
-  "gnome-shell-extension-appindicator"
-  "gnome-shell-extension-blur-my-shell"
   "unrar"
   "unzip"
   "xrandr"
@@ -508,6 +503,7 @@ Next we can look into development related packages and libraries.
   "markdown"
   "libvterm"
   "libtool"
+  "hunspell"
   "hunspell-dict-en-us"
   "enchant"
   "glibc-locales"))
@@ -579,12 +575,13 @@ Set some initial variables first.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $mod Mod4
   set $HOME /home/nil
-  set $term emacsclient -c -e "(vterm)"
-  set $files emacsclient -c -e "(dired \"~\")"
+  set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+  set $files emacsclient -c -e '(dired "~")'
   font pango:Fira Code 9
   gaps inner 6px
   for_window [class="^.*"] border pixel 2
   floating_modifier $mod
+  seat seat0 xcursor_theme Simp1e-Adw
   # tiling_drag modifier titlebar
 #+END_SRC
 
@@ -592,7 +589,8 @@ I'll need my keyboard layout.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   input * {
   xkb_layout "cz"
-  xkb_options "ctrl:swapcaps"	     
+  xkb_options "ctrl:swapcaps"
+  accel_profile flat		
   }
 #+END_SRC
 
@@ -1309,6 +1307,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (define %my-services
     (modify-services %desktop-services
+		     (delete gdm-service-type)
 		     (guix-service-type config => (guix-configuration
 						   (inherit config)
 						   (substitute-urls
@@ -1370,6 +1369,8 @@ Add system-level packages now; these are *only* the most necessary of packages.
 	  "bluez"
 	  "blueman"
 	  "vim"
+	  "sway"
+	  "wofi"
 	  "libratbag"
 	  "git"))
     %base-packages))
@@ -1379,11 +1380,7 @@ Now for the second part of service configuration - appending my own services.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (services
    (append
-    (list (service gnome-desktop-service-type
-		   (gnome-configuration
-		    (gnome gnome-minimal)))
-
-	  (service bluetooth-service-type
+    (list (service bluetooth-service-type
 		   (bluetooth-configuration
 		    (auto-enable? #f)))
 #+END_SRC
@@ -1444,13 +1441,13 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
     (file-system
      (mount-point "/")
      (device
-      (uuid "fd02d6c6-5ff1-48d9-b9cb-a444ceb260dd"
-	    'ext4))
-     (type "ext4"))
+      (uuid "921c9da9-0c0b-4165-b6a2-2e0020ec8dc6"
+	    'btrfs))
+     (type "btrfs"))
     (file-system
      (mount-point "/boot/efi")
      (device
-      (uuid "D846-4633"
+      (uuid "2C41-C9CE"
 	    'fat32))
      (type "vfat"))
     (file-system ;; Second hard drive

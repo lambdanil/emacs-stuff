@@ -24,6 +24,7 @@
 
 (define %my-services
   (modify-services %desktop-services
+		   (delete gdm-service-type)
 		   (guix-service-type config => (guix-configuration
 						 (inherit config)
 						 (substitute-urls
@@ -73,17 +74,15 @@
 	"bluez"
 	"blueman"
 	"vim"
+	"sway"
+	"wofi"
 	"libratbag"
 	"git"))
   %base-packages))
 
 (services
  (append
-  (list (service gnome-desktop-service-type
-		 (gnome-configuration
-		  (gnome gnome-minimal)))
-
-	(service bluetooth-service-type
+  (list (service bluetooth-service-type
 		 (bluetooth-configuration
 		  (auto-enable? #f)))
 
@@ -129,13 +128,13 @@ mount-rshared-service
   (file-system
    (mount-point "/")
    (device
-    (uuid "fd02d6c6-5ff1-48d9-b9cb-a444ceb260dd"
-	  'ext4))
-   (type "ext4"))
+    (uuid "921c9da9-0c0b-4165-b6a2-2e0020ec8dc6"
+	  'btrfs))
+   (type "btrfs"))
   (file-system
    (mount-point "/boot/efi")
    (device
-    (uuid "D846-4633"
+    (uuid "2C41-C9CE"
 	  'fat32))
    (type "vfat"))
   (file-system ;; Second hard drive

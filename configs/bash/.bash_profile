@@ -6,7 +6,7 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     source "$HOME/.config/guix/current/etc/profile"
 fi
 
-# if [[ "$(tty)" == "/dev/tty1" ]]
-# then
-#     exec sway
-# fi
+if [[ "$(tty)" == "/dev/tty1" ]]
+then
+    exec sway
+fi

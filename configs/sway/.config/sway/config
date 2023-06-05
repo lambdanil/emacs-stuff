@@ -1,16 +1,18 @@
 set $mod Mod4
 set $HOME /home/nil
-set $term emacsclient -c -e "(vterm)"
-set $files emacsclient -c -e "(dired \"~\")"
+set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+set $files emacsclient -c -e '(dired "~")'
 font pango:Fira Code 9
 gaps inner 6px
 for_window [class="^.*"] border pixel 2
 floating_modifier $mod
+seat seat0 xcursor_theme Simp1e-Adw
 # tiling_drag modifier titlebar
 
 input * {
 xkb_layout "cz"
-xkb_options "ctrl:swapcaps"	     
+xkb_options "ctrl:swapcaps"
+accel_profile flat		
 }
 
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
