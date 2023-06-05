@@ -150,8 +150,8 @@ Having an Emacs daemon means instant startup times for emacsclient.
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  nm-applet &
-  blueman-applet &
+  # nm-applet &
+  # blueman-applet &
   # mate-volume-control-status-icon &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # mate-power-manager &
@@ -269,10 +269,11 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [[ "$(tty)" == "/dev/tty1" ]]
-  then
-      exec sway
-  fi
+  export XDG_CURRENT_DESKTOP=sway
+  # if [[ "$(tty)" == "/dev/tty1" ]]
+  # then
+  #     exec dbus-run-session -- $HOME/.guix-profile/bin/sway
+  # fi
 #+END_SRC
 
 * Custom Binaries
@@ -283,13 +284,13 @@ Here I have some custom binaries, mostly scripts and stuff.
 
 Just a screenshot shortcut.
 #+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr" :shebang "#!/bin/sh"
-  scrot "$HOME/Obrázky/$(date).png" 
+  grim - | wl-copy
 #+END_SRC
 
 ** .bin/scr-area
 ...And the same but for a selected area.
 #+BEGIN_SRC sh :tangle "~/git/emacs-stuff/configs/bin/.bin/scr-area" :shebang "#!/bin/sh"
-  scrot "$HOME/Obrázky/$(date).png" -f -s
+  grim -g "$(slurp)" - | wl-copy   
 #+END_SRC
 
 ** .bin/chromium-incognito
@@ -352,6 +353,10 @@ This module provides my Firefox configuration. For tree style tab it's necessary
 * Fonts
 
 This module provides the necessary fonts.
+
+* Gtk
+
+This module provides GTK configuration files.
 
 * Guix
 
@@ -596,10 +601,10 @@ I'll need my keyboard layout.
 
 Execute the startup environment, this is necessary for XDG autostart files.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
-  exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-  exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+  exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
   exec --no-startup-id $HOME/.loginctl
-  exec /usr/libexec/polkit-gnome-authentication-agent-1
+  exec --no-startup-id swaybg -i $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+  # exec /usr/libexec/polkit-gnome-authentication-agent-1
 #+END_SRC
 
 Now assignin some keybindings; all of these are rather self-explanatory.
@@ -609,14 +614,14 @@ Now assignin some keybindings; all of these are rather self-explanatory.
   bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 10
   bindsym XF86AudioMute exec --no-startup-id pamixer -t
   bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
-  bindsym Print exec --no-startup-id scr	
-  bindsym Shift+Print exec --no-startup-id scr-area
+  bindsym Print exec --no-startup-id $HOME/.bin/scr
+  bindsym Shift+Print exec --no-startup-id $HOME/.bin/scr-area
 
   bindsym $mod+Return exec $term
   bindsym $mod+q kill
 
-  bindsym $mod+d exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show run
-  bindsym $mod+b exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show window
+  bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show drun
+  bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show window
 
   bindsym $mod+e exec --no-startup-id emacsclient -c
   bindsym $mod+a exec --no-startup-id $files	
@@ -1378,11 +1383,15 @@ Add system-level packages now; these are *only* the most necessary of packages.
 
 Now for the second part of service configuration - appending my own services.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
-  (services
-   (append
-    (list (service bluetooth-service-type
-		   (bluetooth-configuration
-		    (auto-enable? #f)))
+    (services
+     (append
+      (list
+       (service gdm-service-type
+		(gdm-configuration
+		 (wayland? #t)))
+       (service bluetooth-service-type
+		     (bluetooth-configuration
+		      (auto-enable? #f)))
 #+END_SRC
 
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.

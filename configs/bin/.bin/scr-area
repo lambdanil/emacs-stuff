@@ -1,2 +1,2 @@
 #!/bin/sh
-scrot "$HOME/Obrázky/$(date).png" -f -s
+grim -g "$(slurp)" - | wl-copy

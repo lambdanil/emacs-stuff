@@ -4,8 +4,8 @@ syncthing serve --no-browser &
 emacs --daemon &
 
 # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-nm-applet &
-blueman-applet &
+# nm-applet &
+# blueman-applet &
 # mate-volume-control-status-icon &
 # /usr/bin/gnome-keyring-daemon --start --components=secrets &
 # mate-power-manager &

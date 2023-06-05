@@ -82,7 +82,11 @@
 
 (services
  (append
-  (list (service bluetooth-service-type
+  (list
+   (service gdm-service-type
+	    (gdm-configuration
+	     (wayland? #t)))
+   (service bluetooth-service-type
 		 (bluetooth-configuration
 		  (auto-enable? #f)))
 

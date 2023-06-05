@@ -15,24 +15,24 @@ xkb_options "ctrl:swapcaps"
 accel_profile flat		
 }
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec --no-startup-id $HOME/.loginctl
-exec /usr/libexec/polkit-gnome-authentication-agent-1
+exec --no-startup-id swaybg -i $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+# exec /usr/libexec/polkit-gnome-authentication-agent-1
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
 bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 10
 bindsym XF86AudioMute exec --no-startup-id pamixer -t
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym Print exec --no-startup-id scr	
-bindsym Shift+Print exec --no-startup-id scr-area
+bindsym Print exec --no-startup-id $HOME/.bin/scr
+bindsym Shift+Print exec --no-startup-id $HOME/.bin/scr-area
 
 bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
-bindsym $mod+d exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show run
-bindsym $mod+b exec --no-startup-id wofi --theme ~/.config/wofi/nord.rasi --show window
+bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show drun
+bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show window
 
 bindsym $mod+e exec --no-startup-id emacsclient -c
 bindsym $mod+a exec --no-startup-id $files
