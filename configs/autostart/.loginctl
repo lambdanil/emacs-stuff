@@ -13,6 +13,6 @@ emacs --daemon &
 # # timidity -iA &
 # nitrogen --restore &
 # picom &
-# playerctld &
+playerctld &
 # xrandr --output HDMI-A-1 --set TearFree on &
 # # exec i3 & # for use with xfce
