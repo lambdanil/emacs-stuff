@@ -643,6 +643,8 @@ Window focus:
 
 Moving and resizing windows:
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  bindsym $mod+m sticky toggle
+	  
   bindsym $mod+Shift+h move left
   bindsym $mod+Shift+j move down
   bindsym $mod+Shift+k move up
