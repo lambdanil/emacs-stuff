@@ -150,8 +150,8 @@ Having an Emacs daemon means instant startup times for emacsclient.
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  # nm-applet &
-  # blueman-applet &
+  nm-applet &
+  blueman-applet &
   # mate-volume-control-status-icon &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # mate-power-manager &
@@ -270,10 +270,10 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
   export XDG_CURRENT_DESKTOP=sway
-  # if [[ "$(tty)" == "/dev/tty1" ]]
-  # then
-  #     exec dbus-run-session -- $HOME/.guix-profile/bin/sway
-  # fi
+  if [[ "$(tty)" == "/dev/tty1" ]]
+  then
+      exec dbus-run-session -- sway
+  fi
 #+END_SRC
 
 * Custom Binaries

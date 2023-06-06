@@ -7,7 +7,7 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
 fi
 
 export XDG_CURRENT_DESKTOP=sway
-# if [[ "$(tty)" == "/dev/tty1" ]]
-# then
-#     exec dbus-run-session -- $HOME/.guix-profile/bin/sway
-# fi
+if [[ "$(tty)" == "/dev/tty1" ]]
+then
+    exec dbus-run-session -- sway
+fi
