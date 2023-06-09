@@ -356,7 +356,15 @@ This module provides the necessary fonts.
 
 * Gtk
 
-This module provides GTK configuration files.
+This module provides straightforward GTK3 configuration.
+#+begin_src conf-unix :tangle "~/git/emacs-stuff/configs/gtk3/.config/gtk-3.0/settings.ini"
+  [Settings]
+  gtk-cursor-theme-name=Simp1e
+  gtk-icon-theme-name=Adwaita-Dark
+  gtk-theme-name=Adwaita-Dark
+  gtk-font-name=DejaVu Sans 11
+  gtk-application-prefer-dark-theme=1
+#+end_src
 
 * Guix
 
@@ -2858,19 +2866,6 @@ Here is a very minimal setup for org-agenda.
 
 Automatically tangle config on save, currently disabled.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (defun org-insert-file-header ()
-    (interactive)
-    (insert "#+TITLE: ")
-    (end-of-line)
-    (newline)
-    (insert "#+AUTHOR: ")
-    (end-of-line)
-    (newline)
-    (insert "#+SETUPFILE: ~/.org-html.css.org")
-    (end-of-line)
-    (newline)
-    (insert "#+OPTIONS: toc:nil num:nil author:nil date:nil timestamp:nil html-postamble:nil"))
-
   (defun org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
 			(expand-file-name "~/git/emacs-stuff/README.org"))
