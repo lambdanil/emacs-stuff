@@ -2521,7 +2521,7 @@ It's pretty full-featured, yet rather short and straightforward. I try to keep t
 
 
 
-Let's start with a quick listing of the relevant system-level dependencies:
+Let's start with a quick listing of the relevant system-level dependencies, these are the names in Guix:
 - ~clang~
 - ~ripgrep~
 - ~font-fira-mono~
@@ -2529,6 +2529,12 @@ Let's start with a quick listing of the relevant system-level dependencies:
 - ~clang~
 - ~cmake~
 - ~make~
+- ~enchant~
+- ~hunspell~
+- ~hunspell-dict-en-us~
+- ~libtool~
+- ~gcc-toolchain~
+- ~guile~
 I usually install these using [[https://guix.gnu.org][GNU Guix]], at least when running Emacs on Linux.
 
 ** Initial variables
