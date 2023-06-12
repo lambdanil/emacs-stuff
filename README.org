@@ -149,19 +149,10 @@ Having an Emacs daemon means instant startup times for emacsclient.
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
-  nm-applet &
+  # nm-applet &
   blueman-applet &
-  # mate-volume-control-status-icon &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
-  # mate-power-manager &
-  # setxkbmap cz -option 'ctrl:swapcaps' &
-  # # timidity -iA &
-  # nitrogen --restore &
-  # picom &
   playerctld &
-  # xrandr --output HDMI-A-1 --set TearFree on &
-  # # exec i3 & # for use with xfce
 #+END_SRC
 
 * Bash
@@ -265,13 +256,15 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
       source "$HOME/.guix-profile/etc/profile"
       source "$HOME/.config/guix/current/etc/profile"
   fi
+  # export PATH="$PATH:$HOME/.guix-profile/bin"
+  # export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
 #+END_SRC
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  export XDG_CURRENT_DESKTOP=sway
   if [[ "$(tty)" == "/dev/tty1" ]]
   then
+      export XDG_CURRENT_DESKTOP=sway
       exec dbus-run-session -- sway
   fi
 #+END_SRC
@@ -580,7 +573,7 @@ Here is the setup for channels, only real addition here is ~nonguix~.
 
 * Sway
 
-~Sway~ is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have i3 here for completeness.
+~Sway~ is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have sway here for completeness.
 
 ** .config/sway/config
 
@@ -590,11 +583,13 @@ Set some initial variables first.
   set $HOME /home/nil
   set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
   set $files emacsclient -c -e '(dired "~")'
+  set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+  set $lock swaylock -i $wallpaper
   font pango:Fira Code 9
   gaps inner 6px
   for_window [class="^.*"] border pixel 2
   floating_modifier $mod
-  seat seat0 xcursor_theme Simp1e-Adw
+  seat seat0 xcursor_theme Simp1e
   # tiling_drag modifier titlebar
 #+END_SRC
 
@@ -611,11 +606,16 @@ Execute the startup environment, this is necessary for XDG autostart files.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
   exec --no-startup-id $HOME/.loginctl
-  exec --no-startup-id swaybg -i $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+  exec --no-startup-id swaybg -i $wallpaper
   # exec /usr/libexec/polkit-gnome-authentication-agent-1
 #+END_SRC
 
-Now assignin some keybindings; all of these are rather self-explanatory.
+Configure ~swaylock~ to start automatically.
+#+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  exec --no-startup-id swayidle timeout 480 "$lock"
+#+END_SRC
+
+Now assigning some keybindings; all of these are rather self-explanatory.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $refresh_i3status killall -SIGUSR1 i3status
   bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
@@ -627,6 +627,8 @@ Now assignin some keybindings; all of these are rather self-explanatory.
 
   bindsym $mod+Return exec $term
   bindsym $mod+q kill
+
+  bindsym $mod+Shift+Control+l exec --no-startup-id $lock
 
   bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show drun
   bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show window
@@ -2546,7 +2548,7 @@ Set some basic information about the user.
 #+END_SRC
 
   
-EXWM can be toggled here. It's configuration is handled within a separate file.
+EXWM can be toggled here. Its configuration is handled within a separate file.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (defvar use-exwm nil)
 
@@ -2569,8 +2571,7 @@ Next we need to setup our package archives so that we can ensure all the necessa
 
 Here is the list of packages to be patched with ~el-patch~.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (dolist (package '(el-patch
-		     elcord
+  (dolist (package '(elcord
 		     nyan-mode))
     (unless (package-installed-p package)
       (package-install package)))

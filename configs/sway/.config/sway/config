@@ -2,11 +2,13 @@ set $mod Mod4
 set $HOME /home/nil
 set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
 set $files emacsclient -c -e '(dired "~")'
+set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+set $lock swaylock -i $wallpaper
 font pango:Fira Code 9
 gaps inner 6px
 for_window [class="^.*"] border pixel 2
 floating_modifier $mod
-seat seat0 xcursor_theme Simp1e-Adw
+seat seat0 xcursor_theme Simp1e
 # tiling_drag modifier titlebar
 
 input * {
@@ -17,8 +19,10 @@ accel_profile flat
 
 exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec --no-startup-id $HOME/.loginctl
-exec --no-startup-id swaybg -i $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
+exec --no-startup-id swaybg -i $wallpaper
 # exec /usr/libexec/polkit-gnome-authentication-agent-1
+
+exec --no-startup-id swayidle timeout 480 "$lock"
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10
@@ -30,6 +34,8 @@ bindsym Shift+Print exec --no-startup-id $HOME/.bin/scr-area
 
 bindsym $mod+Return exec $term
 bindsym $mod+q kill
+
+bindsym $mod+Shift+Control+l exec --no-startup-id $lock
 
 bindsym $mod+d exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show drun
 bindsym $mod+b exec --no-startup-id rofi -theme ~/.config/wofi/nord.rasi -show window

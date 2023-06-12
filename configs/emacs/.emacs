@@ -14,8 +14,7 @@
   (package-install 'el-patch))
 (require 'el-patch)
 
-(dolist (package '(el-patch
-		   elcord
+(dolist (package '(elcord
 		   nyan-mode))
   (unless (package-installed-p package)
     (package-install package)))
