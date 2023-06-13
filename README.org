@@ -137,8 +137,13 @@ First we need to add a .desktop file for the DE to load.
 
 Here's the actual autostart script.
 
-I use Syncthing to sync my org agenda between different devices.
+For some reason Xwayland won't automatically read my Xresources, so I ensure they are read manually.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
+  xrdb ~/git/emacs-stuff/configs/X/.Xresources 
+#+end_src
+
+I use Syncthing to sync my org agenda between different devices.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   syncthing serve --no-browser &
 #+END_SRC
 
@@ -2608,6 +2613,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     toc-org
 		     tempel
 		     tempel-collection
+		     yaml-mode
 		     tree-sitter
 		     tree-sitter-langs
 		     emms
@@ -2634,13 +2640,13 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 
 ** Extra tempel templates (.emacs.d/templates)
 I use ~tempel~ for inserting snippets. This is the default path for adding new snippets.
-
 #+begin_src emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs.d/templates"
   ;; ~/.config/emacs/templates
 
   org-mode
 
   (file "#+TITLE: " p n "#+AUTHOR: " p n "#+SETUPFILE: ~/.org-html.css.org" n "#+OPTIONS: toc:nil num:nil author:nil date:nil timestamp:nil html-postamble:nil")
+  (blog "#+OPTIONS: toc:nil num:nil" n "#+BEGIN_EXPORT html" n "---" n "layout: post" n "title: " p n "permalink: /:title/" n "tags: [emacs]" n "---" n "#+END_EXPORT")
 
   ;; Local Variables:
   ;; mode: lisp-data
@@ -2899,7 +2905,28 @@ Ensure ~org-html-export-html~ switches to the correct theme before exporting - t
 
   (with-eval-after-load "ox-html"
     (advice-add 'org-html-export-to-html :around 'my-with-theme))
+
+  (with-eval-after-load "ox-publish"
+    (advice-add 'org-publish-current-project :around 'my-with-theme))
 #+END_SRC
+
+Jekyll export setup, I use this for my blog.
+#+begin_src emacs-lisp
+  (setq org-publish-project-alist
+	'(("CuBeRJAN.github.io"
+	   ;; Path to org files.
+	   :base-directory "~/git/CuBeRJAN.github.io/org"
+	   :base-extension "org"
+
+	   ;; Path to Jekyll Posts
+	   :publishing-directory "~/git/CuBeRJAN.github.io/_posts/"
+	   :recursive t
+	   :publishing-function org-html-publish-to-html
+	   :headline-levels 4
+	   :html-extension "html"
+	   :body-only t
+	   )))
+#+end_src
 
 Make ~org-mode~ a little bit prettier to look at.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"

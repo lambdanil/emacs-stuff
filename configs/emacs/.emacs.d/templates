@@ -3,6 +3,7 @@
 org-mode
 
 (file "#+TITLE: " p n "#+AUTHOR: " p n "#+SETUPFILE: ~/.org-html.css.org" n "#+OPTIONS: toc:nil num:nil author:nil date:nil timestamp:nil html-postamble:nil")
+(blog "#+OPTIONS: toc:nil num:nil" n "#+BEGIN_EXPORT html" n "---" n "layout: post" n "title: " p n "permalink: /:title/" n "tags: [emacs]" n "---" n "#+END_EXPORT")
 
 ;; Local Variables:
 ;; mode: lisp-data

@@ -42,6 +42,7 @@
 		   toc-org
 		   tempel
 		   tempel-collection
+		   yaml-mode
 		   tree-sitter
 		   tree-sitter-langs
 		   emms
@@ -257,6 +258,9 @@
 
 (with-eval-after-load "ox-html"
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
+
+(with-eval-after-load "ox-publish"
+  (advice-add 'org-publish-current-project :around 'my-with-theme))
 
 (add-hook 'org-mode-hook
 	  (lambda ()
