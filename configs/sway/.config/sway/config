@@ -136,7 +136,7 @@ bindsym $mod+Shift+r reload
 # exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'"
 
-set $bg-color 	         #88c0d0
+set $bg-color 	   #b19cd8
 set $active-border-color #FFFFFF
 set $inactive-bg-color   #2E3440
 set $text-color          #f5f5f5

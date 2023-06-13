@@ -11,7 +11,7 @@
     nord6:     #eceff4;
 
     nord7:     #8fbcbb;
-    nord8:     #88c0d0;
+    nord8:     #b19cd8; /* purple-ish thingy */
     nord9:     #81a1c1;
     nord10:    #5e81ac;
     nord11:    #bf616a;

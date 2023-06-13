@@ -747,7 +747,7 @@ Now for session commands:
 
 Handle colors next; following the Nord colorscheme here.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
-  set $bg-color 	         #88c0d0
+  set $bg-color 	   #b19cd8
   set $active-border-color #FFFFFF
   set $inactive-bg-color   #2E3440
   set $text-color          #f5f5f5
@@ -1154,7 +1154,7 @@ Original source [[https://github.com/lr-tech/rofi-themes-collection][here]].
       nord6:     #eceff4;
 
       nord7:     #8fbcbb;
-      nord8:     #88c0d0;
+      nord8:     #b19cd8; /* purple-ish thingy */
       nord9:     #81a1c1;
       nord10:    #5e81ac;
       nord11:    #bf616a;
