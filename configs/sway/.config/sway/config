@@ -14,8 +14,12 @@ seat seat0 xcursor_theme Simp1e
 input * {
 xkb_layout "cz"
 xkb_options "ctrl:swapcaps"
-accel_profile flat		
+accel_profile flat
+xkb_numlock enabled
 }
+
+output HDMI-A-2 max_render_time 2
+# swaymsg -t get_outputs
 
 exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec --no-startup-id $HOME/.loginctl

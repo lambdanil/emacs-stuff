@@ -1,11 +1,13 @@
 #!/bin/sh
-xrdb ~/git/emacs-stuff/configs/X/.Xresources
+# xrdb ~/git/emacs-stuff/configs/X/.Xresources
 
 syncthing serve --no-browser &
 
 emacs --daemon &
 
-# nm-applet &
+nm-applet &
 blueman-applet &
+setxkbmap cz -option 'ctrl:swapcaps' &
+xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
 # /usr/bin/gnome-keyring-daemon --start --components=secrets &
-playerctld &
+# playerctld &

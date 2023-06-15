@@ -139,7 +139,7 @@ Here's the actual autostart script.
 
 For some reason Xwayland won't automatically read my Xresources, so I ensure they are read manually.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
-  xrdb ~/git/emacs-stuff/configs/X/.Xresources 
+  # xrdb ~/git/emacs-stuff/configs/X/.Xresources 
 #+end_src
 
 I use Syncthing to sync my org agenda between different devices.
@@ -154,10 +154,12 @@ Having an Emacs daemon means instant startup times for emacsclient.
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  # nm-applet &
+  nm-applet &
   blueman-applet &
+  setxkbmap cz -option 'ctrl:swapcaps' &
+  xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
-  playerctld &
+  # playerctld &
 #+END_SRC
 
 * Bash
@@ -258,11 +260,11 @@ First run the bashrc if necessary.
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
   if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ]; then
-      source "$HOME/.guix-profile/etc/profile"
-      source "$HOME/.config/guix/current/etc/profile"
+      # source "$HOME/.guix-profile/etc/profile"
+      # source "$HOME/.config/guix/current/etc/profile"
+      export PATH="$PATH:$HOME/.guix-profile/bin"
+      export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
   fi
-  # export PATH="$PATH:$HOME/.guix-profile/bin"
-  # export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
 #+END_SRC
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
@@ -598,14 +600,21 @@ Set some initial variables first.
   # tiling_drag modifier titlebar
 #+END_SRC
 
-I'll need my keyboard layout.
+Configure input.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   input * {
   xkb_layout "cz"
   xkb_options "ctrl:swapcaps"
-  accel_profile flat		
+  accel_profile flat
+  xkb_numlock enabled
   }
 #+END_SRC
+
+I decrease the time to render a frame as much as possible (2ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
+#+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  output HDMI-A-2 max_render_time 2
+  # swaymsg -t get_outputs
+#+end_src
 
 Execute the startup environment, this is necessary for XDG autostart files.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
@@ -2905,13 +2914,13 @@ Ensure ~org-html-export-html~ switches to the correct theme before exporting - t
 
   (with-eval-after-load "ox-html"
     (advice-add 'org-html-export-to-html :around 'my-with-theme))
-
-  (with-eval-after-load "ox-publish"
-    (advice-add 'org-publish-current-project :around 'my-with-theme))
 #+END_SRC
 
 Jekyll export setup, I use this for my blog.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (require 'ox-publish)
+  (with-eval-after-load "ox-publish"
+    (advice-add 'org-publish-current-project :around 'my-with-theme))
   (setq org-publish-project-alist
 	'(("CuBeRJAN.github.io"
 	   ;; Path to org files.
@@ -2924,8 +2933,7 @@ Jekyll export setup, I use this for my blog.
 	   :publishing-function org-html-publish-to-html
 	   :headline-levels 4
 	   :html-extension "html"
-	   :body-only t
-	   )))
+	   :body-only t)))
 #+end_src
 
 Make ~org-mode~ a little bit prettier to look at.

@@ -259,8 +259,22 @@
 (with-eval-after-load "ox-html"
   (advice-add 'org-html-export-to-html :around 'my-with-theme))
 
+(require 'ox-publish)
 (with-eval-after-load "ox-publish"
   (advice-add 'org-publish-current-project :around 'my-with-theme))
+(setq org-publish-project-alist
+      '(("CuBeRJAN.github.io"
+	 ;; Path to org files.
+	 :base-directory "~/git/CuBeRJAN.github.io/org"
+	 :base-extension "org"
+
+	 ;; Path to Jekyll Posts
+	 :publishing-directory "~/git/CuBeRJAN.github.io/_posts/"
+	 :recursive t
+	 :publishing-function org-html-publish-to-html
+	 :headline-levels 4
+	 :html-extension "html"
+	 :body-only t)))
 
 (add-hook 'org-mode-hook
 	  (lambda ()
