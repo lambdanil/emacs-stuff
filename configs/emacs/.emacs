@@ -460,6 +460,7 @@
 					     (interactive (list (read-shell-command "$ ")))
 					     (start-process-shell-command command nil command)))
 (global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
+(define-key my/keys-keymap (kbd "M-.") 'xref-find-definitions)
 (global-set-key (kbd "C-c C-w") #'(lambda ()
 				    (interactive)
 				    (let ((current-prefix-arg '(4))) ;; emulate C-u

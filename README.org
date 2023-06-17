@@ -144,20 +144,20 @@ For some reason Xwayland won't automatically read my Xresources, so I ensure the
 
 I use Syncthing to sync my org agenda between different devices.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  syncthing serve --no-browser &
+  $HOME/.guix-profile/bin/syncthing serve --no-browser &
 #+END_SRC
 
 Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  emacs --daemon &
+  $HOME/.guix-profile/bin/emacs --daemon &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  nm-applet &
-  blueman-applet &
-  setxkbmap cz -option 'ctrl:swapcaps' &
-  xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
+  # nm-applet &
+  # blueman-applet &
+  # setxkbmap cz -option 'ctrl:swapcaps' &
+  # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # playerctld &
 #+END_SRC
@@ -200,20 +200,20 @@ Since ~tput~ isn't available on all distros (namely missing on GNU Guix), an alt
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   if [[ $- == *i* ]]
   then
-      # _GREEN=$(tput setaf 2)
-      # _MAGENTA=$(tput setaf 200)
-      # _BLUE=$(tput setaf 4)
-      # _RED=$(tput setaf 1)
-      # _CYAN=$(tput setaf 45)
-      # _RESET=$(tput sgr0)
-      # _BOLD=$(tput bold)
-       _GREEN="\e[0;32m"
-       _MAGENTA="\e[0;35m"
-       _BLUE="\e[0;34m"
-       _RED="\e[0;31m"
-       _CYAN="\e[0;36m"
-       _RESET="\e[0m"
-       _BOLD="\e[1m"
+      _GREEN=$(tput setaf 2)
+      _MAGENTA=$(tput setaf 200)
+      _BLUE=$(tput setaf 4)
+      _RED=$(tput setaf 1)
+      _CYAN=$(tput setaf 45)
+      _RESET=$(tput sgr0)
+      _BOLD=$(tput bold)
+      # _GREEN="\e[0;32m"
+      # _MAGENTA="\e[0;35m"
+      # _BLUE="\e[0;34m"
+      # _RED="\e[0;31m"
+      # _CYAN="\e[0;36m"
+      # _RESET="\e[0m"
+      # _BOLD="\e[1m"
       #  export LD_LIBRARY_PATH=$LIBRARY_PATH
       export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
   fi
@@ -269,11 +269,11 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
 
 This makes sway start up automatically when logging into ~tty1~, eliminating the need for a login manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [[ "$(tty)" == "/dev/tty1" ]]
-  then
-      export XDG_CURRENT_DESKTOP=sway
-      exec dbus-run-session -- sway
-  fi
+  # if [[ "$(tty)" == "/dev/tty1" ]]
+  # then
+  #     export XDG_CURRENT_DESKTOP=sway
+  #     exec dbus-run-session -- sway
+  # fi
 #+END_SRC
 
 * Custom Binaries
@@ -2952,6 +2952,7 @@ Finally we get to my extensive custom keybindings. I try to keep these to as few
 					       (interactive (list (read-shell-command "$ ")))
 					       (start-process-shell-command command nil command)))
   (global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
+  (define-key my/keys-keymap (kbd "M-.") 'xref-find-definitions)
   (global-set-key (kbd "C-c C-w") #'(lambda ()
 				      (interactive)
 				      (let ((current-prefix-arg '(4))) ;; emulate C-u

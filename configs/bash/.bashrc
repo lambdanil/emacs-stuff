@@ -21,20 +21,20 @@ fi
 
 if [[ $- == *i* ]]
 then
-    # _GREEN=$(tput setaf 2)
-    # _MAGENTA=$(tput setaf 200)
-    # _BLUE=$(tput setaf 4)
-    # _RED=$(tput setaf 1)
-    # _CYAN=$(tput setaf 45)
-    # _RESET=$(tput sgr0)
-    # _BOLD=$(tput bold)
-     _GREEN="\e[0;32m"
-     _MAGENTA="\e[0;35m"
-     _BLUE="\e[0;34m"
-     _RED="\e[0;31m"
-     _CYAN="\e[0;36m"
-     _RESET="\e[0m"
-     _BOLD="\e[1m"
+    _GREEN=$(tput setaf 2)
+    _MAGENTA=$(tput setaf 200)
+    _BLUE=$(tput setaf 4)
+    _RED=$(tput setaf 1)
+    _CYAN=$(tput setaf 45)
+    _RESET=$(tput sgr0)
+    _BOLD=$(tput bold)
+    # _GREEN="\e[0;32m"
+    # _MAGENTA="\e[0;35m"
+    # _BLUE="\e[0;34m"
+    # _RED="\e[0;31m"
+    # _CYAN="\e[0;36m"
+    # _RESET="\e[0m"
+    # _BOLD="\e[1m"
     #  export LD_LIBRARY_PATH=$LIBRARY_PATH
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
 fi
