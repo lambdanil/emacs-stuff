@@ -460,7 +460,7 @@
 					     (interactive (list (read-shell-command "$ ")))
 					     (start-process-shell-command command nil command)))
 (global-set-key (kbd "C-c w") 'eww-switch-to-buffer)
-(define-key my/keys-keymap (kbd "M-.") 'xref-find-definitions)
+
 (global-set-key (kbd "C-c C-w") #'(lambda ()
 				    (interactive)
 				    (let ((current-prefix-arg '(4))) ;; emulate C-u
@@ -479,6 +479,7 @@
 				     (local-set-key (kbd "C-c r") 'sly-eval-region)
 				     (local-set-key (kbd "C-c b") 'sly-eval-buffer)))
 (define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
+(define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 (add-hook 'emacs-lisp-mode-hook #'(lambda () (local-set-key (kbd "C-c e") 'eval-region)))
 (add-hook 'erc-mode-hook #'(lambda ()
 			(local-set-key (kbd "C-c s") 'my-erc-channel-search)))
