@@ -1,9 +1,9 @@
 #!/bin/sh
 # xrdb ~/git/emacs-stuff/configs/X/.Xresources
 
-$HOME/.guix-profile/bin/syncthing serve --no-browser &
+#syncthing serve --no-browser &
 
-$HOME/.guix-profile/bin/emacs --daemon &
+#emacs --daemon &
 
 # nm-applet &
 # blueman-applet &

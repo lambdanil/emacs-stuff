@@ -144,12 +144,12 @@ For some reason Xwayland won't automatically read my Xresources, so I ensure the
 
 I use Syncthing to sync my org agenda between different devices.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  $HOME/.guix-profile/bin/syncthing serve --no-browser &
+  #syncthing serve --no-browser &
 #+END_SRC
 
 Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  $HOME/.guix-profile/bin/emacs --daemon &
+  #emacs --daemon &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
@@ -255,6 +255,8 @@ First run the bashrc if necessary.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
   # Honor per-interactive-shell startup file
   if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+  export LANG=cs_CZ.utf-8
+  export PATH=$PATH:$HOME/.bin
 #+END_SRC
 
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
