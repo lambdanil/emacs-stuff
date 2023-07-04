@@ -40,7 +40,6 @@ then
 fi
 
 if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ] && [[ $- == *i* ]]; then
-    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
     GUIX_PROFILE="$HOME/.guix-profile"
     . "$GUIX_PROFILE/etc/profile"
     GUIX_PROFILE="$HOME/.config/guix/current"

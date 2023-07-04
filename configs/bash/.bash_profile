@@ -8,6 +8,7 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     # source "$HOME/.config/guix/current/etc/profile"
     export PATH="$PATH:$HOME/.guix-profile/bin"
     export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
+    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 fi
 
 # if [[ "$(tty)" == "/dev/tty1" ]]
