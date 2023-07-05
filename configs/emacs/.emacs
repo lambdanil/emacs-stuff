@@ -129,6 +129,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (counsel-mode t)
+(setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "") ;; Search by substring
 ;;(global-tab-line-mode t)
 (setq inferior-lisp-program "sbcl")
 (setf nyan-animate-nyancat t)
