@@ -139,7 +139,7 @@ Here's the actual autostart script.
 
 For some reason Xwayland won't automatically read my Xresources, so I ensure they are read manually.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl" :shebang "#!/bin/sh"
-  # xrdb ~/git/emacs-stuff/configs/X/.Xresources 
+  xrdb ~/git/emacs-stuff/configs/X/.Xresources 
 #+end_src
 
 I use Syncthing to sync my org agenda between different devices.
@@ -149,14 +149,16 @@ I use Syncthing to sync my org agenda between different devices.
 
 Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  #emacs --daemon &
+  emacs --daemon &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # nm-applet &
   # blueman-applet &
-  # setxkbmap cz -option 'ctrl:swapcaps' &
+  setxkbmap cz -option 'ctrl:swapcaps' &
+  xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+  $HOME/.guix-profile/libexec/xdg-desktop-portal -r &
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # playerctld &
@@ -200,20 +202,20 @@ Since ~tput~ isn't available on all distros (namely missing on GNU Guix), an alt
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   if [[ $- == *i* ]]
   then
-      _GREEN=$(tput setaf 2)
-      _MAGENTA=$(tput setaf 200)
-      _BLUE=$(tput setaf 4)
-      _RED=$(tput setaf 1)
-      _CYAN=$(tput setaf 45)
-      _RESET=$(tput sgr0)
-      _BOLD=$(tput bold)
-      # _GREEN="\e[0;32m"
-      # _MAGENTA="\e[0;35m"
-      # _BLUE="\e[0;34m"
-      # _RED="\e[0;31m"
-      # _CYAN="\e[0;36m"
-      # _RESET="\e[0m"
-      # _BOLD="\e[1m"
+      # _GREEN=$(tput setaf 2)
+      # _MAGENTA=$(tput setaf 200)
+      # _BLUE=$(tput setaf 4)
+      # _RED=$(tput setaf 1)
+      # _CYAN=$(tput setaf 45)
+      # _RESET=$(tput sgr0)
+      # _BOLD=$(tput bold)
+      _GREEN="\e[0;32m"
+      _MAGENTA="\e[0;35m"
+      _BLUE="\e[0;34m"
+      _RED="\e[0;31m"
+      _CYAN="\e[0;36m"
+      _RESET="\e[0m"
+      _BOLD="\e[1m"
       #  export LD_LIBRARY_PATH=$LIBRARY_PATH
       export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
   fi
@@ -1149,7 +1151,6 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (define %my-services
     (modify-services %desktop-services
-		     (delete gdm-service-type)
 		     (guix-service-type config => (guix-configuration
 						   (inherit config)
 						   (substitute-urls
@@ -1211,8 +1212,7 @@ Add system-level packages now; these are *only* the most necessary of packages.
 	  "bluez"
 	  "blueman"
 	  "vim"
-	  "sway"
-	  "wofi"
+	  "xdg-desktop-portal-gtk"
 	  "libratbag"
 	  "git"))
     %base-packages))
@@ -1220,15 +1220,14 @@ Add system-level packages now; these are *only* the most necessary of packages.
 
 Now for the second part of service configuration - appending my own services.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
-    (services
-     (append
-      (list
-       (service gdm-service-type
-		(gdm-configuration
-		 (wayland? #t)))
-       (service bluetooth-service-type
-		     (bluetooth-configuration
-		      (auto-enable? #f)))
+  (services
+   (append
+    (list
+     (service xfce-desktop-service-type)
+
+     (service bluetooth-service-type
+		   (bluetooth-configuration
+		    (auto-enable? #f)))
 #+END_SRC
 
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
@@ -1287,13 +1286,13 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
     (file-system
      (mount-point "/")
      (device
-      (uuid "921c9da9-0c0b-4165-b6a2-2e0020ec8dc6"
-	    'btrfs))
-     (type "btrfs"))
+      (uuid "bf1f6abc-05d4-430f-8da3-88af822fd603"
+	    'ext4))
+     (type "ext4"))
     (file-system
      (mount-point "/boot/efi")
      (device
-      (uuid "2C41-C9CE"
+      (uuid "8111-C019"
 	    'fat32))
      (type "vfat"))
     (file-system ;; Second hard drive
