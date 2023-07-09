@@ -1238,10 +1238,10 @@ This one is a custom service, essentially distrobox needs the root (/) to be mou
 
 PAM limits for Wine Esync and realtime acces for ~jackd~.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
-  (pam-limits-service
-   (list (pam-limits-entry "*" 'hard 'nofile 524288)
-	 (pam-limits-entry "@realtime" 'both 'rtprio 99)
-	 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
+  (service pam-limits-service-type
+	   (list (pam-limits-entry "*" 'hard 'nofile 524288)
+		 (pam-limits-entry "@realtime" 'both 'rtprio 99)
+		 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 #+END_SRC
 
 This is a bit of a work-around... Basically we place the linker where regular binaries expect it to be. This allows us to execute standard binaries more easily.

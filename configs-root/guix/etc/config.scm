@@ -89,10 +89,10 @@
 
 mount-rshared-service
 
-(pam-limits-service
- (list (pam-limits-entry "*" 'hard 'nofile 524288)
-       (pam-limits-entry "@realtime" 'both 'rtprio 99)
-       (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
+(service pam-limits-service-type
+	 (list (pam-limits-entry "*" 'hard 'nofile 524288)
+	       (pam-limits-entry "@realtime" 'both 'rtprio 99)
+	       (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 
 (extra-special-file "/lib64/ld-linux-x86-64.so.2"
 		    (file-append glibc "/lib/ld-linux-x86-64.so.2"))
