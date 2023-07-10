@@ -1138,6 +1138,7 @@ Now import the actual modules
 	       (gnu services mcron)
 	       (gnu services docker)
 	       (nil services mount-rshared)
+	       (nil services virsh)
 	       (nil packages gnome)
 	       (gnu packages fonts)
 	       (gnu packages networking)
@@ -1234,6 +1235,11 @@ Now for the second part of service configuration - appending my own services.
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   mount-rshared-service 
+#+END_SRC
+
+Another custom service, this one creates the transient ~default~ libvirt network.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  virsh-net-default-service
 #+END_SRC
 
 PAM limits for Wine Esync and realtime acces for ~jackd~.
@@ -2291,6 +2297,51 @@ Tiny service used to remount the root as recursively shared on boot.
 				       #$(file-append util-linux "/bin/mount")
 				       "--make-rshared" "/")))
 			   (respawn? #f)))))
+#+END_SRC
+
+*** virsh.scm
+
+There doesn't seem to be a proper Guix way to configure libvirt networks so my lazy workaround is to make a service that creates the default transient network.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/services/virsh.scm"
+  (define-module (nil services virsh)
+    #:use-module (guix gexp)
+    #:use-module (gnu packages)
+    #:use-module (guix packages)
+    #:use-module (gnu packages virtualization)
+    #:use-module (guix utils)
+    #:use-module (gnu services)
+    #:use-module (gnu services shepherd)
+    #:use-module (guix build utils))
+
+  (define default-config "
+  <network>
+    <name>default</name>
+    <bridge name='virbr0'/>
+    <forward/>
+    <ip address='192.168.122.1' netmask='255.255.255.0'>
+      <dhcp>
+	<range start='192.168.122.2' end='192.168.122.254'/>
+      </dhcp>
+    </ip>
+  </network>
+  ")
+
+  (define-public virsh-net-default-service
+    (let ((config (plain-file "default.xml" default-config)))
+      (simple-service 'virsh-net-default-service shepherd-root-service-type
+		      (list (shepherd-service
+			     (provision '(virsh-net-default))
+			     (requirement '(libvirtd))
+			     (start #~(lambda ()
+					(invoke
+					 #$(file-append libvirt "/bin/virsh")
+					 "net-create" #$config)))
+			     (stop #~(lambda ()
+					(invoke
+					 #$(file-append libvirt "/bin/virsh")
+					 "net-destroy" "default")))
+			     (respawn? #f))))))
+
 #+END_SRC
 
 * ZRAM on non-guix distros

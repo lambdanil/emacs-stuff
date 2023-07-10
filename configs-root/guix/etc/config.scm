@@ -13,6 +13,7 @@
 	     (gnu services mcron)
 	     (gnu services docker)
 	     (nil services mount-rshared)
+	     (nil services virsh)
 	     (nil packages gnome)
 	     (gnu packages fonts)
 	     (gnu packages networking)
@@ -88,6 +89,8 @@
 		  (auto-enable? #f)))
 
 mount-rshared-service
+
+virsh-net-default-service
 
 (service pam-limits-service-type
 	 (list (pam-limits-entry "*" 'hard 'nofile 524288)
