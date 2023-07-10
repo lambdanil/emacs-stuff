@@ -32,7 +32,7 @@
 				       #$(file-append libvirt "/bin/virsh")
 				       "net-create" #$config)))
 			   (stop #~(lambda ()
-				      (invoke
-				       #$(file-append libvirt "/bin/virsh")
-				       "net-destroy" "default")))
+				     (invoke
+				      #$(file-append libvirt "/bin/virsh")
+				      "net-destroy" "default")))
 			   (respawn? #f))))))

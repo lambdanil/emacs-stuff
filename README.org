@@ -2337,9 +2337,9 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 					 #$(file-append libvirt "/bin/virsh")
 					 "net-create" #$config)))
 			     (stop #~(lambda ()
-					(invoke
-					 #$(file-append libvirt "/bin/virsh")
-					 "net-destroy" "default")))
+				       (invoke
+					#$(file-append libvirt "/bin/virsh")
+					"net-destroy" "default")))
 			     (respawn? #f))))))
 
 #+END_SRC
