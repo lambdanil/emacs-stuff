@@ -379,155 +379,7 @@ GNU Guix is a very important part of my configuration.
 
 ** .guix-manifest
 
-Just a straightforward (and very messy!) package manifest.
-
-Start with theming and fonts.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest"
-  (specifications->manifest
-   (list "arc-theme"
-	 "font-google-noto-sans-cjk"
-	 "font-google-noto-emoji"
-	 "font-awesome"
-	 "font-fira-mono"
-#+END_SRC
-
-Next we can look into development related packages and libraries.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest"
-  "sdl2-ttf"
-  "sdl2-image"
-  "sdl2"
-  "sdl2-gfx"
-  "scsh"
-  "sbcl"
-  "python-pip"
-  "patchelf"
-  "make"
-  "cmake"
-#+END_SRC
-
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs/guix/.guix-manifest"
-  "audacity"
-  "strawberry"
-  "lmms"
-  "syncthing"
-  "gvfs"
-  "celluloid"
-  "xdg-desktop-portal-gtk"
-  "xdg-desktop-portal"
-  "gnome-tweaks"
-  "ungoogled-chromium"
-  "firefox"
-  "mpv"
-  "gimp"
-  "flatpak"
-  "transmission:gui"
-  "transmission"
-  "retroarch-nonfree"
-  "aisleriot"
-  "qemu"
-  "virt-manager"
-  "qjackctl"
-  "i3status"
-  "google-chrome-stable"
-  "sushi"
-  "libportal"
-  "steam-patched"
-  "gzdoom"
-  "gnome-mines"
-  "gedit"
-  "pavucontrol"
-  "podman"
-  "libreoffice"
-  "eom"
-  "gthumb"
-  "obs"
-  "yamagi-quake2"
-  "timidity++"
-  "kdenlive"
-  "pulseaudio"
-  "sdl"
-  "openal"
-  "vlc"
-  "wine"
-  "brogue-ce"
-  "distrobox-docker"
-  "emacs-geiser-guile"
-  "pfetch"
-  "thunar"
-  "yt-dlp"
-  "sway"
-  "wofi"
-  "ublock-origin-chromium"
-  "pandoc"
-  "openjdk"
-  "clang-toolchain"
-  "emacs"
-  "rofi"
-  "i3lock"
-  "lm-sensors"
-  "gpick"
-  "picom"
-  "nitrogen"
-  "i3-wm"
-  "xfce4-whiskermenu-plugin"
-  "xfce4-panel"
-  "piper"
-  "scrot"
-  "dconf-editor"
-  "tumbler"
-  "fluidsynth"
-  "libratbag"
-  "yaru-theme"
-  "tuxguitar"
-  "hyfetch"
-  "playerctl"
-  "i3blocks"
-  "emacs-vterm"
-  "emacs-use-package"
-  "xprop"
-  "cloc"
-  "dmenu"
-  "xset"
-  "setxkbmap"
-  "arc-icon-theme"
-  "mcron"
-  "jq"
-  "gdb"
-  "zstd"
-  "gnome-shell-extension-dash-to-dock"
-  "freepats-gm"
-  "p11-kit"
-  "flatpak-xdg-utils"
-  "vulkan-tools"
-  "vulkan-loader"
-  "libgudev"
-  "libxkbcommon"
-  "python"
-  "libxi"
-  "libxrandr"
-  "libxcursor"
-  "libgccjit"
-  "curl"
-  "unrar"
-  "unzip"
-  "xrandr"
-  "stow"
-  "freepats"
-  "fluid-3"
-  "alsa-lib"
-  "htop"
-  "libvorbis"
-  "sqlite"
-  "neofetch"
-  "markdown"
-  "libvterm"
-  "libtool"
-  "hunspell"
-  "hunspell-dict-en-us"
-  "enchant"
-  "glibc-locales"))
-#+END_SRC
-
+Just a straightforward (and very messy!) package manifest. I have decided to keep this as a separate file rather than tangle it. This allows me to use ~guix package --export-manifest~ to update it.
 
 ** .guix-manifest-tiny
 
@@ -2341,7 +2193,6 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 					#$(file-append libvirt "/bin/virsh")
 					"net-destroy" "default")))
 			     (respawn? #f))))))
-
 #+END_SRC
 
 * ZRAM on non-guix distros
@@ -2495,6 +2346,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     impatient-mode
 		     ement
 		     counsel
+		     lsp-mode
 		     rainbow-delimiters
 		     ligature
 		     flycheck
@@ -2692,6 +2544,13 @@ And here we arrive at the global modes.
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
   (add-hook 'scheme-mode-hook 'geiser-mode)
   (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
+#+END_SRC
+
+Set up LSP for supported modes.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'c-mode-hook #'lsp)
+  (add-hook 'c++-mode-hook #'lsp)
+  (add-hook 'python-mode-hook #'lsp)
 #+END_SRC
 
 Impatient mode for Markdown, more about this later.

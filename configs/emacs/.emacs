@@ -53,6 +53,7 @@
 		   impatient-mode
 		   ement
 		   counsel
+		   lsp-mode
 		   rainbow-delimiters
 		   ligature
 		   flycheck
@@ -207,6 +208,10 @@
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (add-hook 'scheme-mode-hook 'geiser-mode)
 (add-hook 'prog-mode-hook #'(lambda () (display-line-numbers-mode t)))
+
+(add-hook 'c-mode-hook #'lsp)
+(add-hook 'c++-mode-hook #'lsp)
+(add-hook 'python-mode-hook #'lsp)
 
 (add-hook 'markdown-mode-hook #'(lambda ()
 				  (markdown-impatient-start))) ; Impatient mode live preview
