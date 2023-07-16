@@ -15,6 +15,7 @@
 	     (nil services mount-rshared)
 	     (nil services virsh)
 	     (nil packages gnome)
+	     (gnu packages gnome)
 	     (gnu packages fonts)
 	     (gnu packages networking)
 	     (guix gexp)
