@@ -98,6 +98,8 @@ virsh-net-default-service
 	       (pam-limits-entry "@realtime" 'both 'rtprio 99)
 	       (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 
+(service nftables-service-type)
+
 (extra-special-file "/lib64/ld-linux-x86-64.so.2"
 		    (file-append glibc "/lib/ld-linux-x86-64.so.2"))
 

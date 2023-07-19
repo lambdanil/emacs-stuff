@@ -26,7 +26,7 @@
     (simple-service 'virsh-net-default-service shepherd-root-service-type
 		    (list (shepherd-service
 			   (provision '(virsh-net-default))
-			   (requirement '(libvirtd))
+			   (requirement '(libvirtd NetworkManager))
 			   (start #~(lambda ()
 				      (invoke
 				       #$(file-append libvirt "/bin/virsh")

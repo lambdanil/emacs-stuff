@@ -1103,6 +1103,11 @@ PAM limits for Wine Esync and realtime acces for ~jackd~.
 		 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 #+END_SRC
 
+A simple firewall configuration. By default all incoming connections are blocked, except for those on ~ssh~ port 22.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (service nftables-service-type)
+#+END_SRC
+
 This is a bit of a work-around... Basically we place the linker where regular binaries expect it to be. This allows us to execute standard binaries more easily.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (extra-special-file "/lib64/ld-linux-x86-64.so.2"
@@ -1669,7 +1674,7 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
       (simple-service 'virsh-net-default-service shepherd-root-service-type
 		      (list (shepherd-service
 			     (provision '(virsh-net-default))
-			     (requirement '(libvirtd))
+			     (requirement '(libvirtd NetworkManager))
 			     (start #~(lambda ()
 					(invoke
 					 #$(file-append libvirt "/bin/virsh")
