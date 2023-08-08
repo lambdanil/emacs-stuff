@@ -235,8 +235,8 @@ Guix needs to be separately sourced in non-container interactive shells.
 Add some aliases.
 The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled software.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-  alias sudo="sudo "
-  alias apt="nala"
+  alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
+#  alias apt="nala"
   alias ls="ls --color"
   alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
   alias tf="xrandr --output HDMI-A-1 --set TearFree"
@@ -1797,8 +1797,8 @@ Here is the list of packages to be patched with ~el-patch~.
 
 A small patch needs to be applied before we start setting up packages - the ~elcord~ package needs to be patched to work with flatpak Discord.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"  
-  (el-patch-feature elcord)
-  (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
+  ;; (el-patch-feature elcord)
+  ;; (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"

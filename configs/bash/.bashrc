@@ -46,13 +46,13 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     . "$GUIX_PROFILE/etc/profile"
 fi
 
-alias sudo="sudo "
-alias apt="nala"
-alias ls="ls --color"
-alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
-alias tf="xrandr --output HDMI-A-1 --set TearFree"
-alias python3="$HOME/.py/bin/python3" # venv
-alias pip="$HOME/.py/bin/pip"
+alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
+#  alias apt="nala"
+  alias ls="ls --color"
+  alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
+  alias tf="xrandr --output HDMI-A-1 --set TearFree"
+  alias python3="$HOME/.py/bin/python3" # venv
+  alias pip="$HOME/.py/bin/pip"
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"

@@ -19,8 +19,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-(el-patch-feature elcord)
-(el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
+;; (el-patch-feature elcord)
+;; (el-patch-defvar elcord--discord-ipc-pipe "app/com.discordapp.Discord/discord-ipc-0")
 
 (el-patch-feature nyan-mode)
 (el-patch-defconst nyan-directory (file-name-directory "~/.emacs.d/nyan-custom/img"))
