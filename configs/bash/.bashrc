@@ -22,7 +22,7 @@ fi
 if [[ $- == *i* ]]
 then
     _GREEN=$(tput setaf 2)
-    _MAGENTA=$(tput setaf 200)
+    _MAGENTA=$(tput setaf 207)
     _BLUE=$(tput setaf 4)
     _RED=$(tput setaf 1)
     _CYAN=$(tput setaf 45)
