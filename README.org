@@ -80,7 +80,7 @@ This ~org~ file is then ~tangled~ into the ~configs~ directory, where the indivi
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
-Each module is a group of files that fullfill a certain role.
+Each module is a group of files that fulfill a certain role.
 These modules should be self-reliant and shouldn't depend on other modules. In practice there are a few exceptions - for example some modules rely on the ~guix~ module to ship dependencies.
 Non-plaintext modules are also present in the ~configs~ directory. These aren't tangled but are still described in the ~org~ file.
 These are mostly things that cannot be defined in plaintext such as fonts, icons, wallpapers and similar.
@@ -235,13 +235,12 @@ Guix needs to be separately sourced in non-container interactive shells.
 Add some aliases.
 The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled software.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-  alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
-#  alias apt="nala"
-  alias ls="ls --color"
-  alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
-  alias tf="xrandr --output HDMI-A-1 --set TearFree"
-  alias python3="$HOME/.py/bin/python3" # venv
-  alias pip="$HOME/.py/bin/pip"
+    alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
+  #  alias apt="nala"
+    alias ls="ls --color"
+    alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
+    alias tf="xrandr --output HDMI-A-1 --set TearFree"
+    alias hyfetch="hyfetch --ascii-file ~/git/neofetch-logo"
 #+END_SRC
 
 Finally some variable exports - for Guix and Flatpak.
@@ -259,7 +258,7 @@ First run the bashrc if necessary.
   # Honor per-interactive-shell startup file
   if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
   export LANG=cs_CZ.utf-8
-  export PATH=$PATH:$HOME/.bin
+  export PATH=$PATH:$HOME/.bin:$HOME/.py/bin
 #+END_SRC
 
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
