@@ -220,6 +220,10 @@
 
 (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
 
+(add-hook 'vterm-mode-hook
+	  (lambda ()
+	    (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
+
 (with-eval-after-load 'geiser-guile
   (add-to-list 'geiser-guile-load-path "~/guix")
   (add-to-list 'geiser-guile-load-path "~/nonguix")

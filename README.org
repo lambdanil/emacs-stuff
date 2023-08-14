@@ -156,10 +156,11 @@ These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # nm-applet &
   # blueman-applet &
-  setxkbmap cz -option 'ctrl:swapcaps' &
-  xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+  xhost +si:localuser:nil
+  # setxkbmap cz -option 'ctrl:swapcaps' &
+  # xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
   # $HOME/.guix-profile/libexec/xdg-desktop-portal -r &
-  dbus-update-activation-environment --all &
+  # dbus-update-activation-environment --all &
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # playerctld &
@@ -364,7 +365,7 @@ This module provides the necessary fonts.
 This module provides straightforward GTK3 configuration.
 #+begin_src conf-unix :tangle "~/git/emacs-stuff/configs/gtk3/.config/gtk-3.0/settings.ini"
   [Settings]
-  gtk-cursor-theme-name=Simp1e
+  gtk-cursor-theme-name=Breeze_Snow
   gtk-icon-theme-name=Adwaita-Dark
   gtk-theme-name=Adwaita-Dark
   gtk-font-name=DejaVu Sans 11
@@ -2058,6 +2059,14 @@ I like to have the selected line clearly highlighted.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (set-face-attribute 'hl-line nil :inherit nil :background "gray14") ; use lavender for leuven theme instead
 #+END_SRC
+
+Fix unicode in ~vterm~.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (add-hook 'vterm-mode-hook
+	    (lambda ()
+	      (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
+#+END_SRC
+
 
 Add the Guix development environment for Geiser along with the ~tempel~ completions.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
