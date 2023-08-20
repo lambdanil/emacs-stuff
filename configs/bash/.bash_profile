@@ -11,8 +11,8 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 fi
 
-# if [[ "$(tty)" == "/dev/tty1" ]]
-# then
-#     export XDG_CURRENT_DESKTOP=sway
-#     exec dbus-run-session -- sway
-# fi
+if [[ "$(tty)" == "/dev/tty2" ]]
+then
+    export XDG_CURRENT_DESKTOP=sway
+    exec dbus-run-session -- sway
+fi
