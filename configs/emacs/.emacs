@@ -143,6 +143,10 @@
 (setq geiser-default-implementation 'guile)
 (defvar my-org-html-export-theme 'leuven)
 
+(set-frame-parameter nil 'alpha-background 96)
+
+(add-to-list 'default-frame-alist '(alpha-background . 96))
+
 (defun load-my-fonts (frame)
   (select-frame frame)
   (set-face-attribute 'default nil :font "Fira Code" :weight 'medium :height 120)

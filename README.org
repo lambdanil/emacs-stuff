@@ -449,7 +449,8 @@ Set some initial variables first.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   set $mod Mod4
   set $HOME /home/nil
-  set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+  #set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+  set $term xfce4-terminal
   # set $files emacsclient -c -e '(dired "~")'
   set $files thunar
   set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
@@ -472,9 +473,14 @@ Configure input.
   }
 #+END_SRC
 
+Window rules for transparency, etc.
+#+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
+  for_window [app_id="thunar"] opacity 0.96
+#+end_src
+
 I decrease the time to render a frame as much as possible (2ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
 #+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
-  output HDMI-A-2 max_render_time 2
+  output HDMI-A-2 max_render_time 12
   # swaymsg -t get_outputs
 #+end_src
 
@@ -1959,6 +1965,13 @@ It's finally time to set up some basic variables.
   (setq geiser-active-implementations '(guile))
   (setq geiser-default-implementation 'guile)
   (defvar my-org-html-export-theme 'leuven)
+#+END_SRC
+
+Background transparency, finally supported since Emacs 29.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (set-frame-parameter nil 'alpha-background 96)
+
+  (add-to-list 'default-frame-alist '(alpha-background . 96))
 #+END_SRC
 
 Emacsclient requires fonts to be loaded on frame creation instead of daemon start.

@@ -1,6 +1,7 @@
 set $mod Mod4
 set $HOME /home/nil
-set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+#set $term emacsclient -c -e "(let ((current-prefix-arg '(4))) (call-interactively 'vterm))"
+set $term xfce4-terminal
 # set $files emacsclient -c -e '(dired "~")'
 set $files thunar
 set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
@@ -19,7 +20,9 @@ accel_profile flat
 xkb_numlock enabled
 }
 
-output HDMI-A-2 max_render_time 2
+for_window [app_id="thunar"] opacity 0.96
+
+output HDMI-A-2 max_render_time 12
 # swaymsg -t get_outputs
 
 exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
