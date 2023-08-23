@@ -6,6 +6,8 @@ set $term xfce4-terminal
 set $files thunar
 set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
 set $lock swaylock -i $wallpaper
+set $scr_off swaymsg "output * dpms off"
+set $scr_on swaymsg "output * dpms on"
 font pango:Fira Code 9
 gaps inner 6px
 for_window [class="^.*"] border pixel 2
@@ -31,7 +33,7 @@ exec --no-startup-id swaybg -i $wallpaper
 exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme Dracula
 # exec /usr/libexec/polkit-gnome-authentication-agent-1
 
-exec --no-startup-id swayidle timeout 480 "$lock"
+exec --no-startup-id swayidle timeout 480 '$lock' timeout 600 '$scr_off' resume '$scr_on'
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 10

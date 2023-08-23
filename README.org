@@ -455,6 +455,8 @@ Set some initial variables first.
   set $files thunar
   set $wallpaper $HOME/.local/share/wallpapers/deijurj-adfa3118-4bd6-4350-b9db-43d4d835536c.jpg
   set $lock swaylock -i $wallpaper
+  set $scr_off swaymsg "output * dpms off"
+  set $scr_on swaymsg "output * dpms on"
   font pango:Fira Code 9
   gaps inner 6px
   for_window [class="^.*"] border pixel 2
@@ -478,7 +480,7 @@ Window rules for transparency, etc.
   for_window [app_id="thunar"] opacity 0.96
 #+end_src
 
-I decrease the time to render a frame as much as possible (2ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
+I decrease the time to render a frame as much as possible (12ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
 #+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   output HDMI-A-2 max_render_time 12
   # swaymsg -t get_outputs
@@ -495,7 +497,7 @@ Execute the startup environment, this is necessary for XDG autostart files.
 
 Configure ~swaylock~ to start automatically.
 #+BEGIN_SRC conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
-  exec --no-startup-id swayidle timeout 480 "$lock"
+  exec --no-startup-id swayidle timeout 480 '$lock' timeout 600 '$scr_off' resume '$scr_on'
 #+END_SRC
 
 Now assigning some keybindings; all of these are rather self-explanatory.
