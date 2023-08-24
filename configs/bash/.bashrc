@@ -58,3 +58,4 @@ alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"
+export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan? '

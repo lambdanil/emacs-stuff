@@ -247,10 +247,11 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
     alias glibc-root="doas chroot /var/chroots/debian /bin/bash"
 #+END_SRC
 
-Finally some variable exports - for Guix and Flatpak.
+Finally some variable exports - for Guix and Flatpak and a silly ~sudo~ prompt.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
   export GUIX_PACKAGE_PATH="/etc/guix-modules"
+  export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan? '
 #+END_SRC
 
 ** .bash profile
@@ -637,7 +638,7 @@ Handle colors next; following the Nord colorscheme here.
   set $inactive-bg-color   #2E3440
   set $text-color          #f5f5f5
   set $inactive-text-color #d8dee9
-  set $urgent-bg-color     #D5D6EA
+  set $urgent-bg-color     #A7C7E7
 
   client.focused          $bg-color           $bg-color          $inactive-bg-color          $active-border-color
   # nice transparent borders for unfocused windows :3		  
