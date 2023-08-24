@@ -152,10 +152,11 @@ set $active-border-color #FFFFFF
 set $inactive-bg-color   #2E3440
 set $text-color          #f5f5f5
 set $inactive-text-color #d8dee9
-set $urgent-bg-color     #FF0000
+set $urgent-bg-color     #5BCEFA
 
 client.focused          $bg-color           $bg-color          $inactive-bg-color          $active-border-color
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+# nice transparent borders for unfocused windows :3		  
+client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color $inactive-bg-color #00000000
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color
 
