@@ -976,6 +976,10 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
   export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
 #+END_SRC
 
+* XFCE 4 terminal
+
+~xfce4-terminal~ is my chosen terminal emulator. It's very easy to get up and running and supports all the basic features I need.
+
 * Wallpapers
 This module provides a few nice wallpapers I like to use. The path to these wallpapers is ~$HOME/.local/share/wallpapers~.
 
