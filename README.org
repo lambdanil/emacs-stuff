@@ -376,6 +376,13 @@ This module provides straightforward GTK3 configuration.
   gtk-application-prefer-dark-theme=1
 #+end_src
 
+This adds a bit of padding to the XFCE terminal.
+#+begin_src css :tangle "~/git/emacs-stuff/configs/gtk3/.config/gtk-3.0/gtk.css"
+  VteTerminal, vte-terminal {
+      padding: 8px;
+  }
+#+end_src
+
 * Guix
 
 *This module depends on the ~guix-modules~ module for certain package definitions!*
@@ -484,6 +491,7 @@ Window rules for transparency, etc.
 I decrease the time to render a frame as much as possible (12ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
 #+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
   output HDMI-A-2 max_render_time 12
+  output HDMI-A-1 disable
   # swaymsg -t get_outputs
 #+end_src
 
@@ -493,6 +501,7 @@ Execute the startup environment, this is necessary for XDG autostart files.
   exec --no-startup-id $HOME/.loginctl
   exec --no-startup-id swaybg -i $wallpaper
   exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme Dracula
+  exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
   # exec /usr/libexec/polkit-gnome-authentication-agent-1
 #+END_SRC
 
@@ -1841,6 +1850,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     magit
 		     guix
 		     systemd
+		     spacious-padding
 		     jinx
 		     toc-org
 		     tempel
@@ -1980,6 +1990,14 @@ Background transparency, finally supported since Emacs 29.
   (set-frame-parameter nil 'alpha-background 96)
 
   (add-to-list 'default-frame-alist '(alpha-background . 96))
+#+END_SRC
+
+Setup up spacious padding.
+#+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
+  (setf spacious-padding-widths '(:internal-border-width 8 :right-divider-width 16 :scroll-bar-width 0))
+  (define-globalized-minor-mode my-global-spacious-padding-mode spacious-padding-mode
+    (lambda () (spacious-padding-mode 1)))
+  (my-global-spacious-padding-mode 1)
 #+END_SRC
 
 Emacsclient requires fonts to be loaded on frame creation instead of daemon start.

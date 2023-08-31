@@ -25,12 +25,14 @@ xkb_numlock enabled
 for_window [app_id="thunar"] opacity 0.96
 
 output HDMI-A-2 max_render_time 12
+output HDMI-A-1 disable
 # swaymsg -t get_outputs
 
 exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec --no-startup-id $HOME/.loginctl
 exec --no-startup-id swaybg -i $wallpaper
 exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme Dracula
+exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
 # exec /usr/libexec/polkit-gnome-authentication-agent-1
 
 exec --no-startup-id swayidle timeout 480 '$lock' timeout 600 '$scr_off' resume '$scr_on'

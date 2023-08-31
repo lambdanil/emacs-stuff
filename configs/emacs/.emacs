@@ -38,6 +38,7 @@
 		   magit
 		   guix
 		   systemd
+		   spacious-padding
 		   jinx
 		   toc-org
 		   tempel
@@ -146,6 +147,11 @@
 (set-frame-parameter nil 'alpha-background 96)
 
 (add-to-list 'default-frame-alist '(alpha-background . 96))
+
+(setf spacious-padding-widths '(:internal-border-width 10 :right-divider-width 20 :scroll-bar-width 0))
+(define-globalized-minor-mode my-global-spacious-padding-mode spacious-padding-mode
+  (lambda () (spacious-padding-mode 1)))
+(my-global-spacious-padding-mode 1)
 
 (defun load-my-fonts (frame)
   (select-frame frame)
