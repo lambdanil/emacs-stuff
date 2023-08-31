@@ -14,8 +14,8 @@ order += separator
 order += "tztime local"
 
 volume master {
-format = "|| %volume"
-format_muted = "|| (%volume)"
+format = "|| 🔊 %volume"
+format_muted = "|| 🔇 (%volume)"
 device = "default"
 mixer = "Master"
 }
@@ -26,8 +26,8 @@ format_down = "W: down"
 }
 
 ethernet _first_ {
-format_up = "%ip"
-format_down = "down"
+format_up = "🌏 %ip"
+format_down = "🚫 net down"
 }
 
 battery all {
@@ -49,5 +49,5 @@ format_degraded = "MEMORY < %available"
 }
 
 tztime local {
-format = "|| %H:%M %d.%m.%Y"
+format = "|| 🗓️ %H:%M %d.%m.%Y"
 }

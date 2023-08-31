@@ -9,7 +9,7 @@ set $lock swaylock -i $wallpaper
 set $scr_off swaymsg "output * dpms off"
 set $scr_on swaymsg "output * dpms on"
 font pango:Fira Code 9
-gaps inner 6px
+gaps inner 8px
 for_window [class="^.*"] border pixel 2
 floating_modifier $mod
 seat seat0 xcursor_theme Breeze_Snow
@@ -169,6 +169,7 @@ bar {
 #strip_workspace_numbers yes
 position top
 mode dock
+status_padding 4
 
 status_command i3status | ~/.config/sway/i3status_wrapper.py
 

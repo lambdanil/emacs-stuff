@@ -148,7 +148,7 @@
 
 (add-to-list 'default-frame-alist '(alpha-background . 96))
 
-(setf spacious-padding-widths '(:internal-border-width 10 :right-divider-width 20 :scroll-bar-width 0))
+(setf spacious-padding-widths '(:internal-border-width 8 :right-divider-width 16 :scroll-bar-width 0))
 (define-globalized-minor-mode my-global-spacious-padding-mode spacious-padding-mode
   (lambda () (spacious-padding-mode 1)))
 (my-global-spacious-padding-mode 1)
