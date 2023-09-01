@@ -666,6 +666,7 @@ Configure the sway bar.
   position top
   mode dock
   status_padding 4
+  tray_padding 4
 #+END_SRC
 
 I pipe the status command through a wrapper, which makes extra modifications to the output.
@@ -753,7 +754,7 @@ if __name__ == '__main__':
         j.insert(0, {
             # 'background': '#FFFFFF',
             'full_text': '%s' % music_title,
-            'color': '#f442f7',
+            'color': '#b19cd8',
             'name': 'music_title',
             'separator_block_width': 0})
         j.insert(1, {
@@ -1860,6 +1861,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     tree-sitter
 		     tree-sitter-langs
 		     emms
+		     lsp-pyright
 		     treemacs
 		     doom-themes
 		     treemacs-all-the-icons
@@ -2077,7 +2079,7 @@ And here we arrive at the global modes.
   (electric-pair-mode t)
   (global-hl-line-mode 1)
   (desktop-save-mode -1)
-  (elcord-mode)
+  ;;(elcord-mode)
   ;(nyan-mode t)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
   (add-hook 'scheme-mode-hook 'geiser-mode)
@@ -2088,7 +2090,11 @@ Set up LSP for supported modes.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
   (add-hook 'c-mode-hook #'lsp)
   (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'python-mode-hook (lambda ()
+				(require 'lsp-pyright)
+				(lsp-register-custom-settings
+				 `(("python.pythonPath" "/home/nil/.py/bin/python")))
+				(lsp)))
 #+END_SRC
 
 Impatient mode for Markdown, more about this later.

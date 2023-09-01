@@ -47,6 +47,7 @@
 		   tree-sitter
 		   tree-sitter-langs
 		   emms
+		   lsp-pyright
 		   treemacs
 		   doom-themes
 		   treemacs-all-the-icons
@@ -215,7 +216,7 @@
 (electric-pair-mode t)
 (global-hl-line-mode 1)
 (desktop-save-mode -1)
-(elcord-mode)
+;;(elcord-mode)
 ;(nyan-mode t)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 (add-hook 'scheme-mode-hook 'geiser-mode)
@@ -223,7 +224,11 @@
 
 (add-hook 'c-mode-hook #'lsp)
 (add-hook 'c++-mode-hook #'lsp)
-(add-hook 'python-mode-hook #'lsp)
+(add-hook 'python-mode-hook (lambda ()
+			      (require 'lsp-pyright)
+			      (lsp-register-custom-settings
+			       `(("python.pythonPath" "/home/nil/.py/bin/python")))
+			      (lsp)))
 
 (add-hook 'markdown-mode-hook #'(lambda ()
 				  (markdown-impatient-start))) ; Impatient mode live preview

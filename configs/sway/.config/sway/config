@@ -170,6 +170,7 @@ bar {
 position top
 mode dock
 status_padding 4
+tray_padding 4
 
 status_command i3status | ~/.config/sway/i3status_wrapper.py
 
