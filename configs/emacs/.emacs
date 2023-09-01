@@ -224,11 +224,21 @@
 
 (add-hook 'c-mode-hook #'lsp)
 (add-hook 'c++-mode-hook #'lsp)
+
 (add-hook 'python-mode-hook (lambda ()
 			      (require 'lsp-pyright)
 			      (lsp-register-custom-settings
 			       `(("python.pythonPath" "/home/nil/.py/bin/python")))
 			      (lsp)))
+
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(add-hook 'go-mode-hook (lambda ()
+			  (lsp-deferred)
+			  (lsp-go-install-save-hooks)
+			  (setq tab-width 4)))
 
 (add-hook 'markdown-mode-hook #'(lambda ()
 				  (markdown-impatient-start))) ; Impatient mode live preview
