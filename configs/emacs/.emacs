@@ -52,6 +52,7 @@
 		   doom-themes
 		   treemacs-all-the-icons
 		   markdown-mode
+		   go-mode
 		   impatient-mode
 		   ement
 		   counsel

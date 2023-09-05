@@ -1867,6 +1867,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     doom-themes
 		     treemacs-all-the-icons
 		     markdown-mode
+		     go-mode
 		     impatient-mode
 		     ement
 		     counsel
