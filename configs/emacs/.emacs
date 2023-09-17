@@ -52,7 +52,6 @@
 		   doom-themes
 		   treemacs-all-the-icons
 		   markdown-mode
-		   go-mode
 		   impatient-mode
 		   ement
 		   counsel
@@ -301,13 +300,13 @@
 (with-eval-after-load "ox-publish"
   (advice-add 'org-publish-current-project :around 'my-with-theme))
 (setq org-publish-project-alist
-      '(("CuBeRJAN.github.io"
+      '(("lambdanil.github.io"
 	 ;; Path to org files.
-	 :base-directory "~/git/CuBeRJAN.github.io/org"
+	 :base-directory "~/git/lambdanil.github.io/org"
 	 :base-extension "org"
 
 	 ;; Path to Jekyll Posts
-	 :publishing-directory "~/git/CuBeRJAN.github.io/_posts/"
+	 :publishing-directory "~/git/lambdanil.github.io/_posts/"
 	 :recursive t
 	 :publishing-function org-html-publish-to-html
 	 :headline-levels 4

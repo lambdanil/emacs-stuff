@@ -3,7 +3,7 @@ xrdb ~/git/emacs-stuff/configs/X/.Xresources
 
 #syncthing serve --no-browser &
 
-emacs --daemon &
+$HOME/.local/bin/emacs --daemon &
 
 # nm-applet &
 # blueman-applet &

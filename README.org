@@ -2,7 +2,7 @@
 #+AUTHOR: (λ () nil)
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
-*Click [[https://raw.githack.com/CuBeRJAN/emacs-stuff/main/README.html][here]] for a properly formatted HTML version :)*
+*Click [[https://raw.githack.com/lambdanil/emacs-stuff/main/README.html][here]] for a properly formatted HTML version :)*
 
 
 /Guix with i3/
@@ -149,7 +149,7 @@ I use Syncthing to sync my org agenda between different devices.
 
 Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  emacs --daemon &
+  $HOME/.local/bin/emacs --daemon &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
@@ -220,6 +220,8 @@ In case ~tput~ (part of ~ncurses~) isn't available an alternative is provided.
       # _BOLD="\e[1m"
       #  export LD_LIBRARY_PATH=$LIBRARY_PATH
       export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
+      . $HOME/git/dumb-sudo/shell-mommy.sh
+      export PROMPT_COMMAND="mommy \\$\\(exit \$?\\); $PROMPT_COMMAND"
   fi
 #+END_SRC
 
@@ -236,7 +238,7 @@ Guix needs to be separately sourced in non-container interactive shells.
 Add some aliases.
 The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled software.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
-    alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
+    alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan?~ ❤️  \" "
   #  alias apt="nala"
     alias ls="ls --color"
     alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
@@ -245,14 +247,13 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
     alias deb="xhost +si:localuser:nil && distrobox enter debian --"
     alias glibc="bwrap --bind /var/chroots/debian / --dev /dev --proc /proc --bind /sys /sys  --ro-bind /sys/dev/char /sys/dev/char --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 --bind /run /run --bind /home /home --ro-bind /dev/dri /dev/dri --ro-bind /etc/resolv.conf /etc/resolv.conf --ro-bind /etc/passwd /etc/passwd --ro-bind /etc/group /etc/group"
     alias glibc-root="doas chroot /var/chroots/debian /bin/bash"
-    alias distrobox="systemd-run --scope --user distrobox"
 #+END_SRC
 
 Finally some variable exports - for Guix and Flatpak and a silly ~sudo~ prompt.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bashrc"
   export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
   export GUIX_PACKAGE_PATH="/etc/guix-modules"
-  export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan? '
+  export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan?~ ❤️  '
 #+END_SRC
 
 ** .bash profile
@@ -370,7 +371,7 @@ This module provides the necessary fonts.
 This module provides straightforward GTK3 configuration.
 #+begin_src conf-unix :tangle "~/git/emacs-stuff/configs/gtk3/.config/gtk-3.0/settings.ini"
   [Settings]
-  gtk-cursor-theme-name=Breeze_Snow
+  gtk-cursor-theme-name=Simp1e-Adw
   gtk-icon-theme-name=Papirus-Dark
   gtk-theme-name=Dracula
   gtk-font-name=Noto Sans 10
@@ -1867,7 +1868,6 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     doom-themes
 		     treemacs-all-the-icons
 		     markdown-mode
-		     go-mode
 		     impatient-mode
 		     ement
 		     counsel
@@ -2218,13 +2218,13 @@ Jekyll export setup, I use this for my blog.
   (with-eval-after-load "ox-publish"
     (advice-add 'org-publish-current-project :around 'my-with-theme))
   (setq org-publish-project-alist
-	'(("CuBeRJAN.github.io"
+	'(("lambdanil.github.io"
 	   ;; Path to org files.
-	   :base-directory "~/git/CuBeRJAN.github.io/org"
+	   :base-directory "~/git/lambdanil.github.io/org"
 	   :base-extension "org"
 
 	   ;; Path to Jekyll Posts
-	   :publishing-directory "~/git/CuBeRJAN.github.io/_posts/"
+	   :publishing-directory "~/git/lambdanil.github.io/_posts/"
 	   :recursive t
 	   :publishing-function org-html-publish-to-html
 	   :headline-levels 4

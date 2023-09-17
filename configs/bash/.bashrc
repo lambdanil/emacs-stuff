@@ -37,6 +37,8 @@ then
     # _BOLD="\e[1m"
     #  export LD_LIBRARY_PATH=$LIBRARY_PATH
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
+    . $HOME/git/dumb-sudo/shell-mommy.sh
+    export PROMPT_COMMAND="mommy \\$\\(exit \$?\\); $PROMPT_COMMAND"
 fi
 
 if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ] && [[ $- == *i* ]]; then
@@ -46,7 +48,7 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     . "$GUIX_PROFILE/etc/profile"
 fi
 
-alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
+alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan?~ ❤️  \" "
 #  alias apt="nala"
   alias ls="ls --color"
   alias ld_libs="export LD_LIBRARY_PATH=\$LIBRARY_PATH"
@@ -55,8 +57,7 @@ alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan? \" "
   alias deb="xhost +si:localuser:nil && distrobox enter debian --"
   alias glibc="bwrap --bind /var/chroots/debian / --dev /dev --proc /proc --bind /sys /sys  --ro-bind /sys/dev/char /sys/dev/char --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 --bind /run /run --bind /home /home --ro-bind /dev/dri /dev/dri --ro-bind /etc/resolv.conf /etc/resolv.conf --ro-bind /etc/passwd /etc/passwd --ro-bind /etc/group /etc/group"
   alias glibc-root="doas chroot /var/chroots/debian /bin/bash"
-  alias distrobox="systemd-run --scope --user distrobox"
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"
-export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan? '
+export SUDO_PROMPT='[sudo] what'\''s youw p-pa-password, Nil-chan?~ ❤️  '
