@@ -60,6 +60,7 @@
 		   ligature
 		   flycheck
 		   geiser
+		   go-mode
 		   geiser-guile
 		   org-present
 		   visual-fill-column
