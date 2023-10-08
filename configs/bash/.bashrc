@@ -37,8 +37,6 @@ then
     # _BOLD="\e[1m"
     #  export LD_LIBRARY_PATH=$LIBRARY_PATH
     export PS1="[${_MAGENTA}\u${_RESET}@${_CYAN}\h${_RESET}] \t\n(\w) λ "
-    . $HOME/git/dumb-sudo/shell-mommy.sh
-    export PROMPT_COMMAND="mommy \\$\\(exit \$?\\); $PROMPT_COMMAND"
 fi
 
 if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-profile" ] && [[ $- == *i* ]]; then
