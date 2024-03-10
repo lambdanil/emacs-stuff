@@ -144,19 +144,20 @@ I use Syncthing to sync my org agenda between different devices.
 
 Having an Emacs daemon means instant startup times for emacsclient.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
-  $HOME/.local/bin/emacs --daemon &
+  # $HOME/.local/bin/emacs --daemon &
+  emacs --daemon &
 #+END_SRC
 
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # nm-applet &
-  # blueman-applet &
-  xhost +si:localuser:nil
-  # setxkbmap cz -option 'ctrl:swapcaps' &
+  blueman-applet &
+  # xhost +si:localuser:nil
+  setxkbmap cz -option 'ctrl:swapcaps' &
   # xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
   # $HOME/.guix-profile/libexec/xdg-desktop-portal -r &
   # dbus-update-activation-environment --all &
-  # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
+  xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   playerctld &
 #+END_SRC
@@ -350,6 +351,21 @@ Add the necessary registries.
 
 This module provides the Czech hunspell dictionary since it currently isn't available in Guix.
 The files were taken from the [[https://github.com/LibreOffice/dictionaries][LibreOffice dictionaries repository]].
+
+* Debian Dependencies
+
+My long distrohopping journey has eventually landed me on Debian, which is the system I choose to run nowadays.
+In order to simplify deploying my configuration on new Debian installations I've decided to add a simple list of ~apt~-installable dependencies.
+
+#+begin_src bash
+  sudo apt install xinput git stow gcc sbcl guile-3.0 libtool-bin clang cmake make libenchant-2-dev
+#+end_src
+
+Emacs is installed separately from the backports.
+
+#+begin_src bash
+  sudo apt install emacs -t bookworm-backports
+#+end_src
 
 * Firefox
 
@@ -982,7 +998,7 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
   export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
 #+END_SRC
 
-* XFCE 4 terminal
+* XFCE 4 Terminal
 
 ~xfce4-terminal~ is my chosen terminal emulator. It's very easy to get up and running and supports all the basic features I need.
 
