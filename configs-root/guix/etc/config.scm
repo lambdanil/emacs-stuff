@@ -38,6 +38,24 @@
 					   (dbus-configuration (inherit config)
 							       (services (list libratbag blueman))))))
 
+(define system-drive ;; root filesystem
+  (file-system
+   (device (uuid "7926c9cd-8655-4ffa-a9a7-abdde685a884" 'ext4))
+   (mount-point "/")
+   (type "ext4")))
+
+(define efi-part ;; EFI partition
+  (file-system
+   (device (uuid "B192-9813" 'fat32))
+   (mount-point "/boot/efi")
+   (type "vfat")))
+
+(define second-drive ;; second hard drive, used for storage
+  (file-system
+   (device (uuid "6e008012-794a-40ad-99e9-69825235e4c5" 'ext4))
+   (mount-point "/mnt/media/nil/external")
+   (type "ext4")))
+
 (operating-system
 
  (locale "cs_CZ.utf8")
@@ -132,22 +150,7 @@ virsh-net-default-service
   (keyboard-layout keyboard-layout)))
 (file-systems
  (cons*   
-  (file-system
-   (mount-point "/")
-   (device
-    (uuid "bf1f6abc-05d4-430f-8da3-88af822fd603"
-	  'ext4))
-   (type "ext4"))
-  (file-system
-   (mount-point "/boot/efi")
-   (device
-    (uuid "8111-C019"
-	  'fat32))
-   (type "vfat"))
-  (file-system ;; Second hard drive
-   (mount-point "/mnt/media/nil/external")
-   (device
-    (uuid "6e008012-794a-40ad-99e9-69825235e4c5"
-	  'ext4))
-   (type "ext4"))
+  system-drive
+  efi-part
+  second-drive
   %base-file-systems)))
