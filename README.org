@@ -974,6 +974,16 @@ And configure the individual items.
   }
 #+END_SRC
 
+* Sudoers
+
+Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
+
+#+begin_src conf
+  root ALL=(ALL) ALL
+  %wheel ALL=(ALL) ALL
+  %wheel ALL=(ALL) NOPASSWD:/opt/throttled/start.sh
+#+end_src
+
 * Icons
 This modules provides custom icons.
 
