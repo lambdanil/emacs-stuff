@@ -469,6 +469,15 @@ Here is the setup for channels, additions here are ~nonguix~ and ~guix-gaming-ch
 	 %default-channels)
 #+END_SRC
 
+Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
+
+** etc/my-sudoers
+#+begin_src conf :tangle ~/git/emacs-stuff/configs-root/guix/etc/sudoers-my
+  root ALL=(ALL) ALL
+  %wheel ALL=(ALL) ALL
+  %wheel ALL=(ALL) NOPASSWD:/opt/throttled/start.sh
+#+end_src
+
 * Guix-run
 
 ~guix-run~ is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
@@ -973,17 +982,6 @@ And configure the individual items.
   format = "|| 🗓️ %H:%M %d.%m.%Y"
   }
 #+END_SRC
-
-* Sudoers
-
-Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
-
-** etc/my-sudoers
-#+begin_src conf :tangle ~/git/emacs-stuff/configs-root/sudoers/etc/sudoers-my
-  root ALL=(ALL) ALL
-  %wheel ALL=(ALL) ALL
-  %wheel ALL=(ALL) NOPASSWD:/opt/throttled/start.sh
-#+end_src
 
 * Icons
 This modules provides custom icons.
