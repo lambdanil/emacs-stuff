@@ -978,7 +978,8 @@ And configure the individual items.
 
 Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
 
-#+begin_src conf
+** etc/my-sudoers
+#+begin_src conf :tangle ~/git/emacs-stuff/configs-root/sudoers/etc/sudoers-my
   root ALL=(ALL) ALL
   %wheel ALL=(ALL) ALL
   %wheel ALL=(ALL) NOPASSWD:/opt/throttled/start.sh
