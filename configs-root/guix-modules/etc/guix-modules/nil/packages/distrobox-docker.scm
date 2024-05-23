@@ -19,13 +19,23 @@
     (substitute-keyword-arguments (package-arguments distrobox)
 				  ((#:phases phases)
 				   #~(modify-phases #$phases
-						    (replace 'refer-to-inputs
-							     (lambda* (#:key inputs #:allow-other-keys)
-							       (delete-file-recursively "docs") ; The files in docs directory break the below substitute*, this is a lazy workaround
-							       (copy-file "distrobox-init" "dinit") ; Temporarily move distrobox-init so it isn't affected by regex
-							       (substitute* (find-files "." "^distrobox.*[^1]$")
-									    (("docker") (search-input-file inputs "/bin/docker"))
-									    (("wget") (search-input-file inputs "/bin/wget"))
-									    (("command -v") "test -x"))
-							       (copy-file "dinit" "distrobox-init") ; move distrobox-init back
-							       (delete-file "dinit")))))))))
+						    (replace 'wrap-scripts
+							     (lambda _
+							       (let ((path (search-path-as-list
+									    (list "bin")
+									    (list #$(this-package-input "docker")
+										  #$(this-package-input "wget")))))
+								 (for-each (lambda (script)
+									     (wrap-script
+									      (string-append #$output "/bin/distrobox-"
+											     script)
+									      `("PATH" ":" prefix ,path)))
+									   '("assemble"
+									     "create"
+									     "enter"
+									     "ephemeral"
+									     "generate-entry"
+									     "list"
+									     "rm"
+									     "stop"
+									     "upgrade")))))))))))

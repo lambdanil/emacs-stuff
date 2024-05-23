@@ -151,15 +151,23 @@ Having an Emacs daemon means instant startup times for emacsclient.
 These are only necessary when using a standalone window manager.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   # nm-applet &
-  blueman-applet &
   # xhost +si:localuser:nil
-  setxkbmap cz -option 'ctrl:swapcaps' &
-  xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
   # $HOME/.guix-profile/libexec/xdg-desktop-portal -r &
   dbus-update-activation-environment --all &
   # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
   # /usr/bin/gnome-keyring-daemon --start --components=secrets &
   # playerctld &
+#+END_SRC
+
+These are commands specifically only used when on my laptop.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
+  if [ "$HOSTNAME" = "lainpad" ]
+     then
+	 sudo /opt/throttled/start.sh &
+	 blueman-applet &
+	 setxkbmap cz -option 'ctrl:swapcaps' &
+	 xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+  fi
 #+END_SRC
 
 * Bash
@@ -270,7 +278,7 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
       export PATH="$PATH:$HOME/.guix-profile/bin"
       export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
       export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-      export GUIX_SANDBOX_EXTRA_SHARES="/mnt/media/nil/external/Steam"
+      # export GUIX_SANDBOX_EXTRA_SHARES="/mnt/media/nil/external/Steam"
   fi
 #+END_SRC
 
@@ -280,6 +288,15 @@ This makes sway start up automatically when logging into ~tty2~, eliminating the
   then
       export XDG_CURRENT_DESKTOP=sway
       exec dbus-run-session -- sway
+  fi
+#+END_SRC
+
+Laptop-specific environment variables to ensure hardware video acceleration works.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+  if [[ "$HOSTNAME" = "lainpad" ]]
+  then
+      export LIBVA_DRIVER_NAME=iHD
+      export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so
   fi
 #+END_SRC
 
@@ -466,6 +483,109 @@ Here is the setup for channels, additions here are ~nonguix~ and ~guix-gaming-ch
   export LD_LIBRARY_PATH=$LIBRARY_PATH
   RUNNER
 #+END_SRC
+
+* Throttled
+
+[[https://github.com/erpalma/throttled][throttled]] is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU. Since it isn't packaged for Guix, I use a bit of a workaround to make it work.
+
+** opt/throttled/start.sh
+#+begin_src sh :tangle ~/git/emacs-stuff/configs-root/throttled/opt/throttled/start.sh :shebang "#!/bin/sh"
+  sudo guix shell gcc-toolchain pkg-config cairo gobject-introspection dbus -- /opt/throttled/venv/bin/python /opt/throttled/throttled.py --config /home/nil/conf/throttled.conf
+#+end_src
+
+** conf/throttled.conf
+#+begin_src conf :tangle ~/git/emacs-stuff/configs/throttled/conf/throttled.conf
+  [GENERAL]
+  # Enable or disable the script execution
+  Enabled: True
+  # SYSFS path for checking if the system is running on AC power
+  Sysfs_Power_Path: /sys/class/power_supply/AC*/online
+  # Auto reload config on changes
+  Autoreload: True
+
+  ## Settings to apply while connected to Battery power
+  [BATTERY]
+  # Update the registers every this many seconds
+  Update_Rate_s: 30
+  # Max package power for time window #1
+  PL1_Tdp_W: 29
+  # Time window #1 duration
+  PL1_Duration_s: 28
+  # Max package power for time window #2
+  PL2_Tdp_W: 44
+  # Time window #2 duration
+  PL2_Duration_S: 0.002
+  # Max allowed temperature before throttling
+  Trip_Temp_C: 85
+  # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)
+  cTDP: 0
+  # Disable BDPROCHOT (EXPERIMENTAL)
+  Disable_BDPROCHOT: False
+
+  ## Settings to apply while connected to AC power
+  [AC]
+  # Update the registers every this many seconds
+  Update_Rate_s: 5
+  # Max package power for time window #1
+  PL1_Tdp_W: 44
+  # Time window #1 duration
+  PL1_Duration_s: 28
+  # Max package power for time window #2
+  PL2_Tdp_W: 44
+  # Time window #2 duration
+  PL2_Duration_S: 0.002
+  # Max allowed temperature before throttling
+  Trip_Temp_C: 90
+  # Set HWP energy performance hints to 'performance' on high load (EXPERIMENTAL)
+  # Uncomment only if you really want to use it
+  # HWP_Mode: False
+  # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)
+  cTDP: 0
+  # Disable BDPROCHOT (EXPERIMENTAL)
+  Disable_BDPROCHOT: False
+
+  # All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)! 
+  [UNDERVOLT.BATTERY]
+  # CPU core voltage offset (mV)
+  CORE: 0
+  # Integrated GPU voltage offset (mV)
+  GPU: 0
+  # CPU cache voltage offset (mV)
+  CACHE: 0
+  # System Agent voltage offset (mV)
+  UNCORE: 0
+  # Analog I/O voltage offset (mV)
+  ANALOGIO: 0
+
+  # All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)!
+  [UNDERVOLT.AC]
+  # CPU core voltage offset (mV)
+  CORE: 0
+  # Integrated GPU voltage offset (mV)
+  GPU: 0
+  # CPU cache voltage offset (mV)
+  CACHE: 0
+  # System Agent voltage offset (mV)
+  UNCORE: 0
+  # Analog I/O voltage offset (mV)
+  ANALOGIO: 0
+
+  # [ICCMAX.AC]
+  # # CPU core max current (A)
+  # CORE: 
+  # # Integrated GPU max current (A)
+  # GPU: 
+  # # CPU cache max current (A)
+  # CACHE: 
+
+  # [ICCMAX.BATTERY]
+  # # CPU core max current (A)
+  # CORE: 
+  # # Integrated GPU max current (A)
+  # GPU: 
+  # # CPU cache max current (A)
+  # CACHE: 
+#+end_src
 
 * Sway
 
@@ -1030,6 +1150,7 @@ Now import the actual modules
   (use-modules (gnu)
 	       (gnu services)
 	       (gnu services dbus)
+	       (gnu services pm)
 	       (gnu packages gnome)
 	       (nongnu packages linux)
 	       (nongnu system linux-initrd)
@@ -1039,6 +1160,7 @@ Now import the actual modules
 	       (guix channels)
 	       (gnu services mcron)
 	       (gnu services docker)
+	       (gnu packages wm)
 	       (nil services mount-rshared)
 	       (nil services virsh)
 	       (nil packages gnome)
@@ -1064,31 +1186,16 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 						   (authorized-keys
 						    (append (list (local-file "./signing-key.pub"))
 							    %default-authorized-guix-keys))))
+		     (gdm-service-type config => 
+				       (gdm-configuration
+					(inherit config)
+					(wayland? #f)
+					(default-user "nil")
+					(auto-login? #t)))
 		     (dbus-root-service-type config =>
 					     (dbus-configuration (inherit config)
 								 (services (list libratbag blueman))))))
 #+END_SRC
-
-Before configuring the ~operating-system~ record we first need to create our drive device definitions
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
-  (define system-drive ;; root filesystem
-    (file-system
-     (device (uuid "7926c9cd-8655-4ffa-a9a7-abdde685a884" 'ext4))
-     (mount-point "/")
-     (type "ext4")))
-
-  (define efi-part ;; EFI partition
-    (file-system
-     (device (uuid "B192-9813" 'fat32))
-     (mount-point "/boot/efi")
-     (type "vfat")))
-
-  (define second-drive ;; second hard drive, used for storage
-    (file-system
-     (device (uuid "6e008012-794a-40ad-99e9-69825235e4c5" 'ext4))
-     (mount-point "/mnt/media/nil/external")
-     (type "ext4")))
-#+end_src
 
 Let's handle basic OS defaults first of all.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
@@ -1098,7 +1205,9 @@ Let's handle basic OS defaults first of all.
    (timezone "Europe/Prague")
    (keyboard-layout (keyboard-layout "cz"))
 
-   (host-name "eternity")
+   (host-name "lainpad")
+
+   (sudoers-file (local-file "./sudoers-my"))
 #+END_SRC
 
 Now add the necessary firmware from nonguix.
@@ -1132,13 +1241,13 @@ Add system-level packages now; these are *only* the most necessary of packages.
    (append
     (map specification->package
 	 (list
-	  "nss-certs"
-	  "xf86-video-amdgpu"
-	  "amdgpu-firmware"
 	  "bluez"
+	  "openssh"
 	  "blueman"
+	  "i915-firmware"
 	  "vim"
 	  "xdg-desktop-portal-gtk"
+	  "i3lock"
 	  "libratbag"
 	  "git"))
     %base-packages))
@@ -1151,9 +1260,30 @@ Now for the second part of service configuration - appending my own services.
     (list
      (service xfce-desktop-service-type)
 
+     (service openssh-service-type)
+
+     ;; Not necessary for Gnome
+     (service screen-locker-service-type
+	      (screen-locker-configuration
+	       (name "i3lock")
+	       (program (file-append i3lock "/bin/i3lock"))))
+
+     (service tlp-service-type
+	      (tlp-configuration
+	       (tlp-enable? #t)
+	       (cpu-scaling-governor-on-ac (list "performance"))
+	       (cpu-scaling-governor-on-bat (list "powersave"))
+	       (energy-perf-policy-on-ac "")
+	       (cpu-boost-on-ac? #t)
+	       (cpu-boost-on-bat? #f)
+	       (start-charge-thresh-bat0 70)
+	       (stop-charge-thresh-bat0 75)
+	       (start-charge-thresh-bat1 70)
+	       (stop-charge-thresh-bat1 75)))
+
      (service bluetooth-service-type
-		   (bluetooth-configuration
-		    (auto-enable? #f)))
+	      (bluetooth-configuration
+	       (auto-enable? #f)))
 #+END_SRC
 
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
@@ -1211,18 +1341,26 @@ And the final few services.
 
 At last we can configure hardware-level stuff - bootloader and drives. Finally we can close the ~operating-system~ section.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
-  (bootloader
-   (bootloader-configuration
-    (bootloader grub-efi-bootloader)
-    (targets '("/boot/efi"))
-    (timeout 3)
-    (keyboard-layout keyboard-layout)))
-  (file-systems
-   (cons*   
-    system-drive
-    efi-part
-    second-drive
-    %base-file-systems)))
+  (bootloader (bootloader-configuration
+	       (bootloader grub-efi-bootloader)
+	       (targets (list "/boot/efi"))
+	       (keyboard-layout keyboard-layout)))
+  (mapped-devices (list (mapped-device
+			 (source (uuid
+				  "52ef5bf4-a41c-4d4c-a67c-f4117ab21102"))
+			 (target "cryptroot")
+			 (type luks-device-mapping))))
+
+  (file-systems (cons* (file-system
+			(mount-point "/boot/efi")
+			(device (uuid "C417-E6C5"
+				      'fat32))
+			(type "vfat"))
+		       (file-system
+			(mount-point "/")
+			(device "/dev/mapper/cryptroot")
+			(type "ext4")
+			(dependencies mapped-devices)) %base-file-systems)))
 #+END_SRC
 
 ** /etc/signing-key.pub
@@ -1336,16 +1474,26 @@ Unfortunately the Distrobox definition in Guix's repos relies on podman, making 
       (substitute-keyword-arguments (package-arguments distrobox)
 				    ((#:phases phases)
 				     #~(modify-phases #$phases
-						      (replace 'refer-to-inputs
-							       (lambda* (#:key inputs #:allow-other-keys)
-								 (delete-file-recursively "docs") ; The files in docs directory break the below substitute*, this is a lazy workaround
-								 (copy-file "distrobox-init" "dinit") ; Temporarily move distrobox-init so it isn't affected by regex
-								 (substitute* (find-files "." "^distrobox.*[^1]$")
-									      (("docker") (search-input-file inputs "/bin/docker"))
-									      (("wget") (search-input-file inputs "/bin/wget"))
-									      (("command -v") "test -x"))
-								 (copy-file "dinit" "distrobox-init") ; move distrobox-init back
-								 (delete-file "dinit")))))))))
+						      (replace 'wrap-scripts
+							       (lambda _
+								 (let ((path (search-path-as-list
+									      (list "bin")
+									      (list #$(this-package-input "docker")
+										    #$(this-package-input "wget")))))
+								   (for-each (lambda (script)
+									       (wrap-script
+										(string-append #$output "/bin/distrobox-"
+											       script)
+										`("PATH" ":" prefix ,path)))
+									     '("assemble"
+									       "create"
+									       "enter"
+									       "ephemeral"
+									       "generate-entry"
+									       "list"
+									       "rm"
+									       "stop"
+									       "upgrade")))))))))))
 #+END_SRC
 
 *** emulators.scm
@@ -1664,6 +1812,7 @@ You'll notice the use of a very primitive function - no ~straight.el~ or ~use-pa
 		     rainbow-delimiters
 		     ligature
 		     flycheck
+		     leuven-theme
 		     geiser
 		     go-mode
 		     geiser-guile
@@ -1700,12 +1849,12 @@ Now we set some custom variables related mostly to theming. This part here was a
    '(ement-save-sessions t)
    '(custom-enabled-themes '(doom-dracula))
    '(custom-safe-themes
-     '("8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098" "944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4" "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
+     '("0cf95236abcf59e05b1ea69b4edd53d293a5baec4fe4c3484543fee99bfd2204" "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098" "944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4" "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
    '(delete-selection-mode t)
    '(org-safe-remote-resources
      '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
    '(package-selected-packages
-     '(org-present org-roam web-mode doom-themes vterm sly sudo-edit pacmacs rainbow-mode eglot nord-theme nyan-mode rainbow-delimiters tree-sitter-langs tree-sitter magit treemacs-icons-dired spacemacs-theme treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature markdown-mode ivy flycheck company dumb-jump))
+     '(leuven-theme org-present org-roam web-mode doom-themes vterm sly sudo-edit pacmacs rainbow-mode eglot nord-theme nyan-mode rainbow-delimiters tree-sitter-langs tree-sitter magit treemacs-icons-dired spacemacs-theme treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature markdown-mode ivy flycheck company dumb-jump))
    '(safe-local-variable-values
      '((eval modify-syntax-entry 43 "'")
        (eval modify-syntax-entry 36 "'")

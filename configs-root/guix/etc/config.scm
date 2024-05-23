@@ -3,6 +3,7 @@
 (use-modules (gnu)
 	     (gnu services)
 	     (gnu services dbus)
+	     (gnu services pm)
 	     (gnu packages gnome)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
@@ -12,6 +13,7 @@
 	     (guix channels)
 	     (gnu services mcron)
 	     (gnu services docker)
+	     (gnu packages wm)
 	     (nil services mount-rshared)
 	     (nil services virsh)
 	     (nil packages gnome)
@@ -34,27 +36,15 @@
 						 (authorized-keys
 						  (append (list (local-file "./signing-key.pub"))
 							  %default-authorized-guix-keys))))
+		   (gdm-service-type config => 
+				     (gdm-configuration
+				      (inherit config)
+				      (wayland? #f)
+				      (default-user "nil")
+				      (auto-login? #t)))
 		   (dbus-root-service-type config =>
 					   (dbus-configuration (inherit config)
 							       (services (list libratbag blueman))))))
-
-(define system-drive ;; root filesystem
-  (file-system
-   (device (uuid "7926c9cd-8655-4ffa-a9a7-abdde685a884" 'ext4))
-   (mount-point "/")
-   (type "ext4")))
-
-(define efi-part ;; EFI partition
-  (file-system
-   (device (uuid "B192-9813" 'fat32))
-   (mount-point "/boot/efi")
-   (type "vfat")))
-
-(define second-drive ;; second hard drive, used for storage
-  (file-system
-   (device (uuid "6e008012-794a-40ad-99e9-69825235e4c5" 'ext4))
-   (mount-point "/mnt/media/nil/external")
-   (type "ext4")))
 
 (operating-system
 
@@ -62,7 +52,9 @@
  (timezone "Europe/Prague")
  (keyboard-layout (keyboard-layout "cz"))
 
- (host-name "eternity")
+ (host-name "lainpad")
+
+ (sudoers-file (local-file "./sudoers-my"))
 
 (kernel linux)
 (initrd microcode-initrd)
@@ -87,13 +79,13 @@
  (append
   (map specification->package
        (list
-	"nss-certs"
-	"xf86-video-amdgpu"
-	"amdgpu-firmware"
 	"bluez"
+	"openssh"
 	"blueman"
+	"i915-firmware"
 	"vim"
 	"xdg-desktop-portal-gtk"
+	"i3lock"
 	"libratbag"
 	"git"))
   %base-packages))
@@ -103,9 +95,30 @@
   (list
    (service xfce-desktop-service-type)
 
+   (service openssh-service-type)
+
+   ;; Not necessary for Gnome
+   (service screen-locker-service-type
+	    (screen-locker-configuration
+	     (name "i3lock")
+	     (program (file-append i3lock "/bin/i3lock"))))
+
+   (service tlp-service-type
+	    (tlp-configuration
+	     (tlp-enable? #t)
+	     (cpu-scaling-governor-on-ac (list "performance"))
+	     (cpu-scaling-governor-on-bat (list "powersave"))
+	     (energy-perf-policy-on-ac "")
+	     (cpu-boost-on-ac? #t)
+	     (cpu-boost-on-bat? #f)
+	     (start-charge-thresh-bat0 70)
+	     (stop-charge-thresh-bat0 75)
+	     (start-charge-thresh-bat1 70)
+	     (stop-charge-thresh-bat1 75)))
+
    (service bluetooth-service-type
-		 (bluetooth-configuration
-		  (auto-enable? #f)))
+	    (bluetooth-configuration
+	     (auto-enable? #f)))
 
 mount-rshared-service
 
@@ -142,15 +155,23 @@ virsh-net-default-service
 	  (compression-algorithm 'zstd))))
 %my-services))
 
-(bootloader
- (bootloader-configuration
-  (bootloader grub-efi-bootloader)
-  (targets '("/boot/efi"))
-  (timeout 3)
-  (keyboard-layout keyboard-layout)))
-(file-systems
- (cons*   
-  system-drive
-  efi-part
-  second-drive
-  %base-file-systems)))
+(bootloader (bootloader-configuration
+	     (bootloader grub-efi-bootloader)
+	     (targets (list "/boot/efi"))
+	     (keyboard-layout keyboard-layout)))
+(mapped-devices (list (mapped-device
+		       (source (uuid
+				"52ef5bf4-a41c-4d4c-a67c-f4117ab21102"))
+		       (target "cryptroot")
+		       (type luks-device-mapping))))
+
+(file-systems (cons* (file-system
+		      (mount-point "/boot/efi")
+		      (device (uuid "C417-E6C5"
+				    'fat32))
+		      (type "vfat"))
+		     (file-system
+		      (mount-point "/")
+		      (device "/dev/mapper/cryptroot")
+		      (type "ext4")
+		      (dependencies mapped-devices)) %base-file-systems)))

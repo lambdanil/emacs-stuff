@@ -7,12 +7,17 @@ xrdb ~/git/emacs-stuff/configs/X/.Xresources
 emacs --daemon &
 
 # nm-applet &
-blueman-applet &
 # xhost +si:localuser:nil
-setxkbmap cz -option 'ctrl:swapcaps' &
-xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
 # $HOME/.guix-profile/libexec/xdg-desktop-portal -r &
 dbus-update-activation-environment --all &
 # xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 &
 # /usr/bin/gnome-keyring-daemon --start --components=secrets &
 # playerctld &
+
+if [ "$HOSTNAME" = "lainpad" ]
+   then
+       sudo /opt/throttled/start.sh &
+       blueman-applet &
+       setxkbmap cz -option 'ctrl:swapcaps' &
+       xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+fi

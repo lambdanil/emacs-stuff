@@ -9,11 +9,17 @@ if [ ! -f /.dockerenv ] && [ ! -f /run/.containerenv ] && [ -d "$HOME/.guix-prof
     export PATH="$PATH:$HOME/.guix-profile/bin"
     export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-profile/share"
     export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
-    export GUIX_SANDBOX_EXTRA_SHARES="/mnt/media/nil/external/Steam"
+    # export GUIX_SANDBOX_EXTRA_SHARES="/mnt/media/nil/external/Steam"
 fi
 
 if [[ "$(tty)" == "/dev/tty2" ]]
 then
     export XDG_CURRENT_DESKTOP=sway
     exec dbus-run-session -- sway
+fi
+
+if [[ "$HOSTNAME" = "lainpad" ]]
+then
+    export LIBVA_DRIVER_NAME=iHD
+    export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so
 fi
