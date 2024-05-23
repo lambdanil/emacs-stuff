@@ -471,7 +471,7 @@ Here is the setup for channels, additions here are ~nonguix~ and ~guix-gaming-ch
 
 Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
 
-** etc/my-sudoers
+** etc/sudoers-my
 #+begin_src conf :tangle ~/git/emacs-stuff/configs-root/guix/etc/sudoers-my
   root ALL=(ALL) ALL
   %wheel ALL=(ALL) ALL
