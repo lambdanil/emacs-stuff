@@ -163,7 +163,6 @@ These are commands specifically only used when on my laptop.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   if [ "$HOSTNAME" = "lainpad" ]
      then
-	 sudo /opt/throttled/start.sh &
 	 blueman-applet &
 	 setxkbmap cz -option 'ctrl:swapcaps' &
 	 xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
@@ -469,15 +468,6 @@ Here is the setup for channels, additions here are ~nonguix~ and ~guix-gaming-ch
 	 %default-channels)
 #+END_SRC
 
-Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without entering password.
-
-** etc/sudoers-my
-#+begin_src conf :tangle ~/git/emacs-stuff/configs-root/guix/etc/sudoers-my
-  root ALL=(ALL) ALL
-  %wheel ALL=(ALL) ALL
-  %wheel ALL=(ALL) NOPASSWD:/opt/throttled/start.sh
-#+end_src
-
 * Guix-run
 
 ~guix-run~ is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
@@ -492,109 +482,6 @@ Custom ~sudoers~ file. Added the ability to execute ~throttled~ script without e
   export LD_LIBRARY_PATH=$LIBRARY_PATH
   RUNNER
 #+END_SRC
-
-* Throttled
-
-[[https://github.com/erpalma/throttled][throttled]] is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU. Since it isn't packaged for Guix, I use a bit of a workaround to make it work.
-
-** opt/throttled/start.sh
-#+begin_src sh :tangle ~/git/emacs-stuff/configs-root/throttled/opt/throttled/start.sh :shebang "#!/bin/sh"
-  sudo guix shell gcc-toolchain pkg-config cairo gobject-introspection dbus -- /opt/throttled/venv/bin/python /opt/throttled/throttled.py --config /home/nil/conf/throttled.conf
-#+end_src
-
-** conf/throttled.conf
-#+begin_src conf :tangle ~/git/emacs-stuff/configs/throttled/conf/throttled.conf
-  [GENERAL]
-  # Enable or disable the script execution
-  Enabled: True
-  # SYSFS path for checking if the system is running on AC power
-  Sysfs_Power_Path: /sys/class/power_supply/AC*/online
-  # Auto reload config on changes
-  Autoreload: True
-
-  ## Settings to apply while connected to Battery power
-  [BATTERY]
-  # Update the registers every this many seconds
-  Update_Rate_s: 30
-  # Max package power for time window #1
-  PL1_Tdp_W: 29
-  # Time window #1 duration
-  PL1_Duration_s: 28
-  # Max package power for time window #2
-  PL2_Tdp_W: 44
-  # Time window #2 duration
-  PL2_Duration_S: 0.002
-  # Max allowed temperature before throttling
-  Trip_Temp_C: 85
-  # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)
-  cTDP: 0
-  # Disable BDPROCHOT (EXPERIMENTAL)
-  Disable_BDPROCHOT: False
-
-  ## Settings to apply while connected to AC power
-  [AC]
-  # Update the registers every this many seconds
-  Update_Rate_s: 5
-  # Max package power for time window #1
-  PL1_Tdp_W: 44
-  # Time window #1 duration
-  PL1_Duration_s: 28
-  # Max package power for time window #2
-  PL2_Tdp_W: 44
-  # Time window #2 duration
-  PL2_Duration_S: 0.002
-  # Max allowed temperature before throttling
-  Trip_Temp_C: 90
-  # Set HWP energy performance hints to 'performance' on high load (EXPERIMENTAL)
-  # Uncomment only if you really want to use it
-  # HWP_Mode: False
-  # Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)
-  cTDP: 0
-  # Disable BDPROCHOT (EXPERIMENTAL)
-  Disable_BDPROCHOT: False
-
-  # All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)! 
-  [UNDERVOLT.BATTERY]
-  # CPU core voltage offset (mV)
-  CORE: 0
-  # Integrated GPU voltage offset (mV)
-  GPU: 0
-  # CPU cache voltage offset (mV)
-  CACHE: 0
-  # System Agent voltage offset (mV)
-  UNCORE: 0
-  # Analog I/O voltage offset (mV)
-  ANALOGIO: 0
-
-  # All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)!
-  [UNDERVOLT.AC]
-  # CPU core voltage offset (mV)
-  CORE: 0
-  # Integrated GPU voltage offset (mV)
-  GPU: 0
-  # CPU cache voltage offset (mV)
-  CACHE: 0
-  # System Agent voltage offset (mV)
-  UNCORE: 0
-  # Analog I/O voltage offset (mV)
-  ANALOGIO: 0
-
-  # [ICCMAX.AC]
-  # # CPU core max current (A)
-  # CORE: 
-  # # Integrated GPU max current (A)
-  # GPU: 
-  # # CPU cache max current (A)
-  # CACHE: 
-
-  # [ICCMAX.BATTERY]
-  # # CPU core max current (A)
-  # CORE: 
-  # # Integrated GPU max current (A)
-  # GPU: 
-  # # CPU cache max current (A)
-  # CACHE: 
-#+end_src
 
 * Sway
 
@@ -1159,13 +1046,17 @@ Now import the actual modules
   (use-modules (gnu)
 	       (gnu services)
 	       (gnu services dbus)
+	       (nil services throttled)
 	       (gnu services pm)
 	       (gnu packages gnome)
+	       (gnu packages firmware)
 	       (nongnu packages linux)
 	       (nongnu system linux-initrd)
 	       (gnu services virtualization)
 	       (gnu services shepherd)
+	       (gnu services avahi)
 	       (gnu services admin)
+	       (gnu system nss)
 	       (guix channels)
 	       (gnu services mcron)
 	       (gnu services docker)
@@ -1173,6 +1064,7 @@ Now import the actual modules
 	       (nil services mount-rshared)
 	       (nil services virsh)
 	       (nil packages gnome)
+	       (gnu services linux)
 	       (gnu packages gnome)
 	       (gnu packages fonts)
 	       (gnu packages networking)
@@ -1203,7 +1095,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 					(auto-login? #t)))
 		     (dbus-root-service-type config =>
 					     (dbus-configuration (inherit config)
-								 (services (list libratbag blueman))))))
+								 (services (list libratbag blueman fwupd))))))
 #+END_SRC
 
 Let's handle basic OS defaults first of all.
@@ -1215,8 +1107,6 @@ Let's handle basic OS defaults first of all.
    (keyboard-layout (keyboard-layout "cz"))
 
    (host-name "lainpad")
-
-   (sudoers-file (local-file "./sudoers-my"))
 #+END_SRC
 
 Now add the necessary firmware from nonguix.
@@ -1262,6 +1152,11 @@ Add system-level packages now; these are *only* the most necessary of packages.
     %base-packages))
 #+END_SRC
 
+Enable resolving hostnames on local network.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (name-service-switch %mdns-host-lookup-nss)
+#+END_SRC
+
 Now for the second part of service configuration - appending my own services.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
   (services
@@ -1294,6 +1189,14 @@ Now for the second part of service configuration - appending my own services.
 	      (bluetooth-configuration
 	       (auto-enable? #f)))
 #+END_SRC
+
+[[https://github.com/erpalma/throttled][throttled]] is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU.
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (service throttled-service-type)
+
+  (service kernel-module-loader-service-type
+	   '("msr")) ;; required for throttled
+#+end_src
 
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
@@ -1590,6 +1493,78 @@ Since the default Gnome package in Guix ships quite a few unnecessary dependenci
 	 (append gnome-terminal)))))
 #+end_src
 
+*** throttled.scm
+
+#+begin_src scheme :tangle ~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/throttled.scm
+  (define-module (nil packages throttled)
+    #:use-module (guix packages)
+    #:use-module (guix utils)
+    #:use-module (guix build utils)
+    #:use-module (gnu packages)
+    #:use-module (guix git-download)
+    #:use-module (gnu packages commencement)
+    #:use-module (gnu packages pkg-config)
+    #:use-module (gnu packages pciutils)
+    #:use-module (gnu packages gtk)
+    #:use-module (gnu packages glib)
+    #:use-module (gnu packages bash)
+    #:use-module (gnu packages linux)
+    #:use-module (gnu packages python-xyz)
+    #:use-module (guix licenses)
+    #:use-module (gnu packages base)
+    #:use-module (guix build-system python)
+    #:use-module (gnu packages python))
+
+  (define-public throttled
+    (let ((commit "596ad496e8c5cff2aae6977de6a9e1546bf51cbf")
+	  (revision "1"))
+      (package
+	(name "throttled")
+	(version (git-version "0.10.99" revision commit))
+	(source (origin
+		  (method git-fetch)
+		  (uri (git-reference
+			(url "https://github.com/erpalma/throttled/")
+			(commit commit)))
+		  (file-name (git-file-name name version))
+		  (sha256
+		   (base32
+		    "10ki1hjisalsqjknmrj6m6zc7cq3mqkfzi7j5bl9ysh9yh1dlzaq"))))
+	(build-system python-build-system)
+	(inputs (list python-pygobject python-dbus-python python-configparser gcc-toolchain pkg-config cairo gobject-introspection dbus))
+	(propagated-inputs (list pciutils))
+	(native-inputs (list python))
+	(arguments
+	 `(#:phases
+	   (modify-phases %standard-phases
+	     (delete 'build)
+	     (delete 'check)
+	     (replace 'install
+	       (lambda* (#:key inputs outputs #:allow-other-keys)
+		 (use-modules (guix build utils))
+		 (let* ((sitedir (site-packages inputs outputs))
+			(source (assoc-ref %build-inputs "source"))
+			(coreutils (assoc-ref %build-inputs "coreutils"))
+			(python (assoc-ref %build-inputs "python"))
+			(out (assoc-ref %outputs "out"))
+			(python-sitedir
+			 (string-append out "/lib/python"
+					(python-version python)
+					"/site-packages")))
+		   (mkdir-p python-sitedir)
+		   (mkdir-p (string-append out "/bin/"))
+		   (copy-file "throttled.py" (string-append out "/bin/throttled"))
+		   (copy-file "mmio.py" (string-append python-sitedir "/mmio.py"))
+		   (wrap-program (string-append out "/bin/throttled")
+		     `("GUIX_PYTHONPATH" ":" suffix
+		       ,(list sitedir python-sitedir)))
+		   ))))))
+	(synopsis "")
+	(description "")
+	(home-page "https://github.com/erpalma/throttled")
+	(license expat))))
+
+#+end_src
 ** /etc/guix-modules/nil/services
 
 Moving on to services.
@@ -1664,6 +1639,184 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 			     (respawn? #f))))))
 #+END_SRC
 
+*** throttled.scm
+
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/services/throttled.scm"
+  (define-module (nil services throttled)
+    #:use-module (nil packages throttled)
+    #:use-module (guix gexp)
+    #:use-module (guix packages)
+    #:use-module (guix records)
+    #:use-module (guix modules)
+    #:use-module (gnu services)
+    #:use-module (gnu services base)
+    #:use-module (gnu services configuration)
+    #:use-module (gnu services dbus)
+    #:use-module (gnu services shepherd)
+    #:use-module (guix gexp)
+    #:use-module (ice-9 match)
+    #:export (throttled-configuration
+	      throttled-configuration?
+	      throttled-service-type))
+
+  (define (non-negative-integer? val)
+    (and (exact-integer? val) (not (negative? val))))
+  (define (non-negative-float? val)
+    (not (negative? val)))
+  (define-maybe file-like)
+  (define-maybe/no-serialization string)
+
+
+  (define-configuration throttled-configuration
+    (throttled
+     (file-like throttled)
+     "The THROTTLED package.")
+
+    (throttled-enable?
+     (boolean #t)
+     "Enable or disable the script execution.")
+
+    (sysfs-power-path
+     (string "/sys/class/power_supply/AC*/online")
+     "SYSFS path for checking if the system is running on AC power.")
+
+    (bat-update-rate-s
+     (non-negative-integer 30)
+     "Update the registers every this many seconds.")
+
+    (bat-pl1-tdp-w
+     (non-negative-integer 29)
+     "Max package power for time window #1.")
+
+    (bat-pl1-duration-s
+     (non-negative-integer 28)
+     "Time window #1 duration.")
+
+    (bat-pl2-tdp-w
+     (non-negative-integer 44)
+     "Max package power for time window #2.")
+
+    (bat-pl2-duration-s
+     (non-negative-float 0.002)
+     "Time window #2 duration.")
+
+    (bat-trip-temp-c
+     (non-negative-integer 85)
+     "Max allowed temperature before throttling.")
+
+    (ac-update-rate-s
+     (non-negative-integer 5)
+     "Update the registers every this many seconds.")
+
+    (ac-pl1-tdp-w
+     (non-negative-integer 44)
+     "Max package power for time window #1.")
+
+    (ac-pl1-duration-s
+     (non-negative-integer 28)
+     "Time window #1 duration.")
+
+    (ac-pl2-tdp-w
+     (non-negative-integer 44)
+     "Max package power for time window #2.")
+
+    (ac-pl2-duration-s
+     (non-negative-float 0.002)
+     "Time window #2 duration.")
+
+    (ac-trip-temp-c
+     (non-negative-integer 90)
+     "Max allowed temperature before throttling.")
+
+    (no-serialization))
+
+  (define (generate-throttled-config config)
+    (string-append "[GENERAL]\n"
+		   "Enabled: "
+		   (if (throttled-configuration-throttled-enable? config) "True" "False")
+		   "\n"
+		   "Sysfs_Power_Path: "
+		   (throttled-configuration-sysfs-power-path config)
+		   "\n"
+		   "Autoreload: True"
+		   "\n\n"
+		   "[BATTERY]\n"
+		   "Update_Rate_s: "
+		   (number->string (throttled-configuration-bat-update-rate-s config))
+		   "\n"
+		   "PL1_Tdp_W: "
+		   (number->string (throttled-configuration-bat-pl1-tdp-w config))
+		   "\n"
+		   "PL1_Duration_s: "
+		   (number->string (throttled-configuration-bat-pl1-duration-s config))
+		   "\n"
+		   "PL2_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl2-tdp-w config))
+		   "\n"
+		   "PL2_Duration_S: "
+		   (number->string (throttled-configuration-bat-pl2-duration-s config))
+		   "\n"
+		   "Trip_Temp_C: "
+		   (number->string (throttled-configuration-bat-trip-temp-c config))
+		   "\n"
+		   "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
+		   "[AC]\n"
+		   "Update_Rate_s: "
+		   (number->string (throttled-configuration-ac-update-rate-s config))
+		   "\n"
+		   "PL1_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl1-tdp-w config))
+		   "\n"
+		   "PL1_Duration_s: "
+		   (number->string (throttled-configuration-ac-pl1-duration-s config))
+		   "\n"
+		   "PL2_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl2-tdp-w config))
+		   "\n"
+		   "PL2_Duration_S: "
+		   (number->string (throttled-configuration-ac-pl2-duration-s config))
+		   "\n"
+		   "Trip_Temp_C: "
+		   (number->string (throttled-configuration-ac-trip-temp-c config))
+		   "\n"
+		   "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
+		   "[UNDERVOLT.BATTERY]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"
+		   "[UNDERVOLT.AC]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"))
+
+  (define (throttled-shepherd-service config)
+
+    (define throttled-command
+      #~(list (string-append #$(throttled-configuration-throttled config) "/bin/throttled")))
+
+    (list
+     (shepherd-service
+      (documentation "Run THROTTLED script.")
+      (provision '(throttled))
+      (requirement '(user-processes))
+      (start #~(make-forkexec-constructor #$throttled-command))
+      (stop #~(make-kill-destructor)))))
+
+  (define (throttled-activation config)
+    (let* ((config-str (generate-throttled-config config))
+	   (config-file (plain-file "throttled" config-str)))
+      (with-imported-modules '((guix build utils))
+	#~(begin
+	    (use-modules (guix build utils))
+	    (copy-file #$config-file "/etc/throttled.conf")))))
+
+  (define throttled-service-type
+    (service-type
+     (name 'throttled)
+     (extensions
+      (list
+       (service-extension shepherd-root-service-type
+			  throttled-shepherd-service)
+       (service-extension activation-service-type
+			  throttled-activation)))
+     (default-value (throttled-configuration))
+     (description "Run THROTTLED, a power management tool.")))
+
+#+end_src
 * ZRAM on non-guix distros
 
 This is the distribution-agnostic ZRAM implementation for use with systems other than GNU Guix. This module isn't necessary (or desired) with Guix System.

@@ -16,7 +16,6 @@ dbus-update-activation-environment --all &
 
 if [ "$HOSTNAME" = "lainpad" ]
    then
-       sudo /opt/throttled/start.sh &
        blueman-applet &
        setxkbmap cz -option 'ctrl:swapcaps' &
        xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &

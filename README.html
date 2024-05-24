@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-05-23 Čt 17:52 -->
+<!-- 2024-05-24 Pá 17:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My System Config</title>
@@ -23,148 +23,143 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6d712f3">1. Introduction</a>
+<li><a href="#orgba1de59">1. Introduction</a>
 <ul>
-<li><a href="#org2b38b29">1.1. The why</a>
+<li><a href="#orgf315822">1.1. The why</a>
 <ul>
-<li><a href="#orgb10c4ef">Reproducibility</a></li>
-<li><a href="#orge34101c">Separation</a></li>
-<li><a href="#org5771719">Modularity</a></li>
-<li><a href="#org9091177">Organization</a></li>
-<li><a href="#orgd6432ea">Maintainability</a></li>
+<li><a href="#org0ec3138">Reproducibility</a></li>
+<li><a href="#orge139a49">Separation</a></li>
+<li><a href="#orgb418a5b">Modularity</a></li>
+<li><a href="#org4d3269b">Organization</a></li>
+<li><a href="#org6601de9">Maintainability</a></li>
 </ul>
 </li>
-<li><a href="#org0e5d9d6">1.2. The implementation</a>
+<li><a href="#org36906ca">1.2. The implementation</a>
 <ul>
-<li><a href="#orge20fede">README.org</a></li>
-<li><a href="#org89d3e76">Modules</a></li>
-<li><a href="#org3cf3ced">Packages</a></li>
-<li><a href="#org04d43e9">Deployment</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgd04d557">2. Autostart</a>
-<ul>
-<li><a href="#orgd2019b5">2.1. .config/autostart/autostart.desktop</a></li>
-<li><a href="#org8a2833a">2.2. .loginctl</a></li>
-</ul>
-</li>
-<li><a href="#orgfd3d0c0">3. Bash</a>
-<ul>
-<li><a href="#org51f9624">3.1. .bashrc</a></li>
-<li><a href="#orgfd26298">3.2. .bash profile</a></li>
-</ul>
-</li>
-<li><a href="#org0a74069">4. Custom Binaries</a>
-<ul>
-<li><a href="#org2b0e4f0">4.1. .bin/scr</a></li>
-<li><a href="#org1b9cdb2">4.2. .bin/scr-area</a></li>
-<li><a href="#orgbc7820e">4.3. .bin/chromium-incognito</a></li>
-</ul>
-</li>
-<li><a href="#orga1bc6c2">5. Containers</a>
-<ul>
-<li><a href="#org9350640">5.1. .config/containers/policy.json</a></li>
-<li><a href="#org061584d">5.2. .config/containers/registries.conf</a></li>
-</ul>
-</li>
-<li><a href="#org41d7e74">6. Dictionaries</a></li>
-<li><a href="#orgc5361f1">7. Debian Dependencies</a></li>
-<li><a href="#org4915ee3">8. Firefox</a></li>
-<li><a href="#orgee01d46">9. Fonts</a></li>
-<li><a href="#org98adb16">10. Gtk</a></li>
-<li><a href="#org197a478">11. Guix</a>
-<ul>
-<li><a href="#org74a760b">11.1. .guix-manifest</a></li>
-<li><a href="#orged54255">11.2. .guix-manifest-tiny</a></li>
-<li><a href="#org77075bb">11.3. .config/guix/channels.scm</a></li>
-<li><a href="#org0cbf7ba">11.4. etc/sudoers-my</a></li>
-</ul>
-</li>
-<li><a href="#orgd5186ff">12. Guix-run</a>
-<ul>
-<li><a href="#org46895da">12.1. .bin/guix-run</a></li>
-</ul>
-</li>
-<li><a href="#org5cebb45">13. Throttled</a>
-<ul>
-<li><a href="#org5859e00">13.1. opt/throttled/start.sh</a></li>
-<li><a href="#orgdf36ead">13.2. conf/throttled.conf</a></li>
-</ul>
-</li>
-<li><a href="#orgebff207">14. Sway</a>
-<ul>
-<li><a href="#org6beee7e">14.1. .config/sway/config</a></li>
-<li><a href="#org0067c30">14.2. .config/sway/i3status wrapper.py</a></li>
-<li><a href="#org68ea4cc">14.3. .config/i3status/config</a></li>
-</ul>
-</li>
-<li><a href="#org30d988e">15. Icons</a></li>
-<li><a href="#org98f56a2">16. Rofi</a>
-<ul>
-<li><a href="#orgbfd6b79">16.1. .config/wofi/nord.rasi</a></li>
-</ul>
-</li>
-<li><a href="#org40189dc">17. Startx</a>
-<ul>
-<li><a href="#org941af7c">17.1. .startx</a></li>
-</ul>
-</li>
-<li><a href="#org4550c47">18. Xresources</a>
-<ul>
-<li><a href="#orgf4f842a">18.1. .Xresources</a></li>
-<li><a href="#orge14db14">18.2. .xsessionrc</a></li>
-</ul>
-</li>
-<li><a href="#orgc6d565e">19. XFCE 4 Terminal</a></li>
-<li><a href="#org40f93c3">20. Wallpapers</a></li>
-<li><a href="#orgbf21929">21. Guix system</a>
-<ul>
-<li><a href="#org070b302">21.1. /etc/config.scm</a></li>
-<li><a href="#org6ab21b2">21.2. /etc/signing-key.pub</a></li>
-</ul>
-</li>
-<li><a href="#org1781bc8">22. Custom Guix Modules</a>
-<ul>
-<li><a href="#orgaa7de48">22.1. /etc/guix-modules/nil/packages</a>
-<ul>
-<li><a href="#org2626d49">22.1.1. brogue.scm</a></li>
-<li><a href="#orgd06eb64">22.1.2. distrobox-docker.scm</a></li>
-<li><a href="#orgba43795">22.1.3. emulators.scm</a></li>
-<li><a href="#orgf1338bb">22.1.4. gnome.scm</a></li>
-</ul>
-</li>
-<li><a href="#org0117041">22.2. /etc/guix-modules/nil/services</a>
-<ul>
-<li><a href="#orgfa295f3">22.2.1. mount-rshared.scm</a></li>
-<li><a href="#org0879438">22.2.2. virsh.scm</a></li>
+<li><a href="#orgd15e7dd">README.org</a></li>
+<li><a href="#org847b4ce">Modules</a></li>
+<li><a href="#orga009365">Packages</a></li>
+<li><a href="#org7dad179">Deployment</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4914b09">23. ZRAM on non-guix distros</a>
+<li><a href="#org2bf5f2c">2. Autostart</a>
 <ul>
-<li><a href="#org91241be">23.1. /etc/modules-load.d/zram.conf</a></li>
-<li><a href="#orgf701fdb">23.2. /etc/modprobe.d/zram.conf</a></li>
-<li><a href="#org7052aef">23.3. /etc/udev/rules.d/99-zram.rules</a></li>
-<li><a href="#org5167b20">23.4. /etc/systemd/system/zram.service</a></li>
+<li><a href="#org66c9f4b">2.1. .config/autostart/autostart.desktop</a></li>
+<li><a href="#orgb40b196">2.2. .loginctl</a></li>
 </ul>
 </li>
-<li><a href="#org2173f7c">24. Emacs</a>
+<li><a href="#orgacad948">3. Bash</a>
 <ul>
-<li><a href="#org4d4c943">24.1. Initial variables</a></li>
-<li><a href="#orgacc4569">24.2. Packages</a></li>
-<li><a href="#org1d175bf">24.3. Extra tempel templates (.emacs.d/templates)</a></li>
-<li><a href="#org4d3de57">24.4. custom-set options</a></li>
-<li><a href="#org9aa4114">24.5. Variables</a></li>
-<li><a href="#org3a9b352">24.6. LSP servers</a></li>
-<li><a href="#org0614991">24.7. Functions</a></li>
-<li><a href="#org357975e">24.8. Keybindings</a></li>
-<li><a href="#orgf7b7868">24.9. .exwm.el</a></li>
+<li><a href="#org037d787">3.1. .bashrc</a></li>
+<li><a href="#orgf3e1aae">3.2. .bash profile</a></li>
 </ul>
 </li>
-<li><a href="#org925439e">25. Non-Guix Services and dependencies</a></li>
+<li><a href="#org67a0054">4. Custom Binaries</a>
+<ul>
+<li><a href="#orgedaa6ee">4.1. .bin/scr</a></li>
+<li><a href="#org9a3ad07">4.2. .bin/scr-area</a></li>
+<li><a href="#org0106529">4.3. .bin/chromium-incognito</a></li>
+</ul>
+</li>
+<li><a href="#org448b305">5. Containers</a>
+<ul>
+<li><a href="#org7b6385e">5.1. .config/containers/policy.json</a></li>
+<li><a href="#orgce1d7be">5.2. .config/containers/registries.conf</a></li>
+</ul>
+</li>
+<li><a href="#org10e8559">6. Dictionaries</a></li>
+<li><a href="#orgfe27c6c">7. Debian Dependencies</a></li>
+<li><a href="#orgfb4eda9">8. Firefox</a></li>
+<li><a href="#org5030556">9. Fonts</a></li>
+<li><a href="#org63acec8">10. Gtk</a></li>
+<li><a href="#orgac7d6ed">11. Guix</a>
+<ul>
+<li><a href="#org3c5c570">11.1. .guix-manifest</a></li>
+<li><a href="#org5dd96ef">11.2. .guix-manifest-tiny</a></li>
+<li><a href="#org4502c92">11.3. .config/guix/channels.scm</a></li>
+</ul>
+</li>
+<li><a href="#org2e43795">12. Guix-run</a>
+<ul>
+<li><a href="#orga97ddeb">12.1. .bin/guix-run</a></li>
+</ul>
+</li>
+<li><a href="#org52af98d">13. Sway</a>
+<ul>
+<li><a href="#org97fb482">13.1. .config/sway/config</a></li>
+<li><a href="#org21418e3">13.2. .config/sway/i3status wrapper.py</a></li>
+<li><a href="#orgb74f58e">13.3. .config/i3status/config</a></li>
+</ul>
+</li>
+<li><a href="#orgd7affb6">14. Icons</a></li>
+<li><a href="#org9373056">15. Rofi</a>
+<ul>
+<li><a href="#org2332982">15.1. .config/wofi/nord.rasi</a></li>
+</ul>
+</li>
+<li><a href="#org98daddb">16. Startx</a>
+<ul>
+<li><a href="#orgeedd84a">16.1. .startx</a></li>
+</ul>
+</li>
+<li><a href="#org495864f">17. Xresources</a>
+<ul>
+<li><a href="#org9dda45f">17.1. .Xresources</a></li>
+<li><a href="#org206fd72">17.2. .xsessionrc</a></li>
+</ul>
+</li>
+<li><a href="#orga031b5e">18. XFCE 4 Terminal</a></li>
+<li><a href="#org8dc47e5">19. Wallpapers</a></li>
+<li><a href="#orgfcd7645">20. Guix system</a>
+<ul>
+<li><a href="#org7779588">20.1. /etc/config.scm</a></li>
+<li><a href="#orgb3b3b9a">20.2. /etc/signing-key.pub</a></li>
+</ul>
+</li>
+<li><a href="#org6b3f8da">21. Custom Guix Modules</a>
+<ul>
+<li><a href="#orgff296e0">21.1. /etc/guix-modules/nil/packages</a>
+<ul>
+<li><a href="#orgf34c6a6">21.1.1. brogue.scm</a></li>
+<li><a href="#org3e091cd">21.1.2. distrobox-docker.scm</a></li>
+<li><a href="#orgf850b6e">21.1.3. emulators.scm</a></li>
+<li><a href="#org96b17a0">21.1.4. gnome.scm</a></li>
+<li><a href="#orgf75d995">21.1.5. throttled.scm</a></li>
+</ul>
+</li>
+<li><a href="#org7081df8">21.2. /etc/guix-modules/nil/services</a>
+<ul>
+<li><a href="#org74dc6dc">21.2.1. mount-rshared.scm</a></li>
+<li><a href="#orga61f25c">21.2.2. virsh.scm</a></li>
+<li><a href="#org4a9c120">21.2.3. throttled.scm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge722014">22. ZRAM on non-guix distros</a>
+<ul>
+<li><a href="#orgcb64d2d">22.1. /etc/modules-load.d/zram.conf</a></li>
+<li><a href="#org27384dc">22.2. /etc/modprobe.d/zram.conf</a></li>
+<li><a href="#org916fcb8">22.3. /etc/udev/rules.d/99-zram.rules</a></li>
+<li><a href="#org6fd919d">22.4. /etc/systemd/system/zram.service</a></li>
+</ul>
+</li>
+<li><a href="#orgbb9180f">23. Emacs</a>
+<ul>
+<li><a href="#orgee09932">23.1. Initial variables</a></li>
+<li><a href="#orgdc4f8b8">23.2. Packages</a></li>
+<li><a href="#orga74c539">23.3. Extra tempel templates (.emacs.d/templates)</a></li>
+<li><a href="#orgd2e496b">23.4. custom-set options</a></li>
+<li><a href="#orgabb122f">23.5. Variables</a></li>
+<li><a href="#org5c412dc">23.6. LSP servers</a></li>
+<li><a href="#orgcad5a3e">23.7. Functions</a></li>
+<li><a href="#org0fc4504">23.8. Keybindings</a></li>
+<li><a href="#orga008a69">23.9. .exwm.el</a></li>
+</ul>
+</li>
+<li><a href="#org2c3bca6">24. Non-Guix Services and dependencies</a></li>
 </ul>
 </div>
 </div>
@@ -176,7 +171,7 @@
 <i>Debian with EXWM</i>
 </p>
 
-<div id="orge685931" class="figure">
+<div id="orgb774412" class="figure">
 <p><img src="./screenshots/exwm-scr.png" alt="exwm-scr.png" width="720px" />
 </p>
 </div>
@@ -185,7 +180,7 @@
 <i>Debian with MATE</i>
 </p>
 
-<div id="orgcdb1606" class="figure">
+<div id="orgbb1e2c5" class="figure">
 <p><img src="./screenshots/debian-scr.png" alt="debian-scr.png" width="720px" />
 </p>
 </div>
@@ -194,7 +189,7 @@
 <i>openSUSE Aeon with Gnome</i>
 </p>
 
-<div id="orgcb542dd" class="figure">
+<div id="orgf0cf6f3" class="figure">
 <p><img src="./screenshots/microos-scr.png" alt="microos-scr.png" width="720px" />
 </p>
 </div>
@@ -203,8 +198,8 @@
 All of these are different flavors of this configuration.
 </p>
 
-<div id="outline-container-org6d712f3" class="outline-2">
-<h2 id="org6d712f3"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgba1de59" class="outline-2">
+<h2 id="orgba1de59"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is my highly modular and entirely literate full-system configuration.
@@ -215,17 +210,17 @@ Let's talk about the implementation first - how I handle it and why.
 </p>
 </div>
 
-<div id="outline-container-org2b38b29" class="outline-3">
-<h3 id="org2b38b29"><span class="section-number-3">1.1.</span> The why</h3>
+<div id="outline-container-orgf315822" class="outline-3">
+<h3 id="orgf315822"><span class="section-number-3">1.1.</span> The why</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 There are multiple important ideas in place here.
 </p>
 </div>
 
-<div id="outline-container-orgb10c4ef" class="outline-4">
-<h4 id="orgb10c4ef">Reproducibility</h4>
-<div class="outline-text-4" id="text-orgb10c4ef">
+<div id="outline-container-org0ec3138" class="outline-4">
+<h4 id="org0ec3138">Reproducibility</h4>
+<div class="outline-text-4" id="text-org0ec3138">
 <p>
 I should be able to deploy this configuration quickly and easily, achieving an identical (= reasonably close to identical) result every time.
 Most importantly all of the relevant dotfiles should be present and should be set up in a way that allows them to work when deployed anywhere. Every file that is relevant to reproducing this configuration should be present.
@@ -234,36 +229,36 @@ To ensure this is the case I sometimes try to set up my environment in a virtual
 </div>
 </div>
 
-<div id="outline-container-orge34101c" class="outline-4">
-<h4 id="orge34101c">Separation</h4>
-<div class="outline-text-4" id="text-orge34101c">
+<div id="outline-container-orge139a49" class="outline-4">
+<h4 id="orge139a49">Separation</h4>
+<div class="outline-text-4" id="text-orge139a49">
 <p>
 The user environment should exist almost entirely separately from the system environment. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5771719" class="outline-4">
-<h4 id="org5771719">Modularity</h4>
-<div class="outline-text-4" id="text-org5771719">
+<div id="outline-container-orgb418a5b" class="outline-4">
+<h4 id="orgb418a5b">Modularity</h4>
+<div class="outline-text-4" id="text-orgb418a5b">
 <p>
 I should be able to easily pick which parts of the configuration I want to deploy.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9091177" class="outline-4">
-<h4 id="org9091177">Organization</h4>
-<div class="outline-text-4" id="text-org9091177">
+<div id="outline-container-org4d3269b" class="outline-4">
+<h4 id="org4d3269b">Organization</h4>
+<div class="outline-text-4" id="text-org4d3269b">
 <p>
 There should be no confusion over how to deploy this system, nor should there be any confusion over where individual files belong, etc. All files should have their own clearly defined place.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd6432ea" class="outline-4">
-<h4 id="orgd6432ea">Maintainability</h4>
-<div class="outline-text-4" id="text-orgd6432ea">
+<div id="outline-container-org6601de9" class="outline-4">
+<h4 id="org6601de9">Maintainability</h4>
+<div class="outline-text-4" id="text-org6601de9">
 <p>
 The configuration should be easy to keep current, it should also be robust and reliable.
 </p>
@@ -271,17 +266,17 @@ The configuration should be easy to keep current, it should also be robust and r
 </div>
 </div>
 
-<div id="outline-container-org0e5d9d6" class="outline-3">
-<h3 id="org0e5d9d6"><span class="section-number-3">1.2.</span> The implementation</h3>
+<div id="outline-container-org36906ca" class="outline-3">
+<h3 id="org36906ca"><span class="section-number-3">1.2.</span> The implementation</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 I'll start by outlining the structure, then I'll go over each step and explain its role.
 </p>
 </div>
 
-<div id="outline-container-orge20fede" class="outline-4">
-<h4 id="orge20fede">README.org</h4>
-<div class="outline-text-4" id="text-orge20fede">
+<div id="outline-container-orgd15e7dd" class="outline-4">
+<h4 id="orgd15e7dd">README.org</h4>
+<div class="outline-text-4" id="text-orgd15e7dd">
 <p>
 The centerpiece of this implementation is the <code>README.org</code> file. This file includes all of the plaintext dotfiles that are part of this system, as well as information about every other file.
 Using <code>org</code> to describe these files allows for the configuration to remain readable and properly organized. Each chapter in this file corresponds to a single "module" (more on these below).
@@ -293,9 +288,9 @@ This <code>org</code> file is then <code>tangled</code> into the <code>configs</
 </div>
 </div>
 
-<div id="outline-container-org89d3e76" class="outline-4">
-<h4 id="org89d3e76">Modules</h4>
-<div class="outline-text-4" id="text-org89d3e76">
+<div id="outline-container-org847b4ce" class="outline-4">
+<h4 id="org847b4ce">Modules</h4>
+<div class="outline-text-4" id="text-org847b4ce">
 <p>
 Each module is a group of files that fulfill a certain role.
 These modules should be self-reliant and shouldn't depend on other modules. In practice there are a few exceptions - for example some modules rely on the <code>guix</code> module to ship dependencies.
@@ -309,18 +304,18 @@ All of these modules are symlinked into the home directory using GNU Stow. Using
 </div>
 </div>
 
-<div id="outline-container-org3cf3ced" class="outline-4">
-<h4 id="org3cf3ced">Packages</h4>
-<div class="outline-text-4" id="text-org3cf3ced">
+<div id="outline-container-orga009365" class="outline-4">
+<h4 id="orga009365">Packages</h4>
+<div class="outline-text-4" id="text-orga009365">
 <p>
 The GNU Guix package manager is used for installing dependencies. This means the dependencies for this environment can be installed anywhere where Guix can run, further separating the user environment from the rest of the system and ensuring better reliability.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org04d43e9" class="outline-4">
-<h4 id="org04d43e9">Deployment</h4>
-<div class="outline-text-4" id="text-org04d43e9">
+<div id="outline-container-org7dad179" class="outline-4">
+<h4 id="org7dad179">Deployment</h4>
+<div class="outline-text-4" id="text-org7dad179">
 <ul class="org-ul">
 <li><b>Make sure to tangle this file with <code>org-babel-tangle</code> to actually apply changes made to plaintext files</b>.</li>
 <li>Install Guix and run a <code>guix pull</code> before importing Guix package manifests.</li>
@@ -357,16 +352,16 @@ Or all at once, overwriting existing:
 </div>
 </div>
 
-<div id="outline-container-orgd04d557" class="outline-2">
-<h2 id="orgd04d557"><span class="section-number-2">2.</span> Autostart</h2>
+<div id="outline-container-org2bf5f2c" class="outline-2">
+<h2 id="org2bf5f2c"><span class="section-number-2">2.</span> Autostart</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here I store my relevant autostart scripts.
 </p>
 </div>
 
-<div id="outline-container-orgd2019b5" class="outline-3">
-<h3 id="orgd2019b5"><span class="section-number-3">2.1.</span> .config/autostart/autostart.desktop</h3>
+<div id="outline-container-org66c9f4b" class="outline-3">
+<h3 id="org66c9f4b"><span class="section-number-3">2.1.</span> .config/autostart/autostart.desktop</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 First we need to add a .desktop file for the DE to load.
@@ -383,8 +378,8 @@ First we need to add a .desktop file for the DE to load.
 </div>
 </div>
 
-<div id="outline-container-org8a2833a" class="outline-3">
-<h3 id="org8a2833a"><span class="section-number-3">2.2.</span> .loginctl</h3>
+<div id="outline-container-orgb40b196" class="outline-3">
+<h3 id="orgb40b196"><span class="section-number-3">2.2.</span> .loginctl</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Here's the actual autostart script.
@@ -435,7 +430,6 @@ These are commands specifically only used when on my laptop.
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #707183;">[</span> <span style="color: #008000;">"</span><span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">HOSTNAME</span><span style="color: #008000;">"</span> = <span style="color: #008000;">"lainpad"</span> <span style="color: #707183;">]</span>
    <span style="color: #0000FF; font-weight: bold;">then</span>
-       <span style="color: #006DAF;">sudo</span> /opt/throttled/start.sh &amp;
        <span style="color: #006DAF;">blueman-applet</span> &amp;
        <span style="color: #006DAF;">setxkbmap</span> cz <span style="color: #D0372D;">-option</span> <span style="color: #008000;">'ctrl:swapcaps'</span> &amp;
        <span style="color: #006DAF;">xinput</span> set-prop <span style="color: #008000;">'pointer:Logitech G305'</span> <span style="color: #008000;">'Device Accel Profile'</span> <span style="color: #D0372D;">-1</span> &amp;
@@ -446,16 +440,16 @@ These are commands specifically only used when on my laptop.
 </div>
 </div>
 
-<div id="outline-container-orgfd3d0c0" class="outline-2">
-<h2 id="orgfd3d0c0"><span class="section-number-2">3.</span> Bash</h2>
+<div id="outline-container-orgacad948" class="outline-2">
+<h2 id="orgacad948"><span class="section-number-2">3.</span> Bash</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Let's move on to configuring the shell - bash in my case.
 </p>
 </div>
 
-<div id="outline-container-org51f9624" class="outline-3">
-<h3 id="org51f9624"><span class="section-number-3">3.1.</span> .bashrc</h3>
+<div id="outline-container-org037d787" class="outline-3">
+<h3 id="org037d787"><span class="section-number-3">3.1.</span> .bashrc</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I like to have a function to clear old guix builds by regex, helps keep the amount of garbage down.
@@ -559,8 +553,8 @@ Finally some variable exports - for Guix and Flatpak and a silly <code>sudo</cod
 </div>
 </div>
 
-<div id="outline-container-orgfd26298" class="outline-3">
-<h3 id="orgfd26298"><span class="section-number-3">3.2.</span> .bash profile</h3>
+<div id="outline-container-orgf3e1aae" class="outline-3">
+<h3 id="orgf3e1aae"><span class="section-number-3">3.2.</span> .bash profile</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Let's move onto the bash profile, used in login shells.
@@ -619,16 +613,16 @@ Laptop-specific environment variables to ensure hardware video acceleration work
 </div>
 </div>
 
-<div id="outline-container-org0a74069" class="outline-2">
-<h2 id="org0a74069"><span class="section-number-2">4.</span> Custom Binaries</h2>
+<div id="outline-container-org67a0054" class="outline-2">
+<h2 id="org67a0054"><span class="section-number-2">4.</span> Custom Binaries</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Here I have some custom binaries, mostly scripts and stuff.
 </p>
 </div>
 
-<div id="outline-container-org2b0e4f0" class="outline-3">
-<h3 id="org2b0e4f0"><span class="section-number-3">4.1.</span> .bin/scr</h3>
+<div id="outline-container-orgedaa6ee" class="outline-3">
+<h3 id="orgedaa6ee"><span class="section-number-3">4.1.</span> .bin/scr</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Just a screenshot shortcut.
@@ -640,8 +634,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-org1b9cdb2" class="outline-3">
-<h3 id="org1b9cdb2"><span class="section-number-3">4.2.</span> .bin/scr-area</h3>
+<div id="outline-container-org9a3ad07" class="outline-3">
+<h3 id="org9a3ad07"><span class="section-number-3">4.2.</span> .bin/scr-area</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 &#x2026;And the same but for a selected area.
@@ -653,8 +647,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-orgbc7820e" class="outline-3">
-<h3 id="orgbc7820e"><span class="section-number-3">4.3.</span> .bin/chromium-incognito</h3>
+<div id="outline-container-org0106529" class="outline-3">
+<h3 id="org0106529"><span class="section-number-3">4.3.</span> .bin/chromium-incognito</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 And a shortcut for opening chromium in incognito mode.
@@ -667,8 +661,8 @@ And a shortcut for opening chromium in incognito mode.
 </div>
 </div>
 
-<div id="outline-container-orga1bc6c2" class="outline-2">
-<h2 id="orga1bc6c2"><span class="section-number-2">5.</span> Containers</h2>
+<div id="outline-container-org448b305" class="outline-2">
+<h2 id="org448b305"><span class="section-number-2">5.</span> Containers</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I use distrobox docker/podman (depending on which is available, podman is prefered) on my installation.
@@ -676,8 +670,8 @@ Here is some necessary configs for the containers.
 </p>
 </div>
 
-<div id="outline-container-org9350640" class="outline-3">
-<h3 id="org9350640"><span class="section-number-3">5.1.</span> .config/containers/policy.json</h3>
+<div id="outline-container-org7b6385e" class="outline-3">
+<h3 id="org7b6385e"><span class="section-number-3">5.1.</span> .config/containers/policy.json</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 This isn't super secure.
@@ -702,8 +696,8 @@ This isn't super secure.
 </div>
 </div>
 
-<div id="outline-container-org061584d" class="outline-3">
-<h3 id="org061584d"><span class="section-number-3">5.2.</span> .config/containers/registries.conf</h3>
+<div id="outline-container-orgce1d7be" class="outline-3">
+<h3 id="orgce1d7be"><span class="section-number-3">5.2.</span> .config/containers/registries.conf</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Add the necessary registries.
@@ -725,8 +719,8 @@ Add the necessary registries.
 </div>
 </div>
 
-<div id="outline-container-org41d7e74" class="outline-2">
-<h2 id="org41d7e74"><span class="section-number-2">6.</span> Dictionaries</h2>
+<div id="outline-container-org10e8559" class="outline-2">
+<h2 id="org10e8559"><span class="section-number-2">6.</span> Dictionaries</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 This module provides the Czech hunspell dictionary since it currently isn't available in Guix.
@@ -735,8 +729,8 @@ The files were taken from the <a href="https://github.com/LibreOffice/dictionari
 </div>
 </div>
 
-<div id="outline-container-orgc5361f1" class="outline-2">
-<h2 id="orgc5361f1"><span class="section-number-2">7.</span> Debian Dependencies</h2>
+<div id="outline-container-orgfe27c6c" class="outline-2">
+<h2 id="orgfe27c6c"><span class="section-number-2">7.</span> Debian Dependencies</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 My long distrohopping journey has eventually landed me on Debian, which is the system I choose to run nowadays.
@@ -759,8 +753,8 @@ Emacs is installed separately from the backports.
 </div>
 </div>
 
-<div id="outline-container-org4915ee3" class="outline-2">
-<h2 id="org4915ee3"><span class="section-number-2">8.</span> Firefox</h2>
+<div id="outline-container-orgfb4eda9" class="outline-2">
+<h2 id="orgfb4eda9"><span class="section-number-2">8.</span> Firefox</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 This module provides my Firefox configuration. For tree style tab it's necessary to import <code>$HOME/.mozilla/firefox/default/treestyletab.css</code>.
@@ -768,8 +762,8 @@ This module provides my Firefox configuration. For tree style tab it's necessary
 </div>
 </div>
 
-<div id="outline-container-orgee01d46" class="outline-2">
-<h2 id="orgee01d46"><span class="section-number-2">9.</span> Fonts</h2>
+<div id="outline-container-org5030556" class="outline-2">
+<h2 id="org5030556"><span class="section-number-2">9.</span> Fonts</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 This module provides the necessary fonts.
@@ -777,8 +771,8 @@ This module provides the necessary fonts.
 </div>
 </div>
 
-<div id="outline-container-org98adb16" class="outline-2">
-<h2 id="org98adb16"><span class="section-number-2">10.</span> Gtk</h2>
+<div id="outline-container-org63acec8" class="outline-2">
+<h2 id="org63acec8"><span class="section-number-2">10.</span> Gtk</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 This module provides straightforward GTK3 configuration.
@@ -805,8 +799,8 @@ This adds a bit of padding to the XFCE terminal.
 </div>
 </div>
 
-<div id="outline-container-org197a478" class="outline-2">
-<h2 id="org197a478"><span class="section-number-2">11.</span> Guix</h2>
+<div id="outline-container-orgac7d6ed" class="outline-2">
+<h2 id="orgac7d6ed"><span class="section-number-2">11.</span> Guix</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <b>This module depends on the <code>guix-modules</code> module for certain package definitions!</b>
@@ -814,8 +808,8 @@ GNU Guix is a very important part of my configuration.
 </p>
 </div>
 
-<div id="outline-container-org74a760b" class="outline-3">
-<h3 id="org74a760b"><span class="section-number-3">11.1.</span> .guix-manifest</h3>
+<div id="outline-container-org3c5c570" class="outline-3">
+<h3 id="org3c5c570"><span class="section-number-3">11.1.</span> .guix-manifest</h3>
 <div class="outline-text-3" id="text-11-1">
 <p>
 Just a straightforward (and very messy!) package manifest. I have decided to keep this as a separate file rather than tangle it. This allows me to use <code>guix package --export-manifest</code> to update it.
@@ -823,8 +817,8 @@ Just a straightforward (and very messy!) package manifest. I have decided to kee
 </div>
 </div>
 
-<div id="outline-container-orged54255" class="outline-3">
-<h3 id="orged54255"><span class="section-number-3">11.2.</span> .guix-manifest-tiny</h3>
+<div id="outline-container-org5dd96ef" class="outline-3">
+<h3 id="org5dd96ef"><span class="section-number-3">11.2.</span> .guix-manifest-tiny</h3>
 <div class="outline-text-3" id="text-11-2">
 <p>
 Due to the above manifest becoming rather bloated a minimal replacement is provided here. This includes only the necessary dependencies to get the system running correctly.
@@ -847,8 +841,8 @@ Due to the above manifest becoming rather bloated a minimal replacement is provi
 </div>
 </div>
 
-<div id="outline-container-org77075bb" class="outline-3">
-<h3 id="org77075bb"><span class="section-number-3">11.3.</span> .config/guix/channels.scm</h3>
+<div id="outline-container-org4502c92" class="outline-3">
+<h3 id="org4502c92"><span class="section-number-3">11.3.</span> .config/guix/channels.scm</h3>
 <div class="outline-text-3" id="text-11-3">
 <p>
 Here is the setup for channels, additions here are <code>nonguix</code> and <code>guix-gaming-channels</code>.
@@ -880,36 +874,20 @@ Here is the setup for channels, additions here are <code>nonguix</code> and <cod
        %default-channels<span style="color: #707183;">)</span>
 </pre>
 </div>
-
-<p>
-Custom <code>sudoers</code> file. Added the ability to execute <code>throttled</code> script without entering password.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org0cbf7ba" class="outline-3">
-<h3 id="org0cbf7ba"><span class="section-number-3">11.4.</span> etc/sudoers-my</h3>
-<div class="outline-text-3" id="text-11-4">
-<div class="org-src-container">
-<pre class="src src-conf"><span style="color: #BA36A5;">root ALL</span>=(ALL) ALL
-<span style="color: #BA36A5;">%wheel ALL</span>=(ALL) ALL
-<span style="color: #BA36A5;">%wheel ALL</span>=(ALL) NOPASSWD:/opt/throttled/start.sh
-</pre>
-</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd5186ff" class="outline-2">
-<h2 id="orgd5186ff"><span class="section-number-2">12.</span> Guix-run</h2>
+<div id="outline-container-org2e43795" class="outline-2">
+<h2 id="org2e43795"><span class="section-number-2">12.</span> Guix-run</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 <code>guix-run</code> is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
 </p>
 </div>
 
-<div id="outline-container-org46895da" class="outline-3">
-<h3 id="org46895da"><span class="section-number-3">12.1.</span> .bin/guix-run</h3>
+<div id="outline-container-orga97ddeb" class="outline-3">
+<h3 id="orga97ddeb"><span class="section-number-3">12.1.</span> .bin/guix-run</h3>
 <div class="outline-text-3" id="text-12-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">export</span> <span style="color: #BA36A5; font-style: italic;">LD_LIBRARY_PATH</span>=<span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">LIBRARY_PATH</span>
@@ -925,135 +903,17 @@ Custom <code>sudoers</code> file. Added the ability to execute <code>throttled</
 </div>
 </div>
 
-<div id="outline-container-org5cebb45" class="outline-2">
-<h2 id="org5cebb45"><span class="section-number-2">13.</span> Throttled</h2>
+<div id="outline-container-org52af98d" class="outline-2">
+<h2 id="org52af98d"><span class="section-number-2">13.</span> Sway</h2>
 <div class="outline-text-2" id="text-13">
-<p>
-<a href="https://github.com/erpalma/throttled">throttled</a> is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU. Since it isn't packaged for Guix, I use a bit of a workaround to make it work.
-</p>
-</div>
-
-<div id="outline-container-org5859e00" class="outline-3">
-<h3 id="org5859e00"><span class="section-number-3">13.1.</span> opt/throttled/start.sh</h3>
-<div class="outline-text-3" id="text-13-1">
-<div class="org-src-container">
-<pre class="src src-sh"><span style="color: #006DAF;">sudo</span> guix shell gcc-toolchain pkg-config cairo gobject-introspection dbus <span style="color: #D0372D;">--</span> /opt/throttled/venv/bin/python /opt/throttled/throttled.py <span style="color: #D0372D;">--config</span> /home/nil/conf/throttled.conf
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgdf36ead" class="outline-3">
-<h3 id="orgdf36ead"><span class="section-number-3">13.2.</span> conf/throttled.conf</h3>
-<div class="outline-text-3" id="text-13-2">
-<div class="org-src-container">
-<pre class="src src-conf">[<span style="color: #6434A3;">GENERAL</span>]
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Enable or disable the script execution</span>
-Enabled: True
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">SYSFS path for checking if the system is running on AC power</span>
-Sysfs_Power_Path: /sys/class/power_supply/AC*/online
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Auto reload config on changes</span>
-Autoreload: True
-
-<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">Settings to apply while connected to Battery power</span>
-[<span style="color: #6434A3;">BATTERY</span>]
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Update the registers every this many seconds</span>
-Update_Rate_s: 30
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max package power for time window #1</span>
-PL1_Tdp_W: 29
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Time window #1 duration</span>
-PL1_Duration_s: 28
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max package power for time window #2</span>
-PL2_Tdp_W: 44
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Time window #2 duration</span>
-PL2_Duration_S: 0.002
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max allowed temperature before throttling</span>
-Trip_Temp_C: 85
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)</span>
-cTDP: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Disable BDPROCHOT (EXPERIMENTAL)</span>
-Disable_BDPROCHOT: False
-
-<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">Settings to apply while connected to AC power</span>
-[<span style="color: #6434A3;">AC</span>]
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Update the registers every this many seconds</span>
-Update_Rate_s: 5
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max package power for time window #1</span>
-PL1_Tdp_W: 44
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Time window #1 duration</span>
-PL1_Duration_s: 28
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max package power for time window #2</span>
-PL2_Tdp_W: 44
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Time window #2 duration</span>
-PL2_Duration_S: 0.002
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Max allowed temperature before throttling</span>
-Trip_Temp_C: 90
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Set HWP energy performance hints to 'performance' on high load (EXPERIMENTAL)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Uncomment only if you really want to use it</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">HWP_Mode: False</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Set cTDP to normal=0, down=1 or up=2 (EXPERIMENTAL)</span>
-cTDP: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Disable BDPROCHOT (EXPERIMENTAL)</span>
-Disable_BDPROCHOT: False
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)! </span>
-[<span style="color: #6434A3;">UNDERVOLT.BATTERY</span>]
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CPU core voltage offset (mV)</span>
-CORE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Integrated GPU voltage offset (mV)</span>
-GPU: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CPU cache voltage offset (mV)</span>
-CACHE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">System Agent voltage offset (mV)</span>
-UNCORE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Analog I/O voltage offset (mV)</span>
-ANALOGIO: 0
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">All voltage values are expressed in mV and *MUST* be negative (i.e. undervolt)!</span>
-[<span style="color: #6434A3;">UNDERVOLT.AC</span>]
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CPU core voltage offset (mV)</span>
-CORE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Integrated GPU voltage offset (mV)</span>
-GPU: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CPU cache voltage offset (mV)</span>
-CACHE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">System Agent voltage offset (mV)</span>
-UNCORE: 0
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Analog I/O voltage offset (mV)</span>
-ANALOGIO: 0
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">[ICCMAX.AC]</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># CPU core max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CORE: </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># Integrated GPU max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">GPU: </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># CPU cache max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CACHE: </span>
-
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">[ICCMAX.BATTERY]</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># CPU core max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CORE: </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># Integrated GPU max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">GPU: </span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;"># CPU cache max current (A)</span>
-<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">CACHE: </span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgebff207" class="outline-2">
-<h2 id="orgebff207"><span class="section-number-2">14.</span> Sway</h2>
-<div class="outline-text-2" id="text-14">
 <p>
 <code>Sway</code> is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have sway here for completeness.
 </p>
 </div>
 
-<div id="outline-container-org6beee7e" class="outline-3">
-<h3 id="org6beee7e"><span class="section-number-3">14.1.</span> .config/sway/config</h3>
-<div class="outline-text-3" id="text-14-1">
+<div id="outline-container-org97fb482" class="outline-3">
+<h3 id="org97fb482"><span class="section-number-3">13.1.</span> .config/sway/config</h3>
+<div class="outline-text-3" id="text-13-1">
 <p>
 Set some initial variables first.
 </p>
@@ -1338,9 +1198,9 @@ And finally set colors.
 </div>
 </div>
 
-<div id="outline-container-org0067c30" class="outline-3">
-<h3 id="org0067c30"><span class="section-number-3">14.2.</span> .config/sway/i3status wrapper.py</h3>
-<div class="outline-text-3" id="text-14-2">
+<div id="outline-container-org21418e3" class="outline-3">
+<h3 id="org21418e3"><span class="section-number-3">13.2.</span> .config/sway/i3status wrapper.py</h3>
+<div class="outline-text-3" id="text-13-2">
 <p>
 This small python wrapper adds the currently playing song as a prefix to the status.
 </p>
@@ -1424,9 +1284,9 @@ This small python wrapper adds the currently playing song as a prefix to the sta
 </div>
 </div>
 
-<div id="outline-container-org68ea4cc" class="outline-3">
-<h3 id="org68ea4cc"><span class="section-number-3">14.3.</span> .config/i3status/config</h3>
-<div class="outline-text-3" id="text-14-3">
+<div id="outline-container-orgb74f58e" class="outline-3">
+<h3 id="orgb74f58e"><span class="section-number-3">13.3.</span> .config/i3status/config</h3>
+<div class="outline-text-3" id="text-13-3">
 <p>
 This is the actual i3status config.
 </p>
@@ -1506,26 +1366,26 @@ And configure the individual items.
 </div>
 </div>
 
-<div id="outline-container-org30d988e" class="outline-2">
-<h2 id="org30d988e"><span class="section-number-2">15.</span> Icons</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-orgd7affb6" class="outline-2">
+<h2 id="orgd7affb6"><span class="section-number-2">14.</span> Icons</h2>
+<div class="outline-text-2" id="text-14">
 <p>
 This modules provides custom icons.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org98f56a2" class="outline-2">
-<h2 id="org98f56a2"><span class="section-number-2">16.</span> Rofi</h2>
-<div class="outline-text-2" id="text-16">
+<div id="outline-container-org9373056" class="outline-2">
+<h2 id="org9373056"><span class="section-number-2">15.</span> Rofi</h2>
+<div class="outline-text-2" id="text-15">
 <p>
 Wofi is an application launcher, I use it with sway and sometimes even with different desktop environments.
 </p>
 </div>
 
-<div id="outline-container-orgbfd6b79" class="outline-3">
-<h3 id="orgbfd6b79"><span class="section-number-3">16.1.</span> .config/wofi/nord.rasi</h3>
-<div class="outline-text-3" id="text-16-1">
+<div id="outline-container-org2332982" class="outline-3">
+<h3 id="org2332982"><span class="section-number-3">15.1.</span> .config/wofi/nord.rasi</h3>
+<div class="outline-text-3" id="text-15-1">
 <p>
 This is my chosen wofi theme, fits with the sway theme!
 Original source <a href="https://github.com/lr-tech/rofi-themes-collection">here</a>.
@@ -1637,17 +1497,17 @@ Original source <a href="https://github.com/lr-tech/rofi-themes-collection">here
 </div>
 </div>
 
-<div id="outline-container-org40189dc" class="outline-2">
-<h2 id="org40189dc"><span class="section-number-2">17.</span> Startx</h2>
-<div class="outline-text-2" id="text-17">
+<div id="outline-container-org98daddb" class="outline-2">
+<h2 id="org98daddb"><span class="section-number-2">16.</span> Startx</h2>
+<div class="outline-text-2" id="text-16">
 <p>
 This bit is for a custom <code>startx</code> command, made to work with Guix.
 </p>
 </div>
 
-<div id="outline-container-org941af7c" class="outline-3">
-<h3 id="org941af7c"><span class="section-number-3">17.1.</span> .startx</h3>
-<div class="outline-text-3" id="text-17-1">
+<div id="outline-container-orgeedd84a" class="outline-3">
+<h3 id="orgeedd84a"><span class="section-number-3">16.1.</span> .startx</h3>
+<div class="outline-text-3" id="text-16-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #BA36A5; font-style: italic;">DIR</span>=<span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span>/.guix-profile
 
@@ -1660,17 +1520,17 @@ This bit is for a custom <code>startx</code> command, made to work with Guix.
 </div>
 </div>
 
-<div id="outline-container-org4550c47" class="outline-2">
-<h2 id="org4550c47"><span class="section-number-2">18.</span> Xresources</h2>
-<div class="outline-text-2" id="text-18">
+<div id="outline-container-org495864f" class="outline-2">
+<h2 id="org495864f"><span class="section-number-2">17.</span> Xresources</h2>
+<div class="outline-text-2" id="text-17">
 <p>
 Here I apply some basic Xorg configuration.
 </p>
 </div>
 
-<div id="outline-container-orgf4f842a" class="outline-3">
-<h3 id="orgf4f842a"><span class="section-number-3">18.1.</span> .Xresources</h3>
-<div class="outline-text-3" id="text-18-1">
+<div id="outline-container-org9dda45f" class="outline-3">
+<h3 id="org9dda45f"><span class="section-number-3">17.1.</span> .Xresources</h3>
+<div class="outline-text-3" id="text-17-1">
 <p>
 Just set the DPI and configure basic font rendering.
 </p>
@@ -1688,9 +1548,9 @@ Just set the DPI and configure basic font rendering.
 </div>
 </div>
 
-<div id="outline-container-orge14db14" class="outline-3">
-<h3 id="orge14db14"><span class="section-number-3">18.2.</span> .xsessionrc</h3>
-<div class="outline-text-3" id="text-18-2">
+<div id="outline-container-org206fd72" class="outline-3">
+<h3 id="org206fd72"><span class="section-number-3">17.2.</span> .xsessionrc</h3>
+<div class="outline-text-3" id="text-17-2">
 <p>
 This here is necessary for Debian; makes Guix programs accessible from a desktop session.
 </p>
@@ -1703,35 +1563,35 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
 </div>
 </div>
 
-<div id="outline-container-orgc6d565e" class="outline-2">
-<h2 id="orgc6d565e"><span class="section-number-2">19.</span> XFCE 4 Terminal</h2>
-<div class="outline-text-2" id="text-19">
+<div id="outline-container-orga031b5e" class="outline-2">
+<h2 id="orga031b5e"><span class="section-number-2">18.</span> XFCE 4 Terminal</h2>
+<div class="outline-text-2" id="text-18">
 <p>
 <code>xfce4-terminal</code> is my chosen terminal emulator. It's very easy to get up and running and supports all the basic features I need.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org40f93c3" class="outline-2">
-<h2 id="org40f93c3"><span class="section-number-2">20.</span> Wallpapers</h2>
-<div class="outline-text-2" id="text-20">
+<div id="outline-container-org8dc47e5" class="outline-2">
+<h2 id="org8dc47e5"><span class="section-number-2">19.</span> Wallpapers</h2>
+<div class="outline-text-2" id="text-19">
 <p>
 This module provides a few nice wallpapers I like to use. The path to these wallpapers is <code>$HOME/.local/share/wallpapers</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbf21929" class="outline-2">
-<h2 id="orgbf21929"><span class="section-number-2">21.</span> Guix system</h2>
-<div class="outline-text-2" id="text-21">
+<div id="outline-container-orgfcd7645" class="outline-2">
+<h2 id="orgfcd7645"><span class="section-number-2">20.</span> Guix system</h2>
+<div class="outline-text-2" id="text-20">
 <p>
 Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
 </p>
 </div>
 
-<div id="outline-container-org070b302" class="outline-3">
-<h3 id="org070b302"><span class="section-number-3">21.1.</span> /etc/config.scm</h3>
-<div class="outline-text-3" id="text-21-1">
+<div id="outline-container-org7779588" class="outline-3">
+<h3 id="org7779588"><span class="section-number-3">20.1.</span> /etc/config.scm</h3>
+<div class="outline-text-3" id="text-20-1">
 <p>
 Let's start by adding my custom modules. This isn't exactly clean but it is functional.
 </p>
@@ -1747,13 +1607,17 @@ Now import the actual modules
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">use-modules</span> <span style="color: #7388D6;">(</span>gnu<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services dbus<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>nil services throttled<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services pm<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages gnome<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>gnu packages firmware<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>nongnu packages linux<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>nongnu system linux-initrd<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services virtualization<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services shepherd<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>gnu services avahi<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services admin<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>gnu system nss<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>guix channels<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services mcron<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services docker<span style="color: #7388D6;">)</span>
@@ -1761,6 +1625,7 @@ Now import the actual modules
              <span style="color: #7388D6;">(</span>nil services mount-rshared<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>nil services virsh<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>nil packages gnome<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>gnu services linux<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages gnome<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages fonts<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages networking<span style="color: #7388D6;">)</span>
@@ -1794,7 +1659,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
                                       <span style="color: #907373;">(</span>auto-login? #t<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                    <span style="color: #909183;">(</span>dbus-root-service-type config =&gt;
                                            <span style="color: #709870;">(</span>dbus-configuration <span style="color: #907373;">(</span>inherit config<span style="color: #907373;">)</span>
-                                                               <span style="color: #907373;">(</span>services <span style="color: #6276BA;">(</span>list libratbag blueman<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                                                               <span style="color: #907373;">(</span>services <span style="color: #6276BA;">(</span>list libratbag blueman fwupd<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -1809,8 +1674,6 @@ Let's handle basic OS defaults first of all.
  <span style="color: #7388D6;">(</span>keyboard-layout <span style="color: #909183;">(</span>keyboard-layout <span style="color: #008000;">"cz"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
 
  <span style="color: #7388D6;">(</span>host-name <span style="color: #008000;">"lainpad"</span><span style="color: #7388D6;">)</span>
-
- <span style="color: #7388D6;">(</span>sudoers-file <span style="color: #909183;">(</span>local-file <span style="color: #008000;">"./sudoers-my"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
 </pre>
 </div>
 
@@ -1867,6 +1730,14 @@ Add system-level packages now; these are <b>only</b> the most necessary of packa
 </div>
 
 <p>
+Enable resolving hostnames on local network.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span>name-service-switch %mdns-host-lookup-nss<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
 Now for the second part of service configuration - appending my own services.
 </p>
 <div class="org-src-container">
@@ -1899,6 +1770,17 @@ Now for the second part of service configuration - appending my own services.
    <span style="color: #709870;">(</span>service bluetooth-service-type
             <span style="color: #907373;">(</span>bluetooth-configuration
              <span style="color: #6276BA;">(</span>auto-enable? #f<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+</pre>
+</div>
+
+<p>
+<a href="https://github.com/erpalma/throttled">throttled</a> is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span>service throttled-service-type<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>service kernel-module-loader-service-type
+         '<span style="color: #7388D6;">(</span><span style="color: #008000;">"msr"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">required for throttled</span>
 </pre>
 </div>
 
@@ -2002,9 +1884,9 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
 </div>
 </div>
 
-<div id="outline-container-org6ab21b2" class="outline-3">
-<h3 id="org6ab21b2"><span class="section-number-3">21.2.</span> /etc/signing-key.pub</h3>
-<div class="outline-text-3" id="text-21-2">
+<div id="outline-container-orgb3b3b9a" class="outline-3">
+<h3 id="orgb3b3b9a"><span class="section-number-3">20.2.</span> /etc/signing-key.pub</h3>
+<div class="outline-text-3" id="text-20-2">
 <p>
 This is the key for nonguix.
 </p>
@@ -2021,25 +1903,25 @@ This is the key for nonguix.
 </div>
 </div>
 
-<div id="outline-container-org1781bc8" class="outline-2">
-<h2 id="org1781bc8"><span class="section-number-2">22.</span> Custom Guix Modules</h2>
-<div class="outline-text-2" id="text-22">
+<div id="outline-container-org6b3f8da" class="outline-2">
+<h2 id="org6b3f8da"><span class="section-number-2">21.</span> Custom Guix Modules</h2>
+<div class="outline-text-2" id="text-21">
 <p>
 I use some of my own custom Guix modules. These provide anything from services to (mainly) packages.
 </p>
 </div>
 
-<div id="outline-container-orgaa7de48" class="outline-3">
-<h3 id="orgaa7de48"><span class="section-number-3">22.1.</span> /etc/guix-modules/nil/packages</h3>
-<div class="outline-text-3" id="text-22-1">
+<div id="outline-container-orgff296e0" class="outline-3">
+<h3 id="orgff296e0"><span class="section-number-3">21.1.</span> /etc/guix-modules/nil/packages</h3>
+<div class="outline-text-3" id="text-21-1">
 <p>
 Let's start with the packages first.
 </p>
 </div>
 
-<div id="outline-container-org2626d49" class="outline-4">
-<h4 id="org2626d49"><span class="section-number-4">22.1.1.</span> brogue.scm</h4>
-<div class="outline-text-4" id="text-22-1-1">
+<div id="outline-container-orgf34c6a6" class="outline-4">
+<h4 id="orgf34c6a6"><span class="section-number-4">21.1.1.</span> brogue.scm</h4>
+<div class="outline-text-4" id="text-21-1-1">
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages brogue</span><span style="color: #7388D6;">)</span>
   <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix packages<span style="color: #7388D6;">)</span>
@@ -2107,9 +1989,9 @@ Let's start with the packages first.
 </div>
 </div>
 
-<div id="outline-container-orgd06eb64" class="outline-4">
-<h4 id="orgd06eb64"><span class="section-number-4">22.1.2.</span> distrobox-docker.scm</h4>
-<div class="outline-text-4" id="text-22-1-2">
+<div id="outline-container-org3e091cd" class="outline-4">
+<h4 id="org3e091cd"><span class="section-number-4">21.1.2.</span> distrobox-docker.scm</h4>
+<div class="outline-text-4" id="text-21-1-2">
 <p>
 Since podman isn't currently fully functional on Guix we have to use docker instead.
 Unfortunately the Distrobox definition in Guix's repos relies on podman, making it practically broken. To solve this issue I modify the package to use docker instead.
@@ -2161,9 +2043,9 @@ Unfortunately the Distrobox definition in Guix's repos relies on podman, making 
 </div>
 </div>
 
-<div id="outline-container-orgba43795" class="outline-4">
-<h4 id="orgba43795"><span class="section-number-4">22.1.3.</span> emulators.scm</h4>
-<div class="outline-text-4" id="text-22-1-3">
+<div id="outline-container-orgf850b6e" class="outline-4">
+<h4 id="orgf850b6e"><span class="section-number-4">21.1.3.</span> emulators.scm</h4>
+<div class="outline-text-4" id="text-21-1-3">
 <p>
 This is a custom retroarch definition, it adds the core downloader functionality which the Guix version doesn't have for licensing reasons.
 </p>
@@ -2225,9 +2107,9 @@ This is a custom retroarch definition, it adds the core downloader functionality
 </div>
 </div>
 
-<div id="outline-container-orgf1338bb" class="outline-4">
-<h4 id="orgf1338bb"><span class="section-number-4">22.1.4.</span> gnome.scm</h4>
-<div class="outline-text-4" id="text-22-1-4">
+<div id="outline-container-org96b17a0" class="outline-4">
+<h4 id="org96b17a0"><span class="section-number-4">21.1.4.</span> gnome.scm</h4>
+<div class="outline-text-4" id="text-21-1-4">
 <p>
 Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace <code>gnome-console</code> with <code>gnome-terminal</code> as it is more full-featured.
 </p>
@@ -2257,19 +2139,95 @@ Since the default Gnome package in Guix ships quite a few unnecessary dependenci
 </div>
 </div>
 </div>
-</div>
 
-<div id="outline-container-org0117041" class="outline-3">
-<h3 id="org0117041"><span class="section-number-3">22.2.</span> /etc/guix-modules/nil/services</h3>
-<div class="outline-text-3" id="text-22-2">
+<div id="outline-container-orgf75d995" class="outline-4">
+<h4 id="orgf75d995"><span class="section-number-4">21.1.5.</span> throttled.scm</h4>
+<div class="outline-text-4" id="text-21-1-5">
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages throttled</span><span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix packages<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix utils<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix build utils<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix git-download<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages commencement<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages pkg-config<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages pciutils<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages gtk<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages glib<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages bash<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages linux<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages python-xyz<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix licenses<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages base<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix build-system python<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages python<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-public</span> <span style="color: #006699;">throttled</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>commit <span style="color: #008000;">"596ad496e8c5cff2aae6977de6a9e1546bf51cbf"</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>revision <span style="color: #008000;">"1"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>package
+      <span style="color: #709870;">(</span>name <span style="color: #008000;">"throttled"</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>version <span style="color: #907373;">(</span>git-version <span style="color: #008000;">"0.10.99"</span> revision commit<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>source <span style="color: #907373;">(</span>origin
+                <span style="color: #6276BA;">(</span>method git-fetch<span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>uri <span style="color: #858580;">(</span>git-reference
+                      <span style="color: #80A880;">(</span>url <span style="color: #008000;">"https://github.com/erpalma/throttled/"</span><span style="color: #80A880;">)</span>
+                      <span style="color: #80A880;">(</span>commit commit<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>file-name <span style="color: #858580;">(</span>git-file-name name version<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>sha256
+                 <span style="color: #858580;">(</span>base32
+                  <span style="color: #008000;">"10ki1hjisalsqjknmrj6m6zc7cq3mqkfzi7j5bl9ysh9yh1dlzaq"</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>build-system python-build-system<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>inputs <span style="color: #907373;">(</span>list python-pygobject python-dbus-python python-configparser gcc-toolchain pkg-config cairo gobject-introspection dbus<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>propagated-inputs <span style="color: #907373;">(</span>list pciutils<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>native-inputs <span style="color: #907373;">(</span>list python<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>arguments
+       `<span style="color: #907373;">(</span><span style="color: #006FE0;">#:phases</span>
+         <span style="color: #6276BA;">(</span>modify-phases %standard-phases
+           <span style="color: #858580;">(</span>delete 'build<span style="color: #858580;">)</span>
+           <span style="color: #858580;">(</span>delete 'check<span style="color: #858580;">)</span>
+           <span style="color: #858580;">(</span>replace 'install
+             <span style="color: #80A880;">(</span><span style="color: #0000FF; font-weight: bold;">lambda*</span> <span style="color: #887070;">(</span><span style="color: #006FE0;">#:key</span> inputs outputs <span style="color: #006FE0;">#:allow-other-keys</span><span style="color: #887070;">)</span>
+               <span style="color: #887070;">(</span><span style="color: #0000FF; font-weight: bold;">use-modules</span> <span style="color: #707183;">(</span>guix build utils<span style="color: #707183;">)</span><span style="color: #887070;">)</span>
+               <span style="color: #887070;">(</span><span style="color: #0000FF; font-weight: bold;">let*</span> <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>sitedir <span style="color: #909183;">(</span>site-packages inputs outputs<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+                      <span style="color: #7388D6;">(</span>source <span style="color: #909183;">(</span>assoc-ref %build-inputs <span style="color: #008000;">"source"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+                      <span style="color: #7388D6;">(</span>coreutils <span style="color: #909183;">(</span>assoc-ref %build-inputs <span style="color: #008000;">"coreutils"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+                      <span style="color: #7388D6;">(</span>python <span style="color: #909183;">(</span>assoc-ref %build-inputs <span style="color: #008000;">"python"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+                      <span style="color: #7388D6;">(</span>out <span style="color: #909183;">(</span>assoc-ref %outputs <span style="color: #008000;">"out"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+                      <span style="color: #7388D6;">(</span>python-sitedir
+                       <span style="color: #909183;">(</span>string-append out <span style="color: #008000;">"/lib/python"</span>
+                                      <span style="color: #709870;">(</span>python-version python<span style="color: #709870;">)</span>
+                                      <span style="color: #008000;">"/site-packages"</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                 <span style="color: #707183;">(</span>mkdir-p python-sitedir<span style="color: #707183;">)</span>
+                 <span style="color: #707183;">(</span>mkdir-p <span style="color: #7388D6;">(</span>string-append out <span style="color: #008000;">"/bin/"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                 <span style="color: #707183;">(</span>copy-file <span style="color: #008000;">"throttled.py"</span> <span style="color: #7388D6;">(</span>string-append out <span style="color: #008000;">"/bin/throttled"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                 <span style="color: #707183;">(</span>copy-file <span style="color: #008000;">"mmio.py"</span> <span style="color: #7388D6;">(</span>string-append python-sitedir <span style="color: #008000;">"/mmio.py"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                 <span style="color: #707183;">(</span>wrap-program <span style="color: #7388D6;">(</span>string-append out <span style="color: #008000;">"/bin/throttled"</span><span style="color: #7388D6;">)</span>
+                   `<span style="color: #7388D6;">(</span><span style="color: #008000;">"GUIX_PYTHONPATH"</span> <span style="color: #008000;">":"</span> suffix
+                     ,<span style="color: #909183;">(</span>list sitedir python-sitedir<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+                 <span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>synopsis <span style="color: #008000;">""</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>description <span style="color: #008000;">""</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>home-page <span style="color: #008000;">"https://github.com/erpalma/throttled"</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>license expat<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org7081df8" class="outline-3">
+<h3 id="org7081df8"><span class="section-number-3">21.2.</span> /etc/guix-modules/nil/services</h3>
+<div class="outline-text-3" id="text-21-2">
 <p>
 Moving on to services.
 </p>
 </div>
 
-<div id="outline-container-orgfa295f3" class="outline-4">
-<h4 id="orgfa295f3"><span class="section-number-4">22.2.1.</span> mount-rshared.scm</h4>
-<div class="outline-text-4" id="text-22-2-1">
+<div id="outline-container-org74dc6dc" class="outline-4">
+<h4 id="org74dc6dc"><span class="section-number-4">21.2.1.</span> mount-rshared.scm</h4>
+<div class="outline-text-4" id="text-21-2-1">
 <p>
 Tiny service used to remount the root as recursively shared on boot.
 </p>
@@ -2299,9 +2257,9 @@ Tiny service used to remount the root as recursively shared on boot.
 </div>
 </div>
 
-<div id="outline-container-org0879438" class="outline-4">
-<h4 id="org0879438"><span class="section-number-4">22.2.2.</span> virsh.scm</h4>
-<div class="outline-text-4" id="text-22-2-2">
+<div id="outline-container-orga61f25c" class="outline-4">
+<h4 id="orga61f25c"><span class="section-number-4">21.2.2.</span> virsh.scm</h4>
+<div class="outline-text-4" id="text-21-2-2">
 <p>
 There doesn't seem to be a proper Guix way to configure libvirt networks so my lazy workaround is to make a service that creates the default transient network.
 </p>
@@ -2348,12 +2306,194 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 </div>
 </div>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org4914b09" class="outline-2">
-<h2 id="org4914b09"><span class="section-number-2">23.</span> ZRAM on non-guix distros</h2>
-<div class="outline-text-2" id="text-23">
+<div id="outline-container-org4a9c120" class="outline-4">
+<h4 id="org4a9c120"><span class="section-number-4">21.2.3.</span> throttled.scm</h4>
+<div class="outline-text-4" id="text-21-2-3">
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil services throttled</span><span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>nil packages throttled<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix gexp<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix packages<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix records<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix modules<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu services<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu services base<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu services configuration<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu services dbus<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu services shepherd<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix gexp<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>ice-9 match<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:export</span> <span style="color: #7388D6;">(</span>throttled-configuration
+            throttled-configuration?
+            throttled-service-type<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">non-negative-integer?</span> val<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">and</span> <span style="color: #909183;">(</span>exact-integer? val<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>not <span style="color: #709870;">(</span>negative? val<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">non-negative-float?</span> val<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span>not <span style="color: #909183;">(</span>negative? val<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>define-maybe file-like<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>define-maybe/no-serialization string<span style="color: #707183;">)</span>
+
+
+<span style="color: #707183;">(</span>define-configuration throttled-configuration
+  <span style="color: #7388D6;">(</span>throttled
+   <span style="color: #909183;">(</span>file-like throttled<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"The THROTTLED package."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>throttled-enable?
+   <span style="color: #909183;">(</span>boolean #t<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Enable or disable the script execution."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>sysfs-power-path
+   <span style="color: #909183;">(</span>string <span style="color: #008000;">"/sys/class/power_supply/AC*/online"</span><span style="color: #909183;">)</span>
+   <span style="color: #008000;">"SYSFS path for checking if the system is running on AC power."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-update-rate-s
+   <span style="color: #909183;">(</span>non-negative-integer 30<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Update the registers every this many seconds."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-pl1-tdp-w
+   <span style="color: #909183;">(</span>non-negative-integer 29<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max package power for time window #1."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-pl1-duration-s
+   <span style="color: #909183;">(</span>non-negative-integer 28<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Time window #1 duration."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-pl2-tdp-w
+   <span style="color: #909183;">(</span>non-negative-integer 44<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max package power for time window #2."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-pl2-duration-s
+   <span style="color: #909183;">(</span>non-negative-float 0.002<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Time window #2 duration."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>bat-trip-temp-c
+   <span style="color: #909183;">(</span>non-negative-integer 85<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max allowed temperature before throttling."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-update-rate-s
+   <span style="color: #909183;">(</span>non-negative-integer 5<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Update the registers every this many seconds."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-pl1-tdp-w
+   <span style="color: #909183;">(</span>non-negative-integer 44<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max package power for time window #1."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-pl1-duration-s
+   <span style="color: #909183;">(</span>non-negative-integer 28<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Time window #1 duration."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-pl2-tdp-w
+   <span style="color: #909183;">(</span>non-negative-integer 44<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max package power for time window #2."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-pl2-duration-s
+   <span style="color: #909183;">(</span>non-negative-float 0.002<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Time window #2 duration."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>ac-trip-temp-c
+   <span style="color: #909183;">(</span>non-negative-integer 90<span style="color: #909183;">)</span>
+   <span style="color: #008000;">"Max allowed temperature before throttling."</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>no-serialization<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">generate-throttled-config</span> config<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span>string-append <span style="color: #008000;">"[GENERAL]\n"</span>
+                 <span style="color: #008000;">"Enabled: "</span>
+                 <span style="color: #909183;">(</span><span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #709870;">(</span>throttled-configuration-throttled-enable? config<span style="color: #709870;">)</span> <span style="color: #008000;">"True"</span> <span style="color: #008000;">"False"</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"Sysfs_Power_Path: "</span>
+                 <span style="color: #909183;">(</span>throttled-configuration-sysfs-power-path config<span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"Autoreload: True"</span>
+                 <span style="color: #008000;">"\n\n"</span>
+                 <span style="color: #008000;">"[BATTERY]\n"</span>
+                 <span style="color: #008000;">"Update_Rate_s: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-bat-update-rate-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL1_Tdp_W: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-bat-pl1-tdp-w config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL1_Duration_s: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-bat-pl1-duration-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL2_Tdp_W: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-pl2-tdp-w config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL2_Duration_S: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-bat-pl2-duration-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"Trip_Temp_C: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-bat-trip-temp-c config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"cTDP: 0\nDisable_BDPROCHOT: False\n\n"</span>
+                 <span style="color: #008000;">"[AC]\n"</span>
+                 <span style="color: #008000;">"Update_Rate_s: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-update-rate-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL1_Tdp_W: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-pl1-tdp-w config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL1_Duration_s: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-pl1-duration-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL2_Tdp_W: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-pl2-tdp-w config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"PL2_Duration_S: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-pl2-duration-s config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"Trip_Temp_C: "</span>
+                 <span style="color: #909183;">(</span>number-&gt;string <span style="color: #709870;">(</span>throttled-configuration-ac-trip-temp-c config<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                 <span style="color: #008000;">"\n"</span>
+                 <span style="color: #008000;">"cTDP: 0\nDisable_BDPROCHOT: False\n\n"</span>
+                 <span style="color: #008000;">"[UNDERVOLT.BATTERY]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"</span>
+                 <span style="color: #008000;">"[UNDERVOLT.AC]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">throttled-shepherd-service</span> config<span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #006699;">throttled-command</span>
+    #~<span style="color: #909183;">(</span>list <span style="color: #709870;">(</span>string-append #$<span style="color: #907373;">(</span>throttled-configuration-throttled config<span style="color: #907373;">)</span> <span style="color: #008000;">"/bin/throttled"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+
+  <span style="color: #7388D6;">(</span>list
+   <span style="color: #909183;">(</span>shepherd-service
+    <span style="color: #709870;">(</span>documentation <span style="color: #008000;">"Run THROTTLED script."</span><span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span>provision '<span style="color: #907373;">(</span>throttled<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span>requirement '<span style="color: #907373;">(</span>user-processes<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span>start #~<span style="color: #907373;">(</span>make-forkexec-constructor #$throttled-command<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span>stop #~<span style="color: #907373;">(</span>make-kill-destructor<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">throttled-activation</span> config<span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">let*</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>config-str <span style="color: #907373;">(</span>generate-throttled-config config<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>config-file <span style="color: #907373;">(</span>plain-file <span style="color: #008000;">"throttled"</span> config-str<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>with-imported-modules '<span style="color: #709870;">(</span><span style="color: #907373;">(</span>guix build utils<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      #~<span style="color: #709870;">(</span><span style="color: #0000FF; font-weight: bold;">begin</span>
+          <span style="color: #907373;">(</span><span style="color: #0000FF; font-weight: bold;">use-modules</span> <span style="color: #6276BA;">(</span>guix build utils<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>copy-file #$config-file <span style="color: #008000;">"/etc/throttled.conf"</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #006699;">throttled-service-type</span>
+  <span style="color: #7388D6;">(</span>service-type
+   <span style="color: #909183;">(</span>name 'throttled<span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>extensions
+    <span style="color: #709870;">(</span>list
+     <span style="color: #907373;">(</span>service-extension shepherd-root-service-type
+                        throttled-shepherd-service<span style="color: #907373;">)</span>
+     <span style="color: #907373;">(</span>service-extension activation-service-type
+                        throttled-activation<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>default-value <span style="color: #709870;">(</span>throttled-configuration<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>description <span style="color: #008000;">"Run THROTTLED, a power management tool."</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orge722014" class="outline-2">
+<h2 id="orge722014"><span class="section-number-2">22.</span> ZRAM on non-guix distros</h2>
+<div class="outline-text-2" id="text-22">
 <p>
 This is the distribution-agnostic ZRAM implementation for use with systems other than GNU Guix. This module isn't necessary (or desired) with Guix System.
 </p>
@@ -2364,9 +2504,9 @@ This is the distribution-agnostic ZRAM implementation for use with systems other
 </ul>
 </div>
 
-<div id="outline-container-org91241be" class="outline-3">
-<h3 id="org91241be"><span class="section-number-3">23.1.</span> /etc/modules-load.d/zram.conf</h3>
-<div class="outline-text-3" id="text-23-1">
+<div id="outline-container-orgcb64d2d" class="outline-3">
+<h3 id="orgcb64d2d"><span class="section-number-3">22.1.</span> /etc/modules-load.d/zram.conf</h3>
+<div class="outline-text-3" id="text-22-1">
 <p>
 First load the kernel module.
 </p>
@@ -2377,9 +2517,9 @@ First load the kernel module.
 </div>
 </div>
 
-<div id="outline-container-orgf701fdb" class="outline-3">
-<h3 id="orgf701fdb"><span class="section-number-3">23.2.</span> /etc/modprobe.d/zram.conf</h3>
-<div class="outline-text-3" id="text-23-2">
+<div id="outline-container-org27384dc" class="outline-3">
+<h3 id="org27384dc"><span class="section-number-3">22.2.</span> /etc/modprobe.d/zram.conf</h3>
+<div class="outline-text-3" id="text-22-2">
 <p>
 Now to configure the module a little bit.
 </p>
@@ -2390,9 +2530,9 @@ Now to configure the module a little bit.
 </div>
 </div>
 
-<div id="outline-container-org7052aef" class="outline-3">
-<h3 id="org7052aef"><span class="section-number-3">23.3.</span> /etc/udev/rules.d/99-zram.rules</h3>
-<div class="outline-text-3" id="text-23-3">
+<div id="outline-container-org916fcb8" class="outline-3">
+<h3 id="org916fcb8"><span class="section-number-3">22.3.</span> /etc/udev/rules.d/99-zram.rules</h3>
+<div class="outline-text-3" id="text-22-3">
 <p>
 Set the ZRAM size - 16GB in this case.
 </p>
@@ -2403,9 +2543,9 @@ Set the ZRAM size - 16GB in this case.
 </div>
 </div>
 
-<div id="outline-container-org5167b20" class="outline-3">
-<h3 id="org5167b20"><span class="section-number-3">23.4.</span> /etc/systemd/system/zram.service</h3>
-<div class="outline-text-3" id="text-23-4">
+<div id="outline-container-org6fd919d" class="outline-3">
+<h3 id="org6fd919d"><span class="section-number-3">22.4.</span> /etc/systemd/system/zram.service</h3>
+<div class="outline-text-3" id="text-22-4">
 <p>
 Finally we need a systemd service to automatically enable zram on boot.
 </p>
@@ -2429,9 +2569,9 @@ Finally we need a systemd service to automatically enable zram on boot.
 </div>
 </div>
 
-<div id="outline-container-org2173f7c" class="outline-2">
-<h2 id="org2173f7c"><span class="section-number-2">24.</span> Emacs</h2>
-<div class="outline-text-2" id="text-24">
+<div id="outline-container-orgbb9180f" class="outline-2">
+<h2 id="orgbb9180f"><span class="section-number-2">23.</span> Emacs</h2>
+<div class="outline-text-2" id="text-23">
 <p>
 Finally - this is my Emacs config, now fully literate!
 </p>
@@ -2465,9 +2605,9 @@ I usually install these using <a href="https://guix.gnu.org">GNU Guix</a>, at le
 </p>
 </div>
 
-<div id="outline-container-org4d4c943" class="outline-3">
-<h3 id="org4d4c943"><span class="section-number-3">24.1.</span> Initial variables</h3>
-<div class="outline-text-3" id="text-24-1">
+<div id="outline-container-orgee09932" class="outline-3">
+<h3 id="orgee09932"><span class="section-number-3">23.1.</span> Initial variables</h3>
+<div class="outline-text-3" id="text-23-1">
 <p>
 Set some basic information about the user.
 </p>
@@ -2490,9 +2630,9 @@ EXWM can be toggled here. Its configuration is handled within a separate file.
 </div>
 </div>
 
-<div id="outline-container-orgacc4569" class="outline-3">
-<h3 id="orgacc4569"><span class="section-number-3">24.2.</span> Packages</h3>
-<div class="outline-text-3" id="text-24-2">
+<div id="outline-container-orgdc4f8b8" class="outline-3">
+<h3 id="orgdc4f8b8"><span class="section-number-3">23.2.</span> Packages</h3>
+<div class="outline-text-3" id="text-23-2">
 <p>
 Next we need to setup our package archives so that we can ensure all the necessary packages are installed. We'll also grab <code>el-patch</code> as it needs to have priority over other packages.
 </p>
@@ -2589,9 +2729,9 @@ You'll notice the use of a very primitive function - no <code>straight.el</code>
 </div>
 </div>
 
-<div id="outline-container-org1d175bf" class="outline-3">
-<h3 id="org1d175bf"><span class="section-number-3">24.3.</span> Extra tempel templates (.emacs.d/templates)</h3>
-<div class="outline-text-3" id="text-24-3">
+<div id="outline-container-orga74c539" class="outline-3">
+<h3 id="orga74c539"><span class="section-number-3">23.3.</span> Extra tempel templates (.emacs.d/templates)</h3>
+<div class="outline-text-3" id="text-23-3">
 <p>
 I use <code>tempel</code> for inserting snippets. This is the default path for adding new snippets.
 </p>
@@ -2612,9 +2752,9 @@ org-mode
 </div>
 </div>
 
-<div id="outline-container-org4d3de57" class="outline-3">
-<h3 id="org4d3de57"><span class="section-number-3">24.4.</span> custom-set options</h3>
-<div class="outline-text-3" id="text-24-4">
+<div id="outline-container-orgd2e496b" class="outline-3">
+<h3 id="orgd2e496b"><span class="section-number-3">23.4.</span> custom-set options</h3>
+<div class="outline-text-3" id="text-23-4">
 <p>
 Now we set some custom variables related mostly to theming. This part here was automatically generated by Emacs.
 </p>
@@ -2684,9 +2824,9 @@ The Fira Code font has ligature support, so we implement it here.
 </div>
 </div>
 
-<div id="outline-container-org9aa4114" class="outline-3">
-<h3 id="org9aa4114"><span class="section-number-3">24.5.</span> Variables</h3>
-<div class="outline-text-3" id="text-24-5">
+<div id="outline-container-orgabb122f" class="outline-3">
+<h3 id="orgabb122f"><span class="section-number-3">23.5.</span> Variables</h3>
+<div class="outline-text-3" id="text-23-5">
 <p>
 It's finally time to set up some basic variables.
 </p>
@@ -2835,9 +2975,9 @@ And here we arrive at the global modes.
 </div>
 </div>
 
-<div id="outline-container-org3a9b352" class="outline-3">
-<h3 id="org3a9b352"><span class="section-number-3">24.6.</span> LSP servers</h3>
-<div class="outline-text-3" id="text-24-6">
+<div id="outline-container-org5c412dc" class="outline-3">
+<h3 id="org5c412dc"><span class="section-number-3">23.6.</span> LSP servers</h3>
+<div class="outline-text-3" id="text-23-6">
 <p>
 Set up LSP for supported modes.
 </p>
@@ -3110,9 +3250,9 @@ This is for keybindings that should never be overwritten by minor modes.
 </div>
 </div>
 
-<div id="outline-container-org0614991" class="outline-3">
-<h3 id="org0614991"><span class="section-number-3">24.7.</span> Functions</h3>
-<div class="outline-text-3" id="text-24-7">
+<div id="outline-container-orgcad5a3e" class="outline-3">
+<h3 id="orgcad5a3e"><span class="section-number-3">23.7.</span> Functions</h3>
+<div class="outline-text-3" id="text-23-7">
 <p>
 Some straightforward functions here, used to make my Emacs life a little easier.
 </p>
@@ -3205,9 +3345,9 @@ Sometimes I like to take quick notes in Markdown with impatient mode used for a 
 </div>
 </div>
 
-<div id="outline-container-org357975e" class="outline-3">
-<h3 id="org357975e"><span class="section-number-3">24.8.</span> Keybindings</h3>
-<div class="outline-text-3" id="text-24-8">
+<div id="outline-container-org0fc4504" class="outline-3">
+<h3 id="org0fc4504"><span class="section-number-3">23.8.</span> Keybindings</h3>
+<div class="outline-text-3" id="text-23-8">
 <p>
 Finally we get to my extensive custom keybindings. I try to keep these to as few as possible, to avoid forgetting them over time.
 </p>
@@ -3332,9 +3472,9 @@ Let's move onto EXWM configuration next.
 </div>
 </div>
 
-<div id="outline-container-orgf7b7868" class="outline-3">
-<h3 id="orgf7b7868"><span class="section-number-3">24.9.</span> .exwm.el</h3>
-<div class="outline-text-3" id="text-24-9">
+<div id="outline-container-orga008a69" class="outline-3">
+<h3 id="orga008a69"><span class="section-number-3">23.9.</span> .exwm.el</h3>
+<div class="outline-text-3" id="text-23-9">
 <p>
 The EXWM configuration is stored in a separate file from the Emacs config, this helps keep it modular and easy to switch on or off.
 </p>
@@ -3490,9 +3630,9 @@ Finally push the super key and escape as <code>exwm-input-prefix-keys</code>.
 </div>
 </div>
 
-<div id="outline-container-org925439e" class="outline-2">
-<h2 id="org925439e"><span class="section-number-2">25.</span> Non-Guix Services and dependencies</h2>
-<div class="outline-text-2" id="text-25">
+<div id="outline-container-org2c3bca6" class="outline-2">
+<h2 id="org2c3bca6"><span class="section-number-2">24.</span> Non-Guix Services and dependencies</h2>
+<div class="outline-text-2" id="text-24">
 <p>
 Some additional services may need to be enabled on non-guix distributions.
 </p>
@@ -3509,7 +3649,7 @@ And that's all for the configs!
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: (λ () nil)</p>
-<p class="date">Created: 2024-05-23 Čt 17:52</p>
+<p class="date">Created: 2024-05-24 Pá 17:18</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
