@@ -33,8 +33,7 @@
 		 (base32
 		  "10ki1hjisalsqjknmrj6m6zc7cq3mqkfzi7j5bl9ysh9yh1dlzaq"))))
       (build-system python-build-system)
-      (inputs (list python-pygobject python-dbus-python python-configparser gcc-toolchain pkg-config cairo gobject-introspection dbus))
-      (propagated-inputs (list pciutils))
+      (inputs (list pciutils python-pygobject python-dbus-python python-configparser gcc-toolchain pkg-config cairo gobject-introspection dbus))
       (native-inputs (list python))
       (arguments
        `(#:phases
@@ -47,12 +46,16 @@
 	       (let* ((sitedir (site-packages inputs outputs))
 		      (source (assoc-ref %build-inputs "source"))
 		      (coreutils (assoc-ref %build-inputs "coreutils"))
+		      (pciutils (assoc-ref %build-inputs "pciutils"))
 		      (python (assoc-ref %build-inputs "python"))
 		      (out (assoc-ref %outputs "out"))
 		      (python-sitedir
 		       (string-append out "/lib/python"
 				      (python-version python)
 				      "/site-packages")))
+		 (substitute* "throttled.py"
+		   (("setpci")
+		    (string-append pciutils "/sbin/setpci")))
 		 (mkdir-p python-sitedir)
 		 (mkdir-p (string-append out "/bin/"))
 		 (copy-file "throttled.py" (string-append out "/bin/throttled"))
