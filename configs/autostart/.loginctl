@@ -18,6 +18,6 @@ if [ "$HOSTNAME" = "lainpad" ]
    then
        # blueman-applet &
        # setxkbmap cz -option 'ctrl:swapcaps' &
-       # xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
-       echo "nothing to do!"
+       xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+       # echo "nothing to do!"
 fi

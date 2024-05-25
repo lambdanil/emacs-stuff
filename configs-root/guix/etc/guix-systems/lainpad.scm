@@ -54,7 +54,7 @@
 		   (gdm-service-type config => 
 				     (gdm-configuration
 				      (inherit config)
-				      (wayland? #t)
+				      (wayland? #f)
 				      (default-user "nil")
 				      (auto-login? #t)))
 		   (dbus-root-service-type config =>

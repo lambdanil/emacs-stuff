@@ -18,7 +18,7 @@ then
     exec dbus-run-session -- sway
 fi
 
-if [[ "$HOSTNAME" = "lainpad" ]]
+if [ "$HOSTNAME" = "lainpad" ] && [ ! -f /run/.containerenv ]
 then
     export LIBVA_DRIVER_NAME=iHD
     export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so

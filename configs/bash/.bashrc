@@ -55,6 +55,7 @@ alias sudo="sudo -p \"[sudo] what's youw p-pa-password, Nil-chan?~ ❤️  \" "
   alias deb="xhost +si:localuser:nil && distrobox enter debian --"
   alias glibc="bwrap --bind /var/chroots/debian / --dev /dev --proc /proc --bind /sys /sys  --ro-bind /sys/dev/char /sys/dev/char --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 --bind /run /run --bind /home /home --ro-bind /dev/dri /dev/dri --ro-bind /etc/resolv.conf /etc/resolv.conf --ro-bind /etc/passwd /etc/passwd --ro-bind /etc/group /etc/group"
   alias glibc-root="doas chroot /var/chroots/debian /bin/bash"
+  alias reconf="sudo -E guix system reconfigure /etc/guix-systems/$HOSTNAME.scm"
 
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export GUIX_PACKAGE_PATH="/etc/guix-modules"

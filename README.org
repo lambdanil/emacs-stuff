@@ -165,8 +165,8 @@ These are commands specifically only used when on my laptop.
      then
 	 # blueman-applet &
 	 # setxkbmap cz -option 'ctrl:swapcaps' &
-	 # xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
-	 echo "nothing to do!"
+	 xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+	 # echo "nothing to do!"
   fi
 #+END_SRC
 
@@ -249,6 +249,7 @@ The ~ld_libs~ is useful for exporting Guix's libraries to run precompiled softwa
     alias deb="xhost +si:localuser:nil && distrobox enter debian --"
     alias glibc="bwrap --bind /var/chroots/debian / --dev /dev --proc /proc --bind /sys /sys  --ro-bind /sys/dev/char /sys/dev/char --ro-bind /sys/devices/pci0000:00 /sys/devices/pci0000:00 --bind /run /run --bind /home /home --ro-bind /dev/dri /dev/dri --ro-bind /etc/resolv.conf /etc/resolv.conf --ro-bind /etc/passwd /etc/passwd --ro-bind /etc/group /etc/group"
     alias glibc-root="doas chroot /var/chroots/debian /bin/bash"
+    alias reconf="sudo -E guix system reconfigure /etc/guix-systems/$HOSTNAME.scm"
 #+END_SRC
 
 Finally some variable exports - for Guix and Flatpak and a silly ~sudo~ prompt.
@@ -293,7 +294,7 @@ This makes sway start up automatically when logging into ~tty2~, eliminating the
 
 Laptop-specific environment variables to ensure hardware video acceleration works.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [[ "$HOSTNAME" = "lainpad" ]]
+  if [ "$HOSTNAME" = "lainpad" ] && [ ! -f /run/.containerenv ]
   then
       export LIBVA_DRIVER_NAME=iHD
       export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so
@@ -1033,17 +1034,17 @@ This module provides a few nice wallpapers I like to use. The path to these wall
 
 * Guix system
 
-Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
+Here is my Guix system configuration.
 
-** /etc/config.scm
+** /etc/guix-systems/lainpad.scm
 
 Let's start by adding my custom modules. This isn't exactly clean but it is functional.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (add-to-load-path "/etc/guix-modules")
 #+END_SRC
 
 Now import the actual modules
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (use-modules (gnu)
 	       (gnu services)
 	       (gnu services dbus)
@@ -1079,7 +1080,7 @@ Now import the actual modules
 #+END_SRC
 
 This function is taken from the ~gnome-desktop~ service.
-#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (define (extract-propagated-inputs package)
     ;; Drop input labels.  Attempt to support outputs.
     (map
@@ -1090,7 +1091,7 @@ This function is taken from the ~gnome-desktop~ service.
 #+end_src
 
 Now redefine some services. Enable nonguix substitutes and blueman for a bluetooth applet.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (define %my-services
     (modify-services %desktop-services
 		     (guix-service-type config => (guix-configuration
@@ -1104,7 +1105,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 		     (gdm-service-type config => 
 				       (gdm-configuration
 					(inherit config)
-					(wayland? #t)
+					(wayland? #f)
 					(default-user "nil")
 					(auto-login? #t)))
 		     (dbus-root-service-type config =>
@@ -1113,7 +1114,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 #+END_SRC
 
 Let's handle basic OS defaults first of all.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (operating-system
 
    (locale "cs_CZ.utf8")
@@ -1124,14 +1125,14 @@ Let's handle basic OS defaults first of all.
 #+END_SRC
 
 Now add the necessary firmware from nonguix.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (kernel linux)
   (initrd microcode-initrd)
   (firmware (list linux-firmware))
 #+END_SRC
 
 User and group setup is next in line:
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (groups 
    (cons* 
     (user-group (name "games")) ;; For libratbagd
@@ -1149,7 +1150,7 @@ User and group setup is next in line:
 #+END_SRC
 
 Add system-level packages now; these are *only* the most necessary of packages.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (packages
    (append
     (map specification->package
@@ -1167,12 +1168,12 @@ Add system-level packages now; these are *only* the most necessary of packages.
 #+END_SRC
 
 Enable resolving hostnames on local network.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (name-service-switch %mdns-host-lookup-nss)
 #+END_SRC
 
 Now for the second part of service configuration - appending my own services.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (services
    (append
     (list
@@ -1208,7 +1209,7 @@ Now for the second part of service configuration - appending my own services.
 #+END_SRC
 
 [[https://github.com/erpalma/throttled][throttled]] is a small Python utility, used to fix throttling issues affecting a few certain laptop models with a particular Intel CPU.
-#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (service throttled-service-type)
 
   (service kernel-module-loader-service-type
@@ -1216,17 +1217,17 @@ Now for the second part of service configuration - appending my own services.
 #+end_src
 
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   mount-rshared-service 
 #+END_SRC
 
 Another custom service, this one creates the transient ~default~ libvirt network.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   virsh-net-default-service
 #+END_SRC
 
 PAM limits for Wine Esync and realtime acces for ~jackd~.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (service pam-limits-service-type
 	   (list (pam-limits-entry "*" 'hard 'nofile 524288)
 		 (pam-limits-entry "@realtime" 'both 'rtprio 99)
@@ -1234,18 +1235,18 @@ PAM limits for Wine Esync and realtime acces for ~jackd~.
 #+END_SRC
 
 A simple firewall configuration. By default all incoming connections are blocked, except for those on ~ssh~ port 22.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (service nftables-service-type)
 #+END_SRC
 
 This is a bit of a work-around... Basically we place the linker where regular binaries expect it to be. This allows us to execute standard binaries more easily.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (extra-special-file "/lib64/ld-linux-x86-64.so.2"
 		      (file-append glibc "/lib/ld-linux-x86-64.so.2"))
 #+END_SRC
 
 And the final few services.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (set-xorg-configuration
    (xorg-configuration
     (keyboard-layout keyboard-layout)))
@@ -1269,7 +1270,7 @@ And the final few services.
 #+END_SRC
 
 At last we can configure hardware-level stuff - bootloader and drives. Finally we can close the ~operating-system~ section.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (bootloader (bootloader-configuration
 	       (bootloader grub-efi-bootloader)
 	       (targets (list "/boot/efi"))
@@ -1292,10 +1293,10 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
 			(dependencies mapped-devices)) %base-file-systems)))
 #+END_SRC
 
-** /etc/signing-key.pub
+** /etc/guix-systems/signing-key.pub
 
 This is the key for nonguix.
-#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/signing-key.pub"
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/signing-key.pub"
   (public-key 
    (ecc 
     (curve Ed25519)
