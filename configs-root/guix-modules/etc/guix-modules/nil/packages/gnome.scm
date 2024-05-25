@@ -37,11 +37,3 @@
      (modify-inputs (package-propagated-inputs gnome-meta-core-shell)
        (delete "mutter")
        (append mutter-patched)))))
-
-(define-public (nil-extract-propagated-inputs package)
-  ;; Drop input labels.  Attempt to support outputs.
-  (map
-   (match-lambda
-     ((_ (? package? pkg)) pkg)
-     ((_ (? package? pkg) output) (list pkg output)))
-   (package-propagated-inputs package)))
