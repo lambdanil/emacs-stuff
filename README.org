@@ -163,9 +163,10 @@ These are commands specifically only used when on my laptop.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   if [ "$HOSTNAME" = "lainpad" ]
      then
-	 blueman-applet &
-	 setxkbmap cz -option 'ctrl:swapcaps' &
-	 xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+	 # blueman-applet &
+	 # setxkbmap cz -option 'ctrl:swapcaps' &
+	 # xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
+	 echo "nothing to do!"
   fi
 #+END_SRC
 
@@ -1066,14 +1067,27 @@ Now import the actual modules
 	       (nil packages gnome)
 	       (gnu services linux)
 	       (gnu packages gnome)
+	       (gnu packages)
 	       (gnu packages fonts)
 	       (gnu packages networking)
 	       (guix gexp)
 	       (guix packages)
-	       (srfi srfi-1))
+	       (srfi srfi-1)
+	       (ice-9 match))
   (use-service-modules linux desktop networking ssh xorg)
   (use-package-modules linux package-management)
 #+END_SRC
+
+This function is taken from the ~gnome-desktop~ service.
+#+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
+  (define (extract-propagated-inputs package)
+    ;; Drop input labels.  Attempt to support outputs.
+    (map
+     (match-lambda
+       ((_ (? package? pkg)) pkg)
+       ((_ (? package? pkg) output) (list pkg output)))
+     (package-propagated-inputs package)))
+#+end_src
 
 Now redefine some services. Enable nonguix substitutes and blueman for a bluetooth applet.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/config.scm"
@@ -1090,7 +1104,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 		     (gdm-service-type config => 
 				       (gdm-configuration
 					(inherit config)
-					(wayland? #f)
+					(wayland? #t)
 					(default-user "nil")
 					(auto-login? #t)))
 		     (dbus-root-service-type config =>
@@ -1162,15 +1176,18 @@ Now for the second part of service configuration - appending my own services.
   (services
    (append
     (list
-     (service xfce-desktop-service-type)
+     (service gnome-desktop-service-type
+	      (gnome-desktop-configuration
+	       (shell (extract-propagated-inputs gnome-meta-core-shell-patched)))) ;; Enable triple buffering support
+     ;; I'm sure there's a more proper way to approach this, but this works for now
 
      (service openssh-service-type)
 
      ;; Not necessary for Gnome
-     (service screen-locker-service-type
-	      (screen-locker-configuration
-	       (name "i3lock")
-	       (program (file-append i3lock "/bin/i3lock"))))
+     ;; (service screen-locker-service-type
+     ;; 	    (screen-locker-configuration
+     ;; 	     (name "i3lock")
+     ;; 	     (program (file-append i3lock "/bin/i3lock"))))
 
      (service tlp-service-type
 	      (tlp-configuration
@@ -1468,29 +1485,55 @@ This is a custom retroarch definition, it adds the core downloader functionality
 
 *** gnome.scm
 
-Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace ~gnome-console~ with ~gnome-terminal~ as it is more full-featured.
+Patches Mutter with the triple buffering patch for improved performance.
 #+begin_src scheme :tangle "~/git/emacs-stuff/configs-root/guix-modules/etc/guix-modules/nil/packages/gnome.scm"
   (define-module (nil packages gnome)
-    #:use-module (guix utils)
     #:use-module (guix packages)
+    #:use-module (guix utils)
+    #:use-module (guix build utils)
     #:use-module (gnu packages)
-    #:use-module (gnu packages gnome))
+    #:use-module (guix git-download)
+    #:use-module (gnu packages gnome)
+    #:use-module (gnu packages pciutils)
+    #:use-module (guix licenses)
+    #:use-module (gnu packages base))
 
-  (define-public gnome-minimal
+  (define-public mutter-patched
+    (let ((commit "28a6447ff060ae1fbac8f20a13908d6e230eddc2")
+	  (revision "1"))
+      (package
+	(inherit mutter)
+	(name "mutter")
+	(version (git-version "44" revision commit))
+	(source (origin
+		  (method git-fetch)
+		  (uri (git-reference
+			(url "https://gitlab.gnome.org/vanvugt/mutter.git")
+			(commit commit)))
+		  (file-name (git-file-name name version))
+		  (sha256
+		   (base32
+		    "1ssmflwpmfkn28rmn5glyh96fd5ys9h1j4v70wm4ix2668wk4rr6"))))
+	(arguments
+	 (substitute-keyword-arguments (package-arguments mutter)
+	   ((#:tests? tests? #f) #f)))))) ;; recommend checking tests on version bumps
+
+  (define-public gnome-meta-core-shell-patched
     (package
-      (inherit gnome)
-      (name "gnome-minimal")
+      (inherit gnome-meta-core-shell)
+      (name "gnome-meta-core-shell")
       (propagated-inputs
-       (modify-inputs (package-propagated-inputs gnome)
-	 (delete "epiphany")
-	 (delete "gnome-weather")
-	 (delete "simple-scan")
-	 (delete "gnome-maps")
-	 (delete "cheese")
-	 (delete "gnome-boxes")
-	 (delete "gnome-console")
-	 (delete "gnome-contacts")
-	 (append gnome-terminal)))))
+       (modify-inputs (package-propagated-inputs gnome-meta-core-shell)
+	 (delete "mutter")
+	 (append mutter-patched)))))
+
+  (define-public (nil-extract-propagated-inputs package)
+    ;; Drop input labels.  Attempt to support outputs.
+    (map
+     (match-lambda
+       ((_ (? package? pkg)) pkg)
+       ((_ (? package? pkg) output) (list pkg output)))
+     (package-propagated-inputs package)))
 #+end_src
 
 *** throttled.scm

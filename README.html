@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-05-24 Pá 18:49 -->
+<!-- 2024-05-25 So 10:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>My System Config</title>
@@ -23,143 +23,143 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org3591a28">1. Introduction</a>
+<li><a href="#orgf9b9736">1. Introduction</a>
 <ul>
-<li><a href="#orga8a27d9">1.1. The why</a>
+<li><a href="#org7498b05">1.1. The why</a>
 <ul>
-<li><a href="#orgcfba4ef">Reproducibility</a></li>
-<li><a href="#org958301d">Separation</a></li>
-<li><a href="#org0e4240d">Modularity</a></li>
-<li><a href="#orge17da55">Organization</a></li>
-<li><a href="#org5a633d0">Maintainability</a></li>
+<li><a href="#org36033c0">Reproducibility</a></li>
+<li><a href="#orga3bebff">Separation</a></li>
+<li><a href="#org817dc13">Modularity</a></li>
+<li><a href="#orgfae8e34">Organization</a></li>
+<li><a href="#orge761bf9">Maintainability</a></li>
 </ul>
 </li>
-<li><a href="#orgf7ba702">1.2. The implementation</a>
+<li><a href="#org1d813bd">1.2. The implementation</a>
 <ul>
-<li><a href="#org735a017">README.org</a></li>
-<li><a href="#org87e566f">Modules</a></li>
-<li><a href="#orgdedd0d7">Packages</a></li>
-<li><a href="#orgd9f9686">Deployment</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org0cf855b">2. Autostart</a>
-<ul>
-<li><a href="#org0e4665e">2.1. .config/autostart/autostart.desktop</a></li>
-<li><a href="#org2742701">2.2. .loginctl</a></li>
-</ul>
-</li>
-<li><a href="#org7d908bd">3. Bash</a>
-<ul>
-<li><a href="#org876e6d2">3.1. .bashrc</a></li>
-<li><a href="#orgbfa6446">3.2. .bash profile</a></li>
-</ul>
-</li>
-<li><a href="#orgbc015cd">4. Custom Binaries</a>
-<ul>
-<li><a href="#org73ec7b6">4.1. .bin/scr</a></li>
-<li><a href="#org6c58e72">4.2. .bin/scr-area</a></li>
-<li><a href="#org14b13af">4.3. .bin/chromium-incognito</a></li>
-</ul>
-</li>
-<li><a href="#org2757a8c">5. Containers</a>
-<ul>
-<li><a href="#org49b72b1">5.1. .config/containers/policy.json</a></li>
-<li><a href="#orgac62c76">5.2. .config/containers/registries.conf</a></li>
-</ul>
-</li>
-<li><a href="#orgf73037b">6. Dictionaries</a></li>
-<li><a href="#org5f114e4">7. Debian Dependencies</a></li>
-<li><a href="#org9815ae5">8. Firefox</a></li>
-<li><a href="#org939ee6c">9. Fonts</a></li>
-<li><a href="#org08d0bd9">10. Gtk</a></li>
-<li><a href="#orgfca07f4">11. Guix</a>
-<ul>
-<li><a href="#org79f66cd">11.1. .guix-manifest</a></li>
-<li><a href="#org4d66a6c">11.2. .guix-manifest-tiny</a></li>
-<li><a href="#org903993a">11.3. .config/guix/channels.scm</a></li>
-</ul>
-</li>
-<li><a href="#org6f6ea07">12. Guix-run</a>
-<ul>
-<li><a href="#org38c51ec">12.1. .bin/guix-run</a></li>
-</ul>
-</li>
-<li><a href="#orge7ca38e">13. Sway</a>
-<ul>
-<li><a href="#org836e314">13.1. .config/sway/config</a></li>
-<li><a href="#orgd6e7f65">13.2. .config/sway/i3status wrapper.py</a></li>
-<li><a href="#org0fda41f">13.3. .config/i3status/config</a></li>
-</ul>
-</li>
-<li><a href="#org3e1bef5">14. Icons</a></li>
-<li><a href="#org91714cf">15. Rofi</a>
-<ul>
-<li><a href="#org2bb5429">15.1. .config/wofi/nord.rasi</a></li>
-</ul>
-</li>
-<li><a href="#org46a4937">16. Startx</a>
-<ul>
-<li><a href="#org96a2a6a">16.1. .startx</a></li>
-</ul>
-</li>
-<li><a href="#org96e1a0c">17. Xresources</a>
-<ul>
-<li><a href="#org762f7c1">17.1. .Xresources</a></li>
-<li><a href="#org639da31">17.2. .xsessionrc</a></li>
-</ul>
-</li>
-<li><a href="#orgb1090cb">18. XFCE 4 Terminal</a></li>
-<li><a href="#org63becd3">19. Wallpapers</a></li>
-<li><a href="#orgf788654">20. Guix system</a>
-<ul>
-<li><a href="#orgb73d172">20.1. /etc/config.scm</a></li>
-<li><a href="#org0120d65">20.2. /etc/signing-key.pub</a></li>
-</ul>
-</li>
-<li><a href="#org1d2a788">21. Custom Guix Modules</a>
-<ul>
-<li><a href="#orgd99c254">21.1. /etc/guix-modules/nil/packages</a>
-<ul>
-<li><a href="#org13bb8b8">21.1.1. brogue.scm</a></li>
-<li><a href="#org8ba1fbf">21.1.2. distrobox-docker.scm</a></li>
-<li><a href="#orga822b1d">21.1.3. emulators.scm</a></li>
-<li><a href="#org7892cbd">21.1.4. gnome.scm</a></li>
-<li><a href="#org150387a">21.1.5. throttled.scm</a></li>
-</ul>
-</li>
-<li><a href="#org3b962f9">21.2. /etc/guix-modules/nil/services</a>
-<ul>
-<li><a href="#org8f053bf">21.2.1. mount-rshared.scm</a></li>
-<li><a href="#org28417d3">21.2.2. virsh.scm</a></li>
-<li><a href="#org69802be">21.2.3. throttled.scm</a></li>
+<li><a href="#orge9028de">README.org</a></li>
+<li><a href="#org45f0ad3">Modules</a></li>
+<li><a href="#org056f4a8">Packages</a></li>
+<li><a href="#orgaccb003">Deployment</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org5c59702">22. ZRAM on non-guix distros</a>
+<li><a href="#org1661d7e">2. Autostart</a>
 <ul>
-<li><a href="#org0f22c5b">22.1. /etc/modules-load.d/zram.conf</a></li>
-<li><a href="#org278da80">22.2. /etc/modprobe.d/zram.conf</a></li>
-<li><a href="#org802c980">22.3. /etc/udev/rules.d/99-zram.rules</a></li>
-<li><a href="#org9cbf570">22.4. /etc/systemd/system/zram.service</a></li>
+<li><a href="#org1873894">2.1. .config/autostart/autostart.desktop</a></li>
+<li><a href="#org8f211c0">2.2. .loginctl</a></li>
 </ul>
 </li>
-<li><a href="#org2031f48">23. Emacs</a>
+<li><a href="#orgfa2d0f0">3. Bash</a>
 <ul>
-<li><a href="#org525e575">23.1. Initial variables</a></li>
-<li><a href="#org50dc201">23.2. Packages</a></li>
-<li><a href="#orgd8d6069">23.3. Extra tempel templates (.emacs.d/templates)</a></li>
-<li><a href="#orga18a18a">23.4. custom-set options</a></li>
-<li><a href="#org78dc778">23.5. Variables</a></li>
-<li><a href="#org00fbcef">23.6. LSP servers</a></li>
-<li><a href="#org74ea5a6">23.7. Functions</a></li>
-<li><a href="#org49cc140">23.8. Keybindings</a></li>
-<li><a href="#org2e12921">23.9. .exwm.el</a></li>
+<li><a href="#org44840ea">3.1. .bashrc</a></li>
+<li><a href="#orgccd3e1e">3.2. .bash profile</a></li>
 </ul>
 </li>
-<li><a href="#org4bf034f">24. Non-Guix Services and dependencies</a></li>
+<li><a href="#org75828b7">4. Custom Binaries</a>
+<ul>
+<li><a href="#org82da860">4.1. .bin/scr</a></li>
+<li><a href="#org758af58">4.2. .bin/scr-area</a></li>
+<li><a href="#org0034386">4.3. .bin/chromium-incognito</a></li>
+</ul>
+</li>
+<li><a href="#orgb382177">5. Containers</a>
+<ul>
+<li><a href="#org8e09060">5.1. .config/containers/policy.json</a></li>
+<li><a href="#orge95f9ce">5.2. .config/containers/registries.conf</a></li>
+</ul>
+</li>
+<li><a href="#orgfbc7295">6. Dictionaries</a></li>
+<li><a href="#org994f111">7. Debian Dependencies</a></li>
+<li><a href="#org2fa59a4">8. Firefox</a></li>
+<li><a href="#orgb625b9c">9. Fonts</a></li>
+<li><a href="#org38bf085">10. Gtk</a></li>
+<li><a href="#org5f4f641">11. Guix</a>
+<ul>
+<li><a href="#orge9c4240">11.1. .guix-manifest</a></li>
+<li><a href="#org943dba1">11.2. .guix-manifest-tiny</a></li>
+<li><a href="#orga5d9765">11.3. .config/guix/channels.scm</a></li>
+</ul>
+</li>
+<li><a href="#orgbec27e4">12. Guix-run</a>
+<ul>
+<li><a href="#org8d69241">12.1. .bin/guix-run</a></li>
+</ul>
+</li>
+<li><a href="#org7b2c459">13. Sway</a>
+<ul>
+<li><a href="#org3e2b3bd">13.1. .config/sway/config</a></li>
+<li><a href="#org3626f52">13.2. .config/sway/i3status wrapper.py</a></li>
+<li><a href="#orgd577732">13.3. .config/i3status/config</a></li>
+</ul>
+</li>
+<li><a href="#org085ecd3">14. Icons</a></li>
+<li><a href="#org1019f34">15. Rofi</a>
+<ul>
+<li><a href="#org5e1b16e">15.1. .config/wofi/nord.rasi</a></li>
+</ul>
+</li>
+<li><a href="#org51c2b1a">16. Startx</a>
+<ul>
+<li><a href="#org310da1e">16.1. .startx</a></li>
+</ul>
+</li>
+<li><a href="#org4c86a8b">17. Xresources</a>
+<ul>
+<li><a href="#org6022f4d">17.1. .Xresources</a></li>
+<li><a href="#org30471aa">17.2. .xsessionrc</a></li>
+</ul>
+</li>
+<li><a href="#orge1de74e">18. XFCE 4 Terminal</a></li>
+<li><a href="#orge238325">19. Wallpapers</a></li>
+<li><a href="#org8ac937d">20. Guix system</a>
+<ul>
+<li><a href="#org1505ae2">20.1. /etc/config.scm</a></li>
+<li><a href="#orgdea1a37">20.2. /etc/signing-key.pub</a></li>
+</ul>
+</li>
+<li><a href="#orgd78adee">21. Custom Guix Modules</a>
+<ul>
+<li><a href="#org0b9e9df">21.1. /etc/guix-modules/nil/packages</a>
+<ul>
+<li><a href="#orgf809d7c">21.1.1. brogue.scm</a></li>
+<li><a href="#org437139b">21.1.2. distrobox-docker.scm</a></li>
+<li><a href="#org9a9e8e1">21.1.3. emulators.scm</a></li>
+<li><a href="#orga0e9014">21.1.4. gnome.scm</a></li>
+<li><a href="#orgdd76851">21.1.5. throttled.scm</a></li>
+</ul>
+</li>
+<li><a href="#org421dd3b">21.2. /etc/guix-modules/nil/services</a>
+<ul>
+<li><a href="#org88f3a51">21.2.1. mount-rshared.scm</a></li>
+<li><a href="#org44a1470">21.2.2. virsh.scm</a></li>
+<li><a href="#org0a52d4d">21.2.3. throttled.scm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge70f1a4">22. ZRAM on non-guix distros</a>
+<ul>
+<li><a href="#org423923f">22.1. /etc/modules-load.d/zram.conf</a></li>
+<li><a href="#org139a73d">22.2. /etc/modprobe.d/zram.conf</a></li>
+<li><a href="#orgc5ee4cd">22.3. /etc/udev/rules.d/99-zram.rules</a></li>
+<li><a href="#org75df881">22.4. /etc/systemd/system/zram.service</a></li>
+</ul>
+</li>
+<li><a href="#org14e30d9">23. Emacs</a>
+<ul>
+<li><a href="#org1e85925">23.1. Initial variables</a></li>
+<li><a href="#org6b338c8">23.2. Packages</a></li>
+<li><a href="#org465fce4">23.3. Extra tempel templates (.emacs.d/templates)</a></li>
+<li><a href="#org936b625">23.4. custom-set options</a></li>
+<li><a href="#org016822d">23.5. Variables</a></li>
+<li><a href="#org38af4a5">23.6. LSP servers</a></li>
+<li><a href="#org77e885b">23.7. Functions</a></li>
+<li><a href="#orga14eb6f">23.8. Keybindings</a></li>
+<li><a href="#org71c51c2">23.9. .exwm.el</a></li>
+</ul>
+</li>
+<li><a href="#org7c2c4f5">24. Non-Guix Services and dependencies</a></li>
 </ul>
 </div>
 </div>
@@ -171,7 +171,7 @@
 <i>Debian with EXWM</i>
 </p>
 
-<div id="orge62bfec" class="figure">
+<div id="org14bbde3" class="figure">
 <p><img src="./screenshots/exwm-scr.png" alt="exwm-scr.png" width="720px" />
 </p>
 </div>
@@ -180,7 +180,7 @@
 <i>Debian with MATE</i>
 </p>
 
-<div id="org4ba9e6e" class="figure">
+<div id="org4bf1393" class="figure">
 <p><img src="./screenshots/debian-scr.png" alt="debian-scr.png" width="720px" />
 </p>
 </div>
@@ -189,7 +189,7 @@
 <i>openSUSE Aeon with Gnome</i>
 </p>
 
-<div id="org03f2a3c" class="figure">
+<div id="orgeb35a43" class="figure">
 <p><img src="./screenshots/microos-scr.png" alt="microos-scr.png" width="720px" />
 </p>
 </div>
@@ -198,8 +198,8 @@
 All of these are different flavors of this configuration.
 </p>
 
-<div id="outline-container-org3591a28" class="outline-2">
-<h2 id="org3591a28"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgf9b9736" class="outline-2">
+<h2 id="orgf9b9736"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is my highly modular and entirely literate full-system configuration.
@@ -210,17 +210,17 @@ Let's talk about the implementation first - how I handle it and why.
 </p>
 </div>
 
-<div id="outline-container-orga8a27d9" class="outline-3">
-<h3 id="orga8a27d9"><span class="section-number-3">1.1.</span> The why</h3>
+<div id="outline-container-org7498b05" class="outline-3">
+<h3 id="org7498b05"><span class="section-number-3">1.1.</span> The why</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 There are multiple important ideas in place here.
 </p>
 </div>
 
-<div id="outline-container-orgcfba4ef" class="outline-4">
-<h4 id="orgcfba4ef">Reproducibility</h4>
-<div class="outline-text-4" id="text-orgcfba4ef">
+<div id="outline-container-org36033c0" class="outline-4">
+<h4 id="org36033c0">Reproducibility</h4>
+<div class="outline-text-4" id="text-org36033c0">
 <p>
 I should be able to deploy this configuration quickly and easily, achieving an identical (= reasonably close to identical) result every time.
 Most importantly all of the relevant dotfiles should be present and should be set up in a way that allows them to work when deployed anywhere. Every file that is relevant to reproducing this configuration should be present.
@@ -229,36 +229,36 @@ To ensure this is the case I sometimes try to set up my environment in a virtual
 </div>
 </div>
 
-<div id="outline-container-org958301d" class="outline-4">
-<h4 id="org958301d">Separation</h4>
-<div class="outline-text-4" id="text-org958301d">
+<div id="outline-container-orga3bebff" class="outline-4">
+<h4 id="orga3bebff">Separation</h4>
+<div class="outline-text-4" id="text-orga3bebff">
 <p>
 The user environment should exist almost entirely separately from the system environment. 
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0e4240d" class="outline-4">
-<h4 id="org0e4240d">Modularity</h4>
-<div class="outline-text-4" id="text-org0e4240d">
+<div id="outline-container-org817dc13" class="outline-4">
+<h4 id="org817dc13">Modularity</h4>
+<div class="outline-text-4" id="text-org817dc13">
 <p>
 I should be able to easily pick which parts of the configuration I want to deploy.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge17da55" class="outline-4">
-<h4 id="orge17da55">Organization</h4>
-<div class="outline-text-4" id="text-orge17da55">
+<div id="outline-container-orgfae8e34" class="outline-4">
+<h4 id="orgfae8e34">Organization</h4>
+<div class="outline-text-4" id="text-orgfae8e34">
 <p>
 There should be no confusion over how to deploy this system, nor should there be any confusion over where individual files belong, etc. All files should have their own clearly defined place.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5a633d0" class="outline-4">
-<h4 id="org5a633d0">Maintainability</h4>
-<div class="outline-text-4" id="text-org5a633d0">
+<div id="outline-container-orge761bf9" class="outline-4">
+<h4 id="orge761bf9">Maintainability</h4>
+<div class="outline-text-4" id="text-orge761bf9">
 <p>
 The configuration should be easy to keep current, it should also be robust and reliable.
 </p>
@@ -266,17 +266,17 @@ The configuration should be easy to keep current, it should also be robust and r
 </div>
 </div>
 
-<div id="outline-container-orgf7ba702" class="outline-3">
-<h3 id="orgf7ba702"><span class="section-number-3">1.2.</span> The implementation</h3>
+<div id="outline-container-org1d813bd" class="outline-3">
+<h3 id="org1d813bd"><span class="section-number-3">1.2.</span> The implementation</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 I'll start by outlining the structure, then I'll go over each step and explain its role.
 </p>
 </div>
 
-<div id="outline-container-org735a017" class="outline-4">
-<h4 id="org735a017">README.org</h4>
-<div class="outline-text-4" id="text-org735a017">
+<div id="outline-container-orge9028de" class="outline-4">
+<h4 id="orge9028de">README.org</h4>
+<div class="outline-text-4" id="text-orge9028de">
 <p>
 The centerpiece of this implementation is the <code>README.org</code> file. This file includes all of the plaintext dotfiles that are part of this system, as well as information about every other file.
 Using <code>org</code> to describe these files allows for the configuration to remain readable and properly organized. Each chapter in this file corresponds to a single "module" (more on these below).
@@ -288,9 +288,9 @@ This <code>org</code> file is then <code>tangled</code> into the <code>configs</
 </div>
 </div>
 
-<div id="outline-container-org87e566f" class="outline-4">
-<h4 id="org87e566f">Modules</h4>
-<div class="outline-text-4" id="text-org87e566f">
+<div id="outline-container-org45f0ad3" class="outline-4">
+<h4 id="org45f0ad3">Modules</h4>
+<div class="outline-text-4" id="text-org45f0ad3">
 <p>
 Each module is a group of files that fulfill a certain role.
 These modules should be self-reliant and shouldn't depend on other modules. In practice there are a few exceptions - for example some modules rely on the <code>guix</code> module to ship dependencies.
@@ -304,18 +304,18 @@ All of these modules are symlinked into the home directory using GNU Stow. Using
 </div>
 </div>
 
-<div id="outline-container-orgdedd0d7" class="outline-4">
-<h4 id="orgdedd0d7">Packages</h4>
-<div class="outline-text-4" id="text-orgdedd0d7">
+<div id="outline-container-org056f4a8" class="outline-4">
+<h4 id="org056f4a8">Packages</h4>
+<div class="outline-text-4" id="text-org056f4a8">
 <p>
 The GNU Guix package manager is used for installing dependencies. This means the dependencies for this environment can be installed anywhere where Guix can run, further separating the user environment from the rest of the system and ensuring better reliability.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd9f9686" class="outline-4">
-<h4 id="orgd9f9686">Deployment</h4>
-<div class="outline-text-4" id="text-orgd9f9686">
+<div id="outline-container-orgaccb003" class="outline-4">
+<h4 id="orgaccb003">Deployment</h4>
+<div class="outline-text-4" id="text-orgaccb003">
 <ul class="org-ul">
 <li><b>Make sure to tangle this file with <code>org-babel-tangle</code> to actually apply changes made to plaintext files</b>.</li>
 <li>Install Guix and run a <code>guix pull</code> before importing Guix package manifests.</li>
@@ -352,16 +352,16 @@ Or all at once, overwriting existing:
 </div>
 </div>
 
-<div id="outline-container-org0cf855b" class="outline-2">
-<h2 id="org0cf855b"><span class="section-number-2">2.</span> Autostart</h2>
+<div id="outline-container-org1661d7e" class="outline-2">
+<h2 id="org1661d7e"><span class="section-number-2">2.</span> Autostart</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here I store my relevant autostart scripts.
 </p>
 </div>
 
-<div id="outline-container-org0e4665e" class="outline-3">
-<h3 id="org0e4665e"><span class="section-number-3">2.1.</span> .config/autostart/autostart.desktop</h3>
+<div id="outline-container-org1873894" class="outline-3">
+<h3 id="org1873894"><span class="section-number-3">2.1.</span> .config/autostart/autostart.desktop</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 First we need to add a .desktop file for the DE to load.
@@ -378,8 +378,8 @@ First we need to add a .desktop file for the DE to load.
 </div>
 </div>
 
-<div id="outline-container-org2742701" class="outline-3">
-<h3 id="org2742701"><span class="section-number-3">2.2.</span> .loginctl</h3>
+<div id="outline-container-org8f211c0" class="outline-3">
+<h3 id="org8f211c0"><span class="section-number-3">2.2.</span> .loginctl</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Here's the actual autostart script.
@@ -430,9 +430,10 @@ These are commands specifically only used when on my laptop.
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #0000FF; font-weight: bold;">if</span> <span style="color: #707183;">[</span> <span style="color: #008000;">"</span><span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">HOSTNAME</span><span style="color: #008000;">"</span> = <span style="color: #008000;">"lainpad"</span> <span style="color: #707183;">]</span>
    <span style="color: #0000FF; font-weight: bold;">then</span>
-       <span style="color: #006DAF;">blueman-applet</span> &amp;
-       <span style="color: #006DAF;">setxkbmap</span> cz <span style="color: #D0372D;">-option</span> <span style="color: #008000;">'ctrl:swapcaps'</span> &amp;
-       <span style="color: #006DAF;">xinput</span> set-prop <span style="color: #008000;">'pointer:Logitech G305'</span> <span style="color: #008000;">'Device Accel Profile'</span> <span style="color: #D0372D;">-1</span> &amp;
+       <span style="color: #8D8D84; font-style: italic;"># blueman-applet &amp;</span>
+       <span style="color: #8D8D84; font-style: italic;"># setxkbmap cz -option 'ctrl:swapcaps' &amp;</span>
+       <span style="color: #8D8D84; font-style: italic;"># xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &amp;</span>
+       <span style="color: #006FE0;">echo</span> <span style="color: #008000;">"nothing to do!"</span>
 <span style="color: #0000FF; font-weight: bold;">fi</span>
 </pre>
 </div>
@@ -440,16 +441,16 @@ These are commands specifically only used when on my laptop.
 </div>
 </div>
 
-<div id="outline-container-org7d908bd" class="outline-2">
-<h2 id="org7d908bd"><span class="section-number-2">3.</span> Bash</h2>
+<div id="outline-container-orgfa2d0f0" class="outline-2">
+<h2 id="orgfa2d0f0"><span class="section-number-2">3.</span> Bash</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Let's move on to configuring the shell - bash in my case.
 </p>
 </div>
 
-<div id="outline-container-org876e6d2" class="outline-3">
-<h3 id="org876e6d2"><span class="section-number-3">3.1.</span> .bashrc</h3>
+<div id="outline-container-org44840ea" class="outline-3">
+<h3 id="org44840ea"><span class="section-number-3">3.1.</span> .bashrc</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 I like to have a function to clear old guix builds by regex, helps keep the amount of garbage down.
@@ -553,8 +554,8 @@ Finally some variable exports - for Guix and Flatpak and a silly <code>sudo</cod
 </div>
 </div>
 
-<div id="outline-container-orgbfa6446" class="outline-3">
-<h3 id="orgbfa6446"><span class="section-number-3">3.2.</span> .bash profile</h3>
+<div id="outline-container-orgccd3e1e" class="outline-3">
+<h3 id="orgccd3e1e"><span class="section-number-3">3.2.</span> .bash profile</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Let's move onto the bash profile, used in login shells.
@@ -613,16 +614,16 @@ Laptop-specific environment variables to ensure hardware video acceleration work
 </div>
 </div>
 
-<div id="outline-container-orgbc015cd" class="outline-2">
-<h2 id="orgbc015cd"><span class="section-number-2">4.</span> Custom Binaries</h2>
+<div id="outline-container-org75828b7" class="outline-2">
+<h2 id="org75828b7"><span class="section-number-2">4.</span> Custom Binaries</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Here I have some custom binaries, mostly scripts and stuff.
 </p>
 </div>
 
-<div id="outline-container-org73ec7b6" class="outline-3">
-<h3 id="org73ec7b6"><span class="section-number-3">4.1.</span> .bin/scr</h3>
+<div id="outline-container-org82da860" class="outline-3">
+<h3 id="org82da860"><span class="section-number-3">4.1.</span> .bin/scr</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Just a screenshot shortcut.
@@ -634,8 +635,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-org6c58e72" class="outline-3">
-<h3 id="org6c58e72"><span class="section-number-3">4.2.</span> .bin/scr-area</h3>
+<div id="outline-container-org758af58" class="outline-3">
+<h3 id="org758af58"><span class="section-number-3">4.2.</span> .bin/scr-area</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 &#x2026;And the same but for a selected area.
@@ -647,8 +648,8 @@ Just a screenshot shortcut.
 </div>
 </div>
 
-<div id="outline-container-org14b13af" class="outline-3">
-<h3 id="org14b13af"><span class="section-number-3">4.3.</span> .bin/chromium-incognito</h3>
+<div id="outline-container-org0034386" class="outline-3">
+<h3 id="org0034386"><span class="section-number-3">4.3.</span> .bin/chromium-incognito</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 And a shortcut for opening chromium in incognito mode.
@@ -661,8 +662,8 @@ And a shortcut for opening chromium in incognito mode.
 </div>
 </div>
 
-<div id="outline-container-org2757a8c" class="outline-2">
-<h2 id="org2757a8c"><span class="section-number-2">5.</span> Containers</h2>
+<div id="outline-container-orgb382177" class="outline-2">
+<h2 id="orgb382177"><span class="section-number-2">5.</span> Containers</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I use distrobox docker/podman (depending on which is available, podman is prefered) on my installation.
@@ -670,8 +671,8 @@ Here is some necessary configs for the containers.
 </p>
 </div>
 
-<div id="outline-container-org49b72b1" class="outline-3">
-<h3 id="org49b72b1"><span class="section-number-3">5.1.</span> .config/containers/policy.json</h3>
+<div id="outline-container-org8e09060" class="outline-3">
+<h3 id="org8e09060"><span class="section-number-3">5.1.</span> .config/containers/policy.json</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 This isn't super secure.
@@ -696,8 +697,8 @@ This isn't super secure.
 </div>
 </div>
 
-<div id="outline-container-orgac62c76" class="outline-3">
-<h3 id="orgac62c76"><span class="section-number-3">5.2.</span> .config/containers/registries.conf</h3>
+<div id="outline-container-orge95f9ce" class="outline-3">
+<h3 id="orge95f9ce"><span class="section-number-3">5.2.</span> .config/containers/registries.conf</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Add the necessary registries.
@@ -719,8 +720,8 @@ Add the necessary registries.
 </div>
 </div>
 
-<div id="outline-container-orgf73037b" class="outline-2">
-<h2 id="orgf73037b"><span class="section-number-2">6.</span> Dictionaries</h2>
+<div id="outline-container-orgfbc7295" class="outline-2">
+<h2 id="orgfbc7295"><span class="section-number-2">6.</span> Dictionaries</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 This module provides the Czech hunspell dictionary since it currently isn't available in Guix.
@@ -729,8 +730,8 @@ The files were taken from the <a href="https://github.com/LibreOffice/dictionari
 </div>
 </div>
 
-<div id="outline-container-org5f114e4" class="outline-2">
-<h2 id="org5f114e4"><span class="section-number-2">7.</span> Debian Dependencies</h2>
+<div id="outline-container-org994f111" class="outline-2">
+<h2 id="org994f111"><span class="section-number-2">7.</span> Debian Dependencies</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 My long distrohopping journey has eventually landed me on Debian, which is the system I choose to run nowadays.
@@ -753,8 +754,8 @@ Emacs is installed separately from the backports.
 </div>
 </div>
 
-<div id="outline-container-org9815ae5" class="outline-2">
-<h2 id="org9815ae5"><span class="section-number-2">8.</span> Firefox</h2>
+<div id="outline-container-org2fa59a4" class="outline-2">
+<h2 id="org2fa59a4"><span class="section-number-2">8.</span> Firefox</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 This module provides my Firefox configuration. For tree style tab it's necessary to import <code>$HOME/.mozilla/firefox/default/treestyletab.css</code>.
@@ -762,8 +763,8 @@ This module provides my Firefox configuration. For tree style tab it's necessary
 </div>
 </div>
 
-<div id="outline-container-org939ee6c" class="outline-2">
-<h2 id="org939ee6c"><span class="section-number-2">9.</span> Fonts</h2>
+<div id="outline-container-orgb625b9c" class="outline-2">
+<h2 id="orgb625b9c"><span class="section-number-2">9.</span> Fonts</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 This module provides the necessary fonts.
@@ -771,8 +772,8 @@ This module provides the necessary fonts.
 </div>
 </div>
 
-<div id="outline-container-org08d0bd9" class="outline-2">
-<h2 id="org08d0bd9"><span class="section-number-2">10.</span> Gtk</h2>
+<div id="outline-container-org38bf085" class="outline-2">
+<h2 id="org38bf085"><span class="section-number-2">10.</span> Gtk</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 This module provides straightforward GTK3 configuration.
@@ -799,8 +800,8 @@ This adds a bit of padding to the XFCE terminal.
 </div>
 </div>
 
-<div id="outline-container-orgfca07f4" class="outline-2">
-<h2 id="orgfca07f4"><span class="section-number-2">11.</span> Guix</h2>
+<div id="outline-container-org5f4f641" class="outline-2">
+<h2 id="org5f4f641"><span class="section-number-2">11.</span> Guix</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <b>This module depends on the <code>guix-modules</code> module for certain package definitions!</b>
@@ -808,8 +809,8 @@ GNU Guix is a very important part of my configuration.
 </p>
 </div>
 
-<div id="outline-container-org79f66cd" class="outline-3">
-<h3 id="org79f66cd"><span class="section-number-3">11.1.</span> .guix-manifest</h3>
+<div id="outline-container-orge9c4240" class="outline-3">
+<h3 id="orge9c4240"><span class="section-number-3">11.1.</span> .guix-manifest</h3>
 <div class="outline-text-3" id="text-11-1">
 <p>
 Just a straightforward (and very messy!) package manifest. I have decided to keep this as a separate file rather than tangle it. This allows me to use <code>guix package --export-manifest</code> to update it.
@@ -817,8 +818,8 @@ Just a straightforward (and very messy!) package manifest. I have decided to kee
 </div>
 </div>
 
-<div id="outline-container-org4d66a6c" class="outline-3">
-<h3 id="org4d66a6c"><span class="section-number-3">11.2.</span> .guix-manifest-tiny</h3>
+<div id="outline-container-org943dba1" class="outline-3">
+<h3 id="org943dba1"><span class="section-number-3">11.2.</span> .guix-manifest-tiny</h3>
 <div class="outline-text-3" id="text-11-2">
 <p>
 Due to the above manifest becoming rather bloated a minimal replacement is provided here. This includes only the necessary dependencies to get the system running correctly.
@@ -841,8 +842,8 @@ Due to the above manifest becoming rather bloated a minimal replacement is provi
 </div>
 </div>
 
-<div id="outline-container-org903993a" class="outline-3">
-<h3 id="org903993a"><span class="section-number-3">11.3.</span> .config/guix/channels.scm</h3>
+<div id="outline-container-orga5d9765" class="outline-3">
+<h3 id="orga5d9765"><span class="section-number-3">11.3.</span> .config/guix/channels.scm</h3>
 <div class="outline-text-3" id="text-11-3">
 <p>
 Here is the setup for channels, additions here are <code>nonguix</code> and <code>guix-gaming-channels</code>.
@@ -878,16 +879,16 @@ Here is the setup for channels, additions here are <code>nonguix</code> and <cod
 </div>
 </div>
 
-<div id="outline-container-org6f6ea07" class="outline-2">
-<h2 id="org6f6ea07"><span class="section-number-2">12.</span> Guix-run</h2>
+<div id="outline-container-orgbec27e4" class="outline-2">
+<h2 id="orgbec27e4"><span class="section-number-2">12.</span> Guix-run</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 <code>guix-run</code> is a tiny script I originally found on Github. Unfortunately I do not have the original link anymore.
 </p>
 </div>
 
-<div id="outline-container-org38c51ec" class="outline-3">
-<h3 id="org38c51ec"><span class="section-number-3">12.1.</span> .bin/guix-run</h3>
+<div id="outline-container-org8d69241" class="outline-3">
+<h3 id="org8d69241"><span class="section-number-3">12.1.</span> .bin/guix-run</h3>
 <div class="outline-text-3" id="text-12-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #0000FF; font-weight: bold;">export</span> <span style="color: #BA36A5; font-style: italic;">LD_LIBRARY_PATH</span>=<span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">LIBRARY_PATH</span>
@@ -903,16 +904,16 @@ Here is the setup for channels, additions here are <code>nonguix</code> and <cod
 </div>
 </div>
 
-<div id="outline-container-orge7ca38e" class="outline-2">
-<h2 id="orge7ca38e"><span class="section-number-2">13.</span> Sway</h2>
+<div id="outline-container-org7b2c459" class="outline-2">
+<h2 id="org7b2c459"><span class="section-number-2">13.</span> Sway</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 <code>Sway</code> is one of the window managers I have a full setup for. While I do usually prefer to use a DE or EXWM, I do have sway here for completeness.
 </p>
 </div>
 
-<div id="outline-container-org836e314" class="outline-3">
-<h3 id="org836e314"><span class="section-number-3">13.1.</span> .config/sway/config</h3>
+<div id="outline-container-org3e2b3bd" class="outline-3">
+<h3 id="org3e2b3bd"><span class="section-number-3">13.1.</span> .config/sway/config</h3>
 <div class="outline-text-3" id="text-13-1">
 <p>
 Set some initial variables first.
@@ -1198,8 +1199,8 @@ And finally set colors.
 </div>
 </div>
 
-<div id="outline-container-orgd6e7f65" class="outline-3">
-<h3 id="orgd6e7f65"><span class="section-number-3">13.2.</span> .config/sway/i3status wrapper.py</h3>
+<div id="outline-container-org3626f52" class="outline-3">
+<h3 id="org3626f52"><span class="section-number-3">13.2.</span> .config/sway/i3status wrapper.py</h3>
 <div class="outline-text-3" id="text-13-2">
 <p>
 This small python wrapper adds the currently playing song as a prefix to the status.
@@ -1284,8 +1285,8 @@ This small python wrapper adds the currently playing song as a prefix to the sta
 </div>
 </div>
 
-<div id="outline-container-org0fda41f" class="outline-3">
-<h3 id="org0fda41f"><span class="section-number-3">13.3.</span> .config/i3status/config</h3>
+<div id="outline-container-orgd577732" class="outline-3">
+<h3 id="orgd577732"><span class="section-number-3">13.3.</span> .config/i3status/config</h3>
 <div class="outline-text-3" id="text-13-3">
 <p>
 This is the actual i3status config.
@@ -1366,8 +1367,8 @@ And configure the individual items.
 </div>
 </div>
 
-<div id="outline-container-org3e1bef5" class="outline-2">
-<h2 id="org3e1bef5"><span class="section-number-2">14.</span> Icons</h2>
+<div id="outline-container-org085ecd3" class="outline-2">
+<h2 id="org085ecd3"><span class="section-number-2">14.</span> Icons</h2>
 <div class="outline-text-2" id="text-14">
 <p>
 This modules provides custom icons.
@@ -1375,16 +1376,16 @@ This modules provides custom icons.
 </div>
 </div>
 
-<div id="outline-container-org91714cf" class="outline-2">
-<h2 id="org91714cf"><span class="section-number-2">15.</span> Rofi</h2>
+<div id="outline-container-org1019f34" class="outline-2">
+<h2 id="org1019f34"><span class="section-number-2">15.</span> Rofi</h2>
 <div class="outline-text-2" id="text-15">
 <p>
 Wofi is an application launcher, I use it with sway and sometimes even with different desktop environments.
 </p>
 </div>
 
-<div id="outline-container-org2bb5429" class="outline-3">
-<h3 id="org2bb5429"><span class="section-number-3">15.1.</span> .config/wofi/nord.rasi</h3>
+<div id="outline-container-org5e1b16e" class="outline-3">
+<h3 id="org5e1b16e"><span class="section-number-3">15.1.</span> .config/wofi/nord.rasi</h3>
 <div class="outline-text-3" id="text-15-1">
 <p>
 This is my chosen wofi theme, fits with the sway theme!
@@ -1497,16 +1498,16 @@ Original source <a href="https://github.com/lr-tech/rofi-themes-collection">here
 </div>
 </div>
 
-<div id="outline-container-org46a4937" class="outline-2">
-<h2 id="org46a4937"><span class="section-number-2">16.</span> Startx</h2>
+<div id="outline-container-org51c2b1a" class="outline-2">
+<h2 id="org51c2b1a"><span class="section-number-2">16.</span> Startx</h2>
 <div class="outline-text-2" id="text-16">
 <p>
 This bit is for a custom <code>startx</code> command, made to work with Guix.
 </p>
 </div>
 
-<div id="outline-container-org96a2a6a" class="outline-3">
-<h3 id="org96a2a6a"><span class="section-number-3">16.1.</span> .startx</h3>
+<div id="outline-container-org310da1e" class="outline-3">
+<h3 id="org310da1e"><span class="section-number-3">16.1.</span> .startx</h3>
 <div class="outline-text-3" id="text-16-1">
 <div class="org-src-container">
 <pre class="src src-sh"><span style="color: #BA36A5; font-style: italic;">DIR</span>=<span style="color: #0000FF; font-weight: bold;">$</span><span style="color: #D0372D; font-style: italic;">HOME</span>/.guix-profile
@@ -1520,16 +1521,16 @@ This bit is for a custom <code>startx</code> command, made to work with Guix.
 </div>
 </div>
 
-<div id="outline-container-org96e1a0c" class="outline-2">
-<h2 id="org96e1a0c"><span class="section-number-2">17.</span> Xresources</h2>
+<div id="outline-container-org4c86a8b" class="outline-2">
+<h2 id="org4c86a8b"><span class="section-number-2">17.</span> Xresources</h2>
 <div class="outline-text-2" id="text-17">
 <p>
 Here I apply some basic Xorg configuration.
 </p>
 </div>
 
-<div id="outline-container-org762f7c1" class="outline-3">
-<h3 id="org762f7c1"><span class="section-number-3">17.1.</span> .Xresources</h3>
+<div id="outline-container-org6022f4d" class="outline-3">
+<h3 id="org6022f4d"><span class="section-number-3">17.1.</span> .Xresources</h3>
 <div class="outline-text-3" id="text-17-1">
 <p>
 Just set the DPI and configure basic font rendering.
@@ -1548,8 +1549,8 @@ Just set the DPI and configure basic font rendering.
 </div>
 </div>
 
-<div id="outline-container-org639da31" class="outline-3">
-<h3 id="org639da31"><span class="section-number-3">17.2.</span> .xsessionrc</h3>
+<div id="outline-container-org30471aa" class="outline-3">
+<h3 id="org30471aa"><span class="section-number-3">17.2.</span> .xsessionrc</h3>
 <div class="outline-text-3" id="text-17-2">
 <p>
 This here is necessary for Debian; makes Guix programs accessible from a desktop session.
@@ -1563,8 +1564,8 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
 </div>
 </div>
 
-<div id="outline-container-orgb1090cb" class="outline-2">
-<h2 id="orgb1090cb"><span class="section-number-2">18.</span> XFCE 4 Terminal</h2>
+<div id="outline-container-orge1de74e" class="outline-2">
+<h2 id="orge1de74e"><span class="section-number-2">18.</span> XFCE 4 Terminal</h2>
 <div class="outline-text-2" id="text-18">
 <p>
 <code>xfce4-terminal</code> is my chosen terminal emulator. It's very easy to get up and running and supports all the basic features I need.
@@ -1572,8 +1573,8 @@ This here is necessary for Debian; makes Guix programs accessible from a desktop
 </div>
 </div>
 
-<div id="outline-container-org63becd3" class="outline-2">
-<h2 id="org63becd3"><span class="section-number-2">19.</span> Wallpapers</h2>
+<div id="outline-container-orge238325" class="outline-2">
+<h2 id="orge238325"><span class="section-number-2">19.</span> Wallpapers</h2>
 <div class="outline-text-2" id="text-19">
 <p>
 This module provides a few nice wallpapers I like to use. The path to these wallpapers is <code>$HOME/.local/share/wallpapers</code>.
@@ -1581,16 +1582,16 @@ This module provides a few nice wallpapers I like to use. The path to these wall
 </div>
 </div>
 
-<div id="outline-container-orgf788654" class="outline-2">
-<h2 id="orgf788654"><span class="section-number-2">20.</span> Guix system</h2>
+<div id="outline-container-org8ac937d" class="outline-2">
+<h2 id="org8ac937d"><span class="section-number-2">20.</span> Guix system</h2>
 <div class="outline-text-2" id="text-20">
 <p>
 Here is my Guix system configuration, currently unused as I'm on Debian, yet always ready to deploy!
 </p>
 </div>
 
-<div id="outline-container-orgb73d172" class="outline-3">
-<h3 id="orgb73d172"><span class="section-number-3">20.1.</span> /etc/config.scm</h3>
+<div id="outline-container-org1505ae2" class="outline-3">
+<h3 id="org1505ae2"><span class="section-number-3">20.1.</span> /etc/config.scm</h3>
 <div class="outline-text-3" id="text-20-1">
 <p>
 Let's start by adding my custom modules. This isn't exactly clean but it is functional.
@@ -1627,13 +1628,29 @@ Now import the actual modules
              <span style="color: #7388D6;">(</span>nil packages gnome<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu services linux<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages gnome<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>gnu packages<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages fonts<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>gnu packages networking<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>guix gexp<span style="color: #7388D6;">)</span>
              <span style="color: #7388D6;">(</span>guix packages<span style="color: #7388D6;">)</span>
-             <span style="color: #7388D6;">(</span>srfi srfi-1<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+             <span style="color: #7388D6;">(</span>srfi srfi-1<span style="color: #7388D6;">)</span>
+             <span style="color: #7388D6;">(</span>ice-9 match<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span>use-service-modules linux desktop networking ssh xorg<span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span>use-package-modules linux package-management<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+This function is taken from the <code>gnome-desktop</code> service.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">extract-propagated-inputs</span> package<span style="color: #7388D6;">)</span>
+  <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">Drop input labels.  Attempt to support outputs.</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">map</span>
+   <span style="color: #909183;">(</span><span style="color: #0000FF; font-weight: bold;">match-lambda</span>
+     <span style="color: #709870;">(</span><span style="color: #907373;">(</span>_ <span style="color: #6276BA;">(</span>? package? pkg<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span> pkg<span style="color: #709870;">)</span>
+     <span style="color: #709870;">(</span><span style="color: #907373;">(</span>_ <span style="color: #6276BA;">(</span>? package? pkg<span style="color: #6276BA;">)</span> output<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>list pkg output<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>package-propagated-inputs package<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -1654,7 +1671,7 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
                    <span style="color: #909183;">(</span>gdm-service-type config =&gt; 
                                      <span style="color: #709870;">(</span>gdm-configuration
                                       <span style="color: #907373;">(</span>inherit config<span style="color: #907373;">)</span>
-                                      <span style="color: #907373;">(</span>wayland? #f<span style="color: #907373;">)</span>
+                                      <span style="color: #907373;">(</span>wayland? #t<span style="color: #907373;">)</span>
                                       <span style="color: #907373;">(</span>default-user <span style="color: #008000;">"nil"</span><span style="color: #907373;">)</span>
                                       <span style="color: #907373;">(</span>auto-login? #t<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                    <span style="color: #909183;">(</span>dbus-root-service-type config =&gt;
@@ -1744,15 +1761,18 @@ Now for the second part of service configuration - appending my own services.
 <pre class="src src-scheme"><span style="color: #707183;">(</span>services
  <span style="color: #7388D6;">(</span>append
   <span style="color: #909183;">(</span>list
-   <span style="color: #709870;">(</span>service xfce-desktop-service-type<span style="color: #709870;">)</span>
+   <span style="color: #709870;">(</span>service gnome-desktop-service-type
+            <span style="color: #907373;">(</span>gnome-desktop-configuration
+             <span style="color: #6276BA;">(</span>shell <span style="color: #858580;">(</span>extract-propagated-inputs gnome-meta-core-shell-patched<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span> <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">Enable triple buffering support</span>
+   <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">I'm sure there's a more proper way to approach this, but this works for now</span>
 
    <span style="color: #709870;">(</span>service openssh-service-type<span style="color: #709870;">)</span>
 
    <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">Not necessary for Gnome</span>
-   <span style="color: #709870;">(</span>service screen-locker-service-type
-            <span style="color: #907373;">(</span>screen-locker-configuration
-             <span style="color: #6276BA;">(</span>name <span style="color: #008000;">"i3lock"</span><span style="color: #6276BA;">)</span>
-             <span style="color: #6276BA;">(</span>program <span style="color: #858580;">(</span>file-append i3lock <span style="color: #008000;">"/bin/i3lock"</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+   <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">(service screen-locker-service-type</span>
+   <span style="color: #8D8D84; font-style: italic;">;;       </span><span style="color: #8D8D84; font-style: italic;">(screen-locker-configuration</span>
+   <span style="color: #8D8D84; font-style: italic;">;;        </span><span style="color: #8D8D84; font-style: italic;">(name "i3lock")</span>
+   <span style="color: #8D8D84; font-style: italic;">;;        </span><span style="color: #8D8D84; font-style: italic;">(program (file-append i3lock "/bin/i3lock"))))</span>
 
    <span style="color: #709870;">(</span>service tlp-service-type
             <span style="color: #907373;">(</span>tlp-configuration
@@ -1884,8 +1904,8 @@ At last we can configure hardware-level stuff - bootloader and drives. Finally w
 </div>
 </div>
 
-<div id="outline-container-org0120d65" class="outline-3">
-<h3 id="org0120d65"><span class="section-number-3">20.2.</span> /etc/signing-key.pub</h3>
+<div id="outline-container-orgdea1a37" class="outline-3">
+<h3 id="orgdea1a37"><span class="section-number-3">20.2.</span> /etc/signing-key.pub</h3>
 <div class="outline-text-3" id="text-20-2">
 <p>
 This is the key for nonguix.
@@ -1903,24 +1923,24 @@ This is the key for nonguix.
 </div>
 </div>
 
-<div id="outline-container-org1d2a788" class="outline-2">
-<h2 id="org1d2a788"><span class="section-number-2">21.</span> Custom Guix Modules</h2>
+<div id="outline-container-orgd78adee" class="outline-2">
+<h2 id="orgd78adee"><span class="section-number-2">21.</span> Custom Guix Modules</h2>
 <div class="outline-text-2" id="text-21">
 <p>
 I use some of my own custom Guix modules. These provide anything from services to (mainly) packages.
 </p>
 </div>
 
-<div id="outline-container-orgd99c254" class="outline-3">
-<h3 id="orgd99c254"><span class="section-number-3">21.1.</span> /etc/guix-modules/nil/packages</h3>
+<div id="outline-container-org0b9e9df" class="outline-3">
+<h3 id="org0b9e9df"><span class="section-number-3">21.1.</span> /etc/guix-modules/nil/packages</h3>
 <div class="outline-text-3" id="text-21-1">
 <p>
 Let's start with the packages first.
 </p>
 </div>
 
-<div id="outline-container-org13bb8b8" class="outline-4">
-<h4 id="org13bb8b8"><span class="section-number-4">21.1.1.</span> brogue.scm</h4>
+<div id="outline-container-orgf809d7c" class="outline-4">
+<h4 id="orgf809d7c"><span class="section-number-4">21.1.1.</span> brogue.scm</h4>
 <div class="outline-text-4" id="text-21-1-1">
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages brogue</span><span style="color: #7388D6;">)</span>
@@ -1989,8 +2009,8 @@ Let's start with the packages first.
 </div>
 </div>
 
-<div id="outline-container-org8ba1fbf" class="outline-4">
-<h4 id="org8ba1fbf"><span class="section-number-4">21.1.2.</span> distrobox-docker.scm</h4>
+<div id="outline-container-org437139b" class="outline-4">
+<h4 id="org437139b"><span class="section-number-4">21.1.2.</span> distrobox-docker.scm</h4>
 <div class="outline-text-4" id="text-21-1-2">
 <p>
 Since podman isn't currently fully functional on Guix we have to use docker instead.
@@ -2043,8 +2063,8 @@ Unfortunately the Distrobox definition in Guix's repos relies on podman, making 
 </div>
 </div>
 
-<div id="outline-container-orga822b1d" class="outline-4">
-<h4 id="orga822b1d"><span class="section-number-4">21.1.3.</span> emulators.scm</h4>
+<div id="outline-container-org9a9e8e1" class="outline-4">
+<h4 id="org9a9e8e1"><span class="section-number-4">21.1.3.</span> emulators.scm</h4>
 <div class="outline-text-4" id="text-21-1-3">
 <p>
 This is a custom retroarch definition, it adds the core downloader functionality which the Guix version doesn't have for licensing reasons.
@@ -2107,41 +2127,67 @@ This is a custom retroarch definition, it adds the core downloader functionality
 </div>
 </div>
 
-<div id="outline-container-org7892cbd" class="outline-4">
-<h4 id="org7892cbd"><span class="section-number-4">21.1.4.</span> gnome.scm</h4>
+<div id="outline-container-orga0e9014" class="outline-4">
+<h4 id="orga0e9014"><span class="section-number-4">21.1.4.</span> gnome.scm</h4>
 <div class="outline-text-4" id="text-21-1-4">
 <p>
-Since the default Gnome package in Guix ships quite a few unnecessary dependencies I make my own variant. I also replace <code>gnome-console</code> with <code>gnome-terminal</code> as it is more full-featured.
+Patches Mutter with the triple buffering patch for improved performance.
 </p>
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages gnome</span><span style="color: #7388D6;">)</span>
-  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix utils<span style="color: #7388D6;">)</span>
   <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix packages<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix utils<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix build utils<span style="color: #7388D6;">)</span>
   <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages<span style="color: #7388D6;">)</span>
-  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages gnome<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix git-download<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages gnome<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages pciutils<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>guix licenses<span style="color: #7388D6;">)</span>
+  <span style="color: #006FE0;">#:use-module</span> <span style="color: #7388D6;">(</span>gnu packages base<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-public</span> <span style="color: #006699;">gnome-minimal</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-public</span> <span style="color: #006699;">mutter-patched</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>commit <span style="color: #008000;">"28a6447ff060ae1fbac8f20a13908d6e230eddc2"</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>revision <span style="color: #008000;">"1"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>package
+      <span style="color: #709870;">(</span>inherit mutter<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>name <span style="color: #008000;">"mutter"</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>version <span style="color: #907373;">(</span>git-version <span style="color: #008000;">"44"</span> revision commit<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>source <span style="color: #907373;">(</span>origin
+                <span style="color: #6276BA;">(</span>method git-fetch<span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>uri <span style="color: #858580;">(</span>git-reference
+                      <span style="color: #80A880;">(</span>url <span style="color: #008000;">"https://gitlab.gnome.org/vanvugt/mutter.git"</span><span style="color: #80A880;">)</span>
+                      <span style="color: #80A880;">(</span>commit commit<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>file-name <span style="color: #858580;">(</span>git-file-name name version<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+                <span style="color: #6276BA;">(</span>sha256
+                 <span style="color: #858580;">(</span>base32
+                  <span style="color: #008000;">"1ssmflwpmfkn28rmn5glyh96fd5ys9h1j4v70wm4ix2668wk4rr6"</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>arguments
+       <span style="color: #907373;">(</span>substitute-keyword-arguments <span style="color: #6276BA;">(</span>package-arguments mutter<span style="color: #6276BA;">)</span>
+         <span style="color: #6276BA;">(</span><span style="color: #858580;">(</span><span style="color: #006FE0;">#:tests?</span> tests? #f<span style="color: #858580;">)</span> #f<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">recommend checking tests on version bumps</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-public</span> <span style="color: #006699;">gnome-meta-core-shell-patched</span>
   <span style="color: #7388D6;">(</span>package
-    <span style="color: #909183;">(</span>inherit gnome<span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span>name <span style="color: #008000;">"gnome-minimal"</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>inherit gnome-meta-core-shell<span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>name <span style="color: #008000;">"gnome-meta-core-shell"</span><span style="color: #909183;">)</span>
     <span style="color: #909183;">(</span>propagated-inputs
-     <span style="color: #709870;">(</span>modify-inputs <span style="color: #907373;">(</span>package-propagated-inputs gnome<span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"epiphany"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"gnome-weather"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"simple-scan"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"gnome-maps"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"cheese"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"gnome-boxes"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"gnome-console"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"gnome-contacts"</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>append gnome-terminal<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+     <span style="color: #709870;">(</span>modify-inputs <span style="color: #907373;">(</span>package-propagated-inputs gnome-meta-core-shell<span style="color: #907373;">)</span>
+       <span style="color: #907373;">(</span>delete <span style="color: #008000;">"mutter"</span><span style="color: #907373;">)</span>
+       <span style="color: #907373;">(</span>append mutter-patched<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-public</span> <span style="color: #7388D6;">(</span><span style="color: #006699;">nil-extract-propagated-inputs</span> package<span style="color: #7388D6;">)</span>
+  <span style="color: #8D8D84; font-style: italic;">;; </span><span style="color: #8D8D84; font-style: italic;">Drop input labels.  Attempt to support outputs.</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF; font-weight: bold;">map</span>
+   <span style="color: #909183;">(</span><span style="color: #0000FF; font-weight: bold;">match-lambda</span>
+     <span style="color: #709870;">(</span><span style="color: #907373;">(</span>_ <span style="color: #6276BA;">(</span>? package? pkg<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span> pkg<span style="color: #709870;">)</span>
+     <span style="color: #709870;">(</span><span style="color: #907373;">(</span>_ <span style="color: #6276BA;">(</span>? package? pkg<span style="color: #6276BA;">)</span> output<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>list pkg output<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+   <span style="color: #909183;">(</span>package-propagated-inputs package<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org150387a" class="outline-4">
-<h4 id="org150387a"><span class="section-number-4">21.1.5.</span> throttled.scm</h4>
+<div id="outline-container-orgdd76851" class="outline-4">
+<h4 id="orgdd76851"><span class="section-number-4">21.1.5.</span> throttled.scm</h4>
 <div class="outline-text-4" id="text-21-1-5">
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil packages throttled</span><span style="color: #7388D6;">)</span>
@@ -2220,16 +2266,16 @@ Since the default Gnome package in Guix ships quite a few unnecessary dependenci
 </div>
 </div>
 </div>
-<div id="outline-container-org3b962f9" class="outline-3">
-<h3 id="org3b962f9"><span class="section-number-3">21.2.</span> /etc/guix-modules/nil/services</h3>
+<div id="outline-container-org421dd3b" class="outline-3">
+<h3 id="org421dd3b"><span class="section-number-3">21.2.</span> /etc/guix-modules/nil/services</h3>
 <div class="outline-text-3" id="text-21-2">
 <p>
 Moving on to services.
 </p>
 </div>
 
-<div id="outline-container-org8f053bf" class="outline-4">
-<h4 id="org8f053bf"><span class="section-number-4">21.2.1.</span> mount-rshared.scm</h4>
+<div id="outline-container-org88f3a51" class="outline-4">
+<h4 id="org88f3a51"><span class="section-number-4">21.2.1.</span> mount-rshared.scm</h4>
 <div class="outline-text-4" id="text-21-2-1">
 <p>
 Tiny service used to remount the root as recursively shared on boot.
@@ -2260,8 +2306,8 @@ Tiny service used to remount the root as recursively shared on boot.
 </div>
 </div>
 
-<div id="outline-container-org28417d3" class="outline-4">
-<h4 id="org28417d3"><span class="section-number-4">21.2.2.</span> virsh.scm</h4>
+<div id="outline-container-org44a1470" class="outline-4">
+<h4 id="org44a1470"><span class="section-number-4">21.2.2.</span> virsh.scm</h4>
 <div class="outline-text-4" id="text-21-2-2">
 <p>
 There doesn't seem to be a proper Guix way to configure libvirt networks so my lazy workaround is to make a service that creates the default transient network.
@@ -2310,8 +2356,8 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 </div>
 </div>
 
-<div id="outline-container-org69802be" class="outline-4">
-<h4 id="org69802be"><span class="section-number-4">21.2.3.</span> throttled.scm</h4>
+<div id="outline-container-org0a52d4d" class="outline-4">
+<h4 id="org0a52d4d"><span class="section-number-4">21.2.3.</span> throttled.scm</h4>
 <div class="outline-text-4" id="text-21-2-3">
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #0000FF; font-weight: bold;">define-module</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">nil services throttled</span><span style="color: #7388D6;">)</span>
@@ -2494,8 +2540,8 @@ There doesn't seem to be a proper Guix way to configure libvirt networks so my l
 </div>
 </div>
 </div>
-<div id="outline-container-org5c59702" class="outline-2">
-<h2 id="org5c59702"><span class="section-number-2">22.</span> ZRAM on non-guix distros</h2>
+<div id="outline-container-orge70f1a4" class="outline-2">
+<h2 id="orge70f1a4"><span class="section-number-2">22.</span> ZRAM on non-guix distros</h2>
 <div class="outline-text-2" id="text-22">
 <p>
 This is the distribution-agnostic ZRAM implementation for use with systems other than GNU Guix. This module isn't necessary (or desired) with Guix System.
@@ -2507,8 +2553,8 @@ This is the distribution-agnostic ZRAM implementation for use with systems other
 </ul>
 </div>
 
-<div id="outline-container-org0f22c5b" class="outline-3">
-<h3 id="org0f22c5b"><span class="section-number-3">22.1.</span> /etc/modules-load.d/zram.conf</h3>
+<div id="outline-container-org423923f" class="outline-3">
+<h3 id="org423923f"><span class="section-number-3">22.1.</span> /etc/modules-load.d/zram.conf</h3>
 <div class="outline-text-3" id="text-22-1">
 <p>
 First load the kernel module.
@@ -2520,8 +2566,8 @@ First load the kernel module.
 </div>
 </div>
 
-<div id="outline-container-org278da80" class="outline-3">
-<h3 id="org278da80"><span class="section-number-3">22.2.</span> /etc/modprobe.d/zram.conf</h3>
+<div id="outline-container-org139a73d" class="outline-3">
+<h3 id="org139a73d"><span class="section-number-3">22.2.</span> /etc/modprobe.d/zram.conf</h3>
 <div class="outline-text-3" id="text-22-2">
 <p>
 Now to configure the module a little bit.
@@ -2533,8 +2579,8 @@ Now to configure the module a little bit.
 </div>
 </div>
 
-<div id="outline-container-org802c980" class="outline-3">
-<h3 id="org802c980"><span class="section-number-3">22.3.</span> /etc/udev/rules.d/99-zram.rules</h3>
+<div id="outline-container-orgc5ee4cd" class="outline-3">
+<h3 id="orgc5ee4cd"><span class="section-number-3">22.3.</span> /etc/udev/rules.d/99-zram.rules</h3>
 <div class="outline-text-3" id="text-22-3">
 <p>
 Set the ZRAM size - 16GB in this case.
@@ -2546,8 +2592,8 @@ Set the ZRAM size - 16GB in this case.
 </div>
 </div>
 
-<div id="outline-container-org9cbf570" class="outline-3">
-<h3 id="org9cbf570"><span class="section-number-3">22.4.</span> /etc/systemd/system/zram.service</h3>
+<div id="outline-container-org75df881" class="outline-3">
+<h3 id="org75df881"><span class="section-number-3">22.4.</span> /etc/systemd/system/zram.service</h3>
 <div class="outline-text-3" id="text-22-4">
 <p>
 Finally we need a systemd service to automatically enable zram on boot.
@@ -2572,8 +2618,8 @@ Finally we need a systemd service to automatically enable zram on boot.
 </div>
 </div>
 
-<div id="outline-container-org2031f48" class="outline-2">
-<h2 id="org2031f48"><span class="section-number-2">23.</span> Emacs</h2>
+<div id="outline-container-org14e30d9" class="outline-2">
+<h2 id="org14e30d9"><span class="section-number-2">23.</span> Emacs</h2>
 <div class="outline-text-2" id="text-23">
 <p>
 Finally - this is my Emacs config, now fully literate!
@@ -2608,8 +2654,8 @@ I usually install these using <a href="https://guix.gnu.org">GNU Guix</a>, at le
 </p>
 </div>
 
-<div id="outline-container-org525e575" class="outline-3">
-<h3 id="org525e575"><span class="section-number-3">23.1.</span> Initial variables</h3>
+<div id="outline-container-org1e85925" class="outline-3">
+<h3 id="org1e85925"><span class="section-number-3">23.1.</span> Initial variables</h3>
 <div class="outline-text-3" id="text-23-1">
 <p>
 Set some basic information about the user.
@@ -2633,8 +2679,8 @@ EXWM can be toggled here. Its configuration is handled within a separate file.
 </div>
 </div>
 
-<div id="outline-container-org50dc201" class="outline-3">
-<h3 id="org50dc201"><span class="section-number-3">23.2.</span> Packages</h3>
+<div id="outline-container-org6b338c8" class="outline-3">
+<h3 id="org6b338c8"><span class="section-number-3">23.2.</span> Packages</h3>
 <div class="outline-text-3" id="text-23-2">
 <p>
 Next we need to setup our package archives so that we can ensure all the necessary packages are installed. We'll also grab <code>el-patch</code> as it needs to have priority over other packages.
@@ -2732,8 +2778,8 @@ You'll notice the use of a very primitive function - no <code>straight.el</code>
 </div>
 </div>
 
-<div id="outline-container-orgd8d6069" class="outline-3">
-<h3 id="orgd8d6069"><span class="section-number-3">23.3.</span> Extra tempel templates (.emacs.d/templates)</h3>
+<div id="outline-container-org465fce4" class="outline-3">
+<h3 id="org465fce4"><span class="section-number-3">23.3.</span> Extra tempel templates (.emacs.d/templates)</h3>
 <div class="outline-text-3" id="text-23-3">
 <p>
 I use <code>tempel</code> for inserting snippets. This is the default path for adding new snippets.
@@ -2755,8 +2801,8 @@ org-mode
 </div>
 </div>
 
-<div id="outline-container-orga18a18a" class="outline-3">
-<h3 id="orga18a18a"><span class="section-number-3">23.4.</span> custom-set options</h3>
+<div id="outline-container-org936b625" class="outline-3">
+<h3 id="org936b625"><span class="section-number-3">23.4.</span> custom-set options</h3>
 <div class="outline-text-3" id="text-23-4">
 <p>
 Now we set some custom variables related mostly to theming. This part here was automatically generated by Emacs.
@@ -2827,8 +2873,8 @@ The Fira Code font has ligature support, so we implement it here.
 </div>
 </div>
 
-<div id="outline-container-org78dc778" class="outline-3">
-<h3 id="org78dc778"><span class="section-number-3">23.5.</span> Variables</h3>
+<div id="outline-container-org016822d" class="outline-3">
+<h3 id="org016822d"><span class="section-number-3">23.5.</span> Variables</h3>
 <div class="outline-text-3" id="text-23-5">
 <p>
 It's finally time to set up some basic variables.
@@ -2978,8 +3024,8 @@ And here we arrive at the global modes.
 </div>
 </div>
 
-<div id="outline-container-org00fbcef" class="outline-3">
-<h3 id="org00fbcef"><span class="section-number-3">23.6.</span> LSP servers</h3>
+<div id="outline-container-org38af4a5" class="outline-3">
+<h3 id="org38af4a5"><span class="section-number-3">23.6.</span> LSP servers</h3>
 <div class="outline-text-3" id="text-23-6">
 <p>
 Set up LSP for supported modes.
@@ -3253,8 +3299,8 @@ This is for keybindings that should never be overwritten by minor modes.
 </div>
 </div>
 
-<div id="outline-container-org74ea5a6" class="outline-3">
-<h3 id="org74ea5a6"><span class="section-number-3">23.7.</span> Functions</h3>
+<div id="outline-container-org77e885b" class="outline-3">
+<h3 id="org77e885b"><span class="section-number-3">23.7.</span> Functions</h3>
 <div class="outline-text-3" id="text-23-7">
 <p>
 Some straightforward functions here, used to make my Emacs life a little easier.
@@ -3348,8 +3394,8 @@ Sometimes I like to take quick notes in Markdown with impatient mode used for a 
 </div>
 </div>
 
-<div id="outline-container-org49cc140" class="outline-3">
-<h3 id="org49cc140"><span class="section-number-3">23.8.</span> Keybindings</h3>
+<div id="outline-container-orga14eb6f" class="outline-3">
+<h3 id="orga14eb6f"><span class="section-number-3">23.8.</span> Keybindings</h3>
 <div class="outline-text-3" id="text-23-8">
 <p>
 Finally we get to my extensive custom keybindings. I try to keep these to as few as possible, to avoid forgetting them over time.
@@ -3475,8 +3521,8 @@ Let's move onto EXWM configuration next.
 </div>
 </div>
 
-<div id="outline-container-org2e12921" class="outline-3">
-<h3 id="org2e12921"><span class="section-number-3">23.9.</span> .exwm.el</h3>
+<div id="outline-container-org71c51c2" class="outline-3">
+<h3 id="org71c51c2"><span class="section-number-3">23.9.</span> .exwm.el</h3>
 <div class="outline-text-3" id="text-23-9">
 <p>
 The EXWM configuration is stored in a separate file from the Emacs config, this helps keep it modular and easy to switch on or off.
@@ -3633,8 +3679,8 @@ Finally push the super key and escape as <code>exwm-input-prefix-keys</code>.
 </div>
 </div>
 
-<div id="outline-container-org4bf034f" class="outline-2">
-<h2 id="org4bf034f"><span class="section-number-2">24.</span> Non-Guix Services and dependencies</h2>
+<div id="outline-container-org7c2c4f5" class="outline-2">
+<h2 id="org7c2c4f5"><span class="section-number-2">24.</span> Non-Guix Services and dependencies</h2>
 <div class="outline-text-2" id="text-24">
 <p>
 Some additional services may need to be enabled on non-guix distributions.
@@ -3652,7 +3698,7 @@ And that's all for the configs!
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: (λ () nil)</p>
-<p class="date">Created: 2024-05-24 Pá 18:49</p>
+<p class="date">Created: 2024-05-25 So 10:40</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

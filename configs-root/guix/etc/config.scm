@@ -23,13 +23,23 @@
 	     (nil packages gnome)
 	     (gnu services linux)
 	     (gnu packages gnome)
+	     (gnu packages)
 	     (gnu packages fonts)
 	     (gnu packages networking)
 	     (guix gexp)
 	     (guix packages)
-	     (srfi srfi-1))
+	     (srfi srfi-1)
+	     (ice-9 match))
 (use-service-modules linux desktop networking ssh xorg)
 (use-package-modules linux package-management)
+
+(define (extract-propagated-inputs package)
+  ;; Drop input labels.  Attempt to support outputs.
+  (map
+   (match-lambda
+     ((_ (? package? pkg)) pkg)
+     ((_ (? package? pkg) output) (list pkg output)))
+   (package-propagated-inputs package)))
 
 (define %my-services
   (modify-services %desktop-services
@@ -44,7 +54,7 @@
 		   (gdm-service-type config => 
 				     (gdm-configuration
 				      (inherit config)
-				      (wayland? #f)
+				      (wayland? #t)
 				      (default-user "nil")
 				      (auto-login? #t)))
 		   (dbus-root-service-type config =>
@@ -98,15 +108,18 @@
 (services
  (append
   (list
-   (service xfce-desktop-service-type)
+   (service gnome-desktop-service-type
+	    (gnome-desktop-configuration
+	     (shell (extract-propagated-inputs gnome-meta-core-shell-patched)))) ;; Enable triple buffering support
+   ;; I'm sure there's a more proper way to approach this, but this works for now
 
    (service openssh-service-type)
 
    ;; Not necessary for Gnome
-   (service screen-locker-service-type
-	    (screen-locker-configuration
-	     (name "i3lock")
-	     (program (file-append i3lock "/bin/i3lock"))))
+   ;; (service screen-locker-service-type
+   ;; 	    (screen-locker-configuration
+   ;; 	     (name "i3lock")
+   ;; 	     (program (file-append i3lock "/bin/i3lock"))))
 
    (service tlp-service-type
 	    (tlp-configuration
