@@ -163,8 +163,7 @@ These are commands specifically only used when on my laptop.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/autostart/.loginctl"
   if [ "$HOSTNAME" = "lainpad" ]
      then
-	 # blueman-applet &
-	 # setxkbmap cz -option 'ctrl:swapcaps' &
+	 setxkbmap cz -option 'ctrl:swapcaps' &
 	 xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
 	 # echo "nothing to do!"
   fi
@@ -283,21 +282,21 @@ Then we can go ahead and export Guix, but only when not inside a container. I al
   fi
 #+END_SRC
 
-This makes sway start up automatically when logging into ~tty2~, eliminating the need for a login manager.
-#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
-  if [[ "$(tty)" == "/dev/tty2" ]]
-  then
-      export XDG_CURRENT_DESKTOP=sway
-      exec dbus-run-session -- sway
-  fi
-#+END_SRC
-
 Laptop-specific environment variables to ensure hardware video acceleration works.
 #+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
   if [ "$HOSTNAME" = "lainpad" ] && [ ! -f /run/.containerenv ]
   then
       export LIBVA_DRIVER_NAME=iHD
       export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so
+  fi
+#+END_SRC
+
+This makes sway start up automatically when logging into ~tty2~, eliminating the need for a login manager.
+#+BEGIN_SRC bash :tangle "~/git/emacs-stuff/configs/bash/.bash_profile"
+  if [[ "$(tty)" == "/dev/tty2" ]]
+  then
+      export XDG_CURRENT_DESKTOP=sway
+      exec dbus-run-session -- sway
   fi
 #+END_SRC
 
@@ -528,8 +527,8 @@ Window rules for transparency, etc.
 
 I decrease the time to render a frame as much as possible (12ms in this case), this significantly helps eliminate input lag. This value needs to be increased if stuttering becomes an issue.
 #+begin_src conf-space :tangle "~/git/emacs-stuff/configs/sway/.config/sway/config"
-  output HDMI-A-2 max_render_time 12
-  output HDMI-A-1 disable
+  # output HDMI-A-2 max_render_time 12
+  # output HDMI-A-1 disable
   # swaymsg -t get_outputs
 #+end_src
 
@@ -538,8 +537,8 @@ Execute the startup environment, this is necessary for XDG autostart files.
   exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
   exec --no-startup-id $HOME/.loginctl
   exec --no-startup-id swaybg -i $wallpaper
-  exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme Dracula
-  exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
+  exec --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme Yaru-magenta-dark
+  exec --no-startup-id gsettings set org.gnome.desktop.interface icon-theme Yaru-magenta-dark
   # exec /usr/libexec/polkit-gnome-authentication-agent-1
 #+END_SRC
 
@@ -1094,23 +1093,23 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (define %my-services
     (modify-services %desktop-services
-		     (guix-service-type config => (guix-configuration
-						   (inherit config)
-						   (substitute-urls
-						    (append (list "https://substitutes.nonguix.org")
-							    %default-substitute-urls))
-						   (authorized-keys
-						    (append (list (local-file "./signing-key.pub"))
-							    %default-authorized-guix-keys))))
-		     (gdm-service-type config => 
-				       (gdm-configuration
-					(inherit config)
-					(wayland? #f)
-					(default-user "nil")
-					(auto-login? #t)))
-		     (dbus-root-service-type config =>
-					     (dbus-configuration (inherit config)
-								 (services (list libratbag blueman fwupd))))))
+      (guix-service-type config => (guix-configuration
+				    (inherit config)
+				    (substitute-urls
+				     (append (list "https://substitutes.nonguix.org")
+					     %default-substitute-urls))
+				    (authorized-keys
+				     (append (list (local-file "./signing-key.pub"))
+					     %default-authorized-guix-keys))))
+      (gdm-service-type config => 
+      		     (gdm-configuration
+      		      (inherit config)
+      		      (wayland? #f)
+      		      (default-user "nil")
+       		      (auto-login? #t)))
+      (dbus-root-service-type config =>
+			      (dbus-configuration (inherit config)
+						  (services (list libratbag blueman fwupd))))))
 #+END_SRC
 
 Let's handle basic OS defaults first of all.
@@ -1160,6 +1159,8 @@ Add system-level packages now; these are *only* the most necessary of packages.
 	  "blueman"
 	  "i915-firmware"
 	  "vim"
+	  "mesa"
+	  "glu"
 	  "xdg-desktop-portal-gtk"
 	  "i3lock"
 	  "libratbag"
@@ -1177,18 +1178,20 @@ Now for the second part of service configuration - appending my own services.
   (services
    (append
     (list
-     (service gnome-desktop-service-type
-	      (gnome-desktop-configuration
-	       (shell (extract-propagated-inputs gnome-meta-core-shell-patched)))) ;; Enable triple buffering support
+     ;; (service gnome-desktop-service-type
+     ;; 	    (gnome-desktop-configuration
+     ;; 	     (shell (extract-propagated-inputs gnome-meta-core-shell-patched))))
+     ;; Enable triple buffering support
      ;; I'm sure there's a more proper way to approach this, but this works for now
+     (service xfce-desktop-service-type)
 
      (service openssh-service-type)
 
      ;; Not necessary for Gnome
-     ;; (service screen-locker-service-type
-     ;; 	    (screen-locker-configuration
-     ;; 	     (name "i3lock")
-     ;; 	     (program (file-append i3lock "/bin/i3lock"))))
+     (service screen-locker-service-type
+	      (screen-locker-configuration
+	       (name "i3lock")
+	       (program (file-append i3lock "/bin/i3lock"))))
 
      (service tlp-service-type
 	      (tlp-configuration

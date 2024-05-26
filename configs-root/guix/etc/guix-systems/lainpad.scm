@@ -43,23 +43,23 @@
 
 (define %my-services
   (modify-services %desktop-services
-		   (guix-service-type config => (guix-configuration
-						 (inherit config)
-						 (substitute-urls
-						  (append (list "https://substitutes.nonguix.org")
-							  %default-substitute-urls))
-						 (authorized-keys
-						  (append (list (local-file "./signing-key.pub"))
-							  %default-authorized-guix-keys))))
-		   (gdm-service-type config => 
-				     (gdm-configuration
-				      (inherit config)
-				      (wayland? #f)
-				      (default-user "nil")
-				      (auto-login? #t)))
-		   (dbus-root-service-type config =>
-					   (dbus-configuration (inherit config)
-							       (services (list libratbag blueman fwupd))))))
+    (guix-service-type config => (guix-configuration
+				  (inherit config)
+				  (substitute-urls
+				   (append (list "https://substitutes.nonguix.org")
+					   %default-substitute-urls))
+				  (authorized-keys
+				   (append (list (local-file "./signing-key.pub"))
+					   %default-authorized-guix-keys))))
+    (gdm-service-type config => 
+      		   (gdm-configuration
+      		    (inherit config)
+      		    (wayland? #f)
+      		    (default-user "nil")
+       		    (auto-login? #t)))
+    (dbus-root-service-type config =>
+			    (dbus-configuration (inherit config)
+						(services (list libratbag blueman fwupd))))))
 
 (operating-system
 
@@ -97,6 +97,8 @@
 	"blueman"
 	"i915-firmware"
 	"vim"
+	"mesa"
+	"glu"
 	"xdg-desktop-portal-gtk"
 	"i3lock"
 	"libratbag"
@@ -108,18 +110,20 @@
 (services
  (append
   (list
-   (service gnome-desktop-service-type
-	    (gnome-desktop-configuration
-	     (shell (extract-propagated-inputs gnome-meta-core-shell-patched)))) ;; Enable triple buffering support
+   ;; (service gnome-desktop-service-type
+   ;; 	    (gnome-desktop-configuration
+   ;; 	     (shell (extract-propagated-inputs gnome-meta-core-shell-patched))))
+   ;; Enable triple buffering support
    ;; I'm sure there's a more proper way to approach this, but this works for now
+   (service xfce-desktop-service-type)
 
    (service openssh-service-type)
 
    ;; Not necessary for Gnome
-   ;; (service screen-locker-service-type
-   ;; 	    (screen-locker-configuration
-   ;; 	     (name "i3lock")
-   ;; 	     (program (file-append i3lock "/bin/i3lock"))))
+   (service screen-locker-service-type
+	    (screen-locker-configuration
+	     (name "i3lock")
+	     (program (file-append i3lock "/bin/i3lock"))))
 
    (service tlp-service-type
 	    (tlp-configuration
