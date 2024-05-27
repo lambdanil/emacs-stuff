@@ -16,6 +16,7 @@ if [ "$HOSTNAME" = "lainpad" ] && [ ! -f /run/.containerenv ]
 then
     export LIBVA_DRIVER_NAME=iHD
     export LD_PRELOAD=/home/nil/.guix-profile/lib/dri/iHD_drv_video.so
+    export MOZ_USE_XINPUT2=1
 fi
 
 if [[ "$(tty)" == "/dev/tty2" ]]
