@@ -1113,6 +1113,10 @@ Now redefine some services. Enable nonguix substitutes and blueman for a bluetoo
 						  (services (list libratbag blueman fwupd))))))
 #+END_SRC
 
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
+  (define my-username "nil")
+#+end_src
+
 Let's handle basic OS defaults first of all.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   (operating-system
@@ -1140,7 +1144,7 @@ User and group setup is next in line:
     %base-groups))
 
   (users (cons* (user-account
-		 (name "nil")
+		 (name my-username)
 		 (comment "(lambda () nil)")
 		 (group "users")
 		 (home-directory "/home/nil")
@@ -1223,6 +1227,15 @@ Now for the second part of service configuration - appending my own services.
 This one is a custom service, essentially distrobox needs the root (/) to be mounted as rshared and this is currently the way to achieve this.
 #+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
   mount-rshared-service 
+#+END_SRC
+
+In order for rootless ~podman~ to work I also have to create the ~/etc/subuid~ and ~/etc/subgid~ files.
+#+BEGIN_SRC scheme :tangle "~/git/emacs-stuff/configs-root/guix/etc/guix-systems/lainpad.scm"
+  (extra-special-file "/etc/subuid"
+		      (plain-file "subuid" (string-append my-username ":100000:65536")))
+
+  (extra-special-file "/etc/subgid"
+		      (plain-file "subgid" (string-append my-username ":100000:65536")))
 #+END_SRC
 
 Another custom service, this one creates the transient ~default~ libvirt network.
@@ -1330,14 +1343,14 @@ Let's start with the packages first.
   (define-public brogue-ce
     (package
      (name "brogue-ce")
-     (version "1.12")
+     (version "1.13")
      (source (origin
 	      (method url-fetch)
 	      (uri (string-append "https://github.com/tmewett/BrogueCE/archive/refs/tags/v" version
 				  ".tar.gz"))
 	      (sha256
 	       (base32
-		"0a6l7j91iq0mv7zrxnlxx6ll5rfwvgfyk5h1gc9m5qzll1n3zvdf"))))
+		"0v4hh5c6lgfrm5gmh2r0c3fnq854i4nqbhmkb9b5hbch74bfjqsc"))))
      (build-system gnu-build-system)
      (arguments
       (list 

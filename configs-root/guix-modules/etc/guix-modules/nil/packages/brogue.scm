@@ -9,14 +9,14 @@
 (define-public brogue-ce
   (package
    (name "brogue-ce")
-   (version "1.12")
+   (version "1.13")
    (source (origin
 	    (method url-fetch)
 	    (uri (string-append "https://github.com/tmewett/BrogueCE/archive/refs/tags/v" version
 				".tar.gz"))
 	    (sha256
 	     (base32
-	      "0a6l7j91iq0mv7zrxnlxx6ll5rfwvgfyk5h1gc9m5qzll1n3zvdf"))))
+	      "0v4hh5c6lgfrm5gmh2r0c3fnq854i4nqbhmkb9b5hbch74bfjqsc"))))
    (build-system gnu-build-system)
    (arguments
     (list 

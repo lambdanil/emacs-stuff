@@ -61,6 +61,8 @@
 			    (dbus-configuration (inherit config)
 						(services (list libratbag blueman fwupd))))))
 
+(define my-username "nil")
+
 (operating-system
 
  (locale "cs_CZ.utf8")
@@ -80,7 +82,7 @@
   %base-groups))
 
 (users (cons* (user-account
-	       (name "nil")
+	       (name my-username)
 	       (comment "(lambda () nil)")
 	       (group "users")
 	       (home-directory "/home/nil")
@@ -148,6 +150,12 @@
 	 '("msr")) ;; required for throttled
 
 mount-rshared-service
+
+(extra-special-file "/etc/subuid"
+		    (plain-file "subuid" (string-append my-username ":100000:65536")))
+
+(extra-special-file "/etc/subgid"
+		    (plain-file "subgid" (string-append my-username ":100000:65536")))
 
 virsh-net-default-service
 
