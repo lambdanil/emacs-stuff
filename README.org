@@ -267,7 +267,7 @@ First run the bashrc if necessary.
   # Honor per-interactive-shell startup file
   if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
   export LANG=cs_CZ.utf-8
-  export PATH=$PATH:$HOME/.local/bin:$HOME/.bin:$HOME/.py/bin:/usr/lib/go-1.21/bin
+  export PATH=$PATH:$HOME/.local/bin:$HOME/.bin:$HOME/.py/bin:/usr/lib/go-1.22/bin
 #+END_SRC
 
 Then we can go ahead and export Guix, but only when not inside a container. I also verify the Guix profile exists before trying to load it.
@@ -2294,16 +2294,16 @@ Fix unicode in ~vterm~.
 
 Add the Guix development environment for Geiser along with the ~tempel~ completions.
 #+BEGIN_SRC emacs-lisp :tangle "~/git/emacs-stuff/configs/emacs/.emacs"
-  (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path "~/guix")
-    (add-to-list 'geiser-guile-load-path "~/nonguix")
-    (add-to-list 'geiser-guile-load-path "/etc/guix-modules"))
+  ;; (with-eval-after-load 'geiser-guile
+  ;;   (add-to-list 'geiser-guile-load-path "~/guix")
+  ;;   (add-to-list 'geiser-guile-load-path "~/nonguix")
+  ;;   (add-to-list 'geiser-guile-load-path "/etc/guix-modules"))
 
-  (with-eval-after-load 'tempel
-    ;; Ensure tempel-path is a list -- it may also be a string.
-    (unless (listp 'tempel-path)
-      (setq tempel-path (list tempel-path)))
-    (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
+  ;; (with-eval-after-load 'tempel
+  ;;   ;; Ensure tempel-path is a list -- it may also be a string.
+  ;;   (unless (listp 'tempel-path)
+  ;;     (setq tempel-path (list tempel-path)))
+  ;;   (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
 #+END_SRC
 
 Enable languages for the Jinx spell checker.
