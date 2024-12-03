@@ -1,6 +1,7 @@
 #+TITLE: My System Config
 #+AUTHOR: (λ () nil)
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+{{{disable-search}}}
 
 *Click [[https://raw.githack.com/lambdanil/emacs-stuff/main/README.html][here]] for a properly formatted HTML version :)*
 
