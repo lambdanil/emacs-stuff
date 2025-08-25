@@ -72,23 +72,58 @@
   (require package))
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(ement-save-sessions t)
  '(custom-enabled-themes '(doom-dracula))
  '(custom-safe-themes
-   '("0cf95236abcf59e05b1ea69b4edd53d293a5baec4fe4c3484543fee99bfd2204" "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098" "944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948" "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8" "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4" "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
+   '("3c9b0f7bb01f278aa1397bec6257483f70c628d24d24dbc2757e07a698f4c625"
+     "6d671c0b7e2b88c90e264eb135c2b1a7ba5778d29ae93dcdf0561d025272d423"
+     "9bed3fb18c8d18acca50f3609efcaa8d1c72027802cec8d291d4577e3e48b825"
+     "0cf95236abcf59e05b1ea69b4edd53d293a5baec4fe4c3484543fee99bfd2204"
+     "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098"
+     "944d52450c57b7cbba08f9b3d08095eb7a5541b0ecfb3a0a9ecd4a18f3c28948"
+     "631c52620e2953e744f2b56d102eae503017047fb43d65ce028e88ef5846ea3b"
+     "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00"
+     "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25"
+     "37768a79b479684b0756dec7c0fc7652082910c37d8863c35b702db3f16000f8"
+     "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964"
+     "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c"
+     "bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d"
+     "dde643b0efb339c0de5645a2bc2e8b4176976d5298065b8e6ca45bc4ddf188b7"
+     "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
+     "12ce0ae7f9f5ba28e7252d9464daea32aa0884646b6576b949edfb2ccf2bf9d4"
+     "da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738"
+     "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9"
+     "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525"
+     "6945dadc749ac5cbd47012cad836f92aea9ebec9f504d32fe89a956260773ca4"
+     "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
+     default))
  '(delete-selection-mode t)
+ '(ement-save-sessions t)
  '(org-safe-remote-resources
    '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
  '(package-selected-packages
-   '(leuven-theme org-present org-roam web-mode doom-themes vterm sly sudo-edit pacmacs rainbow-mode eglot nord-theme nyan-mode rainbow-delimiters tree-sitter-langs tree-sitter magit treemacs-icons-dired spacemacs-theme treemacs-all-the-icons treemacs guix emms elfeed impatient-mode company-plisp sly-quicklisp ligature markdown-mode ivy flycheck company dumb-jump))
+   '(leuven-theme org-present org-roam web-mode doom-themes vterm sly
+		  sudo-edit pacmacs rainbow-mode eglot nord-theme
+		  nyan-mode rainbow-delimiters tree-sitter-langs
+		  tree-sitter magit treemacs-icons-dired
+		  spacemacs-theme treemacs-all-the-icons treemacs guix
+		  emms elfeed impatient-mode company-plisp
+		  sly-quicklisp ligature markdown-mode ivy flycheck
+		  company dumb-jump))
  '(safe-local-variable-values
-   '((eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
+   '((eval modify-syntax-entry 43 "'") (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")))
  '(warning-suppress-types '((comp) (comp) (emacs))))
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(ement-room-message-text ((t (:inherit (variable-pitch default)))))
  '(ement-room-name ((t (:inherit (variable-pitch font-lock-function-name-face)))))
  '(erc-default-face ((t (:inherit (variable-pitch default)))))
