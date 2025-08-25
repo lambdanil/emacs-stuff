@@ -12,8 +12,8 @@
   #:use-module (guix gexp)
   #:use-module (ice-9 match)
   #:export (throttled-configuration
-	    throttled-configuration?
-	    throttled-service-type))
+	      throttled-configuration?
+	      throttled-service-type))
 
 (define (non-negative-integer? val)
   (and (exact-integer? val) (not (negative? val))))
@@ -88,56 +88,56 @@
 
 (define (generate-throttled-config config)
   (string-append "[GENERAL]\n"
-		 "Enabled: "
-		 (if (throttled-configuration-throttled-enable? config) "True" "False")
-		 "\n"
-		 "Sysfs_Power_Path: "
-		 (throttled-configuration-sysfs-power-path config)
-		 "\n"
-		 "Autoreload: True"
-		 "\n\n"
-		 "[BATTERY]\n"
-		 "Update_Rate_s: "
-		 (number->string (throttled-configuration-bat-update-rate-s config))
-		 "\n"
-		 "PL1_Tdp_W: "
-		 (number->string (throttled-configuration-bat-pl1-tdp-w config))
-		 "\n"
-		 "PL1_Duration_s: "
-		 (number->string (throttled-configuration-bat-pl1-duration-s config))
-		 "\n"
-		 "PL2_Tdp_W: "
-		 (number->string (throttled-configuration-ac-pl2-tdp-w config))
-		 "\n"
-		 "PL2_Duration_S: "
-		 (number->string (throttled-configuration-bat-pl2-duration-s config))
-		 "\n"
-		 "Trip_Temp_C: "
-		 (number->string (throttled-configuration-bat-trip-temp-c config))
-		 "\n"
-		 "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
-		 "[AC]\n"
-		 "Update_Rate_s: "
-		 (number->string (throttled-configuration-ac-update-rate-s config))
-		 "\n"
-		 "PL1_Tdp_W: "
-		 (number->string (throttled-configuration-ac-pl1-tdp-w config))
-		 "\n"
-		 "PL1_Duration_s: "
-		 (number->string (throttled-configuration-ac-pl1-duration-s config))
-		 "\n"
-		 "PL2_Tdp_W: "
-		 (number->string (throttled-configuration-ac-pl2-tdp-w config))
-		 "\n"
-		 "PL2_Duration_S: "
-		 (number->string (throttled-configuration-ac-pl2-duration-s config))
-		 "\n"
-		 "Trip_Temp_C: "
-		 (number->string (throttled-configuration-ac-trip-temp-c config))
-		 "\n"
-		 "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
-		 "[UNDERVOLT.BATTERY]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"
-		 "[UNDERVOLT.AC]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"))
+		   "Enabled: "
+		   (if (throttled-configuration-throttled-enable? config) "True" "False")
+		   "\n"
+		   "Sysfs_Power_Path: "
+		   (throttled-configuration-sysfs-power-path config)
+		   "\n"
+		   "Autoreload: True"
+		   "\n\n"
+		   "[BATTERY]\n"
+		   "Update_Rate_s: "
+		   (number->string (throttled-configuration-bat-update-rate-s config))
+		   "\n"
+		   "PL1_Tdp_W: "
+		   (number->string (throttled-configuration-bat-pl1-tdp-w config))
+		   "\n"
+		   "PL1_Duration_s: "
+		   (number->string (throttled-configuration-bat-pl1-duration-s config))
+		   "\n"
+		   "PL2_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl2-tdp-w config))
+		   "\n"
+		   "PL2_Duration_S: "
+		   (number->string (throttled-configuration-bat-pl2-duration-s config))
+		   "\n"
+		   "Trip_Temp_C: "
+		   (number->string (throttled-configuration-bat-trip-temp-c config))
+		   "\n"
+		   "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
+		   "[AC]\n"
+		   "Update_Rate_s: "
+		   (number->string (throttled-configuration-ac-update-rate-s config))
+		   "\n"
+		   "PL1_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl1-tdp-w config))
+		   "\n"
+		   "PL1_Duration_s: "
+		   (number->string (throttled-configuration-ac-pl1-duration-s config))
+		   "\n"
+		   "PL2_Tdp_W: "
+		   (number->string (throttled-configuration-ac-pl2-tdp-w config))
+		   "\n"
+		   "PL2_Duration_S: "
+		   (number->string (throttled-configuration-ac-pl2-duration-s config))
+		   "\n"
+		   "Trip_Temp_C: "
+		   (number->string (throttled-configuration-ac-trip-temp-c config))
+		   "\n"
+		   "cTDP: 0\nDisable_BDPROCHOT: False\n\n"
+		   "[UNDERVOLT.BATTERY]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"
+		   "[UNDERVOLT.AC]\nCORE: 0\nGPU: 0\nCACHE: 0\nUNCORE: 0\nANALOGIO: 0\n\n"))
 
 (define (throttled-shepherd-service config)
 
@@ -154,11 +154,11 @@
 
 (define (throttled-activation config)
   (let* ((config-str (generate-throttled-config config))
-	 (config-file (plain-file "throttled" config-str)))
+	   (config-file (plain-file "throttled" config-str)))
     (with-imported-modules '((guix build utils))
-      #~(begin
-	  (use-modules (guix build utils))
-	  (copy-file #$config-file "/etc/throttled.conf")))))
+	#~(begin
+	    (use-modules (guix build utils))
+	    (copy-file #$config-file "/etc/throttled.conf")))))
 
 (define throttled-service-type
   (service-type
@@ -166,8 +166,8 @@
    (extensions
     (list
      (service-extension shepherd-root-service-type
-			throttled-shepherd-service)
+			  throttled-shepherd-service)
      (service-extension activation-service-type
-			throttled-activation)))
+			  throttled-activation)))
    (default-value (throttled-configuration))
    (description "Run THROTTLED, a power management tool.")))

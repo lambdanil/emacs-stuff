@@ -22,44 +22,44 @@
 (defun exwm-move-window-to-workspace (workspace-number)
   (interactive)
   (let ((frame (exwm-workspace--workspace-from-frame-or-index workspace-number))
-	(id (exwm--buffer->id (window-buffer))))
+	  (id (exwm--buffer->id (window-buffer))))
     (exwm-workspace-move-window frame id)))
 
 
 (defmacro exwm-set-key-progn (key &rest body)
   `(exwm-input-set-key (kbd ,key)
-		       (lambda()
-			 ,@body)))
+			 (lambda()
+			   ,@body)))
 
 (defmacro exwm-key-to-workspace (key workspace)
   `(exwm-set-key-progn ,key
-		       (interactive)
-		       (exwm-workspace-switch ,workspace)))
+			 (interactive)
+			 (exwm-workspace-switch ,workspace)))
 
 (defmacro exwm-key-send-to-workspace (key workspace)
   `(exwm-set-key-progn ,key
-		       (interactive)
-		       (exwm-move-window-to-workspace ,workspace)))
+			 (interactive)
+			 (exwm-move-window-to-workspace ,workspace)))
 
 (defmacro exwm-key-to-command (key command)
   `(exwm-set-key-progn ,key
-		       (interactive)
-		       (start-process-shell-command ,command nil ,command)))
+			 (interactive)
+			 (start-process-shell-command ,command nil ,command)))
 
 (defun my-kill-buffer-and-window ()
   "Kill the current buffer and delete the selected window."
   (interactive)
   (let ((window-to-delete (selected-window))
-	(buffer-to-kill (current-buffer))
-	(delete-window-hook (lambda () (ignore-errors (delete-window)))))
+	  (buffer-to-kill (current-buffer))
+	  (delete-window-hook (lambda () (ignore-errors (delete-window)))))
     (unwind-protect
-	(progn
-	  (add-hook 'kill-buffer-hook delete-window-hook t t)
-	  (if (kill-buffer (current-buffer))
-	      ;; If `delete-window' failed before, we rerun it to regenerate
-	      ;; the error so it can be seen in the echo area.
-	      (when (eq (selected-window) window-to-delete)
-		(delete-window)))))))
+	  (progn
+	    (add-hook 'kill-buffer-hook delete-window-hook t t)
+	    (if (kill-buffer (current-buffer))
+		;; If `delete-window' failed before, we rerun it to regenerate
+		;; the error so it can be seen in the echo area.
+		(when (eq (selected-window) window-to-delete)
+		  (delete-window)))))))
 
 (exwm-key-to-workspace "s-é" 0)
 (exwm-key-to-workspace "s-+" 1)
@@ -89,16 +89,16 @@
 (exwm-input-set-key (kbd "s-<return>") #'new-vterm-exwm)
 (exwm-input-set-key (kbd "s-c") #'vterm)
 (exwm-input-set-key (kbd "s-d") (lambda (command)
-				  (interactive (list (read-shell-command "$ ")))
-				  (start-process-shell-command command nil command)))
+				    (interactive (list (read-shell-command "$ ")))
+				    (start-process-shell-command command nil command)))
 (exwm-input-set-key (kbd "s-b") (lambda ()
-				  (interactive)
-				  (split-window-vertically)
-				  (run-with-idle-timer 0.05 nil (lambda() (windmove-down)))))
+				    (interactive)
+				    (split-window-vertically)
+				    (run-with-idle-timer 0.05 nil (lambda() (windmove-down)))))
 (exwm-input-set-key (kbd "s-v") (lambda ()
-				  (interactive)
-				  (split-window-horizontally)
-				  (run-with-idle-timer 0.05 nil (lambda() (windmove-right)))))
+				    (interactive)
+				    (split-window-horizontally)
+				    (run-with-idle-timer 0.05 nil (lambda() (windmove-right)))))
 (exwm-input-set-key (kbd "s-L") #'(lambda () (enlarge-window-horizontally 2)))
 (exwm-input-set-key (kbd "s-H") #'(lambda () (shrink-window-horizontally 2)))
 (exwm-input-set-key (kbd "s-J") #'(lambda () (shrink-window 2)))

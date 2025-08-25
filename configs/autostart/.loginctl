@@ -14,9 +14,9 @@ dbus-update-activation-environment --all &
 # /usr/bin/gnome-keyring-daemon --start --components=secrets &
 # playerctld &
 
-if [ "$HOSTNAME" = "lainpad" ]
-   then
-       setxkbmap cz -option 'ctrl:swapcaps' &
-       xinput set-prop 'pointer:Logitech G305' 'Device Accel Profile' -1 &
-       # echo "nothing to do!"
+if [ "$HOSTNAME" = "lainpad" ]; then
+    setxkbmap cz -option 'ctrl:swapcaps' &
+    xinput set-prop 'pointer:Logitech G305' 'libinput Accel Profile Enabled' 0 1 0 &
+    xinput set-prop 'pointer:Logitech USB Receiver Mouse' 'libinput Accel Profile Enabled' 0 1 0 &
+    # echo "nothing to do!"
 fi

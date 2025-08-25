@@ -1,21 +1,21 @@
 clean_build () { # clear guix build by regex
     if [[ $1 ]]; then
-	CLEAR_BUILD_PATHS="$(ls --color=never -d /gnu/store/$1 | tr '\n' ' ')"
+	  CLEAR_BUILD_PATHS="$(ls --color=never -d /gnu/store/$1 | tr '\n' ' ')"
     else
-	echo "no regex specified"
-	return 1
+	  echo "no regex specified"
+	  return 1
     fi
     if [[ $(echo "$CLEAR_BUILD_PATHS" | wc -c) -ne 1 ]]; then
-	guix gc --delete $CLEAR_BUILD_PATHS
+	  guix gc --delete $CLEAR_BUILD_PATHS
     else
-	echo "no match for regex found"
-	return 1
+	  echo "no match for regex found"
+	  return 1
     fi
 }
 
 if [ -n "$GUIX_ENVIRONMENT" ]; then
     if [[ $PS1 =~ (.*)"\\$" ]]; then
-	PS1="${BASH_REMATCH[1]} [env]\\\$ "
+	  PS1="${BASH_REMATCH[1]} [env]\\\$ "
     fi
 fi
 

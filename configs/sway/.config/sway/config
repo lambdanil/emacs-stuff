@@ -68,7 +68,7 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 bindsym $mod+m sticky toggle
-
+	  
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up

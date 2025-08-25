@@ -11,12 +11,12 @@
    (name "brogue-ce")
    (version "1.13")
    (source (origin
-	    (method url-fetch)
-	    (uri (string-append "https://github.com/tmewett/BrogueCE/archive/refs/tags/v" version
-				".tar.gz"))
-	    (sha256
-	     (base32
-	      "0v4hh5c6lgfrm5gmh2r0c3fnq854i4nqbhmkb9b5hbch74bfjqsc"))))
+	      (method url-fetch)
+	      (uri (string-append "https://github.com/tmewett/BrogueCE/archive/refs/tags/v" version
+				  ".tar.gz"))
+	      (sha256
+	       (base32
+		"0v4hh5c6lgfrm5gmh2r0c3fnq854i4nqbhmkb9b5hbch74bfjqsc"))))
    (build-system gnu-build-system)
    (arguments
     (list 
@@ -24,36 +24,36 @@
      #:tests? #f
      #:phases
      #~(modify-phases %standard-phases
-		      (delete 'configure)
-		      (add-before 'build 'change-datadir-path
-				  (lambda _
-				    (map
-				     (lambda (substitutes)
-				       (substitute* "config.mk"
-						    (((car substitutes))
-						     (cdr substitutes))))
-				     `(("^DATADIR := ." . ,(string-append "DATADIR := " #$output "/share"))
-				       ("^RELEASE := NO" . "RELEASE := YES")))))
-		      (replace 'install
-			       (lambda _
-				 (mkdir-p (string-append #$output "/bin"))
-				 (copy-file "bin/brogue" (string-append #$output "/bin/.brogue_real"))
-				 (call-with-output-file (string-append #$output "/bin/brogue") ; Wrap around executable and execute in ~/.local
-				   (lambda (file)
-				     (format file "~A" (string-append
-							"mkdir -p \"$HOME/.local/share/brogue\" && cd \"$HOME/.local/share/brogue\" && "
-							#$output "/bin/.brogue_real"))))
-				 (invoke "chmod" "+x" (string-append #$output "/bin/brogue"))
-				 (copy-recursively "bin/assets" (string-append #$output "/share/assets"))
-				 (make-desktop-entry-file
-				  (string-append  #$output "/share/applications/brogue.desktop")
-				  #:name "Brogue"
-				  #:exec "brogue"
-				  #:categories '("RolePlaying" "Game")
-				  #:keywords
-				  '("adventure" "singleplayer")
-				  #:comment
-				  '((#f "Brave the Dungeons of Doom!"))))))))
+			(delete 'configure)
+			(add-before 'build 'change-datadir-path
+				    (lambda _
+				      (map
+				       (lambda (substitutes)
+					 (substitute* "config.mk"
+						      (((car substitutes))
+						       (cdr substitutes))))
+				       `(("^DATADIR := ." . ,(string-append "DATADIR := " #$output "/share"))
+					 ("^RELEASE := NO" . "RELEASE := YES")))))
+			(replace 'install
+				 (lambda _
+				   (mkdir-p (string-append #$output "/bin"))
+				   (copy-file "bin/brogue" (string-append #$output "/bin/.brogue_real"))
+				   (call-with-output-file (string-append #$output "/bin/brogue") ; Wrap around executable and execute in ~/.local
+				     (lambda (file)
+				       (format file "~A" (string-append
+							  "mkdir -p \"$HOME/.local/share/brogue\" && cd \"$HOME/.local/share/brogue\" && "
+							  #$output "/bin/.brogue_real"))))
+				   (invoke "chmod" "+x" (string-append #$output "/bin/brogue"))
+				   (copy-recursively "bin/assets" (string-append #$output "/share/assets"))
+				   (make-desktop-entry-file
+				    (string-append  #$output "/share/applications/brogue.desktop")
+				    #:name "Brogue"
+				    #:exec "brogue"
+				    #:categories '("RolePlaying" "Game")
+				    #:keywords
+				    '("adventure" "singleplayer")
+				    #:comment
+				    '((#f "Brave the Dungeons of Doom!"))))))))
    (inputs (list (sdl-union (list sdl2 sdl2-image))))
    (synopsis "Brogue CE: A dungeon crawler roguelike")
    (description "Community fork of Brogue")

@@ -1,11 +1,11 @@
 (specifications->manifest
  (list "glibc-locales"
-       "gcc"
-       "syncthing"
-       "sbcl"
-       "guile"
-       "cmake"
-       "make"
-       "emacs"
-       "hunspell-dict-en-us"
-       "enchant"))
+	 "gcc"
+	 "syncthing"
+	 "sbcl"
+	 "guile"
+	 "cmake"
+	 "make"
+	 "emacs"
+	 "hunspell-dict-en-us"
+	 "enchant"))

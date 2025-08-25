@@ -15,7 +15,7 @@
   <forward/>
   <ip address='192.168.122.1' netmask='255.255.255.0'>
     <dhcp>
-      <range start='192.168.122.2' end='192.168.122.254'/>
+	<range start='192.168.122.2' end='192.168.122.254'/>
     </dhcp>
   </ip>
 </network>
@@ -24,15 +24,15 @@
 (define-public virsh-net-default-service
   (let ((config (plain-file "default.xml" default-config)))
     (simple-service 'virsh-net-default-service shepherd-root-service-type
-		    (list (shepherd-service
-			   (provision '(virsh-net-default))
-			   (requirement '(libvirtd NetworkManager))
-			   (start #~(lambda ()
-				      (invoke
-				       #$(file-append libvirt "/bin/virsh")
-				       "net-create" #$config)))
-			   (stop #~(lambda ()
-				     (invoke
-				      #$(file-append libvirt "/bin/virsh")
-				      "net-destroy" "default")))
-			   (respawn? #f))))))
+		      (list (shepherd-service
+			     (provision '(virsh-net-default))
+			     (requirement '(libvirtd NetworkManager))
+			     (start #~(lambda ()
+					(invoke
+					 #$(file-append libvirt "/bin/virsh")
+					 "net-create" #$config)))
+			     (stop #~(lambda ()
+				       (invoke
+					#$(file-append libvirt "/bin/virsh")
+					"net-destroy" "default")))
+			     (respawn? #f))))))

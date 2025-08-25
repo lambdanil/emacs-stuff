@@ -10,11 +10,11 @@
 
 (define-public mount-rshared-service
   (simple-service 'mount-rshared shepherd-root-service-type
-		  (list (shepherd-service
-			 (provision '(mount-rshared))
-			 (requirement '(user-processes))
-			 (start #~(lambda ()
-				    (invoke
-				     #$(file-append util-linux "/bin/mount")
-				     "--make-rshared" "/")))
-			 (respawn? #f)))))
+		    (list (shepherd-service
+			   (provision '(mount-rshared))
+			   (requirement '(user-processes))
+			   (start #~(lambda ()
+				      (invoke
+				       #$(file-append util-linux "/bin/mount")
+				       "--make-rshared" "/")))
+			   (respawn? #f)))))
